@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Discovery Pathway</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style copy.css">
+  <link rel="stylesheet" href="animation.css">
+  <link rel="shortcut icon" href="/Assets/Discovery_Logo-removebg-preview.png" type="image/x-icon">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.11/typed.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css"/>
+  
+  <style>
+    :root {
+      --purple: #7C4DFF;
+      --purple-dark: #633DCB;
+    }
+    body { font-family: Arial, sans-serif; }
+    a { text-decoration: none; }
+    .text-purple { color: var(--purple) !important; }
+    .btn-purple {
+      background-color: var(--purple);
+      color: #fff;
+      border: none;
+    }
+    .btn-purple:hover {
+      background-color: var(--purple-dark);
+    }
+    .btn-outline-custom {
+      border: 1px solid #000;
+      color: #000;
+      background: #fff;
+      transition: all 0.3s ease;
+    }
+    .btn-outline-custom:hover {
+      background-color: var(--purple);
+      color: #fff;
+      border-color: var(--purple);
+    }
+    header {
+      background: transparent;
+      position: absolute;
+      top: 0;
+      width: 100%;
+      z-index: 10;
+    }
+    .hero {
+      background: linear-gradient(135deg, #f5f5ff 0%, #fff5f5 100%);
+      position: relative;
+      overflow: hidden;
+      padding-top: 80px;
+    }
+    .hero .shapes img {
+      position: absolute;
+      z-index: 1;
+    }
+    .hero-content { position: relative; z-index: 2; }
+    section { padding: 60px 0; }
+    .bg-purple { background-color: var(--purple); }
+    footer { background-color: #222; color: #aaa; }
+    footer a { color: #aaa; }
+    footer a:hover { color: #fff; }
+    .service-box {
+      background: #fff;
+      border: 1px solid #ddd;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+    .service-box:hover {
+      transform: translateY(-5px);
+    }
+    .service-box h5 {
+      font-weight: 600;
+    }
+    .service-box p {
+      color: #666;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="py-3">
+    <div class="container d-flex justify-content-between align-items-center">
+      <a href="#" class="d-flex align-items-center">
+        <img src="Assets/Discovery_Logo-removebg-preview.png" alt="DISCOVERY" style="height: 52px; width: 52px;">
+        <span class="ms-2 fw-bold h5 mb-0" style="color: #000; font-size: larger;">DISCOVERY PATHWAY</span>
+      </a>
+      <ul class="nav align-items-center">
+        <li class="nav-item"><a class="nav-link text-purple" href="#">Home</a></li>
+        <li class="nav-item"><a class="nav-link text-dark" href="#about">About Us</a></li>
+        <li class="nav-item"><a class="nav-link text-dark" href="#courses">Courses</a></li>
+        <li class="nav-item"><a class="nav-link text-dark" href="#testimonials">Gallary</a></li>
+        <li class="nav-item"><a class="nav-link text-dark" href="#contact">Contact Us</a></li>
+        <li class="nav-item ms-3">
+          <a href="#" class="btn btn-outline-custom rounded-pill px-4">Free Consultation</a>
+        </li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero vh-100 d-flex align-items-center">
+    <div class="shapes">
+      
+      <img src="https://themeim.com/demo/eduplan/assets/img/header/plane.png" style="top:20%; right:20%; width:120px;">
+    </div>
+    <div class="container hero-content">
+      <div class="row align-items-center">
+        <div class="col-lg-6">
+          
+          <h1 class="display-4 fw-bold mb-3">Your <span class="text-danger">success</span><br> journey start with us!</h1>
+          <p class="text-muted mb-4">Discover how Discovery Pathway can make your international education dreams a reality. We match you with top universities and colleges worldwide for the perfect fit.</p>
+          <a href="#" class="btn btn-purple btn-lg rounded-pill me-3 px-4">Apply Online</a>
+          <a href="#" class="btn btn-outline-custom btn-lg rounded-pill px-4">Discover</a>
+        </div>
+        <div class="col-lg-6 text-center">
+          <img src="Assets/Student.png" alt="Student" class="img-fluid" style="position:relative; z-index:2; margin-left: 150px;">
+        </div>
+      </div>
+    </div>
+  </section>
+
+<!-- Why Choose Eduplan Section -->
+<section class="py-20 bg-gray-100">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="text-center mb-16">
+      <p class="text-sm text-purple-600 font-semibold">OUR SERVICES</p>
+      <h2 class="text-4xl font-bold text-gray-900">Why Choose Eduplan</h2>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div class="bg-white p-8 rounded-xl shadow-lg text-center">
+        <img src="https://themeim.com/demo/eduplan/assets/img/icon/idea.png" alt="One Stop Study Solution" class="mx-auto mb-4" />
+        <h3 class="text-xl font-semibold mb-2">One Stop Study Solution</h3>
+        <p class="text-gray-600 mb-4">Get a comprehensive overview of your study‑abroad journey—from budgeting and university selection to application tracking. We simplify every step so you can focus on your goals.</p>
+        <a href="#" class="text-purple-600 font-medium hover:underline">Learn More</a>
+      </div>
+      <div class="bg-white p-8 rounded-xl shadow-lg text-center">
+        <img src="https://themeim.com/demo/eduplan/assets/img/icon/coversation.png" alt="One To One Discussion" class="mx-auto mb-4" />
+        <h3 class="text-xl font-semibold mb-2">One To One Discussion</h3>
+        <p class="text-gray-600 mb-4">Engage directly with our expert advisors in personalized sessions. Get your questions answered, explore options, and build a clear roadmap tailored to your aspirations.</p>
+        <a href="#" class="text-purple-600 font-medium hover:underline">Learn More</a>
+      </div>
+      <div class="bg-white p-8 rounded-xl shadow-lg text-center">
+        <img src="https://themeim.com/demo/eduplan/assets/img/icon/emergency.png" alt="End To End Support" class="mx-auto mb-4" />
+        <h3 class="text-xl font-semibold mb-2">End To End Support</h3>
+        <p class="text-gray-600 mb-4">From initial consultation to visa approval and beyond, we’re with you at every step—handling paperwork, liaising with universities, and ensuring a smooth transition to life abroad.</p>
+        <a href="#" class="text-purple-600 font-medium hover:underline">Learn More</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <!-- Testimonials Section-->
+<section id="feedbacks" class="py-20 bg-gradient-to-b from-purple-50 to-white">
+    <div class="max-w-6xl mx-auto px-4">
+      <!-- Heading -->
+      <div class="text-center mb-12">
+        <p class="text-sm font-semibold text-purple-600 uppercase">FEEDBACKS</p>
+        <h2 class="text-4xl font-bold text-gray-900 mt-2">
+          Our students shared their<br>
+          <span class="relative inline-block">
+            visa <span class="relative z-10">success stories</span>
+            <svg class="absolute bottom-0 left-0 w-full h-2 z-0" viewBox="0 0 200 10" preserveAspectRatio="none">
+              <path d="M0,5 C50,10 150,0 200,5" stroke="#FFDE59" stroke-width="2" fill="none"/>
+              <path d="M0,6 C50,11 150,1 200,6" stroke="#A259FF" stroke-width="2" fill="none"/>
+            </svg>
+          </span>
+        </h2>
+      </div>
+
+      <!-- Cards Row -->
+      <div class="flex space-x-6 overflow-x-auto pb-4">
+        <!-- Card 1 -->
+         <div class="relative rounded-xl overflow-hidden " style="top: 5px;">
+        <img src="/Assets/Reewaz Adhikari.jpg" alt="Reewaz Adhikari" class="w-full h-64 object-cover">
+        <button onclick="openModal('https://youtu.be/VzEqqSUWNjw')" class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 hover:bg-opacity-70">
+          <svg class="w-12 h-12 text-purple-500" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M6 4l10 6-10 6V4z" />
+          </svg>
+        </button>
+        <div class="p-4 bg-gradient-to-t from-black/70 to-transparent text-white absolute bottom-0 w-full">
+          <h4 class="font-semibold">Reewaz Adhikari</h4>
+          <p class="text-sm">Tongmyong University ~ South Korea</p>
+        </div>
+      </div>
+        <!-- Card 2 -->
+        <div class="relative rounded-xl overflow-hidden">
+        <img src="https://scontent.fktm8-1.fna.fbcdn.net/v/t39.30808-6/462545194_8332088723579614_3535586470986419306_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=a5f93a&_nc_ohc=3iswocPDhjkQ7kNvwEDr2rS&_nc_oc=AdnvQpVxqWPXRMdQsMtlCAR9dI8ywkoi3bfCKeyewygHafKguk03ERSufos69o7zsYS3xYgL-GIOFhpwynvUAWIP&_nc_zt=23&_nc_ht=scontent.fktm8-1.fna&_nc_gid=46fZ3UFhPTtXH28UfnO2Ew&oh=00_AfJkK2GLgZlDxffQlEwo0IHI4iw7FlHnhwtlOLAGfAaZnw&oe=682E91C3" alt="David Smith" class="w-full h-64 object-cover">
+        <button onclick="openModal('https://youtu.be/6BYIKEH0RCQ?list=RDRqHbD1i4NF4')" class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 hover:bg-opacity-70">
+          <svg class="w-12 h-12 text-purple-500" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M6 4l10 6-10 6V4z" />
+          </svg>
+        </button>
+        <div class="p-4 bg-gradient-to-t from-black/70 to-transparent text-white absolute bottom-0 w-full">
+          <h4 class="font-semibold">Jishan Rajbashi</h4>
+          <p class="text-sm">Ulster University ~ UK</p>
+        </div>
+      </div>
+        <!-- Card 3 -->
+       <div class="relative rounded-xl overflow-hidden">
+        <img src="https://scontent.fktm8-1.fna.fbcdn.net/v/t39.30808-6/474172867_648369277634027_2955376686396636415_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=a5f93a&_nc_ohc=2wvgGpCNoZQQ7kNvwHAXBRT&_nc_oc=AdlSf9YPpXPOGRk52b4xeCUfDtv_MvrXa4YCKFSnbyFyT6BU7wudk7NQX7G54wa7e0mvnFeU2R7FTreQaG-pT_bc&_nc_zt=23&_nc_ht=scontent.fktm8-1.fna&_nc_gid=DeiF__Do0XP2eepfVd2ifg&oh=00_AfJVw4RyfCQwZaHeA47MCBArnGAXbeU4n0pryOh6c0TS3g&oe=682E97A9" alt="Emily Chen" class="w-full h-64 object-cover">
+        <button onclick="openModal('https://youtu.be/_kUrW9SEaJc')" class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 hover:bg-opacity-70">
+          <svg class="w-12 h-12 text-purple-500" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M6 4l10 6-10 6V4z" />
+          </svg>
+        </button>
+        <div class="p-4 bg-gradient-to-t from-black/70 to-transparent text-white absolute bottom-0 w-full">
+          <h4 class="font-semibold">Prahamsa Chaulagain</h4>
+          <p class="text-sm"> Sydney Met University ~ Australia</p>
+        </div>
+      </div>
+        <!-- Card 4 -->
+        <div class="relative rounded-xl overflow-hidden">
+        <img src="https://scontent.fktm8-1.fna.fbcdn.net/v/t39.30808-6/494994891_1260240179062952_1850200966452973374_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=ikPVjn8-21gQ7kNvwHFbcAt&_nc_oc=Adlu5kxXbmgi9JOeMz0ATnEQl0LXwc458HW4SEGEI7ARlSjatYjcTTN1OcI1Nz3VZeBJ5qF77i2jLK-asAQ4l_k-&_nc_zt=23&_nc_ht=scontent.fktm8-1.fna&_nc_gid=be52lAOOcXYSPtHWJy6KaQ&oh=00_AfJY0xhRTpjcFbWr5rCskmiG9id8Bxkwx9OQ2KPOytuYxg&oe=682E8745" alt="Sarah Johnson" class="w-full h-64 object-cover">
+        <button onclick="openModal('https://youtu.be/khfO9uCpxtU')" class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 hover:bg-opacity-70">
+          <svg class="w-12 h-12 text-purple-500" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M6 4l10 6-10 6V4z" />
+          </svg>
+        </button>
+        <div class="p-4 bg-gradient-to-t from-black/70 to-transparent text-white absolute bottom-0 w-full">
+          <h4 class="font-semibold">Sangam Gautam</h4>
+          <p class="text-sm">Georgian ILAC University ~ Canada</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Video Modal -->
+    <div id="videoModal" 
+       style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.8); 
+              z-index:9999; align-items:center; justify-content:center;">
+    <div style="position:relative; width:45vh; height:80vh;">
+      <iframe id="videoFrame" 
+              style="position:absolute; top:0; left:0; width:100%; height:100%; border-radius:0.5rem;" 
+              frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
+      </iframe>
+      <button onclick="closeModal()" 
+              style="position:absolute; top:0.5rem; right:0.5rem; 
+                     font-size:2rem; color:#fff; background:none; border:none; cursor:pointer;">
+        &times;
+      </button>
+    </div>
+  </div>
+  </section>
+
+<script>
+  function openModal(embedUrl) {
+      document.getElementById('videoFrame').src = embedUrl;
+      document.getElementById('videoModal').style.display = 'flex';
+    }
+    function closeModal() {
+      document.getElementById('videoModal').style.display = 'none';
+      document.getElementById('videoFrame').src = '';
+    }
+</script>
+  
+  
+  <!-- [Unchanged content from previous] -->
+  <!-- Scripts -->
+
+  <!-- Remaining Sections (Courses, Testimonials, Contact, Footer) -->
+  <!-- [Unchanged content from previous] -->
+  <!-- Scripts -->
+
+
+<!-- About Section -->
+
+  <style>
+    /* About & Experience Section */
+    .about-experience {
+  margin: 195px;
+  background: #fff;
+  border-radius: .5rem;
+  overflow: hidden;
+  position: relative;
+  padding: 2.5rem;
+} 
+.subtitle { font-size:.875rem; 
+  text-transform:uppercase; 
+  letter-spacing:.05em; 
+  color:#7672F5; 
+  margin-bottom:.5rem;
+  font-weight: bold; 
+}
+
+.heading { 
+  font-size:2.5rem; 
+  font-weight:700; 
+  line-height:1.2; 
+  margin-bottom:1.5rem; 
+}
+
+.heading .highlight { 
+  position:relative; 
+}
+
+.heading .highlight::before { 
+  content:''; 
+  position:absolute; 
+  bottom:.1em; 
+  left:0; 
+  width:100%; 
+  height:.1em; 
+  background:#7C4DFF; 
+  z-index:1; 
+}
+
+.heading .highlight::after  { content:''; position:absolute; bottom:0;   left:0; width:100%; height:.2em; background:#FFD54F; z-index:0; }
+
+.body-text { color:#666; font-size:.9rem; margin-bottom:1rem; }
+
+.core-title { color:#ccc; text-transform:uppercase; font-weight:600; letter-spacing:.1em; margin:2rem 0 .75rem; }
+
+.core-box { 
+  flex:0 0 120px; 
+  background:#f9f9f9; 
+  padding:1rem; 
+  border-radius:.5rem; 
+  position:relative; 
+  text-align:center; 
+}
+
+.core-box .num {
+  font-size: 2rem;
+  font-weight: 900;
+  margin-bottom: 4px; 
+  margin-right: 4px;  /* 4px space below the number */
+  display: block;
+}
+.core-box .label {
+  display: block;
+  margin-top: 4px;      /* ensures a little extra gap above the label */
+}
+
+.core-box::before { content:''; position:absolute; top:0; left:0; bottom:0; width:.35rem; }
+
+.core-box.purple::before { background:#7C4DFF; }
+
+.core-box.yellow::before { background:#FFD54F; }
+
+.core-box.red::before    { background:#FF5252; }
+
+.num { 
+  font-size:2.75rem; 
+  font-weight: bolder;
+  font-family: 'RNS Camelia'; 
+  text-align: center;
+  align-items: center;
+}
+
+/* number color exactly matches stripe */
+.core-box.purple .num { color: var(--purple); }
+.core-box.yellow .num { color: #FFC44E; }
+.core-box.red    .num { color: red; }
+
+
+
+.label { font-size:.85rem; font-weight: 500;
+  color:#333; }
+
+.btn-custom { display:inline-block; padding:.75rem 2rem; border:1px solid #ddd; border-radius:2rem; background:#fff; color:#000; transition:.3s; text-decoration:none; }
+.btn-custom:hover { background:#7C4DFF; color:#fff; border-color:#7C4DFF; }
+.img-frame { display:inline-block; border-left:30px solid #FFD54F; }
+.shape-circle { position:absolute; top:-30px; left:-30px; width:60px; height:60px; background:#7C4DFF; border-radius:50%; }
+.shape-arrow { position:absolute; top:20px; right:20px; width:90px; height:20px; background:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="90" height="20"><defs><marker id="m" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="%23FF5252"/></marker></defs><line x1="0" y1="10" x2="90" y2="10" stroke="%23FF5252" stroke-width="2" marker-end="url(%23m)"/></svg>') no-repeat center; }
+.shape-triangle { position:absolute; bottom:-10px; right:-10px; width:110px; height:110px; background:#7C4DFF; clip-path:polygon(50% 0%,100% 50%,50% 100%,0% 50%); }
+
+  </style>
+  
+<section class="about-experience container d-flex flex-column flex-lg-row align-items-center py-5">
+  <div class="col-lg-6 pe-lg-5">
+    <p class="subtitle text-purple">About Us &amp; Experience</p>
+    <h1 class="heading">
+      Moving beyond conventional <br>
+      guidance to unlock your <br>
+      competitive edge with <br>
+      Discovery Pathway 
+    </h1>
+    <br>
+    <p class="body-text">
+      Discovery Pathway is a leading educational consultancy in Nepal, specializing in international<br>
+      education. We are committed to providing personalized guidance and support to students seek-<br>
+      ing to study abroad. 
+      <br>
+      <br> We specialize in: <br>
+      • Personalized counseling for course and university selection, <br>
+      • Assistance with temporary study permits and permanent residency applications, <br>
+      • Support with recruitment and retention for foreign students, <br>
+      • End‑to‑end visa application services, liaising directly immigration authorities,
+    </p>
+   
+    <p class="body-text">
+      Our team combines local expertise with global partnerships to ensure aspiring students receive clear,<br>
+       tailored advice—and the hands‑on support they need to study abroad confidently.
+    </p>
+    <div class="core-title">Core Strength</div>
+    <div class="core d-flex gap-3 mb-4">
+      <div class="core-box purple">
+        <div class="num">3</div>
+        <div class="label">Years Experience</div>
+      </div>
+      <div class="core-box yellow">
+        <div class="num">356</div>
+        <div class="label">VISA Approved</div>
+      </div>
+      <div class="core-box red">
+        <div class="num">96%</div>
+        <div class="label">Admission Success</div>
+      </div>
+    </div>
+    <a href="#" class="btn-custom">Get Free Consultation</a>
+  </div>
+  <div class="col-lg-6 position-relative text-center mt-4 mt-lg-0 img-col">
+    <div class="img-frame d-inline-block">
+      <img src="https://scontent.fktm8-1.fna.fbcdn.net/v/t39.30808-6/495642921_668482359272956_6303150763685929665_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=cc71e4&_nc_ohc=L2w0yeS1d84Q7kNvwHSAja4&_nc_oc=AdlCx9IhpbdjQqNrxxTcnqAiOBZbpr-_GZ8bgfRP6dH3A4YidnV5iRnE_tPmhDOU7RjFsmQ5a3nQT5Jc5_wtIGW6&_nc_zt=23&_nc_ht=scontent.fktm8-1.fna&_nc_gid=4izGr8NmsjbFf0Y3OHltcg&oh=00_AfKhD-azKLhleg5-KFsxWvzJtdTO1uYxRXwcpDd5E5r9dw&oe=682E817C">
+    </div>
+    <div class="shape-circle"></div>
+    <div class="shape-arrow"></div>
+    <div class="shape-triangle"></div>
+  </div>
+</section>  
+
+<!-- Team Section -->
+<section class="teams" id="teams">
+        <div class="max-width">
+            <h2 class="title">Our Teams</h2>
+            <div class="carousel owl-carousel">
+                <div class="card" style="color: #fff;">
+                    <div class="box">
+                        <img src="/Assets/Amit_Neupane.jpg" alt="">
+                        <div class="text"><a href="https://www.facebook.com/amit.neupane.75" target="_blank">Amit Neupane</a></div>
+                        <p>CEO</p>
+                    </div>
+                </div>
+                <div class="card" style="color: #fff;">
+                    <div class="box">
+                        <img src="/Assets/Suman Kumar Gautam.jpg" alt="">
+                        <div class="text"><a href="https://www.facebook.com/suman.gautam.96742" target="_blank">Suman Kumar Gautam</a></div>
+                        <p>Managing Director</p>
+                    </div>
+                </div>
+                <div class="card" style="color: #fff;">
+                    <div class="box">
+                        <img src="https://scontent.fktm8-1.fna.fbcdn.net/v/t39.30808-6/474742016_1666179187303933_9189661037150033658_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=a5f93a&_nc_ohc=59jrkctJMekQ7kNvwH2JI2V&_nc_oc=Adlo5kIh1VwOcBEYw6f0NeyLpNY-vXgjNGgRDaWWNRFQIr_CsRiRlAOZWzGebN5IgqjL-C1lH6xjc8guQtbzP-Hd&_nc_zt=23&_nc_ht=scontent.fktm8-1.fna&_nc_gid=LZeVsrExW3Y1SZAQmgsYbg&oh=00_AfLHQHnHX3pvXemW24rTkPJ1HzYAwE3RMl_Nw0SIGCgCQg&oe=682E6A89" alt="">
+                        <div class="text"><a href="https://www.facebook.com/reewaz.adhikari.2025" target="_blank">Reewaz Adhikari</a></div>
+                        <p>Korea Manager</p>
+                    </div>
+                </div>
+                <div class="card" style="color: #fff;">
+                    <div class="box">
+                        <img src="https://scontent.fktm8-1.fna.fbcdn.net/v/t39.30808-6/488541875_640021362119056_5486911279055830317_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=833d8c&_nc_ohc=RMZ0syC8_WIQ7kNvwEHbYyz&_nc_oc=AdlLqVF2XGLVKrIkpj_VjfybWPWOATaJQw_IS1FWf_YyIO6OsH7B32mYH0T42agFJpms6xABKd51m_MGrfHZxagB&_nc_zt=23&_nc_ht=scontent.fktm8-1.fna&_nc_gid=1Fng1ONo84qlsNezdcb6iA&oh=00_AfJB1yoqEEl_FD61Xi3XctuGrN4VZcKcgXBfLdIrf9vGlQ&oe=682E8FBD" alt="">
+                        <div class="text"><a href="https://www.facebook.com/unesh.chaulagain.5" target="_blank">Nirmal Chaulagain</a></div>
+                        <p>Manager</p>
+                    </div>
+                </div>
+                <div class="card" style="color: #fff;">
+                    <div class="box">
+                        <img src="/Assets/Sangita_Rayamajhi.jpg" alt="">
+                        <div class="text"><a href=https://www.facebook.com/sangita.rayamajhi.16" target="_blank">Sangita Rayamajhi</a></div>
+                        <p>IELTS Instructor</p>
+                    </div>
+                </div>   
+            </div>
+        </div>
+    </section>
+
+  <!---- Step------>
+ <section class="py-20 bg-purple-50">
+    <div class="max-w-6xl mx-auto px-4">
+      <p class="text-sm text-purple-600 text-center uppercase mb-2" style="font-weight: bolder;">STEPS</p>
+      <h2 class="text-4xl font-bold text-gray-900 text-center mb-12">Steps to Get your Destination</h2>
+      <div class="flex flex-col md:flex-row items-center justify-center space-y-8 md:space-y-0 md:space-x-12">
+        <!-- Step 1 -->
+        <div class="flex flex-col items-center">
+          <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow">
+            <img src="/Assets/Icons/search.png" alt="Identify course country & collage" class="w-10 h-10" />
+          </div>
+          <p class="mt-4 text-center text-gray-700">Research and <br> Planning</p>
+        </div>
+        <!-- Arrow -->
+        <div class="hidden md:block text-red-500">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </div>
+        <!-- Step 2 -->
+        <div class="flex flex-col items-center">
+          <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow">
+            <img src="/Assets/Icons/resume.png" alt="science & professional" class="w-10 h-10" />
+          </div>
+          <p class="mt-4 text-center text-gray-700">Application and<br/>Acceptance</p>
+        </div>
+        <div class="hidden md:block text-red-500">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </div>
+        <!-- Step 3 -->
+        <div class="flex flex-col items-center">
+          <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow">
+            <img src="/Assets/Icons/graph.png" alt="Art, Design & Culture" class="w-10 h-10" />
+          </div>
+          <p class="mt-4 text-center text-gray-700">Financial and<br/>Legal Preparations</p>
+        </div>
+        <div class="hidden md:block text-red-500">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </div>
+        <!-- Step 4 -->
+        <div class="flex flex-col items-center">
+          <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow">
+            <img src="/Assets/Icons/departures.png" alt="Business & Management" class="w-10 h-10" />
+          </div>
+          <p class="mt-4 text-center text-gray-700">Pre-Departure<br/>Preparation</p>
+        </div>
+        <div class="hidden md:block text-red-500">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </div>
+        <!-- Step 5 -->
+        <div class="flex flex-col items-center">
+          <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow">
+            <img src="/Assets/Icons/arrivals.png" alt="Computer Science & IT" class="w-10 h-10" />
+          </div>
+          <p class="mt-4 text-center text-gray-700">Arrival <br/>and Settlement</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+ <!-- FAQ Section -->
+  <section class="py-20 bg-gray-100">
+    <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+      <!-- Left Column -->
+      <div>
+        <p class="text-sm text-purple-600 font-semibold mb-2">FAQ</p>
+        <div class="w-12 h-0.5 bg-yellow-400 mb-6 mx-auto md:mx-0"></div>  
+        <h2 class="text-4xl font-bold text-gray-900 mb-4">Frequently Asked Questions</h2>
+        <p class="text-gray-700 mb-6">Still do you have any questions to know?<br/>Feel free to ask our experts here.</p>
+        <a href="#"
+  class="inline-block bg-white text-gray-900 border border-gray-200 px-6 py-3 rounded-lg font-medium
+         hover:bg-purple-600 hover:text-white transition-colors duration-300" >Ask Your Questions</a>
+      </div>
+      <!-- Right Column: Accordion -->
+      <div class="space-y-4" x-data="{}">
+        <template x-for="(item, index) in [
+            { q:'How is get admission in abroad university?', a:'To get admission in an abroad university, start by researching programs, meet entry requirements, prepare application documents, and submit before deadlines. Professional guidance from Eduplan ensures a smooth process.' },
+            { q:'Do you offer complete solution for students?', a:'Yes, we provide end-to-end solutions including course counseling, application assistance, visa support, and accommodation arrangements.' },
+            { q:'Which country is safe and better for higher study?', a:'Safety and best fit depend on individual preferences; popular choices are Canada, Australia, and the UK for their friendly environment and strong student protections.' },
+            { q:'Which country offer PR after study getting job?', a:'Countries like Canada and Australia offer pathways to permanent residency for international graduates who secure qualifying employment.' },
+            { q:'Can I get scholarship with my low cGPA?', a:'Scholarship eligibility varies; many institutions offer merit and need-based aid, and our counselors can help identify suitable options.' },
+            { q:'Do you allow accommodation for students in abroad?', a:'Yes, we assist students in finding safe and affordable accommodation options near their campus.' }
+          ]" :key="index">
+          <div x-data="{ open:false }" class="bg-white rounded-xl shadow-lg">
+            <button @click="open = !open" class="w-full flex justify-between items-center px-6 py-4 focus:outline-none rounded-xl">
+              <span class="text-gray-800"><span x-text="index + 1"></span>. <span x-text="item.q"></span></span>
+              <svg :class="{'transform rotate-45': open}" class="w-6 h-6 text-gray-500 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+              </svg>
+            </button>
+            <div x-show="open" x-collapse class="px-6 pb-4 text-gray-700 border-t border-gray-200" x-text="item.a"></div>
+          </div>
+        </template>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Testimonials -->
+ 
+  
+
+  <section class="max-w-4xl mx-auto py-12 text-center">
+    <p class="text-blue-500 uppercase text-sm tracking-widest mb-2">Testimonials</p>
+    <h2 class="text-4xl font-extrabold text-gray-800 mb-8">What They Are Saying About Us</h2>
+
+    <!-- Swiper container -->
+    <div class="swiper testimonial-swiper">
+      <div class="swiper-wrapper">
+
+        <!-- Repeat this .swiper-slide block 7 times -->
+        <div class="swiper-slide px-4">
+          <div class="bg-white rounded-xl p-8 border border-blue-50 shadow-sm">
+            <div class="flex flex-col items-center">
+              <img
+                src="/Assets/RachitProfile.jpg"
+                alt=""
+                class="w-24 h-24 rounded-full mb-4 object-cover"
+              />
+              <h3 class="text-xl font-semibold text-gray-900">Rachit Pokhrel</h3>
+              <p class="text-gray-400 mb-3">Student</p>
+
+              <div class="flex space-x-1 mb-6">
+                <!-- 5 stars -->
+                <template x-for="i in 5">
+                  <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.955a1 1 0 00.95.69h4.163c.969 0 1.371 1.24.588 1.81l-3.373 2.455a1 1 0 00-.364 1.118l1.287 3.955c.3.921-.755 1.688-1.54 1.118L10 13.347l-3.373 2.455c-.784.57-1.838-.197-1.539-1.118l1.286-3.955a1 1 0 00-.364-1.118L2.637 9.382c-.784-.57-.38-1.81.588-1.81h4.163a1 1 0 00.95-.69l1.286-3.955z"/>
+                  </svg>
+                </template>
+              </div>
+
+              <p class="text-gray-700 italic leading-relaxed">
+                “Discovery Pathway guided me throughout my admission and student visa application process for Australia. 
+                All the team members were very supportive and friendly. I received step-by-step guidance through the 
+                entire process, making it a smooth and stress-free experience. I highly recommend Discovery Pathway 
+                to other prospective students for their study abroad needs. Their professional service fosters a strong 
+                and trustworthy relationship.”
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- /.swiper-slide -->
+
+        <!-- Duplicate the above block 6 more times -->
+        <!-- ... -->
+      </div>
+
+      <!-- Pagination dots -->
+      <div class="swiper-pagination mt-8"></div>
+    </div>
+  </section>
+
+  <!-- Swiper JS -->
+  <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+  <script>
+    // Initialize Swiper
+    const swiper = new Swiper('.testimonial-swiper', {
+      slidesPerView: 1,
+      loop: true,
+      autoplay: { delay: 5000 },
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+    });
+  </script>
+
+  
+  <!-- Contact Section -->
+  <section id="contact">
+    <div class="container">
+      <div class="row gy-4">
+        <div class="col-md-6">
+          <h3>Contact Us</h3>
+          <form>
+            <div class="mb-3">
+              <label for="name" class="form-label">Name</label>
+              <input type="text" id="name" class="form-control" required>
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" id="email" class="form-control" required>
+            </div>
+            <div class="mb-3">
+              <label for="message" class="form-label">Message</label>
+              <textarea id="message" class="form-control" rows="4" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-purple px-4 rounded-pill">Send Message</button>
+          </form>
+        </div>
+        <div class="col-md-6">  
+          <h3>Our Office</h3>
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3534.780668777056!2d85.5249911!3d27.6313088!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb09d73fb45ef7%3A0x6ead3fab3ac61152!2sDiscovery%20Educational%20Consultancy%20Banepa%20Branch!5e0!3m2!1sen!2snp!4v1746556820298!5m2!1sen!2snp" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+    <!-- Footer -->
+    <footer class="py-4">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 mb-3 mb-md-0">
+          <h5 class="text-white">Discovery Pathway</h5>
+          <p class="small">Discovery Pathway is a leading educational consultancy in Nepal, specializing in international
+                           education. We are committed to providing personalized guidance and support to students seek-
+                           ing to study abroad.</p>
+        </div>
+        
+        <div class="col-md-3">
+          <h6 class="text-white">Follow Us</h6>
+          <a href="#" class="me-2 text-white"><i class="bi bi-facebook"></i></a>
+          <a href="#" class="me-2 text-white"><i class="bi bi-tiktok"></i></a>
+          <a href="#" class="me-2 text-white"><i class="bi bi-instagram"></i></a>
+        </div>
+      </div>
+      <div class="text-center mt-3 small">&copy; 2025 Discovery Pathway. All Rights Reserved | Developed By Rachit Pokhrel</div>
+    </div>
+  </footer>
+ 
+  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+  <script src="script.js"></script>
+</body>
+</html>
