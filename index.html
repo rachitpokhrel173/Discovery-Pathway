@@ -515,253 +515,68 @@
 
 
   <!-- About Section -->
+<section class="about-experience flex flex-col lg:flex-row items-center gap-10 px-4 py-16 max-w-7xl mx-auto bg-white rounded-2xl shadow-md">
+  <div class="w-full lg:w-1/2 space-y-6">
+    <p class="text-sm uppercase tracking-wider font-semibold text-purple-600">About Us & Experience</p>
+    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-snug text-gray-800">
+      Go beyond the usual <br>
+      unlock your edge with<br>
+      <span class="text-purple-600">Discovery Pathway</span>
+    </h1>
+    <p class="text-gray-700 text-base leading-relaxed">
+      Discovery Pathway is a leading educational consultancy in Nepal, specializing in international education.
+      We are committed to providing personalized guidance and support to students seeking to study abroad.
+    </p>
+    <p class="text-gray-700 text-base leading-relaxed">
+      <strong>We specialize in:</strong><br>
+      • Personalized counseling for course and university selection<br>
+      • Assistance with temporary study permits and permanent residency applications<br>
+      • Support with recruitment and retention for foreign students<br>
+      • End-to-end visa application services, liaising directly with immigration authorities
+    </p>
+    <p class="text-gray-700 text-base leading-relaxed">
+      Our team combines local expertise with global partnerships to ensure aspiring students receive clear,
+      tailored advice — and the hands-on support they need to study abroad confidently.
+    </p>
 
-  <style>
-    /* About & Experience Section */
+    <div class="grid grid-cols-3 gap-4 text-center">
+      <div class="bg-purple-50 rounded-lg py-4">
+        <div class="text-3xl font-bold text-purple-600">3+</div>
+        <div class="text-sm text-gray-600">Years Experience</div>
+      </div>
+      <div class="bg-yellow-50 rounded-lg py-4">
+        <div class="text-3xl font-bold text-yellow-500">500</div>
+        <div class="text-sm text-gray-600">VISA Approved</div>
+      </div>
+      <div class="bg-red-50 rounded-lg py-4">
+        <div class="text-3xl font-bold text-red-500">96%</div>
+        <div class="text-sm text-gray-600">Admission Success</div>
+      </div>
+    </div>
+
+    <a href="#" class="inline-block mt-4 bg-purple-600 text-white px-6 py-3 rounded-full shadow hover:bg-purple-700 transition">Get Free Consultation</a>
+  </div>
+
+  <div class="w-full lg:w-1/2 relative text-center">
+    <div class="relative">
+      <img src="https://scontent.fktm8-1.fna.fbcdn.net/v/t39.30808-6/495642921_668482359272956_6303150763685929665_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=cc71e4&_nc_ohc=L2w0yeS1d84Q7kNvwHSAja4&_nc_oc=AdlCx9IhpbdjQqNrxxTcnqAiOBZbpr-_GZ8bgfRP6dH3A4YidnV5iRnE_tPmhDOU7RjFsmQ5a3nQT5Jc5_wtIGW6&_nc_zt=23&_nc_ht=scontent.fktm8-1.fna&_nc_gid=4izGr8NmsjbFf0Y3OHltcg&oh=00_AfKhD-azKLhleg5-KFsxWvzJtdTO1uYxRXwcpDd5E5r9dw&oe=682E817C" alt="About Image" class="rounded-xl shadow-lg w-full max-w-sm mx-auto">
+      <div class="absolute -top-5 -left-5 w-12 h-12 bg-purple-500 rounded-full"></div>
+      <div class="absolute top-6 right-6 w-24 h-6 bg-red-500 rounded-full"></div>
+      <div class="absolute -bottom-6 -right-6 w-24 h-24 bg-purple-600 clip-triangle"></div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .clip-triangle {
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+  }
+  @media (max-width: 768px) {
     .about-experience {
-      margin: 195px;
-      background: #fff;
-      border-radius: .5rem;
-      overflow: hidden;
-      position: relative;
-      padding: 2.5rem;
+      margin: 1.5rem !important;
     }
-
-    .subtitle {
-      font-size: .875rem;
-      text-transform: uppercase;
-      letter-spacing: .05em;
-      color: #7672F5;
-      margin-bottom: .5rem;
-      font-weight: bold;
-    }
-
-    .heading {
-      font-size: 2.5rem;
-      font-weight: 700;
-      line-height: 1.2;
-      margin-bottom: 1.5rem;
-    }
-
-    .heading .highlight {
-      position: relative;
-    }
-
-    .heading .highlight::before {
-      content: '';
-      position: absolute;
-      bottom: .1em;
-      left: 0;
-      width: 100%;
-      height: .1em;
-      background: #7C4DFF;
-      z-index: 1;
-    }
-
-    .heading .highlight::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: .2em;
-      background: #FFD54F;
-      z-index: 0;
-    }
-
-    .body-text {
-      color: #666;
-      font-size: .9rem;
-      margin-bottom: 1rem;
-    }
-
-    .core-title {
-      color: #ccc;
-      text-transform: uppercase;
-      font-weight: 600;
-      letter-spacing: .1em;
-      margin: 2rem 0 .75rem;
-    }
-
-    .core-box {
-      flex: 0 0 120px;
-      background: #f9f9f9;
-      padding: 1rem;
-      border-radius: .5rem;
-      position: relative;
-      text-align: center;
-    }
-
-    .core-box .num {
-      font-size: 2rem;
-      font-weight: 900;
-      margin-bottom: 4px;
-      margin-right: 4px;
-      /* 4px space below the number */
-      display: block;
-    }
-
-    .core-box .label {
-      display: block;
-      margin-top: 4px;
-      /* ensures a little extra gap above the label */
-    }
-
-    .core-box::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      bottom: 0;
-      width: .35rem;
-    }
-
-    .core-box.purple::before {
-      background: #7C4DFF;
-    }
-
-    .core-box.yellow::before {
-      background: #FFD54F;
-    }
-
-    .core-box.red::before {
-      background: #FF5252;
-    }
-
-    .num {
-      font-size: 2.75rem;
-      font-weight: bolder;
-      font-family: 'RNS Camelia';
-      text-align: center;
-      align-items: center;
-    }
-
-    /* number color exactly matches stripe */
-    .core-box.purple .num {
-      color: var(--purple);
-    }
-
-    .core-box.yellow .num {
-      color: #FFC44E;
-    }
-
-    .core-box.red .num {
-      color: red;
-    }
-
-
-
-    .label {
-      font-size: .85rem;
-      font-weight: 500;
-      color: #333;
-    }
-
-    .btn-custom {
-      display: inline-block;
-      padding: .75rem 2rem;
-      border: 1px solid #ddd;
-      border-radius: 2rem;
-      background: #fff;
-      color: #000;
-      transition: .3s;
-      text-decoration: none;
-    }
-
-    .btn-custom:hover {
-      background: #7C4DFF;
-      color: #fff;
-      border-color: #7C4DFF;
-    }
-
-    .img-frame {
-      display: inline-block;
-      border-left: 30px solid #FFD54F;
-    }
-
-    .shape-circle {
-      position: absolute;
-      top: -30px;
-      left: -30px;
-      width: 60px;
-      height: 60px;
-      background: #7C4DFF;
-      border-radius: 50%;
-    }
-
-    .shape-arrow {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      width: 90px;
-      height: 20px;
-      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="90" height="20"><defs><marker id="m" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="%23FF5252"/></marker></defs><line x1="0" y1="10" x2="90" y2="10" stroke="%23FF5252" stroke-width="2" marker-end="url(%23m)"/></svg>') no-repeat center;
-    }
-
-    .shape-triangle {
-      position: absolute;
-      bottom: -10px;
-      right: -10px;
-      width: 110px;
-      height: 110px;
-      background: #7C4DFF;
-      clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
-    }
-  </style>
-
-  <section class="about-experience container d-flex flex-column flex-lg-row align-items-center py-5">
-    <div class="col-lg-6 pe-lg-5">
-      <p class="subtitle text-purple">About Us &amp; Experience</p>
-      <h1 class="heading">
-        Moving beyond conventional <br>
-        guidance to unlock your <br>
-        competitive edge with <br>
-        Discovery Pathway
-      </h1>
-      <br>
-      <p class="body-text">
-        Discovery Pathway is a leading educational consultancy in Nepal, specializing in international<br>
-        education. We are committed to providing personalized guidance and support to students seek-<br>
-        ing to study abroad.
-        <br>
-        <br> We specialize in: <br>
-        • Personalized counseling for course and university selection, <br>
-        • Assistance with temporary study permits and permanent residency applications, <br>
-        • Support with recruitment and retention for foreign students, <br>
-        • End‑to‑end visa application services, liaising directly immigration authorities,
-      </p>
-
-      <p class="body-text">
-        Our team combines local expertise with global partnerships to ensure aspiring students receive clear,<br>
-        tailored advice—and the hands‑on support they need to study abroad confidently.
-      </p>
-      <div class="core-title">Core Strength</div>
-      <div class="core d-flex gap-3 mb-4">
-        <div class="core-box purple">
-          <div class="num">3</div>
-          <div class="label">Years Experience</div>
-        </div>
-        <div class="core-box yellow">
-          <div class="num">356</div>
-          <div class="label">VISA Approved</div>
-        </div>
-        <div class="core-box red">
-          <div class="num">96%</div>
-          <div class="label">Admission Success</div>
-        </div>
-      </div>
-      <a href="#" class="btn-custom">Get Free Consultation</a>
-    </div>
-    <div class="col-lg-6 position-relative text-center mt-4 mt-lg-0 img-col">
-      <div class="img-frame d-inline-block">
-        <img
-          src="https://scontent.fktm8-1.fna.fbcdn.net/v/t39.30808-6/495642921_668482359272956_6303150763685929665_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=cc71e4&_nc_ohc=L2w0yeS1d84Q7kNvwHSAja4&_nc_oc=AdlCx9IhpbdjQqNrxxTcnqAiOBZbpr-_GZ8bgfRP6dH3A4YidnV5iRnE_tPmhDOU7RjFsmQ5a3nQT5Jc5_wtIGW6&_nc_zt=23&_nc_ht=scontent.fktm8-1.fna&_nc_gid=4izGr8NmsjbFf0Y3OHltcg&oh=00_AfKhD-azKLhleg5-KFsxWvzJtdTO1uYxRXwcpDd5E5r9dw&oe=682E817C">
-      </div>
-      <div class="shape-circle"></div>
-      <div class="shape-arrow"></div>
-      <div class="shape-triangle"></div>
-    </div>
-  </section>
+  }
+</style>
 
   <!-- Team Section -->
   <section class="teams" id="teams">
