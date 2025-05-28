@@ -64,8 +64,25 @@
         display: flex;
       }
 
-      .navbar-toggler {
-        display: block !important;
+      .nav.active::before {
+        content: "✕";
+        font-size: 1.5rem;
+        color: #333;
+        align-self: flex-end;
+        margin-bottom: 1rem;
+        cursor: pointer;
+      }
+
+      .nav.active::before:hover {
+        color: #7C4DFF;
+      }
+
+      .hero {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        padding-top: 120px !important;
       }
 
       .hero .hero-content .row {
@@ -214,7 +231,7 @@
       <button class="navbar-toggler" onclick="toggleMenu()">
         <i class="bi bi-list"></i>
       </button>
-      <ul class="nav align-items-center">
+      <ul class="nav align-items-center" onclick="closeMenu(event)">
         <li class="nav-item"><a class="nav-link text-purple" href="#">Home</a></li>
         <li class="nav-item"><a class="nav-link text-dark" href="#about">About Us</a></li>
         <li class="nav-item"><a class="nav-link text-dark" href="#courses">Courses</a></li>
@@ -255,6 +272,12 @@
   <script>
     function toggleMenu() {
       document.querySelector('header .nav').classList.toggle('active');
+    }
+
+    function closeMenu(event) {
+      if (event.target.closest('.nav') && event.target.textContent === '✕') {
+        document.querySelector('header .nav').classList.remove('active');
+      }
     }
   </script>
 
