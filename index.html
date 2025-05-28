@@ -274,6 +274,7 @@
       </div>
     </div>
   </section>
+
   <script>
     function toggleMenu() {
       document.querySelector('header .nav').classList.toggle('active');
@@ -341,21 +342,29 @@
       </div>
 
       <!-- Cards Row -->
-      <div class="flex space-x-6 overflow-x-auto pb-4">
+      <div class="hidden sm:flex space-x-6 overflow-x-auto pb-4">
+
+
         <!-- Card 1 -->
-        <div class="relative rounded-xl overflow-hidden " style="top: 5px;">
-          <img src="/Assets/Reewaz Adhikari.jpg" alt="Reewaz Adhikari" class="w-full h-64 object-cover">
-          <button onclick="openModal('https://youtu.be/VzEqqSUWNjw')"
-            class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 hover:bg-opacity-70">
-            <svg class="w-12 h-12 text-purple-500" fill="currentColor" viewBox="0 0 20 20">
-              <path d="M6 4l10 6-10 6V4z" />
-            </svg>
-          </button>
-          <div class="p-4 bg-gradient-to-t from-black/70 to-transparent text-white absolute bottom-0 w-full">
-            <h4 class="font-semibold">Reewaz Adhikari</h4>
-            <p class="text-sm">Tongmyong University ~ South Korea</p>
-          </div>
-        </div>
+        <div class="relative rounded-xl overflow-hidden">
+  <img src="/Assets/Reewaz Adhikari.jpg" alt="Reewaz Adhikari" class="w-full h-64 object-cover">
+  <button onclick="openModal('https://youtu.be/VzEqqSUWNjw')"
+    class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 hover:bg-opacity-70">
+    <svg class="w-12 h-12 text-purple-500" fill="currentColor" viewBox="0 0 20 20">
+      <path d="M6 4l10 6-10 6V4z" />
+    </svg>
+  </button>
+  <div class="p-4 bg-gradient-to-t from-black/70 to-transparent text-white absolute bottom-0 w-full">
+    <h4 class="font-semibold">Reewaz Adhikari</h4>
+    <p class="text-sm">Tongmyong University ~ South Korea</p>
+  </div>
+</div>
+
+
+
+
+
+
         <!-- Card 2 -->
         <div class="relative rounded-xl overflow-hidden">
           <img
@@ -405,7 +414,62 @@
           </div>
         </div>
       </div>
-
+<!-- Mobile view: 2x2 grid -->
+    <div class="grid grid-cols-2 gap-4 sm:hidden">
+      <!-- Repeat the same 4 cards here -->
+      <div class="relative rounded-xl overflow-hidden">
+        <img src="/Assets/Reewaz Adhikari.jpg" alt="Reewaz Adhikari" class="w-full h-64 object-cover">
+        <button onclick="openModal('https://youtu.be/VzEqqSUWNjw')"
+          class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 hover:bg-opacity-70">
+          <svg class="w-12 h-12 text-purple-500" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M6 4l10 6-10 6V4z" />
+          </svg>
+        </button>
+        <div class="p-4 bg-gradient-to-t from-black/70 to-transparent text-white absolute bottom-0 w-full">
+          <h4 class="font-semibold">Reewaz Adhikari</h4>
+          <p class="text-sm">Tongmyong University ~ South Korea</p>
+        </div>
+      </div>
+      <div class="relative rounded-xl overflow-hidden">
+        <img src="https://scontent.fktm8-1.fna.fbcdn.net/v/t39.30808-6/462545194_8332088723579614_3535586470986419306_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=a5f93a&_nc_ohc=3iswocPDhjkQ7kNvwEDr2rS&_nc_oc=AdnvQpVxqWPXRMdQsMtlCAR9dI8ywkoi3bfCKeyewygHafKguk03ERSufos69o7zsYS3xYgL-GIOFhpwynvUAWIP&_nc_zt=23&_nc_ht=scontent.fktm8-1.fna&_nc_gid=46fZ3UFhPTtXH28UfnO2Ew&oh=00_AfJkK2GLgZlDxffQlEwo0IHI4iw7FlHnhwtlOLAGfAaZnw&oe=682E91C3" alt="Jishan Rajbashi" class="w-full h-64 object-cover">
+        <button onclick="openModal('https://youtu.be/6BYIKEH0RCQ?list=RDRqHbD1i4NF4')"
+          class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 hover:bg-opacity-70">
+          <svg class="w-12 h-12 text-purple-500" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M6 4l10 6-10 6V4z" />
+          </svg>
+        </button>
+        <div class="p-4 bg-gradient-to-t from-black/70 to-transparent text-white absolute bottom-0 w-full">
+          <h4 class="font-semibold">Jishan Rajbashi</h4>
+          <p class="text-sm">Ulster University ~ UK</p>
+        </div>
+      </div>
+      <div class="relative rounded-xl overflow-hidden">
+        <img src="https://scontent.fktm8-1.fna.fbcdn.net/v/t39.30808-6/474172867_648369277634027_2955376686396636415_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=a5f93a&_nc_ohc=2wvgGpCNoZQQ7kNvwHAXBRT&_nc_oc=AdlSf9YPpXPOGRk52b4xeCUfDtv_MvrXa4YCKFSnbyFyT6BU7wudk7NQX7G54wa7e0mvnFeU2R7FTreQaG-pT_bc&_nc_zt=23&_nc_ht=scontent.fktm8-1.fna&_nc_gid=DeiF__Do0XP2eepfVd2ifg&oh=00_AfJVw4RyfCQwZaHeA47MCBArnGAXbeU4n0pryOh6c0TS3g&oe=682E97A9" alt="Prahamsa Chaulagain" class="w-full h-64 object-cover">
+        <button onclick="openModal('https://youtu.be/_kUrW9SEaJc')"
+          class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 hover:bg-opacity-70">
+          <svg class="w-12 h-12 text-purple-500" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M6 4l10 6-10 6V4z" />
+          </svg>
+        </button>
+        <div class="p-4 bg-gradient-to-t from-black/70 to-transparent text-white absolute bottom-0 w-full">
+          <h4 class="font-semibold">Prahamsa Chaulagain</h4>
+          <p class="text-sm">Sydney Met University ~ Australia</p>
+        </div>
+      </div>
+      <div class="relative rounded-xl overflow-hidden">
+        <img src="https://scontent.fktm8-1.fna.fbcdn.net/v/t39.30808-6/494994891_1260240179062952_1850200966452973374_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=ikPVjn8-21gQ7kNvwHFbcAt&_nc_oc=Adlu5kxXbmgi9JOeMz0ATnEQl0LXwc458HW4SEGEI7ARlSjatYjcTTN1OcI1Nz3VZeBJ5qF77i2jLK-asAQ4l_k-&_nc_zt=23&_nc_ht=scontent.fktm8-1.fna&_nc_gid=be52lAOOcXYSPtHWJy6KaQ&oh=00_AfJY0xhRTpjcFbWr5rCskmiG9id8Bxkwx9OQ2KPOytuYxg&oe=682E8745" alt="Sangam Gautam" class="w-full h-64 object-cover">
+        <button onclick="openModal('https://youtu.be/khfO9uCpxtU')"
+          class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 hover:bg-opacity-70">
+          <svg class="w-12 h-12 text-purple-500" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M6 4l10 6-10 6V4z" />
+          </svg>
+        </button>
+        <div class="p-4 bg-gradient-to-t from-black/70 to-transparent text-white absolute bottom-0 w-full">
+          <h4 class="font-semibold">Sangam Gautam</h4>
+          <p class="text-sm">Georgian ILAC University ~ Canada</p>
+        </div>
+      </div>
+    </div>
       <!-- Video Modal -->
       <div id="videoModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.8); 
               z-index:9999; align-items:center; justify-content:center;">
@@ -432,7 +496,15 @@
       document.getElementById('videoFrame').src = '';
     }
   </script>
-
+  <style>
+    @media (max-width: 640px) {
+      #feedbacks .grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+      }
+    }
+  </style>
 
   <!-- [Unchanged content from previous] -->
   <!-- Scripts -->
