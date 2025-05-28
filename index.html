@@ -32,12 +32,10 @@
 
     body {
       font-family: Arial, sans-serif;
-      overflow-x: auto;
     }
 
 
-    html,
-    body {
+    html, body {
       max-width: 100%;
       overflow-x: hidden;
     }
@@ -68,6 +66,29 @@
 
       .navbar-toggler {
         display: block !important;
+      }
+
+      .hero .hero-content .row {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .hero .hero-content .col-lg-6 {
+        margin: 1rem 0;
+      }
+
+      .hero h1 {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+      }
+
+      .hero p {
+        font-size: 1rem;
+      }
+
+      .hero img {
+        margin: 0 auto;
+        max-width: 100%;
       }
     }
 
@@ -190,6 +211,9 @@
         <img src="Assets/Discovery_Logo-removebg-preview.png" alt="DISCOVERY" style="height: 60px; width: 60px;">
         <span class="ms-2 fw-bold h5 mb-0" style="color: #000; font-size: larger;"></span>
       </a>
+      <button class="navbar-toggler" onclick="toggleMenu()">
+        <i class="bi bi-list"></i>
+      </button>
       <ul class="nav align-items-center">
         <li class="nav-item"><a class="nav-link text-purple" href="#">Home</a></li>
         <li class="nav-item"><a class="nav-link text-dark" href="#about">About Us</a></li>
