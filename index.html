@@ -32,7 +32,52 @@
 
     body {
       font-family: Arial, sans-serif;
+      overflow-x: auto;
     }
+
+
+    html, body {
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+    }
+
+    @media (max-width: 992px) {
+      .nav {
+        display: none;
+        position: absolute;
+        top: 60px;
+        right: 20px;
+        background: #fff;
+        flex-direction: column;
+        width: 100%;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 1rem;
+        border-radius: 8px;
+        z-index: 999;
+      }
+
+      .nav.active {
+        display: flex;
+      }
+
+      .navbar-toggler {
+        display: block !important;
+      }
+    }
+
+    .navbar-toggler {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 2rem;
+      color: #333;
+    }
+
 
     a {
       text-decoration: none;
@@ -181,6 +226,11 @@
       </div>
     </div>
   </section>
+  <script>
+    function toggleMenu() {
+      document.querySelector('header .nav').classList.toggle('active');
+    }
+  </script>
 
   <!-- Why Choose Eduplan Section -->
   <section class="py-20 bg-gray-100">
