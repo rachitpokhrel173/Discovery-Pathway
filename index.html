@@ -24,305 +24,176 @@
   <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
   <link rel="stylesheet" href="mobileview.css">
  
-
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
   <style>
-    :root {
-      --purple: #7C4DFF;
-      --purple-dark: #633DCB;
-    }
-
-    body {
-      font-family: Arial, sans-serif;
-    }
-
-
-    html,
-    body {
-      max-width: 100%;
-      overflow-x: hidden;
-    }
-
-    .nav {
-      display: flex;
-      align-items: center;
-    }
-
-    @media (max-width: 992px) {
-      .nav {
-        display: none;
-        position: absolute;
-        top: 60px;
-        right: 20px;
-        background: #fff;
-        flex-direction: column;
-        width: 100%;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        padding: 1rem;
-        border-radius: 8px;
-        z-index: 999;
-      }
-
-      .nav.active {
-        display: flex;
-      }
-
-      .nav.active::before {
-        content: "✕";
-        font-size: 1.5rem;
-        color: #333;
-        align-self: flex-end;
-        margin-bottom: 1rem;
-        cursor: pointer;
-      }
-
-      .nav.active::before:hover {
-        color: #7C4DFF;
-      }
-
-      .hero {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        padding-top: 350px !important;
-        min-height: 100vh;
-      }
-
-
-      .hero .hero-content .row {
-        flex-direction: column;
-        text-align: center;
-      }
-
-      .hero .hero-content .col-lg-6 {
-        margin: 1rem 0;
-      }
-
-      .hero h1 {
-        font-size: 2rem;
-        margin-bottom: 1rem;
-      }
-
-      .hero p {
-        font-size: 1rem;
-      }
-
-      .hero img {
-        margin: 0 auto;
-        max-width: 90%;
-        transform: translate(-100px, -140px);
-      }
-    }
-
-    .navbar-toggler {
-      display: none;
-      background: none;
-      border: none;
-      font-size: 2rem;
-      color: #333;
-    }
-
-
-    a {
-      text-decoration: none;
-    }
-
-    .text-purple {
-      color: var(--purple) !important;
-    }
-
-    .btn-purple {
-      background-color: var(--purple);
-      color: #fff;
-      border: none;
-    }
-
-    .btn-purple:hover {
-      background-color: var(--purple-dark);
-    }
-
-    .btn-outline-custom {
-      border: 1px solid #000;
-      color: #000;
-      background: #fff;
-      transition: all 0.3s ease;
-    }
-
-    .btn-outline-custom:hover {
-      background-color: var(--purple);
-      color: #fff;
-      border-color: var(--purple);
-    }
-
-    header {
-      background: transparent;
-      position: absolute;
-      top: 0;
-      width: 100%;
-      z-index: 10;
-    }
-
-    .hero {
-      background: linear-gradient(135deg, #f5f5ff 0%, #fff5f5 100%);
-      position: relative;
-      overflow: hidden;
-      padding-top: 80px;
-    }
-
-    .hero .shapes img {
-      position: absolute;
-      z-index: 1;
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 2;
-    }
-
-    section {
-      padding: 60px 0;
-    }
-
-    .bg-purple {
-      background-color: var(--purple);
-    }
-
-    footer {
-      background-color: #222;
-      color: #aaa;
-    }
-
-    footer a {
-      color: #aaa;
-    }
-
-    footer a:hover {
-      color: #fff;
-    }
-
-    .service-box {
-      background: #fff;
-      border: 1px solid #ddd;
-      padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s ease;
-    }
-
-    .service-box:hover {
-      transform: translateY(-5px);
-    }
-
-    .service-box h5 {
-      font-weight: 600;
-    }
-
-    .service-box p {
-      color: #666;
-      font-size: 14px;
+    .fade-slide {
+      transition: opacity 1s ease-in-out;
     }
   </style>
 </head>
-
-<body>
+<body class="bg-gray-100 font-sans">
 
   <!-- Header -->
-  <header class="py-3">
-    <div class="container d-flex justify-content-between align-items-center">
-      <a href="#" class="d-flex align-items-center">
-        <img src="Assets/Discovery_Logo-removebg-preview.png" alt="DISCOVERY" style="height: 60px; width: 60px;">
-        <span class="ms-2 fw-bold h5 mb-0" style="color: #000; font-size: larger;"></span>
-      </a>
-      <button class="navbar-toggler" onclick="toggleMenu()">
-        <i class="bi bi-list"></i>
-      </button>
-      <ul class="nav align-items-center">
-        <li class="nav-item"><a class="nav-link text-purple" href="#">Home</a></li>
-        <li class="nav-item"><a class="nav-link text-dark" href="#About">About Us</a></li>
-        <li class="nav-item"><a class="nav-link text-dark" href="#carouselcountry">Country</a></li>
-        <li class="nav-item"><a class="nav-link text-dark" href="/Gallery.html">Gallary</a></li>
-        <li class="nav-item"><a class="nav-link text-dark" href="#contact">Contact Us</a></li>
-        <li class="nav-item ms-3">
-          <a href="#" class="btn btn-outline-custom rounded-pill px-4">Free Consultation</a>
-        </li>
+  <header class="bg-white shadow-md fixed w-full z-50">
+    <div class="max-w-7xl mx-auto px-4 flex justify-between items-center py-4">
+      <!-- Logo -->
+      <div class="flex items-center">
+        <img src="/Assets/Discovery_Logo_TP.jpg" alt="Logo" class="h-12">
+      </div>
+
+      <!-- Contact Info -->
+      <div class="hidden md:flex flex-col text-sm text-right text-gray-700 font-bold">
+        <span><i class="fas fa-map-marker-alt text-cyan-600 mr-1"></i> Banepa, Nepal</span>
+        <span><i class="fas fa-phone-alt text-cyan-600 mr-1"></i> +977 011 665659</span>
+      </div>
+
+      <!-- Social Icons -->
+      <div class="hidden md:flex space-x-3">
+        <a href="#" class="w-10 h-10 bg-[#3b5998] text-white flex items-center justify-center rounded">
+          <i class="fab fa-facebook-f"></i>
+        </a>
+        <a href="#" class="w-10 h-10 bg-[#00acee] text-white flex items-center justify-center rounded">
+          <i class="fab fa-tiktok"></i>
+        </a>
+        <a href="#" class="w-10 h-10 bg-[#E1306C] text-white flex items-center justify-center rounded">
+          <i class="fab fa-instagram"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="bg-[#0066b3] hidden md:block">
+      <ul class="flex flex-wrap justify-center space-x-6 text-white text-sm font-semibold uppercase py-3">
+        <li><a href="#" class="hover:text-[#46C3E0]">Home</a></li>
+        <li><a href="#" class="hover:text-[#46C3E0]">Discover Us</a></li>
+        <li><a href="#" class="hover:text-[#46C3E0]">Our Pride</a></li>
+        <li><a href="#" class="hover:text-[#46C3E0]">Scholarship</a></li>
+        <li><a href="#" class="hover:text-[#46C3E0]">Study Destination</a></li>
+        <li><a href="#" class="hover:text-[#46C3E0]">Test Prep</a></li>
+        <li><a href="#" class="hover:text-[#46C3E0]">Services</a></li>
+        <li><a href="#" class="hover:text-[#46C3E0]">Blog</a></li>
+        <li><a href="#" class="hover:text-[#46C3E0]">Contact</a></li>
       </ul>
-    </div>
+    </nav>
   </header>
-
-  <!-- Hero -->
-  <section class="hero vh-100 d-flex align-items-center">
-    <div class="shapes">
-
-      <img src="https://themeim.com/demo/eduplan/assets/img/header/plane.png" style="top:20%; right:20%; width:120px;">
+<style>.slide {
+      transition: opacity 1s ease-in-out;
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }</style>
+  <!--Hero Slider Section -->
+  <section class="relative w-full h-[102vh] pt-[136px] overflow-hidden">
+    <div class="absolute inset-0">
+      <img src="/Assets/All_Student.jpg" class="fade-slide absolute inset-0 w-full h-full object-cover opacity-100 z-10 slide" />
+      <img src="/Assets/Student3.jpg" class="fade-slide absolute inset-0 w-full h-full object-cover opacity-0 z-0 slide" />
+      <img src="https://images.unsplash.com/photo-1656077217715-bdaeb06bd01f?auto=format&fit=crop&w=1600&q=80" class="fade-slide absolute inset-0 w-full h-full object-cover opacity-0 z-0 slide" />
     </div>
-    <div class="container hero-content">
-      <div class="row align-items-center">
-        <div class="col-lg-6">
 
-          <h1 class="display-4 fw-bold mb-3">Your <span class="text-danger">success</span><br> journey start with <br>us
-            through the <br><span class="text-danger">Discovery Pathway</span>.
-          </h1>
-          <p class="text-muted mb-4">Discover how Discovery Pathway can make your international education dreams a
-            reality. We match you with top universities and colleges worldwide for the perfect fit.</p>
-          <a href="https://docs.google.com/forms/d/e/1FAIpQLSduSzIjxaAe7AYnc14b81RX7TY_Qe9OdGWhBLziR6gyXY5_6g/viewform?fbzx=860666784337482915&edit2=2_ABaOnueWGxh2iAWphF_9lT1t5osMK_9FFU8diG0fZ4Rj-YmRi_gYSFoO96EcqCgWEw" class="btn btn-purple btn-lg rounded-pill me-3 px-4" target="_blank">Apply Online</a>
-          <a href="/Mantainance.html" target="_blank" class="btn btn-outline-custom btn-lg rounded-pill px-4">Discover</a>
-        </div>
-        <div class="col-lg-6 text-center">
-          <img src="Assets/Student.png" alt="Student" class="img-fluid"
-            style="position:relative; z-index:2; margin-left: 150px;">
-        </div>
-      </div>
+    <!-- Overlay -->
+    <div class="absolute inset-0 bg-black/40 z-20"></div>
+
+    <!-- Slide Content -->
+    <div class="absolute z-30 w-full h-full flex flex-col justify-center items-center text-center text-white px-4">
+      <h1 class="text-4xl md:text-6xl font-extrabold drop-shadow-md">Welcome to Discovery</h1>
+      <p class="mt-4 text-lg md:text-xl font-light max-w-2xl">Explore the world of education, opportunity, and global success through our trusted consultancy.</p>
+      <a href="#" class="mt-6 px-6 py-3 bg-[#46C3E0] text-white font-semibold rounded-full shadow-lg hover:bg-[#2eb0cb] transition">Get Started</a>
     </div>
+
+    <!-- Arrows -->
+    <button id="prevSlide" class="absolute top-1/2 left-3 transform -translate-y-1/2 bg-white/50 text-white p-3 rounded-full z-30 hover:bg-cyan-500 hover:text-white transition duration-300">
+  <i class="fas fa-chevron-left"></i>
+</button>
+
+<button id="nextSlide" class="absolute top-1/2 right-3 transform -translate-y-1/2 bg-white/50 text-white p-3 rounded-full z-30 hover:bg-cyan-500 hover:text-white transition duration-300">
+  <i class="fas fa-chevron-right"></i>
+</button>
+
+
   </section>
 
-  <script>
-    function toggleMenu() {
-      document.querySelector('header .nav').classList.toggle('active');
-    }
-
-    function closeMenu(event) {
-      if (event.target.closest('.nav') && event.target.textContent === '✕') {
-        document.querySelector('header .nav').classList.remove('active');
-      }
-    }
-  </script>
-
-  <!-- Why Choose  Section -->
-  <section class="py-20 bg-gray-100">
+  <!-- Highlight Section -->
+  <section class="py-16 bg-white text-center">
     <div class="max-w-6xl mx-auto px-4">
-      <div class="text-center mb-16">
-        <p class="text-sm text-purple-600 font-semibold">OUR SERVICES</p>
-        <h2 class="text-4xl font-bold text-gray-900">Why Choose Discovery?</h2>
-      </div>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        <div class="bg-white p-8 rounded-xl shadow-lg text-center">
-          <img src="https://themeim.com/demo/eduplan/assets/img/icon/idea.png" alt="One Stop Study Solution"
-            class="mx-auto mb-4" />
-          <h3 class="text-xl font-semibold mb-2">One Stop Study Solution</h3>
-          <p class="text-gray-600 mb-4">Get a comprehensive overview of your study‑abroad journey—from budgeting and
-            university selection to application tracking. We simplify every step so you can focus on your goals.</p>
-          <a href="#" class="text-purple-600 font-medium hover:underline">Learn More</a>
+      <h2 class="text-3xl font-bold text-gray-800 mb-4">Why Choose Us?</h2>
+      <p class="text-gray-600 text-lg max-w-2xl mx-auto">We help you achieve your dream of studying abroad with our top-rated support system, global network, and expert guidance.</p>
+      <div class="mt-10 grid gap-6 md:grid-cols-3">
+        <div class="p-6 bg-gray-100 rounded-xl shadow hover:shadow-md transition">
+          <i class="fas fa-globe text-3xl text-cyan-600 mb-4"></i>
+          <h3 class="font-bold text-xl mb-2">Global Reach</h3>
+          <p class="text-gray-600">We partner with 50+ top universities across 10 countries, offering students global exposure, diverse programs, 
+            and a smooth pathway to international education success./p>
         </div>
-        <div class="bg-white p-8 rounded-xl shadow-lg text-center">
-          <img src="https://themeim.com/demo/eduplan/assets/img/icon/coversation.png" alt="One To One Discussion"
-            class="mx-auto mb-4" />
-          <h3 class="text-xl font-semibold mb-2">One To One Discussion</h3>
-          <p class="text-gray-600 mb-4">Engage directly with our expert advisors in personalized sessions. Get your
-            questions answered, explore options, and build a clear roadmap tailored to your aspirations.</p>
-          <a href="#" class="text-purple-600 font-medium hover:underline">Learn More</a>
+        <div class="p-6 bg-gray-100 rounded-xl shadow hover:shadow-md transition">
+          <i class="fas fa-user-graduate text-3xl text-cyan-600 mb-4"></i>
+          <h3 class="font-bold text-xl mb-2">Student-Centered</h3>
+          <p class="text-gray-600">We focus on your academic and career goals, providing personalized guidance, resources, and global opportunities
+             to help you succeed at every step of your journey.</p>
         </div>
-        <div class="bg-white p-8 rounded-xl shadow-lg text-center">
-          <img src="https://themeim.com/demo/eduplan/assets/img/icon/emergency.png" alt="End To End Support"
-            class="mx-auto mb-4" />
-          <h3 class="text-xl font-semibold mb-2">End To End Support</h3>
-          <p class="text-gray-600 mb-4">From initial consultation to visa approval and beyond, we’re with you at every
-            step—handling paperwork, liaising with universities, and ensuring a smooth transition to life abroad.</p>
-          <a href="#" class="text-purple-600 font-medium hover:underline">Learn More</a>
+        <div class="p-6 bg-gray-100 rounded-xl shadow hover:shadow-md transition">
+          <i class="fas fa-hands-helping text-3xl text-cyan-600 mb-4"></i>
+          <h3 class="font-bold text-xl mb-2">Trusted Support</h3>
+          <p class="text-gray-600">Get 24/7 expert consultancy support and personalized guidance to help you make informed decisions and confidently 
+            navigate your academic and career journey.</p>
         </div>
       </div>
     </div>
   </section>
+
+  <!-- Slider Section -->
+ <script>
+  const slides = document.querySelectorAll('.slide');
+  let currentSlide = 0;
+  let slideInterval;
+
+  function showSlide(index) {
+    slides.forEach((slide, i) => {
+      slide.style.opacity = i === index ? '1' : '0';
+      slide.style.zIndex = i === index ? '10' : '0';
+    });
+  }
+
+  function nextSlide() {
+    currentSlide = (currentSlide + 1) % slides.length;
+    showSlide(currentSlide);
+  }
+
+  function prevSlide() {
+    currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+    showSlide(currentSlide);
+  }
+
+  function startSlider() {
+    slideInterval = setInterval(nextSlide, 5000); // Change every 5 seconds
+  }
+
+  function resetSlider() {
+    clearInterval(slideInterval);
+    startSlider();
+  }
+
+  document.getElementById('nextSlide').addEventListener('click', () => {
+    nextSlide();
+    resetSlider();
+  });
+
+  document.getElementById('prevSlide').addEventListener('click', () => {
+    prevSlide();
+    resetSlider();
+  });
+
+  showSlide(currentSlide);
+  startSlider();
+</script>
+
+
+
+
+
+
 
   <!-- Testimonials Section-->
   <section id="feedbacks" class="py-20 bg-gradient-to-b from-purple-50 to-white">
@@ -580,14 +451,18 @@
         </div>
       </div>
 
-      <a href="/Mantainance.html" target="_blank"
-        class="inline-block mt-4 bg-purple-600 text-white px-6 py-3 rounded-full shadow hover:bg-purple-700 transition">Get
-        Free Consultation</a>
+      <a href="tel:+977011665659"
+   class="inline-block mt-4 bg-purple-600 text-white px-6 py-3 rounded-full shadow hover:bg-purple-700 transition">
+   Get Free Consultation
+</a>
+
     </div>
 
     <div class="w-full lg:w-1/2 relative text-center">
       <div class="relative">
         <img src="/Assets/All_Student.jpg" alt="About Image" class="rounded-xl shadow-lg w-full max-w-sm mx-auto">
+        <img src="/Assets/Photo_STudent.png" alt="About Image" class="rounded-xl shadow-lg w-full max-w-sm mx-auto">
+        <img src="/Assets/student2.jpg" alt="About Image" class="rounded-xl shadow-lg w-full max-w-sm mx-auto">
         <div class="absolute -top-5 -left-5 w-12 h-12 bg-purple-500 rounded-full"></div>
         <div class="absolute top-6 right-6 w-24 h-6 bg-red-500 rounded-full"></div>
         <div class="absolute -bottom-6 -right-6 w-24 h-24 bg-purple-600 clip-triangle"></div>
@@ -606,7 +481,26 @@
       }
     }
   </style>
+<style>.message-button {
+  font-size: 1.25rem;
+  padding: 5px 25px;
+  color: #030728;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  background: #fff;
+  border: 1px solid transparent;
+  transition: 0.2s ease;
+}
 
+.message-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid #fff;
+  background-color: black;
+  color: white;
+}
+
+</style>
   <!-- Team Section -->
   <section class="teams" id="teams">
     <div class="max-width">
@@ -616,7 +510,9 @@
           <div class="box">
             <img src="/Assets/Amit_Neupane.jpg" alt="">
             <div class="text"><a href="https://www.facebook.com/amit.neupane.75" target="_blank">Amit Neupane</a></div>
-            <p>CEO</p>
+            <p style="font-weight: bolder;">CEO</p>
+            <br>
+          <a href="https://wa.me/9779861281539" target="_blank" style="text-decoration: none;" class="message-button">Message</a>
           </div>
         </div>
         <div class="card" style="color: #fff;">
@@ -624,7 +520,9 @@
             <img src="/Assets/Suman Kumar Gautam.jpg" alt="">
             <div class="text"><a href="https://www.facebook.com/suman.gautam.96742" target="_blank">Suman Kumar
                 Gautam</a></div>
-            <p>Managing Director</p>
+            <p style="font-weight: bolder;">Managing Director</p>
+             <br>
+          <a href="https://wa.me/9779851223025" target="_blank" style="text-decoration: none;" class="message-button">Message</a>
           </div>
         </div>
         <div class="card" style="color: #fff;">
@@ -632,7 +530,9 @@
             <img src="/Assets/Reewaz Adhikari.jpg" alt="">
             <div class="text"><a href="https://www.facebook.com/reewaz.adhikari.2025" target="_blank">Reewaz
                 Adhikari</a></div>
-            <p>Korea Manager</p>
+            <p style="font-weight: bolder;">Korea Manager</p>
+             <br>
+          <a href="https://wa.me/9779851345539" target="_blank" style="text-decoration: none;" class="message-button">Message</a>
           </div>
         </div>
         <div class="card" style="color: #fff;">
@@ -640,7 +540,9 @@
             <img src="/Assets/Nirmal.jpg" alt="">
             <div class="text"><a href="https://www.facebook.com/unesh.chaulagain.5" target="_blank">Nirmal
                 Chaulagain</a></div>
-            <p>Manager</p>
+            <p style="font-weight: bolder;">Manager</p>
+             <br>
+          <a href="https://wa.me/9779840850077" target="_blank" style="text-decoration: none;" class="message-button">Message</a>
           </div>
         </div>
         <div class="card" style="color: #fff;">
@@ -648,7 +550,9 @@
             <img src="/Assets/Sangita_Rayamajhi.jpg" alt="">
             <div class="text"><a href=https://www.facebook.com/sangita.rayamajhi.16" target="_blank">Sangita
                 Rayamajhi</a></div>
-            <p>IELTS Instructor</p>
+            <p style="font-weight: bolder;">IELTS Instructor</p>
+             <br>
+          <a href="https://wa.me/9779849786870" target="_blank" style="text-decoration: none;" class="message-button">Message</a>
           </div>
         </div>
       </div>
@@ -1978,4 +1882,6 @@ backButton.onclick = function(){
 
 </body>
 
+</html>
+</body>
 </html>
