@@ -50,13 +50,13 @@
 
       <!-- Social Icons -->
       <div class="hidden md:flex space-x-3">
-        <a href="#" class="w-10 h-10 bg-[#3b5998] text-white flex items-center justify-center rounded">
+        <a href="https://www.facebook.com/discoveryconsultancybanepa" target="_blank" class="w-10 h-10 bg-[#3b5998] text-white flex items-center justify-center rounded">
           <i class="fab fa-facebook-f"></i>
         </a>
-        <a href="#" class="w-10 h-10 bg-[#00acee] text-white flex items-center justify-center rounded">
+        <a href="https://www.tiktok.com/@discoverybanepa" target="_blank" class="w-10 h-10 bg-[#00acee] text-white flex items-center justify-center rounded">
           <i class="fab fa-tiktok"></i>
         </a>
-        <a href="#" class="w-10 h-10 bg-[#E1306C] text-white flex items-center justify-center rounded">
+        <a href="https://www.instagram.com/discovery.pathway/" target="_blank" class="w-10 h-10 bg-[#E1306C] text-white flex items-center justify-center rounded">
           <i class="fab fa-instagram"></i>
         </a>
       </div>
@@ -68,7 +68,7 @@
         <li><a href="#" class="hover:text-[#46C3E0]">Home</a></li>
         <li><a href="#" class="hover:text-[#46C3E0]">Discover Us</a></li>
         <li><a href="#" class="hover:text-[#46C3E0]">Our Pride</a></li>
-        <li><a href="#" class="hover:text-[#46C3E0]">Scholarship</a></li>
+        <li><a href="#" class="hover:text-[#46C3E0]">Scholarships</a></li>
         <li><a href="#" class="hover:text-[#46C3E0]">Study Destination</a></li>
         <li><a href="#" class="hover:text-[#46C3E0]">Test Prep</a></li>
         <li><a href="#" class="hover:text-[#46C3E0]">Services</a></li>
@@ -77,43 +77,315 @@
       </ul>
     </nav>
   </header>
-<style>.slide {
+<style>
+.slide {
       transition: opacity 1s ease-in-out;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+    }</style>
+  <!--Hero Slider Section -->
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: sans-serif;
+    }
+
+    section.slider {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .slide {
       position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
-    }</style>
-  <!--Hero Slider Section -->
-  <section class="relative w-full h-[102vh] pt-[136px] overflow-hidden">
-    <div class="absolute inset-0">
-      <img src="/Assets/All_Student.jpg" class="fade-slide absolute inset-0 w-full h-full object-cover opacity-100 z-10 slide" />
-      <img src="/Assets/Student3.jpg" class="fade-slide absolute inset-0 w-full h-full object-cover opacity-0 z-0 slide" />
-      <img src="https://images.unsplash.com/photo-1656077217715-bdaeb06bd01f?auto=format&fit=crop&w=1600&q=80" class="fade-slide absolute inset-0 w-full h-full object-cover opacity-0 z-0 slide" />
-    </div>
+      opacity: 0;
+      transition: opacity 1s ease;
+      z-index: 0;
+    }
 
-    <!-- Overlay -->
-    <div class="absolute inset-0 bg-black/40 z-20"></div>
+    .slide.active {
+      opacity: 1;
+      z-index: 1;
+    }
 
-    <!-- Slide Content -->
+    .overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.4);
+      z-index: 2;
+    }
+
+    .slide-content {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .slide-content h1 {
+      font-size: 3rem;
+    }
+
+    .slide-content p {
+      font-size: 1.2rem;
+      margin-top: 1rem;
+      max-width: 600px;
+    }
+
+    #prevSlide, #nextSlide {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 4;
+      background: rgba(255, 255, 255, 0.5);
+      border: none;
+      font-size: 2rem;
+      padding: 10px 15px;
+      cursor: pointer;
+      border-radius: 50%;
+      color: white;
+      transition: background 0.3s;
+    }
+
+    #prevSlide:hover, #nextSlide:hover {
+      background: #06b6d4;
+    }
+
+    #prevSlide { left: 20px; }
+    #nextSlide { right: 20px; }
+  </style>
+</head>
+<body>
+
+<section class="slider">
+  <!-- Slides -->
+  <img src="/Assets/All_Student.jpg" class="slide active">
+  <img src="/Assets/Student 2.png" class="slide">
+  <img src="/Assets/Student3.jpg" class="slide">
+  <img src="/Assets/student4.jpg" class="slide">
+
+  <!-- Overlay -->
+  <div class="overlay"></div>
+
+  <!-- Slide Content -->
+  <div class="slide-content">
     <div class="absolute z-30 w-full h-full flex flex-col justify-center items-center text-center text-white px-4">
-      <h1 class="text-4xl md:text-6xl font-extrabold drop-shadow-md">Welcome to Discovery</h1>
-      <p class="mt-4 text-lg md:text-xl font-light max-w-2xl">Explore the world of education, opportunity, and global success through our trusted consultancy.</p>
-      <a href="#" class="mt-6 px-6 py-3 bg-[#46C3E0] text-white font-semibold rounded-full shadow-lg hover:bg-[#2eb0cb] transition">Get Started</a>
+      <h1 style="font-weight: bolder;" class="text-4xl md:text-6xl font-extrabold drop-shadow-md">Welcome to Discovery</h1>
+  <p style="font-weight: bolder;" class="mt-4 text-lg md:text-xl font-light max-w-2xl">Explore the world of education, opportunity, and global success through our trusted consultancy.</p>
+<br>
+  <style>
+    /* Button Styling */
+    #applyBtn {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    /* Popup Background */
+    .popup {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+    }
+
+    /* Popup Content */
+    .popup-content {
+      background-color: #fff;
+      margin: 5% auto;
+      padding: 0;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 800px;
+      position: relative;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+
+    /* Close Button */
+    .popup-content .close {
+      color: #000;
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    /* Responsive iframe */
+    .popup-content iframe {
+      width: 100%;
+      height: 600px;
+      border: none;
+      border-radius: 0 0 10px 10px;
+    }
+  </style>
+
+  <!-- Apply Online Button -->
+  <button id="applyBtn">Apply Online</button>
+
+  <!-- Popup Modal -->
+  <div id="formPopup" class="popup">
+    <div class="popup-content">
+      <span class="close">&times;</span>
+      <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSduSzIjxaAe7AYnc14b81RX7TY_Qe9OdGWhBLziR6gyXY5_6g/viewform?embedded=true">Loading…</iframe>
     </div>
+  </div>
 
-    <!-- Arrows -->
-    <button id="prevSlide" class="absolute top-1/2 left-3 transform -translate-y-1/2 bg-white/50 text-white p-3 rounded-full z-30 hover:bg-cyan-500 hover:text-white transition duration-300">
-  <i class="fas fa-chevron-left"></i>
-</button>
+  <!-- JavaScript -->
+  <script>
+    const applyBtn = document.getElementById("applyBtn");
+    const popup = document.getElementById("formPopup");
+    const closeBtn = document.querySelector(".popup .close");
 
-<button id="nextSlide" class="absolute top-1/2 right-3 transform -translate-y-1/2 bg-white/50 text-white p-3 rounded-full z-30 hover:bg-cyan-500 hover:text-white transition duration-300">
-  <i class="fas fa-chevron-right"></i>
-</button>
+    applyBtn.onclick = () => popup.style.display = "block";
+    closeBtn.onclick = () => popup.style.display = "none";
+    window.onclick = (event) => {
+      if (event.target === popup) {
+        popup.style.display = "none";
+      }
+    };
+  </script>
+
+  </div>
+
+  <!-- Arrows -->
+  <button id="prevSlide"><i class="fdas fa-chevron-left"></i></button>
+  <button id="nextSlide"><i class="fas fda-chevron-right"></i></button>
+</section>
+
+<!-- JS -->
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const nextBtn = document.getElementById('nextSlide');
+  const prevBtn = document.getElementById('prevSlide');
+
+  let current = 0;
+
+  function showSlide(index) {
+    slides.forEach((slide, i) => {
+      slide.classList.remove('active');
+    });
+    slides[index].classList.add('active');
+  }
+
+  function nextSlide() {
+    current = (current + 1) % slides.length;
+    showSlide(current);
+  }
+
+  function prevSlide() {
+    current = (current - 1 + slides.length) % slides.length;
+    showSlide(current);
+  }
+
+  nextBtn.addEventListener('click', nextSlide);
+  prevBtn.addEventListener('click', prevSlide);
+
+  // Auto slide every 5 seconds
+  setInterval(nextSlide, 5000);
+</script>
 
 
-  </section>
+<style>   
+/* Button Styling */
+#applyBtn {
+  padding: 12px 28px;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: #007BFF;
+  color: white;
+  border: 2px solid #007BFF;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#applyBtn:hover {
+  background-color: transparent;
+  color: #ffffff;
+  border: 2px solid #007BFF;
+}
+
+
+
+    /* Popup Background */
+    .popup {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+    }
+
+    /* Popup Content */
+    .popup-content {
+      background-color: #fff;
+      margin: 150px auto 5% auto;
+      padding: 0;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 800px;
+      position: relative;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+    /* Close Button */
+    .popup-content .close {
+      color: #000;
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    /* Responsive iframe */
+    .popup-content iframe {
+      width: 100%;
+      height: 600px;
+      border: none;
+      border-radius: 0 0 10px 10px;
+    }</style>
+
+
+
+
+
+
+
+
 
   <!-- Highlight Section -->
   <section class="py-16 bg-white text-center">
@@ -125,7 +397,7 @@
           <i class="fas fa-globe text-3xl text-cyan-600 mb-4"></i>
           <h3 class="font-bold text-xl mb-2">Global Reach</h3>
           <p class="text-gray-600">We partner with 50+ top universities across 10 countries, offering students global exposure, diverse programs, 
-            and a smooth pathway to international education success./p>
+            and a smooth pathway to international education success.</p>
         </div>
         <div class="p-6 bg-gray-100 rounded-xl shadow hover:shadow-md transition">
           <i class="fas fa-user-graduate text-3xl text-cyan-600 mb-4"></i>
@@ -144,50 +416,61 @@
   </section>
 
   <!-- Slider Section -->
- <script>
-  const slides = document.querySelectorAll('.slide');
-  let currentSlide = 0;
-  let slideInterval;
+   <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const slides = document.querySelectorAll('.fslider');
+    const nextBtn = document.getElementById('nextSlide');
+    const prevBtn = document.getElementById('prevSlide');
 
-  function showSlide(index) {
-    slides.forEach((slide, i) => {
-      slide.style.opacity = i === index ? '1' : '0';
-      slide.style.zIndex = i === index ? '10' : '0';
+    if (!slides.length || !nextBtn || !prevBtn) {
+      console.error("Slider elements not found!");
+      return;
+    }
+
+    let current = 0;
+    let interval;
+
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.style.opacity = i === index ? '1' : '0';
+        slide.style.zIndex = i === index ? '10' : '0';
+      });
+    }
+
+    function nextSlide() {
+      current = (current + 1) % slides.length;
+      showSlide(current);
+    }
+
+    function prevSlide() {
+      current = (current - 1 + slides.length) % slides.length;
+      showSlide(current);
+    }
+
+    function startAutoSlide() {
+      interval = setInterval(nextSlide, 5000);
+    }
+
+    function resetAutoSlide() {
+      clearInterval(interval);
+      startAutoSlide();
+    }
+
+    nextBtn.addEventListener('click', () => {
+      nextSlide();
+      resetAutoSlide();
     });
-  }
 
-  function nextSlide() {
-    currentSlide = (currentSlide + 1) % slides.length;
-    showSlide(currentSlide);
-  }
+    prevBtn.addEventListener('click', () => {
+      prevSlide();
+      resetAutoSlide();
+    });
 
-  function prevSlide() {
-    currentSlide = (currentSlide - 1 + slides.length) % slides.length;
-    showSlide(currentSlide);
-  }
-
-  function startSlider() {
-    slideInterval = setInterval(nextSlide, 5000); // Change every 5 seconds
-  }
-
-  function resetSlider() {
-    clearInterval(slideInterval);
-    startSlider();
-  }
-
-  document.getElementById('nextSlide').addEventListener('click', () => {
-    nextSlide();
-    resetSlider();
+    showSlide(current);
+    startAutoSlide();
   });
-
-  document.getElementById('prevSlide').addEventListener('click', () => {
-    prevSlide();
-    resetSlider();
-  });
-
-  showSlide(currentSlide);
-  startSlider();
 </script>
+
 
 
 
@@ -772,7 +1055,7 @@
   <div class="carouselcountry">
         <div class="list">
             <div class="item">
-                <img src="Assets/Country/USA2.jpg">
+                <img src="Assets/USA2.jpg">
                 <div class="introduce">
                     <div class="titlee">Study in</div>
                     <div class="topic">USA</div>
@@ -807,7 +1090,7 @@
             </div>
 
             <div class="item">
-                <img src="Assets/Country/Australia.png">
+                <img src="Assets/Australia.png">
                 <div class="introduce">
                     <div class="titlee">Study in</div>
                     <div class="topic">Australia</div>
@@ -864,7 +1147,7 @@
             </div>
 
             <div class="item">
-                <img src="Assets/Country/korea.jpg">
+                <img src="Assets/korea.jpg">
                 <div class="introduce">
                     <div class="titlee">Study in</div>
                     <div class="topic">South Korea</div>
@@ -910,7 +1193,7 @@
             </div>
 
             <div class="item">
-                <img src="Assets/Country/japan.jpg">
+                <img src="Assets/japan.jpg">
                 <div class="introduce">
                     <div class="titlee">Study in</div>
                     <div class="topic">Japan</div>
@@ -955,7 +1238,7 @@
             </div>
 
             <div class="item">
-                <img src="/Assets/Country/Uk.jpg">
+                <img src="/Assets/Uk.jpg">
                 <div class="introduce">
                     <div class="titlee">Study in</div>
                     <div class="topic">United Kingdom</div>
@@ -1001,7 +1284,7 @@
             </div>
 
             <div class="item">
-                <img src="/Assets/Country/canada.jpg">
+                <img src="/Assets/Canada.jpg">
                 <div class="introduce">
                     <div class="titlee">Study in</div>
                     <div class="topic">Canada</div>
@@ -1818,6 +2101,8 @@ backButton.onclick = function(){
 
 
 
+
+
   <!-- Contact Section -->
   <section id="contact">
     <div class="container">
@@ -1879,6 +2164,7 @@ backButton.onclick = function(){
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
   <script src="script.js"></script>
+
 
 </body>
 
