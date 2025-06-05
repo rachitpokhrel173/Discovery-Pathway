@@ -33,150 +33,105 @@
   </style>
 </head>
 <body class="bg-gray-100 font-sans">
-
-  <!-- Header -->
-  <header class="bg-white shadow-md fixed w-full z-50">
-    <div class="max-w-7xl mx-auto px-4 flex justify-between items-center py-4">
-      <!-- Logo -->
-      <div class="flex items-center">
-        <img src="/Assets/Discovery_Logo_TP.jpg" alt="Logo" class="h-12">
-      </div>
-
-      <!-- Contact Info -->
-      <div class="hidden md:flex flex-col text-sm text-right text-gray-700 font-bold">
-        <span><i class="fas fa-map-marker-alt text-cyan-600 mr-1"></i> Banepa, Nepal</span>
-        <span><i class="fas fa-phone-alt text-cyan-600 mr-1"></i> +977 011 665659</span>
-      </div>
-
-      <!-- Social Icons -->
-      <div class="hidden md:flex space-x-3">
-        <a href="https://www.facebook.com/discoveryconsultancybanepa" target="_blank" class="w-10 h-10 bg-[#3b5998] text-white flex items-center justify-center rounded">
-          <i class="fab fa-facebook-f"></i>
-        </a>
-        <a href="https://www.tiktok.com/@discoverybanepa" target="_blank" class="w-10 h-10 bg-[#00acee] text-white flex items-center justify-center rounded">
-          <i class="fab fa-tiktok"></i>
-        </a>
-        <a href="https://www.instagram.com/discovery.pathway/" target="_blank" class="w-10 h-10 bg-[#E1306C] text-white flex items-center justify-center rounded">
-          <i class="fab fa-instagram"></i>
-        </a>
-      </div>
+<!-- HEADER -->
+<!-- Header -->
+<!-- Header -->
+<header id="mainHeader" class="bg-white shadow-md fixed w-full z-50 transition-transform duration-300">
+  <div class="max-w-7xl mx-auto px-4 flex justify-between items-center py-2 md:py-3">
+    <!-- Logo -->
+    <div class="flex items-center">
+      <img src="/Assets/Discovery_Logo_TP.jpg" alt="Logo" class="h-10 md:h-12">
     </div>
 
-    <!-- Navigation -->
-    <nav class="bg-[#0066b3] hidden md:block">
-      <ul class="flex flex-wrap justify-center space-x-6 text-white text-sm font-semibold uppercase py-3">
-        <li><a href="#" class="hover:text-[#46C3E0]">Home</a></li>
-        <li><a href="#" class="hover:text-[#46C3E0]">Discover Us</a></li>
-        <li><a href="#" class="hover:text-[#46C3E0]">Our Pride</a></li>
-        <li><a href="#" class="hover:text-[#46C3E0]">Scholarships</a></li>
-        <li><a href="#" class="hover:text-[#46C3E0]">Study Destination</a></li>
-        <li><a href="#" class="hover:text-[#46C3E0]">Test Prep</a></li>
-        <li><a href="#" class="hover:text-[#46C3E0]">Services</a></li>
-        <li><a href="#" class="hover:text-[#46C3E0]">Blog</a></li>
-        <li><a href="#" class="hover:text-[#46C3E0]">Contact</a></li>
-      </ul>
-    </nav>
-  </header>
-<style>
-.slide {
-      transition: opacity 1s ease-in-out;
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-    }</style>
-  <!--Hero Slider Section -->
+    <!-- Hamburger (Mobile) -->
+    <div class="md:hidden">
+      <button id="hamburgerBtn" class="text-3xl focus:outline-none">&#9776;</button>
+    </div>
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    <!-- Contact Info (Desktop) -->
+    <div class="hidden md:flex flex-col text-xs text-right text-gray-700 font-semibold">
+      <span><i class="fas fa-map-marker-alt text-cyan-600 mr-1"></i> Banepa, Nepal</span>
+      <span><i class="fas fa-phone-alt text-cyan-600 mr-1"></i> +977 011 665659</span>
+    </div>
+
+    <!-- Social Icons (Desktop) -->
+    <div class="hidden md:flex space-x-2">
+      <a href="https://www.facebook.com/discoveryconsultancybanepa" target="_blank" class="w-8 h-8 bg-[#3b5998] text-white flex items-center justify-center rounded">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+      <a href="https://www.tiktok.com/@discoverybanepa" target="_blank" class="w-8 h-8 bg-[#00acee] text-white flex items-center justify-center rounded">
+        <i class="fab fa-tiktok"></i>
+      </a>
+      <a href="https://www.instagram.com/discovery.pathway/" target="_blank" class="w-8 h-8 bg-[#E1306C] text-white flex items-center justify-center rounded">
+        <i class="fab fa-instagram"></i>
+      </a>
+    </div>
+  </div>
+
+  <!-- Desktop Navigation -->
+  <nav class="bg-[#0066b3] hidden md:block">
+    <ul class="flex flex-wrap justify-center space-x-6 text-white text-sm font-semibold uppercase py-2">
+      <li><a href="#" class="hover:text-[#46C3E0]">Home</a></li>
+      <li><a href="#" class="hover:text-[#46C3E0]">Discover Us</a></li>
+      <li><a href="#" class="hover:text-[#46C3E0]">Our Pride</a></li>
+      <li><a href="#" class="hover:text-[#46C3E0]">Scholarships</a></li>
+      <li><a href="#" class="hover:text-[#46C3E0]">Study Destination</a></li>
+      <li><a href="#" class="hover:text-[#46C3E0]">Test Prep</a></li>
+      <li><a href="#" class="hover:text-[#46C3E0]">Services</a></li>
+      <li><a href="#" class="hover:text-[#46C3E0]">Blog</a></li>
+      <li><a href="#contact" class="hover:text-[#46C3E0]">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div id="mobileMenu" class="md:hidden hidden bg-[#0066b3] text-white text-sm font-semibold uppercase px-4 pb-4">
+    <ul class="space-y-2 pt-2">
+      <li><a href="#" class="block py-1 border-b border-white">Home</a></li>
+      <li><a href="#" class="block py-1 border-b border-white">Discover Us</a></li>
+      <li><a href="#" class="block py-1 border-b border-white">Our Pride</a></li>
+      <li><a href="#" class="block py-1 border-b border-white">Scholarships</a></li>
+      <li><a href="#" class="block py-1 border-b border-white">Study Destination</a></li>
+      <li><a href="#" class="block py-1 border-b border-white">Test Prep</a></li>
+      <li><a href="#" class="block py-1 border-b border-white">Services</a></li>
+      <li><a href="#" class="block py-1 border-b border-white">Blog</a></li>
+      <li><a href="#contact" class="block py-1 border-b border-white">Contact</a></li>
+    </ul>
+  </div>
+</header>
+
+<!-- JavaScript for Header -->
+ <script>
+  // Mobile hamburger toggle
+const hamburgerBtn = document.getElementById("hamburgerBtn");
+const mobileMenu = document.getElementById("mobileMenu");
+
+hamburgerBtn.addEventListener("click", () => {
+  mobileMenu.classList.toggle("hidden");
+});
+
+</script>
+
+<script>
+  let lastScrollTop = 0;
+  const header = document.getElementById("mainHeader");
+
+  window.addEventListener("scroll", function () {
+    const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+
+    if (currentScroll > lastScrollTop) {
+      // Scrolling down
+      header.style.transform = "translateY(-100%)";
+    } else {
+      // Scrolling up
+      header.style.transform = "translateY(0)";
     }
 
-    body {
-      font-family: sans-serif;
-    }
+    lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+  }, false);
+</script>
 
-    section.slider {
-      position: relative;
-      width: 100%;
-      height: 100vh;
-      overflow: hidden;
-    }
 
-    .slide {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      opacity: 0;
-      transition: opacity 1s ease;
-      z-index: 0;
-    }
-
-    .slide.active {
-      opacity: 1;
-      z-index: 1;
-    }
-
-    .overlay {
-      position: absolute;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.4);
-      z-index: 2;
-    }
-
-    .slide-content {
-      position: absolute;
-      inset: 0;
-      z-index: 3;
-      color: white;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 20px;
-    }
-
-    .slide-content h1 {
-      font-size: 3rem;
-    }
-
-    .slide-content p {
-      font-size: 1.2rem;
-      margin-top: 1rem;
-      max-width: 600px;
-    }
-
-    #prevSlide, #nextSlide {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      z-index: 4;
-      background: rgba(255, 255, 255, 0.5);
-      border: none;
-      font-size: 2rem;
-      padding: 10px 15px;
-      cursor: pointer;
-      border-radius: 50%;
-      color: white;
-      transition: background 0.3s;
-    }
-
-    #prevSlide:hover, #nextSlide:hover {
-      background: #06b6d4;
-    }
-
-    #prevSlide { left: 20px; }
-    #nextSlide { right: 20px; }
-  </style>
-</head>
-<body>
-
+<!-- HERO SECTION -->
 <section class="slider">
   <!-- Slides -->
   <img src="/Assets/All_Student.jpg" class="slide active">
@@ -189,111 +144,181 @@
 
   <!-- Slide Content -->
   <div class="slide-content">
-    <div class="absolute z-30 w-full h-full flex flex-col justify-center items-center text-center text-white px-4">
-      <h1 style="font-weight: bolder;" class="text-4xl md:text-6xl font-extrabold drop-shadow-md">Welcome to Discovery</h1>
-  <p style="font-weight: bolder;" class="mt-4 text-lg md:text-xl font-light max-w-2xl">Explore the world of education, opportunity, and global success through our trusted consultancy.</p>
-<br>
-  <style>
-    /* Button Styling */
-    #applyBtn {
-      padding: 10px 20px;
-      font-size: 16px;
-      background-color: #007BFF;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    /* Popup Background */
-    .popup {
-      display: none;
-      position: fixed;
-      z-index: 999;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.7);
-    }
-
-    /* Popup Content */
-    .popup-content {
-      background-color: #fff;
-      margin: 5% auto;
-      padding: 0;
-      border-radius: 10px;
-      width: 90%;
-      max-width: 800px;
-      position: relative;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    }
-
-    /* Close Button */
-    .popup-content .close {
-      color: #000;
-      position: absolute;
-      top: 10px;
-      right: 20px;
-      font-size: 28px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    /* Responsive iframe */
-    .popup-content iframe {
-      width: 100%;
-      height: 600px;
-      border: none;
-      border-radius: 0 0 10px 10px;
-    }
-  </style>
-
-  <!-- Apply Online Button -->
-  <button id="applyBtn">Apply Online</button>
-
-  <!-- Popup Modal -->
-  <div id="formPopup" class="popup">
-    <div class="popup-content">
-      <span class="close">&times;</span>
-      <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSduSzIjxaAe7AYnc14b81RX7TY_Qe9OdGWhBLziR6gyXY5_6g/viewform?embedded=true">Loading…</iframe>
-    </div>
+    <h1 class="text-4xl md:text-6xl font-extrabold drop-shadow-lg">Welcome to Discovery</h1>
+    <p class="mt-4 text-lg md:text-xl max-w-2xl font-light">Explore the world of education, opportunity, and global success through our trusted consultancy.</p>
+    <button id="applyBtn" class="mt-6">Apply Online</button>
   </div>
-
-  <!-- JavaScript -->
-  <script>
-    const applyBtn = document.getElementById("applyBtn");
-    const popup = document.getElementById("formPopup");
-    const closeBtn = document.querySelector(".popup .close");
-
-    applyBtn.onclick = () => popup.style.display = "block";
-    closeBtn.onclick = () => popup.style.display = "none";
-    window.onclick = (event) => {
-      if (event.target === popup) {
-        popup.style.display = "none";
-      }
-    };
-  </script>
-
-  </div>
-
-  <!-- Arrows -->
-  <button id="prevSlide"><i class="fdas fa-chevron-left"></i></button>
-  <button id="nextSlide"><i class="fas fda-chevron-right"></i></button>
 </section>
+
+<!-- POPUP -->
+<div id="formPopup" class="popup">
+  <div class="popup-content">
+    <span class="close">&times;</span>
+    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSduSzIjxaAe7AYnc14b81RX7TY_Qe9OdGWhBLziR6gyXY5_6g/viewform?embedded=true">Loading…</iframe>
+  </div>
+</div>
+
+<!-- CSS -->
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  section.slider {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    z-index: 0;
+  }
+
+  .slide.active {
+    opacity: 1;
+    z-index: 1;
+  }
+
+  .overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 2;
+  }
+
+  .slide-content {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+  }
+
+  #applyBtn {
+    padding: 12px 28px;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #007BFF;
+    color: white;
+    border: 2px solid #007BFF;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  section.slider {
+  position: relative;
+  width: 100%;
+  height: 100vh; /* Full height for desktop */
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  section.slider {
+    height: 70vh; /* Reduce height for mobile */
+  }
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+  z-index: 0;
+}
+
+.slide.active {
+  opacity: 1;
+  z-index: 1;
+}
+.slide-content h1 {
+  font-size: 2rem;
+}
+
+.slide-content p {
+  font-size: 1rem;
+}
+
+@media (min-width: 768px) {
+  .slide-content h1 {
+    font-size: 3rem;
+  }
+
+  .slide-content p {
+    font-size: 1.25rem;
+  }
+}
+
+  #applyBtn:hover {
+    background-color: transparent;
+    color: #ffffff;
+    border: 2px solid #ffffff;
+  }
+
+  .popup {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+  }
+
+  .popup-content {
+    background-color: #fff;
+    margin: 5% auto;
+    padding: 0;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 800px;
+    position: relative;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  }
+
+  .popup-content .close {
+    color: #000;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .popup-content iframe {
+    width: 100%;
+    height: 600px;
+    border: none;
+    border-radius: 0 0 10px 10px;
+  }
+</style>
 
 <!-- JS -->
 <script>
   const slides = document.querySelectorAll('.slide');
-  const nextBtn = document.getElementById('nextSlide');
-  const prevBtn = document.getElementById('prevSlide');
-
   let current = 0;
 
   function showSlide(index) {
-    slides.forEach((slide, i) => {
-      slide.classList.remove('active');
-    });
+    slides.forEach(slide => slide.classList.remove('active'));
     slides[index].classList.add('active');
   }
 
@@ -302,90 +327,21 @@
     showSlide(current);
   }
 
-  function prevSlide() {
-    current = (current - 1 + slides.length) % slides.length;
-    showSlide(current);
-  }
-
-  nextBtn.addEventListener('click', nextSlide);
-  prevBtn.addEventListener('click', prevSlide);
-
-  // Auto slide every 5 seconds
   setInterval(nextSlide, 5000);
+
+  // Popup logic
+  const applyBtn = document.getElementById("applyBtn");
+  const popup = document.getElementById("formPopup");
+  const closeBtn = document.querySelector(".popup .close");
+
+  applyBtn.onclick = () => popup.style.display = "block";
+  closeBtn.onclick = () => popup.style.display = "none";
+  window.onclick = (event) => {
+    if (event.target === popup) {
+      popup.style.display = "none";
+    }
+  };
 </script>
-
-
-<style>   
-/* Button Styling */
-#applyBtn {
-  padding: 12px 28px;
-  font-size: 16px;
-  font-weight: bold;
-  background-color: #007BFF;
-  color: white;
-  border: 2px solid #007BFF;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-#applyBtn:hover {
-  background-color: transparent;
-  color: #ffffff;
-  border: 2px solid #007BFF;
-}
-
-
-
-    /* Popup Background */
-    .popup {
-      display: none;
-      position: fixed;
-      z-index: 999;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.7);
-    }
-
-    /* Popup Content */
-    .popup-content {
-      background-color: #fff;
-      margin: 150px auto 5% auto;
-      padding: 0;
-      border-radius: 10px;
-      width: 90%;
-      max-width: 800px;
-      position: relative;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    }
-    /* Close Button */
-    .popup-content .close {
-      color: #000;
-      position: absolute;
-      top: 10px;
-      right: 20px;
-      font-size: 28px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    /* Responsive iframe */
-    .popup-content iframe {
-      width: 100%;
-      height: 600px;
-      border: none;
-      border-radius: 0 0 10px 10px;
-    }</style>
-
-
-
-
-
-
-
-
 
   <!-- Highlight Section -->
   <section class="py-16 bg-white text-center">
@@ -503,7 +459,7 @@
         <!-- Card 1 -->
         <div class="relative rounded-xl overflow-hidden">
           <img src="/Assets/Reewaz Adhikari.jpg" alt="Reewaz Adhikari" class="w-full h-64 object-cover">
-          <button onclick="openModal('https://youtu.be/VzEqqSUWNjw')"
+          <button onclick="openModal('https://www.youtube.com/shorts/d6hAaPkPSLY')"
             class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 hover:bg-opacity-70">
             <svg class="w-12 h-12 text-purple-500" fill="currentColor" viewBox="0 0 20 20">
               <path d="M6 4l10 6-10 6V4z" />
@@ -1784,70 +1740,128 @@ backButton.onclick = function(){
 
 
   <!---- Step------>
-  <section class="py-20 bg-purple-50">
-    <div class="max-w-6xl mx-auto px-4">
-      <p class="text-sm text-purple-600 text-center uppercase mb-2" style="font-weight: bolder;">STEPS</p>
-      <h2 class="text-4xl font-bold text-gray-900 text-center mb-12">Steps to Get your Destination</h2>
-      <div class="flex flex-col md:flex-row items-center justify-center space-y-8 md:space-y-0 md:space-x-12">
-        <!-- Step 1 -->
-        <div class="flex flex-col items-center">
-          <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow">
-            <img src="/Assets/Icons/search.png" alt="Identify course country & collage" class="w-10 h-10" />
+<section
+      class="min-h-screen flex flex-col md:flex-row items-center bg-purple-50 justify-between px-6 md:px-20 py-12">
+      
+      <!-- Left Text Content -->
+      <div class="md:w-1/2 space-y-6 mb-10 md:mb-0">
+        <h1 class="text-3xl md:text-4xl font-semibold content-color">
+          With you at every step of your <br />study abroad journey
+        </h1>
+        <p class="text-gray-600">
+          Get personalised, friendly, honest guidance for free<br />from the top
+          consultancy in Nepal
+        </p>
+        <button
+          class="bg-[#47C7DB]  text-white px-6 py-3 rounded-full flex items-center gap-2 hover:bg-blue-900 transition duration-300"
+        >
+          Book a free consultation
+          <span class="text-xl">➡</span>
+        </button>
+      </div>
+
+      <!-- Swiper Slider -->
+      <div class="md:w-1/2 w-full">
+        <div class="swiper mySwiper relative">
+          <div class="swiper-wrapper">
+            <!-- Slide 1 -->
+            <div
+              class="swiper-slide flex flex-col items-center text-center bg-pink-200 p-6 rounded-xl shadow-lg"
+            >
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/3064/3064197.png"
+                class="w-20 h-20 mx-auto mb-4"
+                alt="Passport"
+              />
+              <h2 class="text-lg font-bold content-color">Visa Application</h2>
+              <a href="#" class="text-sm text-gray-600 mt-2">Know more ></a>
+            </div>
+            <!-- Slide 2 -->
+            <div
+              class="swiper-slide flex flex-col items-center text-center bg-blue-100 p-6 rounded-xl shadow-lg"
+            >
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/3064/3064217.png"
+                class="w-20 h-20 mx-auto mb-4"
+                alt="Piggy Bank"
+              />
+              <h2 class="text-lg font-bold content-color">
+                Scholarship Guidance
+              </h2>
+              <a href="#" class="text-sm text-gray-600 mt-2">Know more ></a>
+            </div>
+            <!-- Slide 3 -->
+            <div
+              class="swiper-slide flex flex-col items-center text-center bg-yellow-100 p-6 rounded-xl shadow-lg"
+            >
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/3135/3135692.png"
+                class="w-20 h-20 mx-auto mb-4"
+                alt="Graduation Hat"
+              />
+              <h2 class="text-lg font-bold content-color">
+                Education Counselling
+              </h2>
+              <a href="#" class="text-sm text-gray-600 mt-2">Know more ></a>
+            </div>
+            <!-- Slide 4 -->
+            <div
+              class="swiper-slide flex flex-col items-center text-center bg-green-100 p-6 rounded-xl shadow-lg"
+            >
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/3039/3039436.png"
+                class="w-20 h-20 mx-auto mb-4"
+                alt="Language"
+              />
+              <h2 class="text-lg font-bold content-color">Language Preparation</h2>
+              <a href="#" class="text-sm text-gray-600 mt-2">Know more ></a>
+            </div>
+            <!-- Slide 5 -->
+            <div
+              class="swiper-slide flex flex-col items-center text-center bg-purple-100 p-6 rounded-xl shadow-lg"
+            >
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/2920/2920085.png"
+                class="w-20 h-20 mx-auto mb-4"
+                alt="Flight"
+              />
+              <h2 class="text-lg font-bold content-color">Pre-Departure Support</h2>
+              <a href="#" class="text-sm text-gray-600 mt-2">Know more ></a>
+            </div>
           </div>
-          <p class="mt-4 text-center text-gray-700">Research and <br> Planning</p>
-        </div>
-        <!-- Arrow -->
-        <div class="hidden md:block text-red-500">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-          </svg>
-        </div>
-        <!-- Step 2 -->
-        <div class="flex flex-col items-center">
-          <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow">
-            <img src="/Assets/Icons/resume.png" alt="science & professional" class="w-10 h-10" />
-          </div>
-          <p class="mt-4 text-center text-gray-700">Application and<br />Acceptance</p>
-        </div>
-        <div class="hidden md:block text-red-500">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-          </svg>
-        </div>
-        <!-- Step 3 -->
-        <div class="flex flex-col items-center">
-          <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow">
-            <img src="/Assets/Icons/graph.png" alt="Art, Design & Culture" class="w-10 h-10" />
-          </div>
-          <p class="mt-4 text-center text-gray-700">Financial and<br />Legal Preparations</p>
-        </div>
-        <div class="hidden md:block text-red-500">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-          </svg>
-        </div>
-        <!-- Step 4 -->
-        <div class="flex flex-col items-center">
-          <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow">
-            <img src="/Assets/Icons/departures.png" alt="Business & Management" class="w-10 h-10" />
-          </div>
-          <p class="mt-4 text-center text-gray-700">Pre-Departure<br />Preparation</p>
-        </div>
-        <div class="hidden md:block text-red-500">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-          </svg>
-        </div>
-        <!-- Step 5 -->
-        <div class="flex flex-col items-center">
-          <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow">
-            <img src="/Assets/Icons/arrivals.png" alt="Computer Science & IT" class="w-10 h-10" />
-          </div>
-          <p class="mt-4 text-center text-gray-700">Arrival <br />and Settlement</p>
+          <div class="swiper-pagination mt-4"></div>
+          <div class="swiper-button-prev !text-[#2953AA]"></div>
+          <div class="swiper-button-next !text-[#2953AA]"></div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+      const stepSwiper = new Swiper(".mySwiper", {
+        slidesPerView: 1,
+        spaceBetween: 30,
+        loop: true,
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+        breakpoints: {
+          768: {
+            slidesPerView: 2,
+          },
+          1024: {
+            slidesPerView: 3,
+          },
+        },
+      });
+    </script>
+
+
 
   <!-- FAQ Section -->
   <section class="py-20 bg-gray-100">
@@ -2104,61 +2118,182 @@ backButton.onclick = function(){
 
 
   <!-- Contact Section -->
-  <section id="contact">
-    <div class="container">
-      <div class="row gy-4">
-        <div class="col-md-6">
-          <h3>Contact Us</h3>
-          <form>
-            <div class="mb-3">
-              <label for="name" class="form-label">Name</label>
-              <input type="text" id="name" class="form-control" required>
+<section class="w-full max-w-6xl mx-auto bg-white shadow-xl rounded-2xl overflow-hidden p-4 sm:p-6 lg:p-8" id="contact">
+      <div class="flex flex-col lg:flex-row gap-6">
+        <!-- Form -->
+        <div class="w-full lg:w-1/2">
+          <h2 class="text-xl sm:text-2xl lg:text-2xl font-bold text-[#1d0f5e] mb-4">Study Abroad Dream to Global Degree.</h2>
+          <form class="space-y-3">
+            <input type="text" placeholder="Name" class="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm" />
+
+            <input type="email" placeholder="Email" class="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm" />
+
+            <div class="flex space-x-2">
+              <input type="text" value="+977" disabled class="w-16 px-3 py-2 border rounded-md bg-gray-100 text-center text-sm" />
+              <input type="tel" placeholder="Mobile Number" class="flex-1 px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm" />
             </div>
-            <div class="mb-3">
-              <label for="email" class="form-label">Email</label>
-              <input type="email" id="email" class="form-control" required>
+
+            <select class="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm">
+              <option>Nearest Office</option>
+              <option>Banepa</option>
+              <option>Kathmandu</option>
+              <option>Bhaktapur</option>
+              <option>Butwal</option>
+            </select>
+
+            <select class="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm">
+              <option>Preferred Study Destination</option>
+              <option>Australia</option>
+              <option>Canada</option>
+              <option>UK</option>
+              <option>USA</option>
+              <option>KOREA</option>
+              <option>JAPAN</option>
+              <option>EUROPE</option>
+            </select>
+
+            <select class="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm">
+              <option>Preferred Study Year</option>
+              <option>2025</option>
+              <option>2026</option>
+            </select>
+
+            <select class="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm">
+              <option>Preferred Study Intake</option>
+              <option>Spring</option>
+              <option>Fall</option>
+              <option>Winter</option>
+            </select>
+
+            <div class="flex items-start space-x-2 text-sm">
+              <input type="checkbox" checked class="accent-indigo-600 mt-1" />
+              <p class="text-gray-600 leading-tight">By clicking you agree to our <a href="#" class="text-indigo-600 underline">Privacy Policy</a> and <a href="#" class="text-indigo-600 underline">Terms & Conditions</a> *</p>
             </div>
-            <div class="mb-3">
-              <label for="message" class="form-label">Message</label>
-              <textarea id="message" class="form-control" rows="4" required></textarea>
-            </div>
-            <button type="submit" class="btn btn-purple px-4 rounded-pill">Send Message</button>
+
+            <button type="submit" class="w-full bg-[#1d0f5e] text-white py-2 rounded-full font-semibold hover:bg-indigo-900 transition-all text-sm">Get Started for Free</button>
           </form>
         </div>
-        <div class="col-md-6">
-          <h3>Our Office</h3>
+
+        <!-- Map -->
+        <div class="w-full lg:w-1/2 flex flex-col">
+          <h3 class="text-xl sm:text-2xl lg:text-2xl font-bold text-[#1d0f5e] mb-4">Our Office:</h3>
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3534.780668777056!2d85.5249911!3d27.6313088!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb09d73fb45ef7%3A0x6ead3fab3ac61152!2sDiscovery%20Educational%20Consultancy%20Banepa%20Branch!5e0!3m2!1sen!2snp!4v1746556820298!5m2!1sen!2snp"
-            width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"></iframe>
+            width="100%"
+            height="400"
+            style="border:0; border-radius: 0.75rem"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            class="w-full h-[400px] shadow-md">
+          </iframe>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+
+
+
+
+
+
+
+
 
   <!-- Footer -->
-  <footer class="py-4">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6 mb-3 mb-md-0">
-          <h5 class="text-white">Discovery Pathway</h5>
-          <p class="small">Discovery Pathway is a leading educational consultancy in Nepal, specializing in
-            international
-            education. We are committed to providing personalized guidance and support to students seek-
-            ing to study abroad.</p>
+   <footer class="px-6 py-10 md:px-20" style="background-color: #1A3076;">
+      <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-5 gap-8">
+        <!-- Logo and Social -->
+        <div>
+          <div class="mb-4">
+  <img src="/Assets/New_DP_Logo.png" alt="Discovery Pathway Logo" class="h-15 mb-2">
+  
+</div>
+          <p class="mb-3 font-small">Let's get social.</p>
+          <div class="flex space-x-4 justify-center">
+    <a href="https://www.facebook.com/discoveryconsultancybanepa" target="_blank" class="text-white hover:text-[#1877F2] transition-colors duration-200 text-2xl">
+      <i class="fab fa-facebook"></i>
+    </a>
+    <a href="https://www.instagram.com/discovery.pathway/" target="_blank" class="text-white hover:text-[#E1306C] transition-colors duration-200 text-2xl">
+      <i class="fab fa-instagram"></i>
+    </a>
+    <a href="https://www.tiktok.com/@discoverybanepa" target="_blank" class="text-white hover:text-[#69C9D0] transition-colors duration-200 text-2xl">
+      <i class="fab fa-tiktok"></i>
+    </a>
+  </div>
         </div>
 
-        <div class="col-md-3">
-          <h6 class="text-white">Follow Us</h6>
-          <a href="#" class="me-2 text-white"><i class="bi bi-facebook"></i></a>
-          <a href="#" class="me-2 text-white"><i class="bi bi-tiktok"></i></a>
-          <a href="#" class="me-2 text-white"><i class="bi bi-instagram"></i></a>
+        <!-- About Us -->
+        <div>
+          <h2 class="text-lg font-semibold mb-3">About Us</h2>
+          <ul class="space-y-2 text-sm">
+            <li><a href="#">Who We Are</a></li>
+            <li><a href="#">Our Timeline</a></li>
+            <li><a href="#">Our Leadership Team</a></li>
+            <li><a href="#">Partner With Us</a></li>
+            <li><a href="#">Awards Recognitions</a></li>
+            <li><a href="#">Careers</a></li>
+          </ul>
+        </div>
+
+        <!-- Quick Links and Destinations -->
+        <div>
+          <h2 class="text-lg font-semibold mb-3">Quick Links</h2>
+          <ul class="space-y-2 text-sm mb-6">
+            <li><a href="#">Visit Our Virtual Office</a></li>
+            <li><a href="#">Test Preparation</a></li>
+            <li><a href="#">International Study Guide</a></li>
+            <li><a href="#">Duolingo English Test</a></li>
+          </ul>
+          <h2 class="text-lg font-semibold mb-3">Our Services</h2>
+          <ul class="space-y-2 text-sm">
+            
+            <li><a href="#">Meet us Online</a></li>
+            <li><a href="#">Admission Counselling</a></li>
+            <li><a href="#">Health Cover</a></li>
+            <li><a href="#">Student Visa Service</a></li>
+          </ul>
+        </div>
+
+        <!-- Services -->
+        <div>
+          <h2 class="text-lg font-semibold mb-3">Study Destinations</h2>
+          <ul class="space-y-2 text-sm">
+            <li><a href="#">Study In Australia</a></li>
+            <li><a href="#">Study In Canada</a></li>
+            <li><a href="#">Study In Europe</a></li>
+            <li><a href="#">Study In New Zealand</a></li>
+            <li><a href="#">Study In UK</a></li>
+            <li><a href="#">Study In USA</a></li>
+          </ul>
+        </div>
+
+        <!-- Courses & Events -->
+        <div>
+          <h2 class="text-lg font-semibold mb-3">Courses Abroad</h2>
+          <ul class="space-y-2 text-sm mb-6">
+            <li><a href="#">MBA in Australia</a></li>
+            <li><a href="#">MBA in USA</a></li>
+            <li><a href="#">MBA in Canada</a></li>
+          </ul>
+          <h2 class="text-lg font-semibold mb-3">Events</h2>
+          <ul class="space-y-2 text-sm">
+            <li><a href="#">Upcoming Events</a></li>
+            <li><a href="#">Webinars</a></li>
+            <li><a href="#">Pathfinder</a></li>
+            <li><a href="#">Unisessions</a></li>
+          </ul>
         </div>
       </div>
-      <div class="text-center mt-3 small">&copy; 2025 Discovery Pathway. All Rights Reserved | Developed By Rachit
-        Pokhrel</div>
-    </div>
-  </footer>
+
+      <!-- Branches & Bottom Line -->
+      <div class="max-w-7xl mx-auto mt-10 border-t border-white/10 pt-6 text-center text-sm">
+        <p class="text-xs text-gray-200 mt-2">
+          &copy; 2025 Discovery Pathway. All Rights Reserved. <br>Developed By 
+          <a href="https://www.rachitpokhrel.com.np/" class="hover:text-white hover:font-bold transition-all duration-200">Rachit Pokhrel.</a>
+        </p>
+      </div>
+    </footer>
+
 
   <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
