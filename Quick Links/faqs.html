@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Discovery Pathway</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style copy.css">
+  <link rel="stylesheet" href="animation.css">
+  <link rel="shortcut icon" href="/Assets/Discovery_Logo-removebg-preview.png" type="image/x-icon">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" />
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.11/typed.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="mobileview.css">
+ 
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <style>
+    .fade-slide {
+      transition: opacity 1s ease-in-out;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 font-sans">
+<!-- HEADER -->
+<!-- Header -->
+<!-- Header -->
+<header id="mainHeader" class="bg-white shadow-md fixed w-full z-50 transition-transform duration-300">
+  <div class="max-w-7xl mx-auto px-4 flex justify-between items-center py-2 md:py-3">
+    <!-- Logo -->
+    <div class="flex items-center">
+      <img src="/Assets/Discovery_Logo_TP.jpg" alt="Logo" class="h-10 md:h-12">
+    </div>
+
+    <!-- Hamburger (Mobile) -->
+    <div class="md:hidden">
+      <button id="hamburgerBtn" class="text-3xl focus:outline-none">&#9776;</button>
+    </div>
+
+    <!-- Contact Info (Desktop) -->
+    <div class="hidden md:flex flex-col text-xs text-right text-gray-700 font-semibold">
+      <span><i class="fas fa-map-marker-alt text-cyan-600 mr-1"></i> Banepa, Nepal</span>
+      <span><i class="fas fa-phone-alt text-cyan-600 mr-1"></i> +977 011 665659</span>
+    </div>
+
+    <!-- Social Icons (Desktop) -->
+    <div class="hidden md:flex space-x-2">
+      <a href="https://www.facebook.com/discoveryconsultancybanepa" target="_blank" class="w-8 h-8 bg-[#3b5998] text-white flex items-center justify-center rounded">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+      <a href="https://www.tiktok.com/@discoverybanepa" target="_blank" class="w-8 h-8 bg-[#00acee] text-white flex items-center justify-center rounded">
+        <i class="fab fa-tiktok"></i>
+      </a>
+      <a href="https://www.instagram.com/discovery.pathway/" target="_blank" class="w-8 h-8 bg-[#E1306C] text-white flex items-center justify-center rounded">
+        <i class="fab fa-instagram"></i>
+      </a>
+    </div>
+  </div>
+
+  <!-- Desktop Navigation -->
+  <nav class="bg-[#0066b3] hidden md:block">
+    <ul class="flex flex-wrap justify-center space-x-6 text-white text-sm font-semibold uppercase py-2">
+      <li><a href="#" class="hover:text-[#46C3E0]">Home</a></li>
+      <li><a href="#" class="hover:text-[#46C3E0]">Discover Us</a></li>
+      <li><a href="#" class="hover:text-[#46C3E0]">Our Pride</a></li>
+      <li><a href="#" class="hover:text-[#46C3E0]">Scholarships</a></li>
+      <li><a href="#" class="hover:text-[#46C3E0]">Study Destination</a></li>
+      <li><a href="#" class="hover:text-[#46C3E0]">Test Prep</a></li>
+      <li><a href="#" class="hover:text-[#46C3E0]">Services</a></li>
+      <li><a href="#" class="hover:text-[#46C3E0]">Blog</a></li>
+      <li><a href="#contact" class="hover:text-[#46C3E0]">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div id="mobileMenu" class="md:hidden hidden bg-[#0066b3] text-white text-sm font-semibold uppercase px-4 pb-4">
+    <ul class="space-y-2 pt-2">
+      <li><a href="#" class="block py-1 border-b border-white">Home</a></li>
+      <li><a href="#" class="block py-1 border-b border-white">Discover Us</a></li>
+      <li><a href="#" class="block py-1 border-b border-white">Our Pride</a></li>
+      <li><a href="#" class="block py-1 border-b border-white">Scholarships</a></li>
+      <li><a href="#" class="block py-1 border-b border-white">Study Destination</a></li>
+      <li><a href="#" class="block py-1 border-b border-white">Test Prep</a></li>
+      <li><a href="#" class="block py-1 border-b border-white">Services</a></li>
+      <li><a href="#" class="block py-1 border-b border-white">Blog</a></li>
+      <li><a href="#contact" class="block py-1 border-b border-white">Contact</a></li>
+    </ul>
+  </div>
+</header>
+
+<!-- JavaScript for Header -->
+ <script>
+  // Mobile hamburger toggle
+const hamburgerBtn = document.getElementById("hamburgerBtn");
+const mobileMenu = document.getElementById("mobileMenu");
+
+hamburgerBtn.addEventListener("click", () => {
+  mobileMenu.classList.toggle("hidden");
+});
+
+</script>
+
+<script>
+  let lastScrollTop = 0;
+  const header = document.getElementById("mainHeader");
+
+  window.addEventListener("scroll", function () {
+    const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+
+    if (currentScroll > lastScrollTop) {
+      // Scrolling down
+      header.style.transform = "translateY(-100%)";
+    } else {
+      // Scrolling up
+      header.style.transform = "translateY(0)";
+    }
+
+    lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+  }, false);
+</script>
+<section class="bg-[#f5faff] py-16">
+  <div class="max-w-4xl mx-auto px-4">
+    <h2 class="text-center text-3xl font-bold text-[#0066b3] mb-10">Study Abroad <span class="text-red-600">FAQ</span></h2>
+
+    <div class="space-y-4">
+      <!-- FAQ Item Template -->
+      <details class="bg-white p-4 rounded shadow">
+        <summary class="cursor-pointer font-semibold">Why should I study abroad?</summary>
+        <p class="mt-2 text-gray-600">Studying abroad offers an enriching experience by exposing students to new cultures, perspectives, and academic environments, which fosters personal growth, independence, and global awareness.</p>
+      </details>
+
+      <details class="bg-white p-4 rounded shadow">
+        <summary class="cursor-pointer font-semibold">How will a study abroad experience enhance my employability after I graduate?</summary>
+        <p class="mt-2 text-gray-600">Employers value the skills gained from studying abroad, such as adaptability, cross-cultural communication, and problem-solving. It demonstrates initiative and global competence.</p>
+      </details>
+
+      <details class="bg-white p-4 rounded shadow">
+        <summary class="cursor-pointer font-semibold">When should I start planning to study abroad?</summary>
+        <p class="mt-2 text-gray-600">You should start planning at least 6–12 months in advance to ensure you meet application deadlines, acquire a passport or visa, and secure funding or scholarships.</p>
+      </details>
+
+      <details class="bg-white p-4 rounded shadow">
+        <summary class="cursor-pointer font-semibold">This is such a big step. How do I talk to my parents about it?</summary>
+        <p class="mt-2 text-gray-600">Be open and honest. Share your goals and how the experience can benefit your future. Providing facts, program details, and safety info can ease their concerns.</p>
+      </details>
+
+      <details class="bg-white p-4 rounded shadow">
+        <summary class="cursor-pointer font-semibold">Can credit transfer is possible?</summary>
+        <p class="mt-2 text-gray-600">Yes, many institutions allow you to transfer credits from abroad programs. Make sure to get pre-approval from your home institution before you go.</p>
+      </details>
+
+      <details class="bg-white p-4 rounded shadow">
+        <summary class="cursor-pointer font-semibold">What’s a passport?</summary>
+        <p class="mt-2 text-gray-600">A passport is an international form of identification showing a person’s nationality. It is required for all individuals traveling internationally. Obtaining a Nepalese passport generally takes 1–4 weeks. Without it, you cannot travel abroad.</p>
+      </details>
+
+      <details class="bg-white p-4 rounded shadow">
+        <summary class="cursor-pointer font-semibold">When should I apply for a passport?</summary>
+        <p class="mt-2 text-gray-600">As soon as possible. A passport is required for visa application and international travel, and delays in obtaining one can impact your travel plans.</p>
+      </details>
+
+      <details class="bg-white p-4 rounded shadow">
+        <summary class="cursor-pointer font-semibold">What’s a visa and will I need one?</summary>
+        <p class="mt-2 text-gray-600">A visa is official permission to enter a specific country for a specific period and purpose. Most study abroad programs require a student visa.</p>
+      </details>
+
+      <details class="bg-white p-4 rounded shadow">
+        <summary class="cursor-pointer font-semibold">Are visas hard to obtain?</summary>
+        <p class="mt-2 text-gray-600">Visa difficulty depends on the destination country. Having proper documents and starting early makes the process smoother.</p>
+      </details>
+
+      <details class="bg-white p-4 rounded shadow">
+        <summary class="cursor-pointer font-semibold">So if I need a visa, where can I get one?</summary>
+        <p class="mt-2 text-gray-600">You can obtain a visa through the destination country's embassy or consulate. Many now accept online applications.</p>
+      </details>
+
+      <details class="bg-white p-4 rounded shadow">
+        <summary class="cursor-pointer font-semibold">How much will they cost?</summary>
+        <p class="mt-2 text-gray-600">Visa fees vary by country and visa type. It can range from NPR 5,000 to NPR 25,000 or more. Check the respective embassy's website.</p>
+      </details>
+
+      <details class="bg-white p-4 rounded shadow">
+        <summary class="cursor-pointer font-semibold">How will I choose the program that is right for me?</summary>
+        <p class="mt-2 text-gray-600">Consider your academic goals, language preferences, finances, and destination country. Discovery Pathway counselors can assist with the selection.</p>
+      </details>
+
+      <details class="bg-white p-4 rounded shadow">
+        <summary class="cursor-pointer font-semibold">How do I apply for study abroad?</summary>
+        <p class="mt-2 text-gray-600">Start by researching programs, gathering documents, and contacting Discovery Pathway for guidance with applications and visa procedures.</p>
+      </details>
+
+      <details class="bg-white p-4 rounded shadow">
+        <summary class="cursor-pointer font-semibold">What can Discovery Pathway do to help me?</summary>
+        <p class="mt-2 text-gray-600">Discovery Pathway provides personalized counseling, helps you select the right program, and supports you with documentation, visa processing, and pre-departure briefings.</p>
+      </details>
+
+      <details class="bg-white p-4 rounded shadow">
+        <summary class="cursor-pointer font-semibold">What if the visa is not issued by the time the program departs or not issued at all?</summary>
+        <p class="mt-2 text-gray-600">Visa delays can happen. Inform your program provider and embassy immediately. Many programs defer your admission to the next intake.</p>
+      </details>
+
+      <details class="bg-white p-4 rounded shadow">
+        <summary class="cursor-pointer font-semibold">When does the program tuition have to be paid?</summary>
+        <p class="mt-2 text-gray-600">Payment schedules vary. Some programs require full payment before departure; others may allow installments. Confirm with your provider.</p>
+      </details>
+
+      <details class="bg-white p-4 rounded shadow">
+        <summary class="cursor-pointer font-semibold">How much luggage can I take?</summary>
+        <p class="mt-2 text-gray-600">Check with your airline. Most international flights allow 1–2 checked bags (23–30 kg each) and a carry-on. Exceeding limits may incur fees.</p>
+      </details>
+
+      <details class="bg-white p-4 rounded shadow">
+        <summary class="cursor-pointer font-semibold">What should I pack?</summary>
+        <p class="mt-2 text-gray-600">Pack essentials including weather-appropriate clothes, documents, basic medicines, and electronics. Avoid overpacking. Use a checklist.</p>
+      </details>
+
+      <details class="bg-white p-4 rounded shadow">
+        <summary class="cursor-pointer font-semibold">What happens when I arrive in the destination country?</summary>
+        <p class="mt-2 text-gray-600">You’ll go through immigration, then meet a local contact or proceed to housing. Orientation sessions usually follow.</p>
+      </details>
+
+      <details class="bg-white p-4 rounded shadow">
+        <summary class="cursor-pointer font-semibold">Who will support me while I am there (Abroad)?</summary>
+        <p class="mt-2 text-gray-600">Your host university, local program staff, and Discovery Pathway support network will help with academics, housing, and emergencies.</p>
+      </details>
+
+      <details class="bg-white p-4 rounded shadow">
+        <summary class="cursor-pointer font-semibold">I’m insured by my family’s medical plan. Why do I need secondary medical coverage?</summary>
+        <p class="mt-2 text-gray-600">Many local plans don't cover international emergencies. Secondary insurance ensures access to hospitals and coverage of repatriation costs.</p>
+      </details>
+
+      <details class="bg-white p-4 rounded shadow">
+        <summary class="cursor-pointer font-semibold">How do I do my banking while abroad? How much money should I bring?</summary>
+        <p class="mt-2 text-gray-600">Use international debit cards or open a local bank account. Bring a few weeks’ cash and arrange regular transfers or budgeting tools.</p>
+      </details>
+
+      <details class="bg-white p-4 rounded shadow">
+        <summary class="cursor-pointer font-semibold">Is there anything I won’t be able to do abroad?</summary>
+        <p class="mt-2 text-gray-600">Some programs restrict certain jobs, alcohol, or driving. Laws and cultural norms may differ. Always follow local rules.</p>
+      </details>
+
+      <details class="bg-white p-4 rounded shadow">
+        <summary class="cursor-pointer font-semibold">Will I be able to fit in with people my age in another country?</summary>
+        <p class="mt-2 text-gray-600">Yes, students often form strong friendships abroad. Be open to learning and respectful of cultural differences.</p>
+      </details>
+
+      <details class="bg-white p-4 rounded shadow">
+        <summary class="cursor-pointer font-semibold">Can I come back to the Nepal for holidays?</summary>
+        <p class="mt-2 text-gray-600">Yes, depending on your visa and academic schedule. Check re-entry conditions before traveling.</p>
+      </details>
+
+      <details class="bg-white p-4 rounded shadow">
+        <summary class="cursor-pointer font-semibold">Can my family and friends visit me during the program?</summary>
+        <p class="mt-2 text-gray-600">Yes, they can visit if they obtain tourist visas. Plan visits around academic commitments to avoid disruptions.</p>
+      </details>
+
+      <details class="bg-white p-4 rounded shadow">
+        <summary class="cursor-pointer font-semibold">Can I travel to other countries from destination country?</summary>
+        <p class="mt-2 text-gray-600">Yes, many students travel during breaks. Make sure to research and apply for any additional visas required in advance.</p>
+      </details>
+
+      <details class="bg-white p-4 rounded shadow">
+        <summary class="cursor-pointer font-semibold">(When abroad): Sometimes I get extremely homesick, sometimes I feel like I never want to go back home. Are these feelings normal?</summary>
+        <p class="mt-2 text-gray-600">Yes, both feelings are normal. Cultural adjustment has phases. Talk to a counselor or trusted mentor if needed.</p>
+      </details>
+
+      <details class="bg-white p-4 rounded shadow">
+        <summary class="cursor-pointer font-semibold">I still don’t see the answer to my question.</summary>
+        <p class="mt-2 text-gray-600">Feel free to contact Discovery Pathway directly. We’re here to support you at every step of your journey abroad.</p>
+      </details>
+
+    </div>
+  </div>
+</section>
+
+
+
+  <!-- Footer -->
+<footer class="px-6 py-10 md:px-20 text-white" style="background-color: #003f84;">
+  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-10">
+    <!-- Logo and Contact Info -->
+    <div>
+      <div class="mb-4">
+        <img src="/Assets/New_DP_Logo.png" alt="Discovery Pathway Logo" class="h-13">
+      </div>
+      <ul class="text-sm space-y-2">
+        <li class="flex items-start space-x-2">
+          <i class="fas fa-phone mt-1"></i>
+          <span>+977 9851345539, 9851223025</span>
+        </li>
+        <li class="flex items-start space-x-2">
+          <i class="fas fa-envelope mt-1"></i>
+          <span>banepa@discoveryedu.com.np</span>
+        </li>
+        <li class="flex items-start space-x-2">
+          <i class="fas fa-map-marker-alt mt-1"></i>
+          <span>Chandeshwori Margh, Banepa,<br> Kavrepalanchok, Nepal</span>
+        </li>
+      </ul>
+      <div class="flex space-x-4 mt-4">
+        <a href="#" class="text-white hover:text-[#1877F2] text-xl"><i class="fab fa-facebook"></i></a>
+        <a href="#" class="text-white hover:text-[#E1306C] text-xl"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="text-white hover:text-[#69C9D0] text-xl"><i class="fab fa-tiktok"></i></a>
+        <a href="#" class="text-white text-xl"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
+
+    <!-- Quick Links -->
+    <div>
+      <h2 class="text-lg font-semibold mb-4">Quick Links</h2>
+      <ul class="space-y-2 text-sm">
+        <li><a href="#">About Discovery</a></li>
+        <li><a href="#">Services</a></li>
+        <li><a href="#">Universities</a></li>
+        <li><a href="#">Resources</a></li>
+        <li><a href="#">Events</a></li>
+        <li><a href="#">Contact Us</a></li>
+      </ul>
+    </div>
+
+    <!-- Middle Links -->
+    <div>
+      <h2 class="text-lg font-semibold mb-4">&nbsp;</h2>
+      <ul class="space-y-2 text-sm">
+        <li><a href="#">Gallery</a></li>
+        <li><a href="#">Testimonials & Reviews</a></li>
+        <li><a href="#">Success Stories</a></li>
+        <li><a href="#">Interviews</a></li>
+        <li><a href="#">OHSC</a></li>
+        <li><a href="/Quick Links/faqs.html">FAQs</a></li>
+      </ul>
+    </div>
+
+    <!-- Student Needs -->
+    <div>
+      <h2 class="text-lg font-semibold mb-4">Need for Students</h2>
+      <ul class="space-y-2 text-sm">
+        <li><a href="#">Career Counseling</a></li>
+        <li><a href="#">Online Application</a></li>
+        <li><a href="#">How to Obtain Visa</a></li>
+        <li><a href="#">Student Accommodation</a></li>
+      </ul>
+    </div>
+
+    <!-- Tools for Students -->
+    <div>
+      <h2 class="text-lg font-semibold mb-4">&nbsp;</h2>
+      <ul class="space-y-2 text-sm">
+        <li><a href="https://www.xe.com/currencyconverter/">Currency Converter</a></li>
+        <li><a href="/Quick Links/date.html">Date Converter</a></li>
+        <li><a href="/Quick Links/score.html">Score Comparison</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Bottom Line -->
+  <div class="max-w-7xl mx-auto mt-10 border-t border-white/10 pt-6 text-center text-xs text-gray-200">
+    <p>&copy; 2025 Discovery Pathway. All Rights Reserved. <br>Developed By 
+      <a href="https://www.rachitpokhrel.com.np/" class="hover:text-white hover:font-bold transition-all duration-200">Rachit Pokhrel.</a>
+    </p>
+  </div>
+</footer>
+
+
+
+  <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+  <script src="script.js"></script>
+
+
+</body>
+
+</html>
+</body>
+</html>

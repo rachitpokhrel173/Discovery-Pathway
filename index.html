@@ -30,7 +30,19 @@
     .fade-slide {
       transition: opacity 1s ease-in-out;
     }
+     .dropdown-menu {
+      display: none;
+    }
+
+    .dropdown:hover .dropdown-menu {
+      display: block;
+    }
+
+    .dropdown-menu.show {
+      display: block;
+    }
   </style>
+  
 </head>
 <body class="bg-gray-100 font-sans">
 <!-- HEADER -->
@@ -40,7 +52,7 @@
   <div class="max-w-7xl mx-auto px-4 flex justify-between items-center py-2 md:py-3">
     <!-- Logo -->
     <div class="flex items-center">
-      <img src="/Assets/Discovery_Logo_TP.jpg" alt="Logo" class="h-10 md:h-12">
+      <a href="https://discoverypathway.edu.np/"><img src="/Assets/Discovery_Logo_TP.jpg" alt="Logo" class="h-10 md:h-12"></a>
     </div>
 
     <!-- Hamburger (Mobile) -->
@@ -71,14 +83,69 @@
   <!-- Desktop Navigation -->
   <nav class="bg-[#0066b3] hidden md:block">
     <ul class="flex flex-wrap justify-center space-x-6 text-white text-sm font-semibold uppercase py-2">
-      <li><a href="#" class="hover:text-[#46C3E0]">Home</a></li>
-      <li><a href="#" class="hover:text-[#46C3E0]">Discover Us</a></li>
-      <li><a href="#" class="hover:text-[#46C3E0]">Our Pride</a></li>
-      <li><a href="#" class="hover:text-[#46C3E0]">Scholarships</a></li>
-      <li><a href="#" class="hover:text-[#46C3E0]">Study Destination</a></li>
-      <li><a href="#" class="hover:text-[#46C3E0]">Test Prep</a></li>
-      <li><a href="#" class="hover:text-[#46C3E0]">Services</a></li>
-      <li><a href="#" class="hover:text-[#46C3E0]">Blog</a></li>
+
+      <li><a href="#About" class="hover:text-[#46C3E0]">ABOUT US</a></li>
+      <li><a href="Mantainance.html" class="hover:text-[#46C3E0]">INTERVIEWS</a></li>
+      <li><a href="Mantainance.html" class="hover:text-[#46C3E0]">SCHOLARSHIP</a></li>
+      <li class="relative dropdown">
+          <button id="studyAbroadToggle" class="hover:text-[#46C3E0] focus:outline-none">STUDY ABROAD</button>
+          <div class="absolute left-1/2 transform -translate-x-1/2 mt-2 w-[90vw] md:w-[700px] p-4 rounded-lg shadow-lg bg-white border border-gray-200 z-50 dropdown-menu" id="studyAbroadMenu">
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              <a href="Mantainance.html" class="flex items-center justify-start space-x-3 hover:bg-blue-50 p-2 rounded-md transition">
+                <img src="https://upload.wikimedia.org/wikipedia/en/b/b9/Flag_of_Australia.svg" class="w-8 h-auto" alt="Australia">
+                <span class="text-gray-800 font-semibold">Australia</span>
+              </a>
+              <a href="Mantainance.html" class="flex items-center space-x-3 hover:bg-blue-50 p-2 rounded-md transition">
+                <img src="https://upload.wikimedia.org/wikipedia/en/a/a4/Flag_of_the_United_States.svg" class="w-8 h-auto" alt="USA">
+                <span class="text-gray-800 font-semibold">USA</span>
+              </a>
+              <a href="Mantainance.html" class="flex items-center space-x-3 hover:bg-blue-50 p-2 rounded-md transition">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Flag_of_New_Zealand.svg" class="w-8 h-auto" alt="New Zealand">
+                <span class="text-gray-800 font-semibold">New Zealand</span>
+              </a>
+              <a href="Mantainance.html" class="flex items-center space-x-3 hover:bg-blue-50 p-2 rounded-md transition">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/c/cf/Flag_of_Canada.svg" class="w-8 h-auto" alt="Canada">
+                <span class="text-gray-800 font-semibold">Canada</span>
+              </a>
+              <a href="Mantainance.html" class="flex items-center space-x-3 hover:bg-blue-50 p-2 rounded-md transition">
+                <img src="https://upload.wikimedia.org/wikipedia/en/a/ae/Flag_of_the_United_Kingdom.svg" class="w-8 h-auto" alt="UK">
+                <span class="text-gray-800 font-semibold">UK</span>
+              </a>
+              <a href="Mantainance.html" class="flex items-center space-x-3 hover:bg-blue-50 p-2 rounded-md transition">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBeaSZSwax2XvXTLQ5hlnz3oF6SMpRiTb_hu_WAaa6oCXnEHWihMmU3ww1DDwt&s=10" class="w-8 h-auto" alt="Denmark">
+                <span class="text-gray-800 font-semibold">Denmark</span>
+              </a>
+              <a href="Mantainance.html" class="flex items-center space-x-3 hover:bg-blue-50 p-2 rounded-md transition">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/4/45/Flag_of_Ireland.svg" class="w-8 h-auto" alt="Ireland">
+                <span class="text-gray-800 font-semibold">Ireland</span>
+              </a>
+              <a href="Mantainance.html" class="flex items-center space-x-3 hover:bg-blue-50 p-2 rounded-md transition">
+                <img src="https://upload.wikimedia.org/wikipedia/en/9/9e/Flag_of_Japan.svg" class="w-8 h-auto" alt="Japan">
+                <span class="text-gray-800 font-semibold">Japan</span>
+              </a>
+              <a href="Mantainance.html" class="flex items-center space-x-3 hover:bg-blue-50 p-2 rounded-md transition">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" class="w-8 h-auto" alt="South Korea">
+                <span class="text-gray-800 font-semibold">South Korea</span>
+              </a>
+              <a href="Mantainance.html" class="flex items-center space-x-3 hover:bg-blue-50 p-2 rounded-md transition">
+                <img src="https://upload.wikimedia.org/wikipedia/en/b/ba/Flag_of_Germany.svg" class="w-8 h-auto" alt="Germany">
+                <span class="text-gray-800 font-semibold">Germany</span>
+              </a>
+              <a href="Mantainance.html" class="flex items-center space-x-3 hover:bg-blue-50 p-2 rounded-md transition">
+                <img src="https://upload.wikimedia.org/wikipedia/en/c/c3/Flag_of_France.svg" class="w-8 h-auto" alt="France">
+                <span class="text-gray-800 font-semibold">France</span>
+              </a>
+              <a href="Mantainance.html" class="flex items-center space-x-3 hover:bg-blue-50 p-2 rounded-md transition">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/f/f3/Flag_of_Switzerland.svg" class="w-8 h-auto" alt="Switzerland">
+                <span class="text-gray-800 font-semibold">Switzerland</span>
+              </a>
+              <!-- Other countries same as before -->
+            </div>
+          </div>
+        </li>
+      <li><a href="Mantainance.html" class="hover:text-[#46C3E0]">Test Prep</a></li>
+      <li><a href="Mantainance.html" class="hover:text-[#46C3E0]">Services</a></li>
+      <li><a href="Mantainance.html" class="hover:text-[#46C3E0]">FEEDBACKS</a></li>
       <li><a href="#contact" class="hover:text-[#46C3E0]">Contact</a></li>
     </ul>
   </nav>
@@ -104,13 +171,58 @@
   // Mobile hamburger toggle
 const hamburgerBtn = document.getElementById("hamburgerBtn");
 const mobileMenu = document.getElementById("mobileMenu");
+    document.addEventListener("DOMContentLoaded", () => {
+      const toggleBtn = document.getElementById("studyAbroadToggle");
+      const dropdownMenu = document.getElementById("studyAbroadMenu");
+      const hamburgerBtn = document.getElementById("hamburgerBtn");
+      const mobileMenu = document.getElementById("mobileMenu");
+
+      toggleBtn?.addEventListener("click", (e) => {
+        e.preventDefault();
+        dropdownMenu.classList.toggle("show");
+      });
+
+      document.addEventListener("click", (e) => {
+        if (!toggleBtn.contains(e.target) && !dropdownMenu.contains(e.target)) {
+          dropdownMenu.classList.remove("show");
+        }
+      });
+
+      hamburgerBtn?.addEventListener("click", () => {
+        mobileMenu.classList.toggle("hidden");
+      });
+    });
+
 
 hamburgerBtn.addEventListener("click", () => {
   mobileMenu.classList.toggle("hidden");
 });
 
 </script>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const toggleBtn = document.getElementById("studyAbroadToggle");
+      const dropdownMenu = document.getElementById("studyAbroadMenu");
+      const hamburgerBtn = document.getElementById("hamburgerBtn");
+      const mobileMenu = document.getElementById("mobileMenu");
 
+      toggleBtn?.addEventListener("click", (e) => {
+        e.preventDefault();
+        dropdownMenu.classList.toggle("show");
+      });
+
+      document.addEventListener("click", (e) => {
+        if (!toggleBtn.contains(e.target) && !dropdownMenu.contains(e.target)) {
+          dropdownMenu.classList.remove("show");
+        }
+      });
+
+      hamburgerBtn?.addEventListener("click", () => {
+        mobileMenu.classList.toggle("hidden");
+      });
+    });
+    
+  </script>
 <script>
   let lastScrollTop = 0;
   const header = document.getElementById("mainHeader");
@@ -2251,7 +2363,7 @@ backButton.onclick = function(){
         <li><a href="#">Success Stories</a></li>
         <li><a href="#">Interviews</a></li>
         <li><a href="#">OHSC</a></li>
-        <li><a href="#">FAQs</a></li>
+        <li><a href="/Quick Links/faqs.html">FAQs</a></li>
       </ul>
     </div>
 
@@ -2271,9 +2383,8 @@ backButton.onclick = function(){
       <h2 class="text-lg font-semibold mb-4">&nbsp;</h2>
       <ul class="space-y-2 text-sm">
         <li><a href="https://www.xe.com/currencyconverter/">Currency Converter</a></li>
-        <li><a href="#">Date Converter</a></li>
-        <li><a href="#">SOP Bank</a></li>
-        <li><a href="#">Score Comparison</a></li>
+        <li><a href="/Quick Links/date.html">Date Converter</a></li>
+        <li><a href="/Quick Links/score.html">Score Comparison</a></li>
       </ul>
     </div>
   </div>

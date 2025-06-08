@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nepali Date Converter</title>
+    <script src="https://unpkg.com/nepali-date-converter@2.2.0/dist/nepali-date-converter.umd.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(to right, #e0f7fa, #f8bbd0);
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #ffffffee;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            font-size: 3em;
+            font-weight: 700;
+            color: #0d47a1;
+        }
+        h2 {
+            text-align: center;
+            font-size: 2em;
+            margin-bottom: 30px;
+            color: #00796b;
+        }
+        .converter-section {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+        .converter {
+            background: #e8f5e9;
+            border-radius: 10px;
+            padding: 30px;
+            flex: 1 1 45%;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            min-width: 300px;
+        }
+        .converter h3 {
+            margin-top: 0;
+            background-color: #29b6f6;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            border-radius: 5px;
+            font-size: 1.2em;
+        }
+        label {
+            display: block;
+            margin: 15px 0 5px;
+            font-weight: 600;
+        }
+        select, input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 1em;
+            border: 1px solid #b0bec5;
+            border-radius: 5px;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #00796b;
+            color: white;
+            border: none;
+            font-size: 1.1em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background-color: #004d40;
+        }
+        #result {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 1.2em;
+            color: #d84315;
+        }
+        @media (max-width: 768px) {
+            .converter-section {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header id="mainHeader" class="bg-white shadow-md fixed w-full z-50 transition-transform duration-300">
+  <div class="max-w-7xl mx-auto px-4 flex justify-between items-center py-2 md:py-3">
+    <!-- Logo -->
+    <div class="flex items-center">
+      <img src="/Assets/Discovery_Logo_TP.jpg" alt="Logo" class="h-10 md:h-12">
+    </div>
+
+    <!-- Hamburger (Mobile) -->
+    <div class="md:hidden">
+      <button id="hamburgerBtn" class="text-3xl focus:outline-none">&#9776;</button>
+    </div>
+
+    <!-- Contact Info (Desktop) -->
+    <div class="hidden md:flex flex-col text-xs text-right text-gray-700 font-semibold">
+      <span><i class="fas fa-map-marker-alt text-cyan-600 mr-1"></i> Banepa, Nepal</span>
+      <span><i class="fas fa-phone-alt text-cyan-600 mr-1"></i> +977 011 665659</span>
+    </div>
+
+    <!-- Social Icons (Desktop) -->
+    <div class="hidden md:flex space-x-2">
+      <a href="https://www.facebook.com/discoveryconsultancybanepa" target="_blank" class="w-8 h-8 bg-[#3b5998] text-white flex items-center justify-center rounded">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+      <a href="https://www.tiktok.com/@discoverybanepa" target="_blank" class="w-8 h-8 bg-[#00acee] text-white flex items-center justify-center rounded">
+        <i class="fab fa-tiktok"></i>
+      </a>
+      <a href="https://www.instagram.com/discovery.pathway/" target="_blank" class="w-8 h-8 bg-[#E1306C] text-white flex items-center justify-center rounded">
+        <i class="fab fa-instagram"></i>
+      </a>
+    </div>
+  </div>
+
+  <!-- Desktop Navigation -->
+  <nav class="bg-[#0066b3] hidden md:block">
+    <ul class="flex flex-wrap justify-center space-x-6 text-white text-sm font-semibold uppercase py-2">
+      <li><a href="#" class="hover:text-[#46C3E0]">Home</a></li>
+      <li><a href="#" class="hover:text-[#46C3E0]">Discover Us</a></li>
+      <li><a href="#" class="hover:text-[#46C3E0]">Our Pride</a></li>
+      <li><a href="#" class="hover:text-[#46C3E0]">Scholarships</a></li>
+      <li><a href="#" class="hover:text-[#46C3E0]">Study Destination</a></li>
+      <li><a href="#" class="hover:text-[#46C3E0]">Test Prep</a></li>
+      <li><a href="#" class="hover:text-[#46C3E0]">Services</a></li>
+      <li><a href="#" class="hover:text-[#46C3E0]">Blog</a></li>
+      <li><a href="#contact" class="hover:text-[#46C3E0]">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div id="mobileMenu" class="md:hidden hidden bg-[#0066b3] text-white text-sm font-semibold uppercase px-4 pb-4">
+    <ul class="space-y-2 pt-2">
+      <li><a href="#" class="block py-1 border-b border-white">Home</a></li>
+      <li><a href="#" class="block py-1 border-b border-white">Discover Us</a></li>
+      <li><a href="#" class="block py-1 border-b border-white">Our Pride</a></li>
+      <li><a href="#" class="block py-1 border-b border-white">Scholarships</a></li>
+      <li><a href="#" class="block py-1 border-b border-white">Study Destination</a></li>
+      <li><a href="#" class="block py-1 border-b border-white">Test Prep</a></li>
+      <li><a href="#" class="block py-1 border-b border-white">Services</a></li>
+      <li><a href="#" class="block py-1 border-b border-white">Blog</a></li>
+      <li><a href="#contact" class="block py-1 border-b border-white">Contact</a></li>
+    </ul>
+  </div>
+</header>
+
+<!-- JavaScript for Header -->
+ <script>
+  // Mobile hamburger toggle
+const hamburgerBtn = document.getElementById("hamburgerBtn");
+const mobileMenu = document.getElementById("mobileMenu");
+
+hamburgerBtn.addEventListener("click", () => {
+  mobileMenu.classList.toggle("hidden");
+});
+
+</script>
+
+<script>
+  let lastScrollTop = 0;
+  const header = document.getElementById("mainHeader");
+
+  window.addEventListener("scroll", function () {
+    const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+
+    if (currentScroll > lastScrollTop) {
+      // Scrolling down
+      header.style.transform = "translateY(-100%)";
+    } else {
+      // Scrolling up
+      header.style.transform = "translateY(0)";
+    }
+
+    lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+  }, false);
+</script>
+
+    <div class="container">
+        <h1>Nepali Date Converter</h1>
+        <h2>Date Conversion</h2>
+        <div class="converter-section">
+            <div class="converter">
+                <h3>Convert BS to AD</h3>
+                <label for="bs-year">Year</label>
+                <input type="number" id="bs-year" value="2082">
+                <label for="bs-month">Month</label>
+                <select id="bs-month">
+                    <option value="1">Baisakh</option>
+                    <option value="2">Jestha</option>
+                    <option value="3">Ashadh</option>
+                    <option value="4">Shrawan</option>
+                    <option value="5">Bhadra</option>
+                    <option value="6">Ashwin</option>
+                    <option value="7">Kartik</option>
+                    <option value="8">Mangsir</option>
+                    <option value="9">Poush</option>
+                    <option value="10">Magh</option>
+                    <option value="11">Falgun</option>
+                    <option value="12">Chaitra</option>
+                </select>
+                <label for="bs-day">Day</label>
+                <input type="number" id="bs-day" value="25">
+                <button onclick="convertBSToAD()">Convert</button>
+            </div>
+            <div class="converter">
+                <h3>Convert AD to BS</h3>
+                <label for="ad-year">Year</label>
+                <input type="number" id="ad-year" value="2025">
+                <label for="ad-month">Month</label>
+                <select id="ad-month">
+                    <option value="1">January</option>
+                    <option value="2">February</option>
+                    <option value="3">March</option>
+                    <option value="4">April</option>
+                    <option value="5">May</option>
+                    <option value="6" selected>June</option>
+                    <option value="7">July</option>
+                    <option value="8">August</option>
+                    <option value="9">September</option>
+                    <option value="10">October</option>
+                    <option value="11">November</option>
+                    <option value="12">December</option>
+                </select>
+                <label for="ad-day">Day</label>
+                <input type="number" id="ad-day" value="8">
+                <button onclick="convertADToBS()">Convert</button>
+            </div>
+        </div>
+        <div id="result"></div>
+    </div>
+  <!-- Footer -->
+<footer class="px-6 py-10 md:px-20 text-white" style="background-color: #003f84;">
+  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-10">
+    <!-- Logo and Contact Info -->
+    <div>
+      <div class="mb-4">
+        <img src="/Assets/New_DP_Logo.png" alt="Discovery Pathway Logo" class="h-13">
+      </div>
+      <ul class="text-sm space-y-2">
+        <li class="flex items-start space-x-2">
+          <i class="fas fa-phone mt-1"></i>
+          <span>+977 9851345539, 9851223025</span>
+        </li>
+        <li class="flex items-start space-x-2">
+          <i class="fas fa-envelope mt-1"></i>
+          <span>banepa@discoveryedu.com.np</span>
+        </li>
+        <li class="flex items-start space-x-2">
+          <i class="fas fa-map-marker-alt mt-1"></i>
+          <span>Chandeshwori Margh, Banepa,<br> Kavrepalanchok, Nepal</span>
+        </li>
+      </ul>
+      <div class="flex space-x-4 mt-4">
+        <a href="#" class="text-white hover:text-[#1877F2] text-xl"><i class="fab fa-facebook"></i></a>
+        <a href="#" class="text-white hover:text-[#E1306C] text-xl"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="text-white hover:text-[#69C9D0] text-xl"><i class="fab fa-tiktok"></i></a>
+        <a href="#" class="text-white text-xl"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
+
+    <!-- Quick Links -->
+    <div>
+      <h2 class="text-lg font-semibold mb-4">Quick Links</h2>
+      <ul class="space-y-2 text-sm">
+        <li><a href="#">About Discovery</a></li>
+        <li><a href="#">Services</a></li>
+        <li><a href="#">Universities</a></li>
+        <li><a href="#">Resources</a></li>
+        <li><a href="#">Events</a></li>
+        <li><a href="#">Contact Us</a></li>
+      </ul>
+    </div>
+
+    <!-- Middle Links -->
+    <div>
+      <h2 class="text-lg font-semibold mb-4">&nbsp;</h2>
+      <ul class="space-y-2 text-sm">
+        <li><a href="#">Gallery</a></li>
+        <li><a href="#">Testimonials & Reviews</a></li>
+        <li><a href="#">Success Stories</a></li>
+        <li><a href="#">Interviews</a></li>
+        <li><a href="#">OHSC</a></li>
+        <li><a href="#">FAQs</a></li>
+      </ul>
+    </div>
+
+    <!-- Student Needs -->
+    <div>
+      <h2 class="text-lg font-semibold mb-4">Need for Students</h2>
+      <ul class="space-y-2 text-sm">
+        <li><a href="#">Career Counseling</a></li>
+        <li><a href="#">Online Application</a></li>
+        <li><a href="#">How to Obtain Visa</a></li>
+        <li><a href="#">Student Accommodation</a></li>
+      </ul>
+    </div>
+
+    <!-- Tools for Students -->
+    <div>
+      <h2 class="text-lg font-semibold mb-4">&nbsp;</h2>
+      <ul class="space-y-2 text-sm">
+        <li><a href="https://www.xe.com/currencyconverter/">Currency Converter</a></li>
+        <li><a href="/Quick Links/date.html">Date Converter</a></li>
+        <li><a href="/Quick Links/score.html">Score Comparison</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Bottom Line -->
+  <div class="max-w-7xl mx-auto mt-10 border-t border-white/10 pt-6 text-center text-xs text-gray-200">
+    <p>&copy; 2025 Discovery Pathway. All Rights Reserved. <br>Developed By 
+      <a href="https://www.rachitpokhrel.com.np/" class="hover:text-white hover:font-bold transition-all duration-200">Rachit Pokhrel.</a>
+    </p>
+  </div>
+</footer>
+    <script>
+        function convertBSToAD() {
+            const year = parseInt(document.getElementById("bs-year").value);
+            const month = parseInt(document.getElementById("bs-month").value);
+            const day = parseInt(document.getElementById("bs-day").value);
+
+            const ad = NepaliDateConverter.bs2ad({ year, month, day });
+            document.getElementById("result").innerText = `BS ${year}-${month}-${day} = AD ${ad.year}-${ad.month}-${ad.day}`;
+        }
+
+        function convertADToBS() {
+            const year = parseInt(document.getElementById("ad-year").value);
+            const month = parseInt(document.getElementById("ad-month").value);
+            const day = parseInt(document.getElementById("ad-day").value);
+
+            const bs = NepaliDateConverter.ad2bs({ year, month, day });
+            document.getElementById("result").innerText = `AD ${year}-${month}-${day} = BS ${bs.year}-${bs.month}-${bs.day}`;
+        }
+    </script>
+      <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</body>
+</html>
