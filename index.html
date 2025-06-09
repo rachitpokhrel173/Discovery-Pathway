@@ -242,7 +242,100 @@ hamburgerBtn.addEventListener("click", () => {
   }, false);
 </script>
 
+<!--Popup module-->
 
+  <style>
+    /* Modal background */
+    #videoModalalfa {
+      display: block;
+      position: fixed;
+      z-index: 9999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.5);
+    }
+
+    /* Modal content */
+    .modal-content {
+      position: relative;
+      background-color: #fff;
+      margin: 5% auto;
+      padding: 0;
+      width: 80%;
+      max-width: 800px;
+      border-radius: 8px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+
+    /* Modal header */
+    .modal-header {
+      padding: 16px;
+      font-size: 18px;
+      font-weight: bold;
+      border-bottom: 1px solid #ddd;
+    }
+
+    /* Close button */
+    .close-btn {
+      color: #aaa;
+      float: right;
+      font-size: 24px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .close-btn:hover {
+      color: #000;
+    }
+
+    /* Responsive iframe */
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      padding-top: 25px;
+      height: 0;
+    }
+
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Modal -->
+<div id="videoModalalfa">
+  <div class="modal-content">
+    <div class="modal-header">
+      Don’t be afraid to give it a try
+      <span class="close-btn" onclick="closeModalalfa()">&times;</span>
+    </div>
+    <div class="video-wrapper">
+      <iframe src="https://youtu.be/TeBI40gXb6M"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen>
+      </iframe>
+    </div>
+  </div>
+</div>
+
+<script>
+  function closeModalalfa() {
+    document.getElementById("videoModalalfa").style.display = "none";
+  }
+</script>
+
+
+
+  
 <!-- HERO SECTION -->
 <section class="slider">
   <!-- Slides -->
