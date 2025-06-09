@@ -96,7 +96,27 @@
 
 
       <li><a href="/Quick Links/interview.html" class="hover:text-[#46C3E0]">INTERVIEWS</a></li>
-      <li><a href="Mantainance.html" class="hover:text-[#46C3E0]">SCHOLARSHIP</a></li>
+<li class="relative dropdown">
+  <button id="classesToggle" class="hover:text-[#46C3E0] focus:outline-none">CLASSES</button>
+
+  <div class="absolute left-1/2 transform -translate-x-1/2 mt-2 w-64 p-4 rounded-lg shadow-lg 
+              bg-white/50 backdrop-blur-md border border-gray-200 z-50 dropdown-menu hidden" id="classesMenu">
+    <div class="grid grid-cols-1 gap-3">
+      <a href="Mantainance.html" class="flex items-center hover:bg-blue-100/40 p-2 rounded-md transition">
+        <span class="text-gray-800 font-semibold">IELTS</span>
+      </a>
+      <a href="Mantainance.html" class="flex items-center hover:bg-blue-100/40 p-2 rounded-md transition">
+        <span class="text-gray-800 font-semibold">PTE</span>
+      </a>
+      <a href="Mantainance.html" class="flex items-center hover:bg-blue-100/40 p-2 rounded-md transition">
+        <span class="text-gray-800 font-semibold">Japanese</span>
+      </a>
+      <a href="Mantainance.html" class="flex items-center hover:bg-blue-100/40 p-2 rounded-md transition">
+        <span class="text-gray-800 font-semibold">Korean</span>
+      </a>
+    </div>
+  </div>
+</li>
       <li class="relative dropdown">
   <button id="studyAbroadToggle" class="hover:text-[#46C3E0] focus:outline-none">STUDY ABROAD</button>
 
@@ -156,7 +176,7 @@
           </div>
         </li>
       <li><a href="Gallery.html" class="hover:text-[#46C3E0]">GALLERY</a></li>
-      <li><a href="#services" class="hover:text-[#46C3E0]">SERVICES</a></li>
+      <li><a href="/Quick Links/university.html" class="hover:text-[#46C3E0]">UNIVERSITIES</a></li>
       <li><a href="#feedbacks" class="hover:text-[#46C3E0]">FEEDBACKS</a></li>
       <li><a href="#contact" class="hover:text-[#46C3E0]">CONTACT</a></li>
     </ul>
@@ -179,6 +199,13 @@
 </header>
 
 <!-- JavaScript for Header -->
+ <script>
+  document.getElementById('classesToggle').addEventListener('click', () => {
+    const menu = document.getElementById('classesMenu');
+    menu.classList.toggle('hidden');
+  });
+</script>
+
  <script>
   // Mobile hamburger toggle
 const hamburgerBtn = document.getElementById("hamburgerBtn");
