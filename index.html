@@ -71,7 +71,7 @@
       <a href="https://www.facebook.com/discoveryconsultancybanepa" target="_blank" class="w-8 h-8 bg-[#3b5998] text-white flex items-center justify-center rounded">
         <i class="fab fa-facebook-f"></i>
       </a>
-      <a href="https://www.tiktok.com/@discoverybanepa" target="_blank" class="w-8 h-8 bg-[#00acee] text-white flex items-center justify-center rounded">
+      <a href="https://www.tiktok.com/@discoverybanepa" target="_blank" class="w-8 h-8 bg-[#000] text-white flex items-center justify-center rounded">
         <i class="fab fa-tiktok"></i>
       </a>
       <a href="https://www.instagram.com/discovery.pathway/" target="_blank" class="w-8 h-8 bg-[#E1306C] text-white flex items-center justify-center rounded">
@@ -83,14 +83,26 @@
   <!-- Desktop Navigation -->
   <nav class="bg-[#0066b3] hidden md:block">
     <ul class="flex flex-wrap justify-center space-x-6 text-white text-sm font-semibold uppercase py-2">
+<li class="relative dropdown group">
+  <button id="aboutUsToggle" class="hover:text-[#46C3E0] focus:outline-none">ABOUT US</button>
 
-      <li><a href="#About" class="hover:text-[#46C3E0]">ABOUT US</a></li>
+  <div class="absolute left-1/2 transform -translate-x-1/2 mt-2 w-[300px] p-4 rounded-lg shadow-lg bg-white/50 backdrop-blur-md border border-gray-200 z-50 hidden group-hover:block">
+    <div class="flex flex-col space-y-2">
+      <a href="/Quick Links/message.html" class="block text-gray-800 font-semibold hover:bg-blue-100/40 p-2 rounded-md transition text-center">CEO Message</a>
+      <a href="#About" class="block text-gray-800 font-semibold hover:bg-blue-100/40 p-2 rounded-md transition text-center">About Us</a>
+    </div>
+  </div>
+</li>
+
+
       <li><a href="/Quick Links/interview.html" class="hover:text-[#46C3E0]">INTERVIEWS</a></li>
       <li><a href="Mantainance.html" class="hover:text-[#46C3E0]">SCHOLARSHIP</a></li>
       <li class="relative dropdown">
-          <button id="studyAbroadToggle" class="hover:text-[#46C3E0] focus:outline-none">STUDY ABROAD</button>
-          <div class="absolute left-1/2 transform -translate-x-1/2 mt-2 w-[90vw] md:w-[700px] p-4 rounded-lg shadow-lg bg-white border border-gray-200 z-50 dropdown-menu" id="studyAbroadMenu">
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+  <button id="studyAbroadToggle" class="hover:text-[#46C3E0] focus:outline-none">STUDY ABROAD</button>
+
+  <div class="absolute left-1/2 transform -translate-x-1/2 mt-2 w-[90vw] md:w-[700px] p-4 rounded-lg shadow-lg 
+              bg-white/50 backdrop-blur-md border border-gray-200 z-50 dropdown-menu" id="studyAbroadMenu">
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
               <a href="Mantainance.html" class="flex items-center justify-start space-x-3 hover:bg-blue-50 p-2 rounded-md transition">
                 <img src="https://upload.wikimedia.org/wikipedia/en/b/b9/Flag_of_Australia.svg" class="w-8 h-auto" alt="Australia">
                 <span class="text-gray-800 font-semibold">Australia</span>
