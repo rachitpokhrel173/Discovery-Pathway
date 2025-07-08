@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Discovery Pathway</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style copy.css">
+  <link rel="stylesheet" href="animation.css">
+  <link rel="shortcut icon" href="/Assets/Discovery_Logo-removebg-preview.png" type="image/x-icon">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" />
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.11/typed.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="mobileview.css">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f4f8fb;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+
+    section {
+      padding: 40px 20px;
+      margin: 30px auto;
+      max-width: 1100px;
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    }
+
+    h2 {
+      color: #005aa7;
+      font-weight: 700;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #eee;
+      padding-bottom: 10px;
+    }
+
+    h4 {
+      font-size: 1.2rem;
+      color: #3b3b3b;
+      margin-top: 15px;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    li {
+      margin-bottom: 10px;
+      line-height: 1.6;
+    }
+
+    .ceo,
+    .md {
+      width: 250px;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .profile-container {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 30px;
+    }
+
+    .text-content {
+      flex: 1;
+    }
+
+    @media (max-width: 768px) {
+      .profile-container {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+  </style>
+
+</head>
+
+<body class="bg-gray-100 font-sans">
+  <!-- HEADER -->
+  <!-- Header -->
+  <!-- Header -->
+  <header id="mainHeader" class="bg-white shadow-md fixed w-full z-50 transition-transform duration-300">
+    <div class="max-w-7xl mx-auto px-4 flex justify-between items-center py-2 md:py-3">
+      <!-- Logo -->
+      <div class="flex items-center">
+        <a href="https://discoverypathway.edu.np/"><img src="/Assets/Discovery_Logo_TP.jpg" alt="Logo"
+            class="h-10 md:h-12"></a>
+      </div>
+
+      <!-- Hamburger (Mobile) -->
+      <div class="md:hidden">
+        <button id="hamburgerBtn" class="text-3xl focus:outline-none">&#9776;</button>
+      </div>
+
+      <!-- Contact Info (Desktop) -->
+      <div class="hidden md:flex flex-col text-xs text-right text-gray-700 font-semibold">
+        <span><i class="fas fa-map-marker-alt text-cyan-600 mr-1"></i> Banepa, Nepal</span>
+        <span><i class="fas fa-phone-alt text-cyan-600 mr-1"></i> +977 011 665659</span>
+      </div>
+
+      <!-- Social Icons (Desktop) -->
+      <div class="hidden md:flex space-x-2">
+        <a href="https://www.facebook.com/discoveryconsultancybanepa" target="_blank"
+          class="w-8 h-8 bg-[#3b5998] text-white flex items-center justify-center rounded">
+          <i class="fab fa-facebook-f"></i>
+        </a>
+        <a href="https://www.tiktok.com/@discoverybanepa" target="_blank"
+          class="w-8 h-8 bg-[#00acee] text-white flex items-center justify-center rounded">
+          <i class="fab fa-tiktok"></i>
+        </a>
+        <a href="https://www.instagram.com/discovery.pathway/" target="_blank"
+          class="w-8 h-8 bg-[#E1306C] text-white flex items-center justify-center rounded">
+          <i class="fab fa-instagram"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- Desktop Navigation -->
+    <nav class="bg-[#0066b3] hidden md:block">
+      <ul class="flex flex-wrap justify-center space-x-6 text-white text-sm font-semibold uppercase py-2">
+        <li><a href="/Quick Links/about.html" class="hover:text-[#46C3E0]">ABOUT US</a></li>
+
+
+        <li><a href="/Quick Links/interview.html" class="hover:text-[#46C3E0]">INTERVIEWS</a></li>
+        <li><a href="Mantainance.html" class="hover:text-[#46C3E0]">SCHOLARSHIP</a></li>
+        <li class="relative dropdown">
+          <button id="studyAbroadToggle" class="hover:text-[#46C3E0] focus:outline-none">STUDY ABROAD</button>
+
+          <div class="absolute left-1/2 transform -translate-x-1/2 mt-2 w-[90vw] md:w-[700px] p-4 rounded-lg shadow-lg 
+              bg-white/50 backdrop-blur-md border border-gray-200 z-50 dropdown-menu" id="studyAbroadMenu">
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              <a href="Mantainance.html"
+                class="flex items-center justify-start space-x-3 hover:bg-blue-50 p-2 rounded-md transition">
+                <img src="https://upload.wikimedia.org/wikipedia/en/b/b9/Flag_of_Australia.svg" class="w-8 h-auto"
+                  alt="Australia">
+                <span class="text-gray-800 font-semibold">Australia</span>
+              </a>
+              <a href="Mantainance.html" class="flex items-center space-x-3 hover:bg-blue-50 p-2 rounded-md transition">
+                <img src="https://upload.wikimedia.org/wikipedia/en/a/a4/Flag_of_the_United_States.svg"
+                  class="w-8 h-auto" alt="USA">
+                <span class="text-gray-800 font-semibold">USA</span>
+              </a>
+              <a href="Mantainance.html" class="flex items-center space-x-3 hover:bg-blue-50 p-2 rounded-md transition">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Flag_of_New_Zealand.svg"
+                  class="w-8 h-auto" alt="New Zealand">
+                <span class="text-gray-800 font-semibold">New Zealand</span>
+              </a>
+              <a href="Mantainance.html" class="flex items-center space-x-3 hover:bg-blue-50 p-2 rounded-md transition">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/c/cf/Flag_of_Canada.svg" class="w-8 h-auto"
+                  alt="Canada">
+                <span class="text-gray-800 font-semibold">Canada</span>
+              </a>
+              <a href="Mantainance.html" class="flex items-center space-x-3 hover:bg-blue-50 p-2 rounded-md transition">
+                <img src="https://upload.wikimedia.org/wikipedia/en/a/ae/Flag_of_the_United_Kingdom.svg"
+                  class="w-8 h-auto" alt="UK">
+                <span class="text-gray-800 font-semibold">UK</span>
+              </a>
+              <a href="Mantainance.html" class="flex items-center space-x-3 hover:bg-blue-50 p-2 rounded-md transition">
+                <img
+                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBeaSZSwax2XvXTLQ5hlnz3oF6SMpRiTb_hu_WAaa6oCXnEHWihMmU3ww1DDwt&s=10"
+                  class="w-8 h-auto" alt="Denmark">
+                <span class="text-gray-800 font-semibold">Denmark</span>
+              </a>
+              <a href="Mantainance.html" class="flex items-center space-x-3 hover:bg-blue-50 p-2 rounded-md transition">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/4/45/Flag_of_Ireland.svg" class="w-8 h-auto"
+                  alt="Ireland">
+                <span class="text-gray-800 font-semibold">Ireland</span>
+              </a>
+              <a href="Mantainance.html" class="flex items-center space-x-3 hover:bg-blue-50 p-2 rounded-md transition">
+                <img src="https://upload.wikimedia.org/wikipedia/en/9/9e/Flag_of_Japan.svg" class="w-8 h-auto"
+                  alt="Japan">
+                <span class="text-gray-800 font-semibold">Japan</span>
+              </a>
+              <a href="Mantainance.html" class="flex items-center space-x-3 hover:bg-blue-50 p-2 rounded-md transition">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg"
+                  class="w-8 h-auto" alt="South Korea">
+                <span class="text-gray-800 font-semibold">South Korea</span>
+              </a>
+              <a href="Mantainance.html" class="flex items-center space-x-3 hover:bg-blue-50 p-2 rounded-md transition">
+                <img src="https://upload.wikimedia.org/wikipedia/en/b/ba/Flag_of_Germany.svg" class="w-8 h-auto"
+                  alt="Germany">
+                <span class="text-gray-800 font-semibold">Germany</span>
+              </a>
+              <a href="Mantainance.html" class="flex items-center space-x-3 hover:bg-blue-50 p-2 rounded-md transition">
+                <img src="https://upload.wikimedia.org/wikipedia/en/c/c3/Flag_of_France.svg" class="w-8 h-auto"
+                  alt="France">
+                <span class="text-gray-800 font-semibold">France</span>
+              </a>
+              <a href="Mantainance.html" class="flex items-center space-x-3 hover:bg-blue-50 p-2 rounded-md transition">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/f/f3/Flag_of_Switzerland.svg"
+                  class="w-8 h-auto" alt="Switzerland">
+                <span class="text-gray-800 font-semibold">Switzerland</span>
+              </a>
+              <!-- Other countries same as before -->
+            </div>
+          </div>
+        </li>
+        <li><a href="Gallery.html" class="hover:text-[#46C3E0]">GALLERY</a></li>
+        <li><a href="#services" class="hover:text-[#46C3E0]">SERVICES</a></li>
+        <li><a href="#feedbacks" class="hover:text-[#46C3E0]">FEEDBACKS</a></li>
+        <li><a href="#contact" class="hover:text-[#46C3E0]">CONTACT</a></li>
+      </ul>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="md:hidden hidden bg-[#0066b3] text-white text-sm font-semibold uppercase px-4 pb-4">
+      <ul class="space-y-2 pt-2">
+        <li><a href="#" class="block py-1 border-b border-white">Home</a></li>
+        <li><a href="#" class="block py-1 border-b border-white">Discover Us</a></li>
+        <li><a href="#" class="block py-1 border-b border-white">Our Pride</a></li>
+        <li><a href="#" class="block py-1 border-b border-white">Scholarships</a></li>
+        <li><a href="#" class="block py-1 border-b border-white">Study Destination</a></li>
+        <li><a href="#" class="block py-1 border-b border-white">Test Prep</a></li>
+        <li><a href="#" class="block py-1 border-b border-white">Services</a></li>
+        <li><a href="#" class="block py-1 border-b border-white">Blog</a></li>
+        <li><a href="#contact" class="block py-1 border-b border-white">Contact</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- JavaScript for Header -->
+  <script>
+    // Mobile hamburger toggle
+    const hamburgerBtn = document.getElementById("hamburgerBtn");
+    const mobileMenu = document.getElementById("mobileMenu");
+    document.addEventListener("DOMContentLoaded", () => {
+      const toggleBtn = document.getElementById("studyAbroadToggle");
+      const dropdownMenu = document.getElementById("studyAbroadMenu");
+      const hamburgerBtn = document.getElementById("hamburgerBtn");
+      const mobileMenu = document.getElementById("mobileMenu");
+
+      toggleBtn?.addEventListener("click", (e) => {
+        e.preventDefault();
+        dropdownMenu.classList.toggle("show");
+      });
+
+      document.addEventListener("click", (e) => {
+        if (!toggleBtn.contains(e.target) && !dropdownMenu.contains(e.target)) {
+          dropdownMenu.classList.remove("show");
+        }
+      });
+
+      hamburgerBtn?.addEventListener("click", () => {
+        mobileMenu.classList.toggle("hidden");
+      });
+    });
+
+
+    hamburgerBtn.addEventListener("click", () => {
+      mobileMenu.classList.toggle("hidden");
+    });
+
+  </script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const toggleBtn = document.getElementById("studyAbroadToggle");
+      const dropdownMenu = document.getElementById("studyAbroadMenu");
+      const hamburgerBtn = document.getElementById("hamburgerBtn");
+      const mobileMenu = document.getElementById("mobileMenu");
+
+      toggleBtn?.addEventListener("click", (e) => {
+        e.preventDefault();
+        dropdownMenu.classList.toggle("show");
+      });
+
+      document.addEventListener("click", (e) => {
+        if (!toggleBtn.contains(e.target) && !dropdownMenu.contains(e.target)) {
+          dropdownMenu.classList.remove("show");
+        }
+      });
+
+      hamburgerBtn?.addEventListener("click", () => {
+        mobileMenu.classList.toggle("hidden");
+      });
+    });
+
+  </script>
+  <script>
+    let lastScrollTop = 0;
+    const header = document.getElementById("mainHeader");
+
+    window.addEventListener("scroll", function () {
+      const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+
+      if (currentScroll > lastScrollTop) {
+        // Scrolling down
+        header.style.transform = "translateY(-100%)";
+      } else {
+        // Scrolling up
+        header.style.transform = "translateY(0)";
+      }
+
+      lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+    }, false);
+  </script>
+  <style>
+    :root {
+      --main-color: #2352A4;
+      --secondary-color: #2451A8;
+      --light-bg: #f2f7fc;
+      --text-color: #333;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #fff;
+      color: var(--text-color);
+    }
+
+    .hero {
+      text-align: center;
+      padding: 80px 20px;
+      background: linear-gradient(to right, var(--main-color), var(--secondary-color));
+      color: #fff;
+    }
+
+    .hero h1 {
+      font-size: 34px;
+      margin: 10px 0;
+      font-weight: 700;
+    }
+
+    .hero h4 {
+      font-size: 20px;
+      font-weight: 500;
+      margin-bottom: 5px;
+    }
+
+    .hero p {
+      font-size: 14px;
+      opacity: 0.85;
+    }
+
+    .message-section {
+      padding: 60px 20px;
+    }
+
+    .message-card {
+      max-width: 1100px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+      padding: 40px;
+      transition: 0.3s ease-in-out;
+    }
+
+    .message-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .message-content {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 40px;
+      flex-wrap: nowrap;
+    }
+
+    .reverse {
+      flex-direction: row-reverse;
+    }
+
+    .profile-img {
+      width: 250px;
+      height: auto;
+      border-radius: 16px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+      flex-shrink: 0;
+      display: block;
+      margin: 0;
+    }
+
+    .profile-img:hover {
+      transform: scale(1.03);
+    }
+
+    .text-block {
+      max-width: 100%;
+      flex: 1;
+      padding: 0;
+      margin: 0;
+    }
+
+    .text-block h2 {
+      color: var(--main-color);
+      font-size: 26px;
+      margin-bottom: 5px;
+    }
+
+    .text-block h4 {
+      color: var(--secondary-color);
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+
+    .text-block p {
+      line-height: 1.7;
+      margin-bottom: 15px;
+      font-size: 16px;
+      text-align: justify;
+    }
+
+    .light-bg {
+      background-color: var(--light-bg);
+    }
+
+    @media (max-width: 768px) {
+      .message-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+      }
+
+      .reverse {
+        flex-direction: column;
+      }
+
+      .profile-img {
+        margin: 0 auto;
+      }
+
+      .text-block {
+        padding-top: 20px;
+      }
+
+      .hero h1 {
+        font-size: 28px;
+      }
+
+      .hero h4 {
+        font-size: 16px;
+      }
+    }
+  </style>
+  </head>
+
+  <body>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>  
+    <section>
+      <h2>About Us</h2>
+      <p><strong>Welcome to Discovery Pathway Pvt. Ltd</strong></p>
+      <p>Discovery Pathway Pvt. Ltd is a leading education consultancy, headquartered in Banepa, Nepal, which was
+        established in 2023 and is registered under the Ministry of Education, Science & Technology. We fulfill all
+        technical and certification requirements. Our motive is to provide top-quality, reliable services to aspiring
+        students for higher studies worldwide. We have successfully unleashed thousands of dreams for people who wish to
+        study abroad.</p>
+      <p>Our highly skilled and experienced team provides detailed counseling to prospective students to secure
+        admission at various universities and colleges in Europe, Australia, Japan, South Korea, UK, Canada, USA, and
+        more. We also prepare students for IELTS and PTE exams with expert coaching by our highly trained teachers in
+        modern high-tech classrooms.</p>
+      <p>We have strong relationships with Institutes and Universities worldwide. Our team of learned expert counselors
+        holds not only ample experience but has also visited the respective nations' universities and acquired in-depth
+        knowledge and training. We hold a very high admission and student visa success ratio. Trust is what we have
+        established through people’s faith and excellent service. With our incredible success rate, Discovery Pathway is
+        becoming one of the most renowned international education consultants in Nepal.</p>
+    </section>
+
+    <section>
+      <h2>Message from CEO</h2>
+      <div class="profile-container">
+        <div class="text-content">
+          <p>Dear Students and Parents,</p>
+          <p>Empowering the students with quality education in a wider horizon is the mission we embrace at Global. As
+            the Managing Director of Discovery Pathway Pvt. Ltd, I am privileged to be a part of the education scenario
+            today. Understanding the competitive environment, we strive to facilitate excellent educational options for
+            the personal growth and career fulfillment of students aspiring to study abroad.</p>
+          <p>In the emerging context of the global economy and community, having a globally accepted degree from abroad
+            secures a bright future ensuring an ever-advancing career profile. We provide vital services to obtain
+            admission to popular courses in premium institutions abroad. Our adaptable service package ensures complete
+            support and guidance from pre-application to final admission.</p>
+          <p>Our highly dedicated and committed team strives to achieve excellence in overseas educational consultancy,
+            and I am honored to be the leader of this team. With a keen focus on quality education, we are steadfast in
+            our path, assisting students in attaining meritorious heights. We work closely to serve students in
+            fulfilling their academic dreams through a cost-effective package and professional guidance. We look forward
+            to answering your queries and ensuring effective assistance for education overseas.</p>
+          <p><strong>Thanks,<br> Amit Neupane</strong></p>
+        </div>
+        <img src="/Assets/Amit_NeupaneICEO.jpg" alt="Amit Neupane - CEO" class="ceo">
+      </div>
+    </section>
+
+    <section>
+      <h2>Message from Managing Director</h2>
+      <div class="profile-container">
+        <img src="/Assets/Suman Kumar Gautammd.jpg" alt="Suman Kumar Gautam - Managing Director" class="md">
+        <div class="text-content">
+          <p>Dear Students and Parents,</p>
+          <p>It gives me great pleasure to welcome you to Discovery Pathway, a place where ambition meets opportunity.
+            As the Managing Director, my priority is to uphold the values of integrity, transparency, and student-first
+            service that define our organization.</p>
+          <p>We recognize that no two students are the same. Each individual has a unique dream, a personal story, and
+            specific goals. Our job is to listen closely, guide carefully, and support consistently. From choosing the
+            right country and university to preparing for interviews and visas, we walk with you through every step of
+            your academic adventure abroad.</p>
+          <p>At Discovery Pathway, we strive to create a safe, supportive, and informed space for every learner. With an
+            expert team, strong global partnerships, and up-to-date insights into international education systems, we
+            offer a service you can trust.</p>
+          <p>Let Discovery Pathway be your compass. We are here to inspire, to guide, and to celebrate your success. The
+            future is bright—and it's yours to claim.</p>
+          <strong>Thanks,<br> Suman Kumar Gautam</strong></p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+  <h2>Why Discovery Pathway?</h2>
+  <ul>
+    <li>Trusted pioneers in overseas education counseling with global academic network.</li>
+    <li>Thousands of students placed successfully in top universities worldwide.</li>
+    <li>Focused exclusively on English-speaking countries to eliminate language barriers.</li>
+    <li>Customized guidance based on academic, financial, and personal goals.</li>
+    <li>Personalized, student-first approach over a one-size-fits-all system.</li>
+    <li>Expert counselors committed to turning your dreams into reality.</li>
+    <li>Among Nepal’s highest student visa success rates.</li>
+  </ul>
+</section>
+
+    <section>
+      <h2>What We Do</h2>
+      <ul>
+        <li><strong>University & Course Selection:</strong> Tailored guidance to find the perfect academic match.</li>
+        <li><strong>Test Preparation:</strong> Coaching for IELTS, Japanese Language, PTE, and SAT.</li>
+        <li><strong>Application Assistance:</strong> Expert help with SOPs, transcripts, and documentation.</li>
+        <li><strong>Admission Follow-up:</strong> Fast and effective application tracking and support.</li>
+        <li><strong>Visa Counseling:</strong> Guidance for successful visa applications and documentation.</li>
+        <li><strong>Financial & Travel Planning:</strong> Advice on loans, foreign exchange, and logistics.</li>
+        <li><strong>Pre-Departure Orientation:</strong> Cultural and academic readiness sessions.</li>
+        <li><strong>Career Skills:</strong> Resume writing and interview training for part-time or full-time jobs.</li>
+      </ul>
+    </section>
+
+
+
+
+    <!-- Footer -->
+    <footer class="px-6 py-10 md:px-20 text-white" style="background-color: #003f84;">
+      <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-10">
+        <!-- Logo and Contact Info -->
+        <div>
+          <div class="mb-4">
+            <img src="/Assets/New_DP_Logo.png" alt="Discovery Pathway Logo" class="h-13">
+          </div>
+          <ul class="text-sm space-y-2">
+            <li class="flex items-start space-x-2">
+              <i class="fas fa-phone mt-1"></i>
+              <span>+977 9851345539, 9851223025</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <i class="fas fa-envelope mt-1"></i>
+              <span>banepa@discoveryedu.com.np</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <i class="fas fa-map-marker-alt mt-1"></i>
+              <span>Chandeshwori Margh, Banepa,<br> Kavrepalanchok, Nepal</span>
+            </li>
+          </ul>
+          <div class="flex space-x-4 mt-4">
+            <a href="#" class="text-white hover:text-[#1877F2] text-xl"><i class="fab fa-facebook"></i></a>
+            <a href="#" class="text-white hover:text-[#E1306C] text-xl"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="text-white hover:text-[#69C9D0] text-xl"><i class="fab fa-tiktok"></i></a>
+            <a href="#" class="text-white text-xl"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div>
+          <h2 class="text-lg font-semibold mb-4">Quick Links</h2>
+          <ul class="space-y-2 text-sm">
+            <li><a href="#">About Discovery</a></li>
+            <li><a href="#">Services</a></li>
+            <li><a href="#">Universities</a></li>
+            <li><a href="#">Resources</a></li>
+            <li><a href="#">Events</a></li>
+            <li><a href="#">Contact Us</a></li>
+          </ul>
+        </div>
+
+        <!-- Middle Links -->
+        <div>
+          <h2 class="text-lg font-semibold mb-4">&nbsp;</h2>
+          <ul class="space-y-2 text-sm">
+            <li><a href="#">Gallery</a></li>
+            <li><a href="#">Testimonials & Reviews</a></li>
+            <li><a href="#">Success Stories</a></li>
+            <li><a href="#">Interviews</a></li>
+            <li><a href="#">OHSC</a></li>
+            <li><a href="/Quick Links/faqs.html">FAQs</a></li>
+          </ul>
+        </div>
+
+        <!-- Student Needs -->
+        <div>
+          <h2 class="text-lg font-semibold mb-4">Need for Students</h2>
+          <ul class="space-y-2 text-sm">
+            <li><a href="#">Career Counseling</a></li>
+            <li><a href="#">Online Application</a></li>
+            <li><a href="#">How to Obtain Visa</a></li>
+            <li><a href="#">Student Accommodation</a></li>
+          </ul>
+        </div>
+
+        <!-- Tools for Students -->
+        <div>
+          <h2 class="text-lg font-semibold mb-4">&nbsp;</h2>
+          <ul class="space-y-2 text-sm">
+            <li><a href="https://www.xe.com/currencyconverter/">Currency Converter</a></li>
+            <li><a href="/Quick Links/date.html">Date Converter</a></li>
+            <li><a href="/Quick Links/score.html">Score Comparison</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Bottom Line -->
+      <div class="max-w-7xl mx-auto mt-10 border-t border-white/10 pt-6 text-center text-xs text-gray-200">
+        <p>&copy; 2025 Discovery Pathway. All Rights Reserved. <br>Developed By
+          <a href="https://www.rachitpokhrel.com.np/"
+            class="hover:text-white hover:font-bold transition-all duration-200">Rachit Pokhrel.</a>
+        </p>
+      </div>
+    </footer>
+  </body>
+
+</html>
