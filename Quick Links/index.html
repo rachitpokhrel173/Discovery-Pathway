@@ -431,13 +431,9 @@
       ⬅ Go Back to Main Page
     </a>
   </div>
+<script>
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwwwLO0LjPYsoocFNEhPQpXm-WpR_Zle1pbI43ZRzsNmojGWSOSWwYVBdD1A_lvWSBB/exec";
 
-  <script>
-    // ======= SET YOUR /exec URL HERE =======
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxVKclI_HlLpSih6RA1nJHoUraAjibTqiOukxazrGdUOQ3xQW7T-9Iva8Nt9YxVmukvIw/exec";
-    // =======================================
-
-    // DOM refs
     const form = document.getElementById("admissionForm");
     const registerBtn = document.getElementById("registerBtn");
     const statusOk = document.getElementById("statusOk");
@@ -461,6 +457,7 @@
     const countrySelect = document.getElementById("country");
     const additionalOptions = document.getElementById("additionalOptions");
     const ieltsScoreDiv = document.getElementById("ieltsScoreDiv");
+    const pteScoreDiv = document.getElementById("pteScoreDiv"); // ✅ FIX added
     const japanTestsDiv = document.getElementById("japanTestsDiv");
     const additionalHint = document.getElementById("additionalHint");
     const ieltsScoreInput = document.getElementById("ieltsScore");
@@ -469,17 +466,13 @@
     ieltsScoreInput.addEventListener("input", () => {
       ieltsError.style.display = "none";
       let val = parseFloat(ieltsScoreInput.value);
-
       if (isNaN(val)) return;
-
-      // Only allow values between 0.5 and 9.0 in steps of 0.5
       if (val < 0.5 || val > 9.0 || val * 10 % 5 !== 0) {
         ieltsError.style.display = "block";
-        ieltsScoreInput.value = ""; // clear invalid input
+        ieltsScoreInput.value = "";
       }
     });
 
-    // Helpers
     const show = (el, flag) => el.style.display = flag ? "block" : "none";
     const banner = (el, msg) => { el.textContent = msg; el.style.display = msg ? "block" : "none"; }
     const clearBanners = () => { banner(statusOk, ""); banner(statusErr, ""); banner(statusInfo, ""); }
@@ -505,23 +498,18 @@
     function updateAdditionalOptions() {
       const course = courseSelect.value;
       const country = countrySelect.value;
-      show(additionalOptions, false); show(ieltsScoreDiv, false); show(japanTestsDiv, false); additionalHint.textContent = "";
-      if (course === "IELTS" && ["Korea", "Australia", "UK", "USA", "New Zealand", "Denmark", "France", "Finland", "Germany", "Spain", "Italy", "Sweden",].includes(country)) {
+      show(additionalOptions, false); show(ieltsScoreDiv, false); show(pteScoreDiv, false); show(japanTestsDiv, false); additionalHint.textContent = "";
+      if (course === "IELTS" && ["Korea", "Australia", "UK", "USA", "New Zealand", "Denmark", "France", "Finland", "Germany", "Spain", "Italy", "Sweden"].includes(country)) {
         show(additionalOptions, true); show(ieltsScoreDiv, true);
         additionalHint.textContent = "Provide IELTS if applying for the selected country.";
       }
-      // PTE logic
-      else if (course === "PTE" && [
-        "Ireland", "Canada", "New Zealand", "UK", "Australia"
-      ].includes(country)) {
-
+      else if (course === "PTE" && ["Ireland", "Canada", "New Zealand", "UK", "Australia"].includes(country)) {
         show(additionalOptions, true);
-        show(pteScoreDiv, true); // reusing IELTS field for PTE score
+        show(pteScoreDiv, true);
         additionalHint.textContent = "Provide your PTE Academic score if available.";
       }
       else if (course === "Japanese" && country === "Japan") {
-        additionalOptions.style.display = "block";
-        japanTestsDiv.style.display = "block";
+        show(additionalOptions, true); show(japanTestsDiv, true);
         additionalHint.textContent = "Provide your JLCT / JLPT / NAT score if available.";
       }
     }
@@ -538,19 +526,16 @@
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
       clearBanners();
-
       if (!agree.checked) { banner(statusErr, "Please agree to the declaration to continue."); return; }
       if (!form.checkValidity()) { banner(statusErr, "Please fill all required fields."); return; }
       if (!validatePayment()) return;
 
       banner(statusInfo, "Submitting..."); registerBtn.disabled = true;
 
-      // Collect data
       const fd = new FormData(form);
       const data = {};
       fd.forEach((v, k) => data[k] = v);
 
-      // Attach Base64 file (if any)
       const file = qrReceipt.files[0];
       if (file) {
         const b64 = await new Promise((resolve, reject) => {
@@ -566,14 +551,10 @@
       try {
         const resp = await fetch(WEB_APP_URL, {
           method: "POST",
-          headers: { "Content-Type": "text/plain;charset=utf-8" }, // avoids CORS preflight on GAS
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
           body: JSON.stringify(data)
         });
-
-        // If your deployment is not public, Google will redirect to login HTML here,
-        // and this parse will throw. That’s the signal to fix deployment access.
         const json = await resp.json();
-
         if (json.result === "success") {
           banner(statusOk, "✅ Registration submitted successfully!");
           form.reset(); updateButton();
@@ -588,22 +569,18 @@
       }
     });
 
-    // init
-    updateButton();
     const dobInput = document.getElementById("dob");
     const dobError = document.getElementById("dobError");
-
     dobInput.addEventListener("change", () => {
-      dobError.style.display = "none"; // reset
+      dobError.style.display = "none";
       if (dobInput.value) {
         const selectedYear = new Date(dobInput.value).getFullYear();
         if (selectedYear < 1989) {
           dobError.style.display = "block";
-          dobInput.value = ""; // clear invalid input (optional)
+          dobInput.value = "";
         }
       }
     });
-
   </script>
 </body>
 
