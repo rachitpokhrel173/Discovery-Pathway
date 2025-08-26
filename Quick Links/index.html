@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Discovery Admission</title>
+  <meta name="color-scheme" content="light dark" />
+  <meta name="description" content="Student Admission Form - Discovery Pathway" />
+  <style>
+    :root {
+      --brand: #3B8FC2;
+      --bg: rgba(57, 137, 192, .08);
+      --card: #fff;
+      --text: #222;
+      --muted: #666;
+      --border: #ddd;
+      --danger: #c62828;
+      --success: #2e7d32;
+      --focus: #2563eb;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0f172a;
+        --card: #0b1220;
+        --text: #e5e7eb;
+        --muted: #9ca3af;
+        --border: #1f2937;
+      }
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Helvetica Neue", sans-serif;
+      margin: 0;
+      background: var(--bg);
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 16px;
+      color: var(--text)
+    }
+
+    .container {
+      background: var(--card);
+      width: 100%;
+      max-width: 760px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, .15);
+      padding: 24px;
+      border: 1px solid var(--border)
+    }
+
+    .logo {
+      text-align: center;
+      margin-bottom: 12px
+    }
+
+    .logo img {
+      max-width: 260px;
+      height: auto
+    }
+
+    h1 {
+      font-size: clamp(20px, 2.6vw, 28px);
+      text-align: center;
+      margin: 6px 0 18px
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px
+    }
+
+    @media (min-width:640px) {
+      .row.two {
+        grid-template-columns: 1fr 1fr
+      }
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="date"],
+    input[type="number"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: transparent;
+      color: var(--text);
+      outline: none;
+      transition: box-shadow .15s, border-color .15s
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--focus);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, .15)
+    }
+
+    textarea {
+      resize: vertical
+    }
+
+    .muted {
+      color: var(--muted);
+      font-size: 13px
+    }
+
+    .chips {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px
+    }
+
+    .section {
+      margin-top: 14px;
+      padding: 14px;
+      background: rgba(59, 143, 194, .06);
+      border: 1px dashed var(--border);
+      border-radius: 10px
+    }
+
+    .error {
+      color: var(--danger);
+      font-size: 13px;
+      display: none;
+      margin-top: 6px
+    }
+
+    .banner {
+      display: none;
+      margin: 10px 0 0;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-size: 14px;
+      border: 1px solid transparent
+    }
+
+    .banner.success {
+      background: rgba(46, 125, 50, .12);
+      color: var(--success);
+      border-color: rgba(46, 125, 50, .3)
+    }
+
+    .banner.danger {
+      background: rgba(198, 40, 40, .12);
+      color: var(--danger);
+      border-color: rgba(198, 40, 40, .3)
+    }
+
+    .banner.info {
+      background: rgba(59, 143, 194, .12);
+      color: var(--brand);
+      border-color: rgba(59, 143, 194, .3)
+    }
+
+    .btn {
+      appearance: none;
+      border: none;
+      border-radius: 10px;
+      padding: 12px 16px;
+      background: var(--brand);
+      color: #fff;
+      font-weight: 600;
+      width: 100%;
+      cursor: pointer;
+      font-size: 16px;
+      transition: transform .06s, box-shadow .15s;
+      margin-top: 8px
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, .15)
+    }
+
+    .btn[disabled] {
+      opacity: .6;
+      cursor: not-allowed;
+      box-shadow: none
+    }
+
+    .footer-note {
+      text-align: center;
+      font-size: 12px;
+      margin-top: 10px;
+      color: var(--muted)
+    }
+
+    .preview img {
+      max-width: 160px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      display: block;
+      margin-top: 6px
+    }
+
+    .req {
+      color: var(--danger);
+      margin-left: 4px
+    }
+
+    .small {
+      font-size: 12px;
+      color: var(--muted)
+    }
+
+    /* All options in dropdown */
+    select option {
+      background: #ffffff;
+      color: #000000;
+    }
+
+    /* The selected option in dropdown */
+    select option:checked {
+      background: #3B8FC2;
+      /* your brand blue */
+      color: #ffffff;
+      /* white text */
+    }
+
+    /* Hover effect inside dropdown */
+    select option:hover {
+      background: #2563eb;
+      /* darker blue */
+      color: #ffffff;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="container" role="main" aria-label="Student Admission Form">
+    <div class="logo"><img src="./LOGO.png" alt="Discovery Pathway" /></div>
+    <h1>Student Admission Form</h1>
+
+    <form id="admissionForm" novalidate>
+      <div class="row two">
+        <div><label for="fullName">Full Name <span class="req">*</span></label>
+          <input id="fullName" name="fullName" type="text" required autocomplete="name" />
+        </div>
+        <div><label for="email">Email Address <span class="req">*</span></label>
+          <input id="email" name="email" type="email" required autocomplete="email" />
+        </div>
+      </div>
+
+      <div class="row two">
+        <div><label for="dob">Date of Birth <span class="req">*</span></label>
+          <input id="dob" name="dob" type="date" required />
+          <div class="error" id="dobError">⚠️ Date of Birth before 1989 doesn’t seem valid.</div>
+        </div>
+        <div><label>Gender <span class="req">*</span></label>
+          <div class="chips" role="radiogroup">
+            <label class="chip"><input type="radio" name="gender" value="male" required /> Male</label>
+            <label class="chip"><input type="radio" name="gender" value="female" /> Female</label>
+            <label class="chip"><input type="radio" name="gender" value="other" /> Other</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div><label for="address">Address <span class="req">*</span></label>
+          <textarea id="address" name="address" rows="3" required placeholder="Street, City, Province"></textarea>
+        </div>
+      </div>
+
+      <div class="row two">
+        <div><label for="qualification">Academic Qualification <span class="req">*</span></label>
+          <input id="qualification" name="qualification" type="text" required placeholder="e.g., Bachelor in ..." />
+        </div>
+        <div><label for="grade">Academic % or GPA <span class="req">*</span></label>
+          <input id="grade" name="grade" type="text" required placeholder="e.g., 3.6 GPA / 78%" />
+        </div>
+      </div>
+
+      <div class="row two">
+        <div><label for="university">University / School Name <span class="req">*</span></label>
+          <input id="university" name="university" type="text" required />
+        </div>
+        <div><label for="personalNumber">Personal Number <span class="req">*</span></label>
+          <input id="personalNumber" name="personalNumber" inputmode="tel" type="text" required
+            placeholder="9XXXXXXXXX" />
+        </div>
+      </div>
+
+      <div class="row two">
+        <div><label for="parentNumber">Parent Number <span class="req">*</span></label>
+          <input id="parentNumber" name="parentNumber" inputmode="tel" type="text" required />
+        </div>
+        <div><label for="course">Select Course <span class="req">*</span></label>
+          <select id="course" name="course" required>
+            <option value="">--Please choose--</option>
+            <option value="IELTS">IELTS</option>
+            <option value="PTE">PTE</option>
+            <option value="Japanese">Japanese Language</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row two">
+        <div><label for="country">Selected Country <span class="req">*</span></label>
+          <select id="country" name="country" required>
+            <option value="">--Please choose--</option>
+            <option>Australia</option>
+            <option>UK</option>
+            <option>USA</option>
+            <option>Canada</option>
+            <option>New Zealand</option>
+            <option>Japan</option>
+            <option>Denmark</option>
+            <option>Korea</option>
+            <option>France</option>
+            <option>Malta</option>
+            <option>Finland</option>
+            <option>Germany</option>
+            <option>Spain</option>
+            <option>Italy</option>
+            <option>Sweden</option>
+          </select>
+        </div>
+
+        <div id="additionalOptions" class="section" style="display:none;">
+          <div id="ieltsScoreDiv" style="display:none;">
+            <label for="ieltsScore">IELTS Score</label>
+            <input id="ieltsScore" name="ieltsScore" type="number" step="0.5" min="0.5" max="9.0"
+              placeholder="e.g., 6.5, 7.5, 9.0" />
+            <div class="error" id="ieltsError">⚠️ Please enter a valid IELTS score (0.5 – 9.0 in 0.5 steps).</div>
+          </div>
+
+          <!-- PTE Score -->
+          <div id="pteScoreDiv" style="display:none;">
+            <label for="pteScore">PTE Score</label>
+            <input id="pteScore" name="pteScore" type="number" min="10" max="90" step="1" />
+          </div>
+          <div id="japanTestsDiv" style="display:none;">
+            <label for="japanTest">Language Test Score (JLCT / JLPT / NAT)</label>
+            <input id="japanTest" name="japanTest" type="number" min="0" step="0.1" />
+          </div>
+          <p class="muted" id="additionalHint" style="margin:6px 0 0;"></p>
+        </div>
+      </div>
+
+      <div class="section">
+        <label>Payment Method <span class="req">*</span></label>
+        <div class="chips" style="margin-top:6px;">
+          <label class="chip"><input id="qrPay" type="radio" name="paymentMethod" value="qr" required /> QR
+            Payment</label>
+          <label class="chip"><input id="cashPay" type="radio" name="paymentMethod" value="cash" /> Cash</label>
+        </div>
+
+        <div id="qrUpload" style="display:none; margin-top:10px;">
+          <label for="qrReceipt">Upload QR Receipt (image)</label>
+          <input id="qrReceipt" name="qrReceipt" type="file" accept="image/*" />
+          <div class="preview" id="qrPreview"></div>
+          <div class="error" id="qrError">Please upload the QR receipt image.</div>
+          <p class="muted">
+            Please upload a clear picture of your QR payment receipt.
+            This will be used to verify your payment.
+            Your receipt will remain confidential and will only be used by our administration team.
+          </p>
+        </div>
+
+        <div id="cashSection" style="display:none; margin-top:10px;">
+          <label for="paidTo">Paid To</label>
+          <select id="paidTo" name="paidTo">
+            <option value="">--Select--</option>
+            <option>Amit Sir</option>
+            <option>Suman Sir</option>
+            <option>Nirmal Sir</option>
+            <option>Rachit Sir</option>
+            <option>Arpan Sir</option>
+            <option>Sadhana Maam</option>
+          </select>
+          <div class="error" id="cashError">Please select who received the cash payment.</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <p class="muted" style="line-height:1.5; margin:0 0 6px;">
+          I declare that the information I have provided in this application is true, complete, and correct to the best
+          of my knowledge.
+          I agree to follow all the rules and regulations of this institution during my preparation and visa application
+          process.
+          I also assure that all fees and dues will be cleared within three (3) days from the date of admission.
+          In case of violation of the rules, misconduct, or providing false information, I accept that the institution
+          has full rights to cancel my admission and I will be liable to pay any penalty or compensation as required by
+          the office.
+        </p>
+        <div class="chips">
+          <label class="chip"><input id="agree" type="radio" name="declaration" value="agree" /> Agree</label>
+          <label class="chip"><input id="disagree" type="radio" name="declaration" value="disagree" /> Disagree</label>
+        </div>
+        <p class="small"> By submitting, you consent to your information being securely stored on Discovery Pathway’s
+          servers and used only by the administration team for admission and official purposes.</p>
+      </div>
+
+      <button id="registerBtn" class="btn" type="submit" disabled>Register</button>
+      <div id="statusOk" class="banner success"></div>
+      <div id="statusErr" class="banner danger"></div>
+      <div id="statusInfo" class="banner info"></div>
+
+      <p class="footer-note">Your admission details will be securely recorded and reviewed by the Discovery Pathway
+        administration team.
+        You will be contacted by our team after successful submission.</p>
+    </form>
+  </main>
+
+  <!-- Go Back Button -->
+  <div style="text-align:center; margin-top:16px;">
+    <a href="https://discoverypathway.edu.np/" class="btn"
+      style="display:inline-block; width:auto; padding:10px 20px; text-decoration:none;">
+      ⬅ Go Back to Main Page
+    </a>
+  </div>
+
+  <script>
+    // ======= SET YOUR /exec URL HERE =======
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbypr-TSMaGylh0AUyWlmebtFDdZH9VzWqtT5aef_KKCnKY7tuy07p6OO2l24k9uPepmmw/exec";
+    // =======================================
+
+    // DOM refs
+    const form = document.getElementById("admissionForm");
+    const registerBtn = document.getElementById("registerBtn");
+    const statusOk = document.getElementById("statusOk");
+    const statusErr = document.getElementById("statusErr");
+    const statusInfo = document.getElementById("statusInfo");
+
+    const agree = document.getElementById("agree");
+    const disagree = document.getElementById("disagree");
+
+    const qrPay = document.getElementById("qrPay");
+    const cashPay = document.getElementById("cashPay");
+    const qrUpload = document.getElementById("qrUpload");
+    const cashSection = document.getElementById("cashSection");
+    const qrReceipt = document.getElementById("qrReceipt");
+    const paidTo = document.getElementById("paidTo");
+    const qrError = document.getElementById("qrError");
+    const cashError = document.getElementById("cashError");
+    const qrPreview = document.getElementById("qrPreview");
+
+    const courseSelect = document.getElementById("course");
+    const countrySelect = document.getElementById("country");
+    const additionalOptions = document.getElementById("additionalOptions");
+    const ieltsScoreDiv = document.getElementById("ieltsScoreDiv");
+    const japanTestsDiv = document.getElementById("japanTestsDiv");
+    const additionalHint = document.getElementById("additionalHint");
+    const ieltsScoreInput = document.getElementById("ieltsScore");
+    const ieltsError = document.getElementById("ieltsError");
+
+    ieltsScoreInput.addEventListener("input", () => {
+      ieltsError.style.display = "none";
+      let val = parseFloat(ieltsScoreInput.value);
+
+      if (isNaN(val)) return;
+
+      // Only allow values between 0.5 and 9.0 in steps of 0.5
+      if (val < 0.5 || val > 9.0 || val * 10 % 5 !== 0) {
+        ieltsError.style.display = "block";
+        ieltsScoreInput.value = ""; // clear invalid input
+      }
+    });
+
+    // Helpers
+    const show = (el, flag) => el.style.display = flag ? "block" : "none";
+    const banner = (el, msg) => { el.textContent = msg; el.style.display = msg ? "block" : "none"; }
+    const clearBanners = () => { banner(statusOk, ""); banner(statusErr, ""); banner(statusInfo, ""); }
+    const updateButton = () => { registerBtn.disabled = !agree.checked; };
+
+    agree.addEventListener("change", updateButton);
+    disagree.addEventListener("change", updateButton);
+
+    qrPay.addEventListener("change", () => { show(qrUpload, true); show(cashSection, false); paidTo.value = ""; paidTo.disabled = true; });
+    cashPay.addEventListener("change", () => { show(cashSection, true); show(qrUpload, false); qrReceipt.value = ""; qrPreview.innerHTML = ""; paidTo.disabled = false; });
+
+    qrReceipt.addEventListener("change", () => {
+      qrPreview.innerHTML = "";
+      const f = qrReceipt.files?.[0];
+      if (f) {
+        const img = document.createElement("img");
+        img.alt = "QR receipt preview";
+        img.src = URL.createObjectURL(f);
+        qrPreview.appendChild(img);
+      }
+    });
+
+    function updateAdditionalOptions() {
+      const course = courseSelect.value;
+      const country = countrySelect.value;
+      show(additionalOptions, false); show(ieltsScoreDiv, false); show(japanTestsDiv, false); additionalHint.textContent = "";
+      if (course === "IELTS" && ["Korea", "Australia", "UK", "USA", "New Zealand", "Denmark", "France", "Finland", "Germany", "Spain", "Italy", "Sweden",].includes(country)) {
+        show(additionalOptions, true); show(ieltsScoreDiv, true);
+        additionalHint.textContent = "Provide IELTS if applying for the selected country.";
+      }
+      // PTE logic
+      else if (course === "PTE" && [
+        "Ireland", "Canada", "New Zealand", "UK", "Australia"
+      ].includes(country)) {
+
+        show(additionalOptions, true);
+        show(pteScoreDiv, true); // reusing IELTS field for PTE score
+        additionalHint.textContent = "Provide your PTE Academic score if available.";
+      }
+      else if (course === "Japanese" && country === "Japan") {
+        additionalOptions.style.display = "block";
+        japanTestsDiv.style.display = "block";
+        additionalHint.textContent = "Provide your JLCT / JLPT / NAT score if available.";
+      }
+    }
+    courseSelect.addEventListener("change", updateAdditionalOptions);
+    countrySelect.addEventListener("change", updateAdditionalOptions);
+
+    function validatePayment() {
+      let ok = true; qrError.style.display = "none"; cashError.style.display = "none";
+      if (qrPay.checked && !qrReceipt.files.length) { qrError.style.display = "block"; ok = false; }
+      if (cashPay.checked && paidTo.value === "") { cashError.style.display = "block"; ok = false; }
+      return ok;
+    }
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      clearBanners();
+
+      if (!agree.checked) { banner(statusErr, "Please agree to the declaration to continue."); return; }
+      if (!form.checkValidity()) { banner(statusErr, "Please fill all required fields."); return; }
+      if (!validatePayment()) return;
+
+      banner(statusInfo, "Submitting..."); registerBtn.disabled = true;
+
+      // Collect data
+      const fd = new FormData(form);
+      const data = {};
+      fd.forEach((v, k) => data[k] = v);
+
+      // Attach Base64 file (if any)
+      const file = qrReceipt.files[0];
+      if (file) {
+        const b64 = await new Promise((resolve, reject) => {
+          const r = new FileReader();
+          r.onload = () => resolve(String(r.result).split(",")[1]);
+          r.onerror = () => reject(new Error("File read failed"));
+          r.readAsDataURL(file);
+        });
+        data.qrReceipt = b64;
+        data.qrReceiptName = file.name;
+      }
+
+      try {
+        const resp = await fetch(WEB_APP_URL, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" }, // avoids CORS preflight on GAS
+          body: JSON.stringify(data)
+        });
+
+        // If your deployment is not public, Google will redirect to login HTML here,
+        // and this parse will throw. That’s the signal to fix deployment access.
+        const json = await resp.json();
+
+        if (json.result === "success") {
+          banner(statusOk, "✅ Registration submitted successfully!");
+          form.reset(); updateButton();
+          show(qrUpload, false); show(cashSection, false); qrPreview.innerHTML = "";
+        } else {
+          banner(statusErr, "❌ Error: " + (json.error || "Unknown error"));
+        }
+      } catch (err) {
+        banner(statusErr, "❌ Failed to connect: " + err.message);
+      } finally {
+        banner(statusInfo, ""); registerBtn.disabled = false;
+      }
+    });
+
+    // init
+    updateButton();
+    const dobInput = document.getElementById("dob");
+    const dobError = document.getElementById("dobError");
+
+    dobInput.addEventListener("change", () => {
+      dobError.style.display = "none"; // reset
+      if (dobInput.value) {
+        const selectedYear = new Date(dobInput.value).getFullYear();
+        if (selectedYear < 1989) {
+          dobError.style.display = "block";
+          dobInput.value = ""; // clear invalid input (optional)
+        }
+      }
+    });
+
+  </script>
+</body>
+
+</html>
