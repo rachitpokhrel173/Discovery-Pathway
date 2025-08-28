@@ -56,38 +56,40 @@
   </div>
 
   <!-- Clerk -->
-  <script>
-    window.addEventListener('load', async () => {
-      await window.Clerk.load();
+ <script>
+  window.addEventListener('load', async () => {
+    await window.Clerk.load();
 
-      Clerk.mountSignIn(document.getElementById('auth-root'), {
-        routing: 'hash',
-        withSignUp: false, // disable sign-up for admin
-        forceRedirectUrl: '/admin-dashboard.html',
-        appearance: {
-          layout: { logoPlacement: "none" },
-          variables: {
-            colorPrimary: "#7c3aed",
-            borderRadius: "10px",
-            colorText: "white",
-            colorBackground: "#2a2738",
-            colorInputBackground: "#1e1b29",
-            colorInputText: "white",
-            colorInputBorder: "#444"
-          },
-          elements: {
-            card: "bg-transparent shadow-none",
-            headerTitle: "hidden",
-            headerSubtitle: "hidden",
-            formButtonPrimary:
-              "bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-semibold rounded-lg h-11 transition duration-200 w-full",
-            formFieldInput:
-              "bg-[#1e1b29] text-white border border-gray-600 rounded-lg px-3 py-2 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 outline-none",
-            footer: "hidden"
-          }
+    Clerk.mountSignIn(document.getElementById('auth-root'), {
+      routing: 'hash',
+      withSignUp: false, // disable sign-up for admin
+      redirectUrl: '/admin-dashboard.html',   // ✅ use this instead
+      afterSignInUrl: '/admin-dashboard.html', // ✅ ensure proper redirect
+      appearance: {
+        layout: { logoPlacement: "none" },
+        variables: {
+          colorPrimary: "#7c3aed",
+          borderRadius: "10px",
+          colorText: "white",
+          colorBackground: "#2a2738",
+          colorInputBackground: "#1e1b29",
+          colorInputText: "white",
+          colorInputBorder: "#444"
+        },
+        elements: {
+          card: "bg-transparent shadow-none",
+          headerTitle: "hidden",
+          headerSubtitle: "hidden",
+          formButtonPrimary:
+            "bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-semibold rounded-lg h-11 transition duration-200 w-full",
+          formFieldInput:
+            "bg-[#1e1b29] text-white border border-gray-600 rounded-lg px-3 py-2 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 outline-none",
+          footer: "hidden"
         }
-      });
+      }
     });
-  </script>
+  });
+</script>
+
 </body>
 </html>
