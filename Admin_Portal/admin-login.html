@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Discovery Admin Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Clerk -->
+  <script async crossorigin="anonymous"
+    data-clerk-publishable-key="pk_test_bmV3LW1vbGx1c2stMTIuY2xlcmsuYWNjb3VudHMuZGV2JA"
+    src="https://new-mollusk-12.clerk.accounts.dev/npm/@clerk/clerk-js@latest/dist/clerk.browser.js">
+  </script>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+    }
+
+    /* Hide Clerk badge */
+    .cl-internal-b3fm6y {
+      display: none !important;
+    }
+  </style>
+</head>
+
+<body class="min-h-screen flex items-center justify-center bg-[#1e1b29] p-4">
+
+  <!-- Container -->
+  <div class="w-full max-w-6xl h-auto md:h-[600px] flex flex-col md:flex-row bg-[#2a2738] rounded-2xl shadow-2xl overflow-hidden">
+
+    <!-- Left: Branding / Image -->
+    <div class="w-full md:w-3/5 h-48 md:h-auto bg-cover bg-center relative"
+      style="background-image: url('/Assets/1_Team_Discovery.jpeg');">
+      <div class="absolute inset-0 bg-black/50 flex flex-col justify-end p-6 md:p-8 text-white">
+        <img src="/Quick Links/LOGO.png" alt="Discovery Pathway" class="w-32 md:w-40 mb-4" />
+        <h2 class="text-lg md:text-2xl font-bold">Discovery Admin Portal</h2>
+        <p class="text-xs md:text-sm text-gray-300">Manage students, payments, and more — securely.</p>
+      </div>
+    </div>
+
+    <!-- Right: Login Box -->
+    <div class="w-full md:w-2/5 p-6 md:p-10 flex flex-col justify-center bg-[#1f1c2e] text-white">
+      <h1 class="text-2xl md:text-3xl font-bold mb-2">Sign in</h1>
+      <p class="text-gray-400 mb-8 text-sm md:text-base">Enter your credentials to access the admin dashboard.</p>
+
+      <!-- Clerk login will mount here -->
+      <div id="auth-root"></div>
+
+      <p class="mt-6 text-xs text-gray-500 text-center">
+        Trouble logging in? <a href="mailto:rachitpokhrel123@gmail.com" class="text-blue-400 hover:underline">Contact IT</a>
+      </p>
+    </div>
+  </div>
+
+  <!-- Clerk -->
+  <script>
+    window.addEventListener('load', async () => {
+      await window.Clerk.load();
+
+      Clerk.mountSignIn(document.getElementById('auth-root'), {
+        routing: 'hash',
+        withSignUp: false, // disable sign-up for admin
+        forceRedirectUrl: '/admin-dashboard.html',
+        appearance: {
+          layout: { logoPlacement: "none" },
+          variables: {
+            colorPrimary: "#7c3aed",
+            borderRadius: "10px",
+            colorText: "white",
+            colorBackground: "#2a2738",
+            colorInputBackground: "#1e1b29",
+            colorInputText: "white",
+            colorInputBorder: "#444"
+          },
+          elements: {
+            card: "bg-transparent shadow-none",
+            headerTitle: "hidden",
+            headerSubtitle: "hidden",
+            formButtonPrimary:
+              "bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-semibold rounded-lg h-11 transition duration-200 w-full",
+            formFieldInput:
+              "bg-[#1e1b29] text-white border border-gray-600 rounded-lg px-3 py-2 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 outline-none",
+            footer: "hidden"
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>
