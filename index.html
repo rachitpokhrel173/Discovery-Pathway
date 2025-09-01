@@ -341,18 +341,44 @@ hamburgerBtn.addEventListener("click", () => {
 <body>
 
 <!-- Modal -->
-<div id="videoModalalfa">
+<div id="videoModalalfa" style="display:none;">
   <div class="modal-content">
     <div class="modal-header">
       Don’t be afraid to give it a try
       <span class="close-btn" onclick="closeModalalfa()">&times;</span>
     </div>
     <div class="video-wrapper">
-      <iframe width="1296" height="729" src="https://www.youtube.com/embed/0zZTBJA5MPw" title="Begin Your Future: Discovery Pathway Starts Here" 
-        frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      <iframe width="560" height="315"
+        src="https://www.youtube.com/embed/0zZTBJA5MPw"
+        title="Begin Your Future: Discovery Pathway Starts Here"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen>
+      </iframe>
     </div>
   </div>
 </div>
+
+<script>
+  function closeModalalfa() {
+    document.getElementById("videoModalalfa").style.display = "none";
+  }
+
+  function showModalOncePerDay() {
+    const today = new Date().toISOString().slice(0,10); // YYYY-MM-DD
+    const lastShown = localStorage.getItem("videoModalDate");
+
+    if (lastShown !== today) {
+      document.getElementById("videoModalalfa").style.display = "block";
+      localStorage.setItem("videoModalDate", today);
+    }
+  }
+
+  // Run when page loads
+  window.onload = showModalOncePerDay;
+</script>
+
 
 <script>
   function closeModalalfa() {
