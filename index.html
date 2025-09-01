@@ -362,27 +362,290 @@ hamburgerBtn.addEventListener("click", () => {
 
 
 
-  
-<!-- HERO SECTION -->
-<section class="slider">
-  <!-- Slides -->
-  <img src="/Assets/All_Student.jpg" class="slide active">
-  <img src="/Assets/Team_Discovery.jpeg" class="slide">
-  <img src="/Assets/Student 2.png" class="slide">
-  <img src="/Assets/Student3.jpg" class="slide">
-  <img src="/Assets/student4.jpg" class="slide">
-  <img src="/Assets/Photo_STudent.png" class="slide">
-  
-  <!-- Overlay -->
-  <div class="overlay"></div>
+<style>
+    :root {
+      --primary: #26539e;
+      --accent: #44c4df;
+      --light: #ffffff;
+      --radius: 1.25rem;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
 
-  <!-- Slide Content -->
-  <div class="slide-content">
-    <h1 class="text-4xl md:text-6xl font-extrabold drop-shadow-lg">Welcome to Discovery Pathway</h1>
-    <p class="mt-4 text-lg md:text-xl max-w-2xl font-light">Explore the world of education, opportunity, and global success through our trusted consultancy.</p>
-    <button id="applyBtn" class="mt-6">Apply Online</button>
-  </div>
-</section>
+    /* Buttons */
+    .btn {
+      padding: .75rem 1.5rem;
+      border-radius: var(--radius);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .3s;
+      font-size: .95rem;
+      border: none;
+      margin-right: 0.5rem;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: var(--light);
+    }
+
+    .btn-primary:hover {
+      background: var(--accent);
+      transform: scale(1.05);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 2px solid var(--accent);
+      color: var(--accent);
+    }
+
+    .btn-outline:hover {
+      background: var(--accent);
+      color: #fff;
+      transform: scale(1.05);
+    }
+
+    .btn-counseling {
+      background: linear-gradient(135deg, #26539e, #44c4df);
+      color: #fff;
+      padding: 0.85rem 2rem;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 2rem;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-counseling:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      background: linear-gradient(135deg, #44c4df, #26539e);
+    }
+
+
+
+    /* Hero */
+    .hero {
+      position: relative;
+      height: 100vh;
+      overflow: hidden;
+      color: var(--light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0));
+      z-index: -1;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+    }
+
+    .hero-bg img {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 1.5s ease-in-out;
+      animation: zoomBg 20s ease-in-out infinite alternate;
+    }
+
+    .hero-bg img.active {
+      opacity: 1;
+    }
+
+    @keyframes zoomBg {
+      from {
+        transform: scale(1);
+      }
+
+      to {
+        transform: scale(1.1);
+      }
+    }
+
+    .hero-content {
+      max-width: 1200px;
+      padding: 2rem;
+      width: 100%;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+      align-items: center;
+      text-align: center;
+    }
+
+    .hero-text h1 {
+      font-size: 2.8rem;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+
+    .hero-text .highlight {
+      color: var(--accent);
+    }
+
+    .hero-text p {
+      font-size: 1.2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    /* CTA Buttons */
+    .cta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    /* Stats */
+    .stats {
+      display: flex;
+      gap: 2rem;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .stats div strong {
+      display: block;
+      font-size: 1.8rem;
+      color: var(--accent);
+    }
+
+    /* Fade-up text */
+    .hero-text {
+      animation: fadeUp 1.2s ease forwards;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    @keyframes fadeUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero-text h1 {
+        font-size: 2rem;
+      }
+
+      .hero-text p {
+        font-size: 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-text h1 {
+        font-size: 1.6rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+<br>
+<br>
+<br>
+  
+  <!-- Hero -->
+  <section class="hero">
+    <!-- Background slider -->
+    <div class="hero-bg" id="heroBg">
+      <img src="/Assets/Team_Discovery.jpeg" class="active" alt="City skyline view" loading="eager">
+      <img src="/Assets/SK_Student_1.jpg" alt="University campus aerial" loading="lazy">
+      <img src="/Assets/SK_Student_4.jpg" alt="Airplane flying above clouds" loading="lazy">
+      <img src="/Assets/SK_Student_3.jpg" alt="Airplane flying above clouds" loading="lazy">
+      <img src="/Assets/SK_Student_2.jpg" alt="Airplane flying above clouds" loading="lazy">
+      <img src="/Assets/SK_Student_2.jpg" alt="Airplane flying above clouds" loading="lazy">
+      <img src="/Assets/SK_Student_5.jpg" alt="Airplane flying above clouds" loading="lazy">
+    </div>
+
+    <!-- Content -->
+    <div class="container hero-content">
+      <div class="hero-grid">
+        <div class="hero-text">
+          <h1>
+            Quality Education, Global Opportunities — <br>
+            <span class="highlight">Admissions Support | Test Prep | Study Abroad Guidance</span>
+          </h1>
+          <p>
+            Your guide to study abroad — from test prep to admissions, visas, and scholarships. </p>
+          <div class="cta">
+            <button class="btn btn-primary btn-counseling"><a href="https://calendly.com/banepa-discoveryedu/30min" target="_blank"> 
+              Book Free Counseling</a></button>
+          </div>
+          <div class="stats">
+            <div><strong id="stat1">0+</strong> Visa grants</div>
+            <div><strong id="stat2">0+</strong> Top universities</div>
+            <div><strong id="stat3">0+</strong> Destinations</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Background slider
+    const bgImages = document.querySelectorAll("#heroBg img");
+    let bgIndex = 0;
+    setInterval(() => {
+      bgImages[bgIndex].classList.remove("active");
+      bgIndex = (bgIndex + 1) % bgImages.length;
+      bgImages[bgIndex].classList.add("active");
+    }, 5000);
+
+    // Stats Counter with IntersectionObserver
+    function counterUp(el, target) {
+      let count = 0;
+      const step = Math.ceil(target / 50);
+      const update = () => {
+        count += step;
+        if (count >= target) {
+          el.textContent = target + "+";
+        } else {
+          el.textContent = count + "+";
+          requestAnimationFrame(update);
+        }
+      };
+      update();
+    }
+
+    const statObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          counterUp(document.getElementById("stat1"), 1120);
+          counterUp(document.getElementById("stat2"), 152);
+          counterUp(document.getElementById("stat3"), 19);
+          statObserver.disconnect();
+        }
+      });
+    }, { threshold: 0.5 });
+
+    statObserver.observe(document.querySelector(".stats"));
+  </script>
 
 <!-- POPUP -->
 <div id="formPopup" class="popup">
@@ -924,10 +1187,10 @@ hamburgerBtn.addEventListener("click", () => {
         </div>
       </div>
 
-      <a href="tel:+977011665659"
-   class="inline-block mt-4 bg-purple-600 text-white px-6 py-3 rounded-full shadow hover:bg-purple-700 transition">
-   Get Free Consultation
-</a>
+      <div class="cta">
+            <button class="btn btn-primary btn-counseling"><a href="https://calendly.com/banepa-discoveryedu/30min" target="_blank"> 
+              Book Free Counseling</a></button>
+          </div>
 
     </div>
 
