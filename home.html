@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive 3-Section Header</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- ✅ Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+   
+</head>
+
+<body class="font-sans">
+
+    <!-- 🔹 Top Bar -->
+    <div class="bg-[#26539E] text-white text-sm">
+        <div class="max-w-7xl mx-auto flex justify-between items-center px-4 py-2">
+            <!-- Address -->
+            <p class="flex items-center gap-2">
+                <i class="fas fa-map-marker-alt"></i> Discovery Pathway, Chandeshwori Margh, Banepa, Kavrepalanchok
+            </p>
+            <!-- Social -->
+            <div class="flex space-x-4 text-lg">
+                <a href="https://www.facebook.com/discoveryconsultancybanepa" target="_blank" class="hover:text-[#44C4DF]"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://www.tiktok.com/@discoverybanepa" target="_blank" class="hover:text-[#44C4DF]"><i class="fab fa-tiktok"></i></a>
+                <a href="https://www.instagram.com/discovery.pathway/" target="_blank" class="hover:text-[#44C4DF]"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🔹 Middle Section -->
+    <div class="bg-white border-b border-gray-200">
+        <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between px-4 py-4">
+
+            <!-- Logo -->
+            <div class="flex items-center">
+      <a href="https://discoverypathway.edu.np/index.html"><img src="/Assets/Discovery_Logo_TP.jpg" alt="Logo" class="h-10 md:h-12"></a>
+    </div>
+
+            <!-- Contact Info -->
+            <div class="hidden md:flex items-center space-x-8">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-envelope text-[#26539E]"></i>
+                    <div>
+                        <p class="text-sm font-semibold">Email Us</p>
+                        <p class="text-gray-600 text-sm">banepa@discoveryedu.com.np</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-phone-alt text-[#26539E]"></i>
+                    <div>
+                        <p class="text-sm font-semibold">Call Us</p>
+                        <p class="text-gray-600 text-sm">011 665659</p>
+                    </div>
+                </div>
+                <button
+                    class="border border-[#44C4DF] text-[#26539E] px-4 py-2 rounded font-semibold hover:bg-[#44C4DF] hover:text-white transition">
+                    Free Consulting
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🔹 Navigation Bar -->
+    <!-- 🔹 Navigation Bar -->
+    <nav class="bg-[#26539E] sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto flex items-center justify-between px-4 py-3">
+
+
+
+            <!-- Desktop Menu (Centered) -->
+            <ul class="hidden md:flex flex-1 justify-center space-x-6 text-white font-medium">
+                <li><a href="#" class="hover:text-[#44C4DF]">ABOUT US</a></li>
+                <li><a href="#" class="hover:text-[#44C4DF]">INTERVIEWS</a></li>
+                <li><a href="#" class="hover:text-[#44C4DF]">CLASSES</a></li>
+                <li><a href="#" class="hover:text-[#44C4DF]">STUDY ABROAD</a></li>
+                <li><a href="#" class="hover:text-[#44C4DF]">GALLERY</a></li>
+                <li><a href="#" class="hover:text-[#44C4DF]">UNIVERSITIES</a></li>
+                <li><a href="#" class="hover:text-[#44C4DF]">FEEDBACKS</a></li>
+                <li><a href="#" class="hover:text-[#44C4DF]">CONTACT</a></li>
+            </ul>
+
+            <!-- Icons (Right Side) -->
+            <div class="flex space-x-4 text-white text-xl">
+                <!-- ✅ Login Icon -->
+                <button class="hover:text-[#44C4DF]"><i class="fa-solid fa-user"></i></button>
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden hover:text-[#44C4DF]" onclick="toggleMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-[#26539E] px-4 py-3 space-y-2">
+            <a href="#" class="hover:text-[#44C4DF]">ABOUT US</a>
+            <a href="#" class="hover:text-[#44C4DF]">INTERVIEWS</a>
+            <a href="#" class="hover:text-[#44C4DF]">CLASSES</a></li>
+            <a href="#" class="hover:text-[#44C4DF]">STUDY ABROAD</a></li>
+            <a href="#" class="hover:text-[#44C4DF]">GALLERY</a></li>
+            <a href="#" class="hover:text-[#44C4DF]">UNIVERSITIES</a>
+            <a href="#" class="hover:text-[#44C4DF]">FEEDBACKS</a>
+            <a href="#" class="hover:text-[#44C4DF]">CONTACT</a>
+            <button
+                class="w-full mt-2 bg-[#44C4DF] text-[#26539E] px-4 py-2 rounded font-semibold hover:bg-white hover:text-[#26539E] transition">
+                Free Consulting
+            </button>
+        </div>
+    </nav>
+ <script>
+        function toggleMenu() {
+            document.getElementById("mobileMenu").classList.toggle("hidden");
+        }
+    </script>
+
+</body>
+
+</html>
