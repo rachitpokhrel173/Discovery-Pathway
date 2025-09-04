@@ -105,7 +105,24 @@
             <ul class="hidden md:flex flex-1 justify-center space-x-6 text-white font-medium">
                 <li><a href="#" class="hover:text-[#44C4DF]">ABOUT US</a></li>
                 <li><a href="#" class="hover:text-[#44C4DF]">INTERVIEWS</a></li>
-                <li><a href="#" class="hover:text-[#44C4DF]">CLASSES</a></li>
+                <li class="relative dropdown">
+        <button id="classesToggle" class="hover:text-[#46C3E0] focus:outline-none">CLASSES</button>
+
+        <div class="absolute left-1/2 transform -translate-x-1/2 mt-2 w-64 p-4 rounded-lg shadow-lg 
+              bg-white/50 backdrop-blur-md border border-gray-200 z-50 dropdown-menu hidden" id="classesMenu">
+          <div class="grid grid-cols-1 gap-3">
+            <a href="/Quick Links/IELTS.html" class="flex items-center hover:bg-blue-100/40 p-2 rounded-md transition">
+              <span class="text-gray-800 font-semibold">IELTS</span>
+            </a>
+            <a href="/Quick Links/PTE.html" class="flex items-center hover:bg-blue-100/40 p-2 rounded-md transition">
+              <span class="text-gray-800 font-semibold">PTE</span>
+            </a>
+            <a href="/Quick Links/Japanese.html" class="flex items-center hover:bg-blue-100/40 p-2 rounded-md transition">
+              <span class="text-gray-800 font-semibold">Japanese</span>
+            </a>
+          </div>
+        </div>
+      </li>
                 <li><a href="#" class="hover:text-[#44C4DF]">STUDY ABROAD</a></li>
                 <li><a href="#" class="hover:text-[#44C4DF]">GALLERY</a></li>
                 <li><a href="#" class="hover:text-[#44C4DF]">UNIVERSITIES</a></li>
