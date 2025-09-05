@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IELTS Module – Speak With Experts</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style copy.css">
+  <link rel="stylesheet" href="animation.css">
+  <link rel="shortcut icon" href="/Assets/Discovery_Logo-removebg-preview.png" type="image/x-icon">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" />
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.11/typed.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="mobileview.css">
+ 
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+<style>/* Core tokens */
+:root {
+  --brand: #44C4E0;
+  /* purple */
+  --brand-600: #44C4E0;
+  --ink: #1f2937;
+  --muted: #6b7280;
+  --bg: #ffffff;
+  --surface: #f6f5fa;
+  --radius: 18px;
+  --shadow: 0 10px 25px rgba(0, 0, 0, .07);
+}
+
+* {
+  box-sizing: border-box
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+  line-height: 1.65;
+}
+
+.container {
+  max-width: 1120px;
+  margin-inline: auto;
+  padding: clamp(14px, 2vw, 24px)
+}
+
+.topbar {
+  background: linear-gradient(90deg, var(--brand), var(--brand-600));
+  color: #fff;
+  padding: 32px 0;
+  box-shadow: var(--shadow);
+}
+
+.page-title {
+  margin: 0;
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 800;
+  letter-spacing: .2px
+}
+
+.intro {
+  display: grid;
+  gap: 28px;
+  grid-template-columns: 1.25fr -.1fr;
+  align-items: start;
+  margin-top: 22px;
+}
+
+@media (max-width: 900px) {
+  .intro {
+    grid-template-columns: 1fr
+  }
+}
+
+.intro-text p {
+  margin: 0;
+  background: #fff;
+  border: 1px solid #eee;
+  padding: 22px;
+  border-radius: var(--radius)
+}
+
+
+.phone-row span {
+  display: block
+}
+
+.phone-input {
+  display: flex;
+  gap: 10px
+}
+
+.phone-input select {
+  flex: 0 0 120px
+}
+
+.phone-input input {
+  flex: 1
+}
+
+.btn {
+  margin-top: 14px;
+  width: 100%;
+  border: none;
+  background: var(--brand);
+  color: #fff;
+  font-weight: 700;
+  padding: 12px 16px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: .2s transform ease, .2s opacity ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  opacity: .95
+}
+
+.form-status {
+  min-height: 22px;
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 6px
+}
+
+/* Modules grid */
+.modules-grid {
+  display: grid;
+  gap: 18px;
+  margin-top: 26px;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+@media (max-width: 1000px) {
+  .modules-grid {
+    grid-template-columns: repeat(2, 1fr)
+  }
+}
+
+@media (max-width: 560px) {
+  .modules-grid {
+    grid-template-columns: 1fr
+  }
+}
+
+.module {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: var(--radius);
+  padding: 18px 18px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: var(--shadow);
+}
+
+.icon-circle {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--surface);
+  color: var(--brand);
+}
+
+.module h4 {
+  margin: 0;
+  font-size: 18px
+}
+
+.module p {
+  margin: 0;
+  color: var(--muted)
+}
+
+/* Scores section */
+.scores {
+  margin-top: 30px
+}
+
+.scores h2 {
+  font-size: 24px;
+  margin: 0 0 6px
+}
+
+.scores-note {
+  margin: 0 0 12px;
+  color: var(--muted)
+}
+
+.table-wrap {
+  overflow: auto;
+  border: 1px solid #eee;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: var(--shadow)
+}
+
+.score-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 640px
+}
+
+.score-table th,
+.score-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid #f0f0f3;
+  text-align: left
+}
+
+.score-table thead th {
+  background: var(--surface);
+  font-weight: 700
+}
+
+.cta-foot {
+  color: var(--muted)
+}
+
+/* Footer */
+.site-footer {
+  margin-top: 40px;
+  background: #111827;
+  color: #9ca3af
+}
+
+.site-footer p {
+  margin: 0
+}</style>
+</head>
+
+<body>
+  <!-- HEADER -->
+ <!-- 🔹 Top Bar -->
+    <div class="bg-[#26539E] text-white text-sm">
+        <div class="max-w-7xl mx-auto flex justify-between items-center px-4 py-2">
+            <!-- Address -->
+            <p class="flex items-center gap-2">
+                <i class="fas fa-map-marker-alt"></i> Discovery Pathway, Chandeshwori Margh, Banepa, Kavrepalanchok
+            </p>
+            <!-- Social -->
+            <div class="flex space-x-4 text-lg">
+                <a href="https://www.facebook.com/discoveryconsultancybanepa" target="_blank" class="hover:text-[#44C4DF]"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://www.tiktok.com/@discoverybanepa" target="_blank" class="hover:text-[#44C4DF]"><i class="fab fa-tiktok"></i></a>
+                <a href="https://www.instagram.com/discovery.pathway/" target="_blank" class="hover:text-[#44C4DF]"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🔹 Middle Section -->
+    <div class="bg-white border-b border-gray-200">
+        <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between px-1 py-1">
+
+            <!-- Logo -->
+            <div class="flex items-center">
+      <a href="https://discoverypathway.edu.np/index.html"><img src="/Assets/Discovery_Logo_TP.jpg" alt="Logo" class="h-10 md:h-12"></a>
+    </div>
+
+            <!-- Contact Info -->
+            <div class="hidden md:flex items-center space-x-8">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-envelope text-[#26539E]"></i>
+                    <div>
+                        <p class="text-sm font-semibold">Email Us</p>
+                        <p class="text-gray-600 text-sm">banepa@discoveryedu.com.np</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-phone-alt text-[#26539E]"></i>
+                    <div>
+                        <p class="text-sm font-semibold">Call Us</p>
+                        <p class="text-gray-600 text-sm">011 665659</p>
+                    </div>
+                </div>
+                <button
+                    class="border border-[#44C4DF] text-[#26539E] px-4 py-2 rounded font-semibold hover:bg-[#44C4DF] hover:text-white transition">
+                    Free Consulting
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🔹 Navigation Bar -->
+<nav id="mainHeader" class="bg-[#26539E] sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto flex items-center justify-between px-2 py-2">
+
+
+
+            <!-- Desktop Menu (Centered) -->
+            <ul class="hidden md:flex flex-1 justify-center space-x-6 text-white font-medium">
+                <li><a href="#" class="hover:text-[#44C4DF]">ABOUT US</a></li>
+                <li><a href="#" class="hover:text-[#44C4DF]">INTERVIEWS</a></li>
+                <li class="relative dropdown">
+        <button id="classesToggle" class="hover:text-[#46C3E0] focus:outline-none">CLASSES</button>
+
+        <div class="absolute left-1/2 transform -translate-x-1/2 mt-2 w-64 p-4 rounded-lg shadow-lg 
+              bg-white/50 backdrop-blur-md border border-gray-200 z-50 dropdown-menu hidden" id="classesMenu">
+          <div class="grid grid-cols-1 gap-3">
+            <a href="/Quick Links/IELTS.html" class="flex items-center hover:bg-blue-100/40 p-2 rounded-md transition">
+              <span class="text-gray-800 font-semibold">IELTS</span>
+            </a>
+            <a href="/Quick Links/PTE.html" class="flex items-center hover:bg-blue-100/40 p-2 rounded-md transition">
+              <span class="text-gray-800 font-semibold">PTE</span>
+            </a>
+            <a href="/Quick Links/Japanese.html" class="flex items-center hover:bg-blue-100/40 p-2 rounded-md transition">
+              <span class="text-gray-800 font-semibold">Japanese</span>
+            </a>
+          </div>
+        </div>
+      </li>
+             <li class="relative dropdown">
+        <button id="studyAbroadToggle" class="hover:text-[#46C3E0] focus:outline-none">STUDY ABROAD</button>
+
+        <div class="absolute left-1/2 transform -translate-x-1/2 mt-2 w-[90vw] md:w-[700px] p-4 rounded-lg shadow-lg 
+              bg-white/50 backdrop-blur-md border border-gray-200 z-50 dropdown-menu" id="studyAbroadMenu">
+          <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <a href="Mantainance.html"
+              class="flex items-center justify-start space-x-3 hover:bg-blue-50 p-2 rounded-md transition">
+              <img src="https://upload.wikimedia.org/wikipedia/en/b/b9/Flag_of_Australia.svg" class="w-8 h-auto"
+                alt="Australia">
+              <span class="text-gray-800 font-semibold">Australia</span>
+            </a>
+            <a href="Mantainance.html" class="flex items-center space-x-3 hover:bg-blue-50 p-2 rounded-md transition">
+              <img src="https://upload.wikimedia.org/wikipedia/en/a/a4/Flag_of_the_United_States.svg" class="w-8 h-auto"
+                alt="USA">
+              <span class="text-gray-800 font-semibold">USA</span>
+            </a>
+            <a href="Mantainance.html" class="flex items-center space-x-3 hover:bg-blue-50 p-2 rounded-md transition">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Flag_of_New_Zealand.svg" class="w-8 h-auto"
+                alt="New Zealand">
+              <span class="text-gray-800 font-semibold">New Zealand</span>
+            </a>
+            <a href="Mantainance.html" class="flex items-center space-x-3 hover:bg-blue-50 p-2 rounded-md transition">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/c/cf/Flag_of_Canada.svg" class="w-8 h-auto"
+                alt="Canada">
+              <span class="text-gray-800 font-semibold">Canada</span>
+            </a>
+            <a href="Mantainance.html" class="flex items-center space-x-3 hover:bg-blue-50 p-2 rounded-md transition">
+              <img src="https://upload.wikimedia.org/wikipedia/en/a/ae/Flag_of_the_United_Kingdom.svg"
+                class="w-8 h-auto" alt="UK">
+              <span class="text-gray-800 font-semibold">UK</span>
+            </a>
+            <a href="Mantainance.html" class="flex items-center space-x-3 hover:bg-blue-50 p-2 rounded-md transition">
+              <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBeaSZSwax2XvXTLQ5hlnz3oF6SMpRiTb_hu_WAaa6oCXnEHWihMmU3ww1DDwt&s=10"
+                class="w-8 h-auto" alt="Denmark">
+              <span class="text-gray-800 font-semibold">Denmark</span>
+            </a>
+            <a href="Mantainance.html" class="flex items-center space-x-3 hover:bg-blue-50 p-2 rounded-md transition">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/4/45/Flag_of_Ireland.svg" class="w-8 h-auto"
+                alt="Ireland">
+              <span class="text-gray-800 font-semibold">Ireland</span>
+            </a>
+            <a href="Mantainance.html" class="flex items-center space-x-3 hover:bg-blue-50 p-2 rounded-md transition">
+              <img src="https://upload.wikimedia.org/wikipedia/en/9/9e/Flag_of_Japan.svg" class="w-8 h-auto"
+                alt="Japan">
+              <span class="text-gray-800 font-semibold">Japan</span>
+            </a>
+            <a href="Mantainance.html" class="flex items-center space-x-3 hover:bg-blue-50 p-2 rounded-md transition">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" class="w-8 h-auto"
+                alt="South Korea">
+              <span class="text-gray-800 font-semibold">South Korea</span>
+            </a>
+            <a href="Mantainance.html" class="flex items-center space-x-3 hover:bg-blue-50 p-2 rounded-md transition">
+              <img src="https://upload.wikimedia.org/wikipedia/en/b/ba/Flag_of_Germany.svg" class="w-8 h-auto"
+                alt="Germany">
+              <span class="text-gray-800 font-semibold">Germany</span>
+            </a>
+            <a href="Mantainance.html" class="flex items-center space-x-3 hover:bg-blue-50 p-2 rounded-md transition">
+              <img src="https://upload.wikimedia.org/wikipedia/en/c/c3/Flag_of_France.svg" class="w-8 h-auto"
+                alt="France">
+              <span class="text-gray-800 font-semibold">France</span>
+            </a>
+            <a href="Mantainance.html" class="flex items-center space-x-3 hover:bg-blue-50 p-2 rounded-md transition">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/f/f3/Flag_of_Switzerland.svg" class="w-8 h-auto"
+                alt="Switzerland">
+              <span class="text-gray-800 font-semibold">Switzerland</span>
+            </a>
+            <!-- Other countries same as before -->
+          </div>
+        </div>
+      </li>
+                <li><a href="#" class="hover:text-[#44C4DF]">GALLERY</a></li>
+                <li><a href="#" class="hover:text-[#44C4DF]">UNIVERSITIES</a></li>
+                <li><a href="#" class="hover:text-[#44C4DF]">FEEDBACKS</a></li>
+                <li><a href="#" class="hover:text-[#44C4DF]">CONTACT</a></li>
+            </ul>
+
+            <!-- Icons (Right Side) -->
+            <div class="flex space-x-4 text-white text-xl">
+                <!-- ✅ Login Icon -->
+                <button class="hover:text-[#44C4DF]"><i class="fa-solid fa-user"></i></button>
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden hover:text-[#44C4DF]" onclick="toggleMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+         <!-- Mobile Menu Button -->
+<button id="hamburgerBtn" class="md:hidden hover:text-[#44C4DF]">
+  <i class="fas fa-bars"></i>
+</button>
+
+        <div id="mobileMenu" class="hidden md:hidden bg-[#26539E] px-4 py-3 space-y-2">
+            <a href="#" class="hover:text-[#44C4DF]">ABOUT US</a>
+            <a href="#" class="hover:text-[#44C4DF]">INTERVIEWS</a>
+            <a href="#" class="hover:text-[#44C4DF]">CLASSES</a></li>
+            <a href="#" class="hover:text-[#44C4DF]">STUDY ABROAD</a></li>
+            <a href="#" class="hover:text-[#44C4DF]">GALLERY</a></li>
+            <a href="#" class="hover:text-[#44C4DF]">UNIVERSITIES</a>
+            <a href="#" class="hover:text-[#44C4DF]">FEEDBACKS</a>
+            <a href="#" class="hover:text-[#44C4DF]">CONTACT</a>
+            <button
+                class="w-full mt-2 bg-[#44C4DF] text-[#26539E] px-4 py-2 rounded font-semibold hover:bg-white hover:text-[#26539E] transition">
+                Free Consulting
+            </button>
+        </div>
+    </nav>
+
+ 
+
+
+  <!-- Hero -->
+  <section class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-20 text-center">
+    <h1 class="text-4xl md:text-5xl font-bold">Japanese Language Tests for Student Visa to Japan</h1>
+    <p class="mt-4 text-lg max-w-3xl mx-auto">To apply for a Japanese student visa, you must pass a recognized Japanese language test such as JLPT, NAT-TEST, JLCT, J-CERT, TOP-J, or J-TEST. <br><strong>Minimum Requirement:</strong> NAT, TOP-J, or J-TEST equivalent to JLPT N5.</p>
+    <a href="https://calendly.com/banepa-discoveryedu/30min" target="_blank" class="mt-6 inline-block bg-white text-indigo-600 px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-100 transition">
+      🎓 Book Free Counseling
+    </a>
+  </section>
+
+  <!-- About -->
+  <section class="max-w-7xl mx-auto px-4 py-16 grid md:grid-cols-2 gap-10 items-center">
+    <div>
+      <h2 class="text-3xl font-bold mb-4">Why Language Tests Matter?</h2>
+      <p class="text-gray-700 leading-relaxed">Japan requires international students to demonstrate Japanese proficiency for visa approval and academic success. Passing recognized tests ensures you are ready for Japanese schools, universities, and daily life in Japan.</p>
+      <p class="mt-4 text-gray-700">We train students for <strong>JLPT, NAT, JLCT, J-CERT, TOP-J, and J-TEST</strong>, guiding them from beginner to advanced level for both visa requirements and long-term success in Japan.</p>
+    </div>
+    <div class="flex justify-center">
+      <img src="https://ecommerce.henryharvin.com/storage/images/products/5z30i3A5arT7EKA9ktghjxbnX1jVPDBBU3PbeGwM.jpg" alt="Study in Japan" class="rounded-xl shadow-lg">
+    </div>
+  </section>
+
+  <!-- Recognized Tests Grid -->
+ <!-- Recognized Japanese Language Tests -->
+<section class="bg-gray-50 py-16">
+  <div class="max-w-7xl mx-auto px-4">
+    <h2 class="text-4xl font-bold text-center text-gray-800 mb-12">Recognized Japanese Language Tests</h2>
+    <div class="grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
+
+      <!-- JLPT -->
+      <div class="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transform hover:-translate-y-2 transition-all duration-300">
+        <div class="flex justify-center mb-4">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Japanese-Language_Proficiency_Test_logo.svg" alt="JLPT" class="w-16 h-16">
+        </div>
+        <h3 class="text-lg font-semibold mb-2 text-blue-600">JLPT</h3>
+        <p class="text-gray-600 text-sm">Most popular, 5 levels (N5–N1). Required for universities and jobs.</p>
+        <span class="inline-block mt-3 px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-medium">Popular</span>
+      </div>
+
+      <!-- NAT-TEST -->
+      <div class="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transform hover:-translate-y-2 transition-all duration-300">
+        <div class="flex justify-center mb-4">
+          <img src="https://www.unicosmos.in/wp-content/uploads/2020/05/image1.png" alt="NAT-TEST" class="w-16 h-16">
+        </div>
+        <h3 class="text-lg font-semibold mb-2 text-green-600">NAT-TEST</h3>
+        <p class="text-gray-600 text-sm">Equivalent to JLPT. Accepted for student visas.</p>
+        <span class="inline-block mt-3 px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-medium">Visa Accepted</span>
+      </div>
+
+      <!-- JLCT -->
+      <div class="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transform hover:-translate-y-2 transition-all duration-300">
+        <div class="flex justify-center mb-4">
+          <img src="https://jlct.jp/assets/images/logo/inline-A-EB.png" alt="JLCT" class="w-16 h-16">
+        </div>
+        <h3 class="text-lg font-semibold mb-2 text-purple-600">JLCT</h3>
+        <p class="text-gray-600 text-sm">Focus on communication. Recognized by schools.</p>
+        <span class="inline-block mt-3 px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-xs font-medium">Communication</span>
+      </div>
+
+      <!-- J-CERT -->
+      <div class="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transform hover:-translate-y-2 transition-all duration-300">
+        <div class="flex justify-center mb-4">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGACScNPBXhFNi37qniFaDIznVdnnHMmwhqQ&s" alt="J-CERT" class="w-16 h-16">
+        </div>
+        <h3 class="text-lg font-semibold mb-2 text-orange-600">J-CERT</h3>
+        <p class="text-gray-600 text-sm">Certifies practical Japanese for study & work.</p>
+        <span class="inline-block mt-3 px-3 py-1 bg-orange-100 text-orange-800 rounded-full text-xs font-medium">Practical</span>
+      </div>
+
+      <!-- TOP-J -->
+      <div class="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transform hover:-translate-y-2 transition-all duration-300">
+        <div class="flex justify-center mb-4">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/d/d1/TOP-J_logo.png" alt="TOP-J" class="w-16 h-16">
+        </div>
+        <h3 class="text-lg font-semibold mb-2 text-red-600">TOP-J</h3>
+        <p class="text-gray-600 text-sm">Practical language test. Accepted for visas.</p>
+        <span class="inline-block mt-3 px-3 py-1 bg-red-100 text-red-800 rounded-full text-xs font-medium">Visa Accepted</span>
+      </div>
+
+      <!-- J-TEST -->
+      <div class="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transform hover:-translate-y-2 transition-all duration-300">
+        <div class="flex justify-center mb-4">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/0/03/J-TEST_logo.png" alt="J-TEST" class="w-16 h-16">
+        </div>
+        <h3 class="text-lg font-semibold mb-2 text-teal-600">J-TEST</h3>
+        <p class="text-gray-600 text-sm">Real-world Japanese usage. Equivalent to JLPT.</p>
+        <span class="inline-block mt-3 px-3 py-1 bg-teal-100 text-teal-800 rounded-full text-xs font-medium">Practical</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+  <!-- Visa Requirements -->
+  <section class="max-w-7xl mx-auto px-4 py-16">
+    <h2 class="text-3xl font-bold text-center mb-8">Student Visa Requirements</h2>
+    <div class="overflow-x-auto bg-white shadow rounded-xl">
+      <table class="w-full text-left border-collapse">
+        <thead>
+          <tr class="bg-indigo-600 text-white">
+            <th class="p-4">Test</th>
+            <th class="p-4">Minimum Level</th>
+            <th class="p-4">Visa Advantage</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="border-b">
+            <td class="p-4">JLPT</td>
+            <td class="p-4">N5 or higher</td>
+            <td class="p-4">Eligibility for language schools</td>
+          </tr>
+          <tr class="border-b">
+            <td class="p-4">NAT-TEST</td>
+            <td class="p-4">Equivalent to JLPT N5</td>
+            <td class="p-4">Accepted for visa application</td>
+          </tr>
+          <tr class="border-b">
+            <td class="p-4">JLCT / J-CERT</td>
+            <td class="p-4">Equivalent to JLPT N5</td>
+            <td class="p-4">Recognized by schools</td>
+          </tr>
+          <tr>
+            <td class="p-4">TOP-J / J-TEST</td>
+            <td class="p-4">Equivalent to JLPT N5</td>
+            <td class="p-4">Mandatory for visa approval</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="mt-6 text-center text-gray-700 font-medium">⚠️ You must have passed <strong>NAT, TOP-J, or J-TEST</strong> (equivalent to JLPT N5) for Japanese student visa application.</p>
+  </section>
+
+  <!-- Comparison Table -->
+  <section class="bg-gray-100 py-16">
+    <div class="max-w-7xl mx-auto px-4">
+      <h2 class="text-3xl font-bold text-center mb-10">Comparison of Japanese Language Tests</h2>
+      <div class="overflow-x-auto bg-white shadow rounded-xl">
+        <table class="w-full border-collapse text-left">
+          <thead>
+            <tr class="bg-indigo-600 text-white">
+              <th class="p-4">Test</th>
+              <th class="p-4">Levels</th>
+              <th class="p-4">Frequency</th>
+              <th class="p-4">Visa Acceptance</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-b">
+              <td class="p-4">JLPT</td>
+              <td class="p-4">N5–N1</td>
+              <td class="p-4">2 times/year</td>
+              <td class="p-4">Universities & visas</td>
+            </tr>
+            <tr class="border-b">
+              <td class="p-4">NAT-TEST</td>
+              <td class="p-4">5 levels</td>
+              <td class="p-4">6 times/year</td>
+              <td class="p-4">Visa eligible</td>
+            </tr>
+            <tr class="border-b">
+              <td class="p-4">JLCT</td>
+              <td class="p-4">6 levels</td>
+              <td class="p-4">Every 2 months</td>
+              <td class="p-4">Accepted by schools</td>
+            </tr>
+            <tr class="border-b">
+              <td class="p-4">J-CERT</td>
+              <td class="p-4">5 levels</td>
+              <td class="p-4">Multiple times/year</td>
+              <td class="p-4">Recognized by schools</td>
+            </tr>
+            <tr class="border-b">
+              <td class="p-4">TOP-J</td>
+              <td class="p-4">3 levels</td>
+              <td class="p-4">6 times/year</td>
+              <td class="p-4">Visa eligible</td>
+            </tr>
+            <tr>
+              <td class="p-4">J-TEST</td>
+              <td class="p-4">8 levels</td>
+              <td class="p-4">Every 2 months</td>
+              <td class="p-4">Visa eligible</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Choose Us -->
+  <section class="py-16">
+    <div class="max-w-7xl mx-auto px-4">
+      <h2 class="text-3xl font-bold text-center mb-12">Why Choose Discovery Pathway?</h2>
+      <div class="grid gap-8 md:grid-cols-3 text-center">
+        <div class="bg-white p-8 rounded-xl shadow hover:shadow-lg transition">
+          <h3 class="font-semibold text-lg mb-3">All Test Preparation</h3>
+          <p>Expert coaching for JLPT, NAT, JLCT, J-CERT, TOP-J, and J-TEST.</p>
+        </div>
+        <div class="bg-white p-8 rounded-xl shadow hover:shadow-lg transition">
+          <h3 class="font-semibold text-lg mb-3">Visa Guidance</h3>
+          <p>Step-by-step support for Japanese student visa documentation.</p>
+        </div>
+        <div class="bg-white p-8 rounded-xl shadow hover:shadow-lg transition">
+          <h3 class="font-semibold text-lg mb-3">High Success Rate</h3>
+          <p>Proven track record of students studying in Japan successfully.</p>
+        </div>
+      </div>
+    </div>
+  </section>  
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const classesToggle = document.getElementById("classesToggle");
+    const classesMenu = document.getElementById("classesMenu");
+    const studyAbroadToggle = document.getElementById("studyAbroadToggle");
+    const studyAbroadMenu = document.getElementById("studyAbroadMenu");
+    const hamburgerBtn = document.getElementById("hamburgerBtn");
+    const mobileMenu = document.getElementById("mobileMenu");
+    const header = document.getElementById("mainHeader");
+
+    // Toggle dropdowns
+    classesToggle?.addEventListener("click", (e) => {
+      e.stopPropagation();
+      classesMenu.classList.toggle("hidden");
+      studyAbroadMenu.classList.add("hidden");
+    });
+
+    studyAbroadToggle?.addEventListener("click", (e) => {
+      e.stopPropagation();
+      studyAbroadMenu.classList.toggle("hidden");
+      classesMenu.classList.add("hidden");
+    });
+
+    // Mobile menu toggle
+    hamburgerBtn?.addEventListener("click", () => {
+      mobileMenu.classList.toggle("hidden");
+    });
+
+    // Close dropdowns when clicking outside
+    document.addEventListener("click", () => {
+      classesMenu.classList.add("hidden");
+      studyAbroadMenu.classList.add("hidden");
+    });
+
+    // Close dropdowns on ESC
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        classesMenu.classList.add("hidden");
+        studyAbroadMenu.classList.add("hidden");
+      }
+    });
+
+    // Hide/show header on scroll
+    let lastScrollTop = 0;
+    window.addEventListener("scroll", () => {
+      const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+      if (currentScroll > lastScrollTop) {
+        header.style.transform = "translateY(-100%)"; // scroll down → hide
+      } else {
+        header.style.transform = "translateY(0)"; // scroll up → show
+      }
+      lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+    });
+  });
+</script>
+
+
+  <!-- Footer -->
+<footer class="px-6 py-10 md:px-20 text-white" style="background-color: #003f84;">
+  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-10">
+    <!-- Logo and Contact Info -->
+    <div>
+      <div class="mb-4">
+        <img src="/Assets/New_DP_Logo.png" alt="Discovery Pathway Logo" class="h-13">
+      </div>
+      <ul class="text-sm space-y-2">
+        <li class="flex items-start space-x-2">
+          <i class="fas fa-phone mt-1"></i>
+          <span>+977 9851345539, 9851223025</span>
+        </li>
+        <li class="flex items-start space-x-2">
+          <i class="fas fa-envelope mt-1"></i>
+          <span>banepa@discoveryedu.com.np</span>
+        </li>
+        <li class="flex items-start space-x-2">
+          <i class="fas fa-map-marker-alt mt-1"></i>
+          <span>Chandeshwori Margh, Banepa,<br> Kavrepalanchok, Nepal</span>
+        </li>
+      </ul>
+      <div class="flex space-x-4 mt-4">
+        <a href="#" class="text-white hover:text-[#1877F2] text-xl"><i class="fab fa-facebook"></i></a>
+        <a href="#" class="text-white hover:text-[#E1306C] text-xl"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="text-white hover:text-[#69C9D0] text-xl"><i class="fab fa-tiktok"></i></a>
+        <a href="#" class="text-white text-xl"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
+
+    <!-- Quick Links -->
+    <div>
+      <h2 class="text-lg font-semibold mb-4">Quick Links</h2>
+      <ul class="space-y-2 text-sm">
+        <li><a href="#">About Discovery</a></li>
+        <li><a href="#">Services</a></li>
+        <li><a href="#">Universities</a></li>
+        <li><a href="#">Resources</a></li>
+        <li><a href="#">Events</a></li>
+        <li><a href="#">Contact Us</a></li>
+      </ul>
+    </div>
+
+    <!-- Middle Links -->
+    <div>
+      <h2 class="text-lg font-semibold mb-4">&nbsp;</h2>
+      <ul class="space-y-2 text-sm">
+        <li><a href="#">Gallery</a></li>
+        <li><a href="#">Testimonials & Reviews</a></li>
+        <li><a href="#">Success Stories</a></li>
+        <li><a href="#">Interviews</a></li>
+        <li><a href="#">OHSC</a></li>
+        <li><a href="/Quick Links/faqs.html">FAQs</a></li>
+      </ul>
+    </div>
+
+    <!-- Student Needs -->
+    <div>
+      <h2 class="text-lg font-semibold mb-4">Need for Students</h2>
+      <ul class="space-y-2 text-sm">
+        <li><a href="#">Career Counseling</a></li>
+        <li><a href="#">Online Application</a></li>
+        <li><a href="#">How to Obtain Visa</a></li>
+        <li><a href="#">Student Accommodation</a></li>
+        <li><a href="Quick Links/index.html">Student Admission</a></li>
+      </ul>
+    </div>
+
+    <!-- Tools for Students -->
+    <div>
+      <h2 class="text-lg font-semibold mb-4">&nbsp;</h2>
+      <ul class="space-y-2 text-sm">
+        <li><a href="https://www.xe.com/currencyconverter/">Currency Converter</a></li>
+        <li><a href="/Quick Links/date.html">Date Converter</a></li>
+        <li><a href="/Quick Links/score.html">Score Comparison</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Bottom Line -->
+  <div class="max-w-7xl mx-auto mt-10 border-t border-white/10 pt-6 text-center text-xs text-gray-200">
+    <p>&copy; 2025 Discovery Pathway. All Rights Reserved. <br>Developed By 
+      <a href="https://www.rachitpokhrel.com.np/" class="hover:text-white hover:font-bold transition-all duration-200">Rachit Pokhrel.</a>
+    </p>
+  </div>
+</footer>
+
+</body>
+
+</html>
+
+
+
+
