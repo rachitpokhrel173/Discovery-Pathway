@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Career Counseling - Discovery Pathway</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<style>
+  /* Basic Reset */
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #27529e, #4ac2d8);
+    color: #333;
+    line-height:1.6;
+    scroll-behavior: smooth;
+  }
+
+  /* Header */
+  header {
+    background: #fff;
+    text-align:center;
+    padding:2rem 1rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border-radius:0 0 12px 12px;
+  }
+  header h1 { font-size:2rem; color:#27529e; margin-bottom:0.5rem; }
+  header p { font-size:1rem; color:#555; }
+
+  /* Main container */
+  main {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 1rem;
+  }
+
+  /* Section styles */
+  .section {
+    background: #fff;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .section:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    background: #27529e;
+    color: #fff;
+    cursor: pointer;
+    justify-content: space-between;
+  }
+  .section-header h2 { font-size:1.4rem; }
+  .section-header i { font-size:1.2rem; transition: transform 0.3s; }
+
+  .section-content {
+    padding: 1rem 1.5rem;
+    display: none;
+    animation: fadeIn 0.5s ease forwards;
+  }
+
+  @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+
+  .section-content ul { margin-left:1.5rem; margin-bottom:1rem; }
+  .section-content p { margin-bottom:1rem; }
+
+  /* Call to action button */
+  .cta {
+    display:block;
+    width:fit-content;
+    margin:1rem auto;
+    padding:0.75rem 1.5rem;
+    background:#4ac2d8;
+    color:#fff;
+    border:none;
+    border-radius:8px;
+    font-size:1rem;
+    font-weight:500;
+    cursor:pointer;
+    transition: transform 0.3s, background 0.3s;
+    text-decoration: none;
+    text-align:center;
+  }
+  .cta:hover { background:#33b5d3; transform:scale(1.05); }
+
+  /* Footer */
+  footer {
+    text-align:center;
+    padding:2rem 1rem;
+    background:#27529e;
+    color:#fff;
+    margin-top:2rem;
+    border-radius:12px 12px 0 0;
+  }
+  footer a { color:#4ac2d8; text-decoration:underline; }
+  footer a:hover { color:#ffd700; }
+
+  /* Responsive */
+  @media (max-width:600px){
+    header h1 { font-size:1.5rem; }
+    .section-header h2 { font-size:1.2rem; }
+    .cta { font-size:0.95rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Career Counseling</h1>
+  <p>Discover your path and make informed decisions for a successful future.</p>
+</header>
+
+<main>
+
+  <!-- Step 1 -->
+  <div class="section">
+    <div class="section-header">
+      <h2><i class="fas fa-user-graduate"></i> Self-Assessment</h2>
+      <i class="fas fa-chevron-down"></i>
+    </div>
+    <div class="section-content">
+      <p>Understand your strengths, interests, and values through detailed assessments and personality tests.</p>
+      <ul>
+        <li>Skills & strengths evaluation</li>
+        <li>Interest & passion analysis</li>
+        <li>Personality assessments</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Step 2 -->
+  <div class="section">
+    <div class="section-header">
+      <h2><i class="fas fa-search"></i> Career Exploration</h2>
+      <i class="fas fa-chevron-down"></i>
+    </div>
+    <div class="section-content">
+      <p>Explore potential career paths aligned with your skills and goals. Learn about industry trends and opportunities.</p>
+      <ul>
+        <li>Career options and growth paths</li>
+        <li>Industry insights</li>
+        <li>Job market research</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Step 3 -->
+  <div class="section">
+    <div class="section-header">
+      <h2><i class="fas fa-clipboard-list"></i> Goal Setting</h2>
+      <i class="fas fa-chevron-down"></i>
+    </div>
+    <div class="section-content">
+      <p>Set achievable short-term and long-term goals to stay focused on your career journey.</p>
+      <ul>
+        <li>Define SMART goals</li>
+        <li>Plan educational and skill milestones</li>
+        <li>Track progress regularly</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Step 4 -->
+  <div class="section">
+    <div class="section-header">
+      <h2><i class="fas fa-briefcase"></i> Career Planning</h2>
+      <i class="fas fa-chevron-down"></i>
+    </div>
+    <div class="section-content">
+      <p>Develop a structured career plan, including education, internships, and skill-building activities.</p>
+    </div>
+  </div>
+
+  <!-- Step 5 -->
+  <div class="section">
+    <div class="section-header">
+      <h2><i class="fas fa-handshake"></i> Expert Guidance</h2>
+      <i class="fas fa-chevron-down"></i>
+    </div>
+    <div class="section-content">
+      <p>Get personalized counseling from our experts to make confident decisions about your academic and career path.</p>
+    </div>
+  </div>
+
+  <!-- Call to Action -->
+  <a href="https://calendly.com/banepa-discoveryedu/30min" class="cta" target="_blank"><i class="fas fa-arrow-right"></i> Book Your Counseling Session</a>
+
+</main>
+
+<footer>
+  © 2025 Discovery Pathway. All Rights Reserved. <br>
+  Developed By <a href="https://rachitpokhrel.com.np/" target="_blank">Rachit Pokhrel</a>
+</footer>
+
+<script>
+  // Collapsible sections
+  const sections = document.querySelectorAll('.section');
+  sections.forEach(section => {
+    const header = section.querySelector('.section-header');
+    header.addEventListener('click', () => {
+      const content = section.querySelector('.section-content');
+      const icon = header.querySelector('.fa-chevron-down');
+      if(content.style.display === 'block'){
+        content.style.display = 'none';
+        icon.style.transform = 'rotate(0deg)';
+      } else {
+        content.style.display = 'block';
+        icon.style.transform = 'rotate(180deg)';
+        content.scrollIntoView({behavior:'smooth', block:'start'});
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

@@ -1,346 +1,232 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Discovery Gallary</title>
-  <link rel="shortcut icon" href="/Assets/Discovery_Logo-removebg-preview.png" type="image/x-icon">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Discovery Photo Gallery</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #fff;
+      color: #333;
+      line-height: 1.6;
+    }
 
+    header {
+      text-align: center;
+      padding: 2rem 1rem 1rem;
+      border-bottom: 1px solid #eee;
+    }
+    header h1 {
+      font-size: 2rem;
+      color: #27529e;
+    }
+    header p {
+      font-size: 1rem;
+      color: #666;
+    }
+
+    /* Filter Menu */
+    .filter-menu {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      padding: 1rem;
+      flex-wrap: wrap;
+    }
+    .filter-menu button {
+      background: #27529e;
+      color: #fff;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .filter-menu button.active,
+    .filter-menu button:hover {
+      background: #4ac2d8;
+      transform: scale(1.05);
+    }
+
+    /* Gallery Grid */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 15px;
+      padding: 2rem;
+      max-width: 1400px;
+      margin: auto;
+    }
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s, opacity 0.3s;
+    }
+    .gallery-item.hide {
+      opacity: 0;
+      transform: scale(0.8);
+      pointer-events: none;
+    }
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+      border-radius: 12px;
+    }
+    .gallery-item:hover img {
+      transform: scale(1.1);
+    }
+    .overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 0.7rem;
+      background: rgba(0,0,0,0.6);
+      color: #fff;
+      opacity: 0;
+      transition: opacity 0.3s;
+      font-size: 0.9rem;
+    }
+    .gallery-item:hover .overlay {
+      opacity: 1;
+    }
+
+    /* Lightbox */
+    .lightbox {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.9);
+      justify-content: center;
+      align-items: center;
+    }
+    .lightbox img {
+      max-width: 90%;
+      max-height: 80%;
+      border-radius: 12px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.8);
+      animation: fadeIn 0.5s ease;
+    }
+    .lightbox:target {
+      display: flex;
+    }
+    .close {
+      position: absolute;
+      top: 30px;
+      right: 30px;
+      font-size: 2rem;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      background: #f8f8f8;
+      font-size: 0.9rem;
+      color: #555;
+      margin-top: 2rem;
+    }
+    footer a {
+      color: #27529e;
+      text-decoration: none;
+    }
+    footer a:hover {
+      color: #4ac2d8;
+    }
+  </style>
 </head>
-
 <body>
 
-    <aside class="sidebar">
-        <div class="logo"><a href="https://discoverypathway.edu.np/"><img src="/Assets/Discovery_Logo-removebg-preview.png" alt=""></a></div>
-    </aside>
+<header>
+  <h1>Discovery Photo Gallery</h1>
+  <p>Explore our collection of 100 beautiful moments.</p>
+</header>
 
-    <main class="main">
-        <h1>Discovery Pathway - Photo Gallery</h1>
+<div class="filter-menu">
+  <button class="active" data-filter="all">All</button>
+  <button data-filter="events">Events</button>
+  <button data-filter="students">Students</button>
+  <button data-filter="office">Office</button>
+  <button data-filter="travel">Travel</button>
+</div>
 
-        <div class="gallery">
-            <figure>
-                <img src="https://scontent.fktm8-1.fna.fbcdn.net/v/t39.30808-6/491494873_651924234262102_6882205999472485109_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=108&ccb=1-7&_nc_sid=833d8c&_nc_ohc=zqw7JE4TwCkQ7kNvwGPn8oT&_nc_oc=Admk-q9GTEuB49PzLKk4eoMXb6U6AJnQYQKVob12d_iH-w3U4rUmQXhKB0Zmn6BSrrdndHqloexJ86OsbmE5W7HF&_nc_zt=23&_nc_ht=scontent.fktm8-1.fna&_nc_gid=UZolJ1NLbab9MjlrJsx0wQ&oh=00_AfLIcV5BV6OFqKILaotTCi8tpnNJuztJLpew2QkJXWXQDA&oe=684122E8"
-                    alt="Lorem ipsum dolor sit amet">
-                <figcaption>
-                    <h3>Japan Students</h3>
-                    <p> Rupa Gautam, Sujan Sapkota, Kranti Lama, Pabitra Phuyal and Rajeah Baraili.</p>
-                </figcaption>
-            </figure>
+<main>
+  <div class="gallery" id="gallery"></div>
+</main>
 
-            <figure>
-                <img src="https://scontent.fktm8-1.fna.fbcdn.net/v/t39.30808-6/495642921_668482359272956_6303150763685929665_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=cc71e4&_nc_ohc=7nvDxEnY2OYQ7kNvwFi3kyR&_nc_oc=AdlanX0GcmEauxTSspfl3HMZzs9b7S8UqqX9ZyPkP25Ih9rpYSKqugVdJspoRkwhP_c2vhp_CVGjcx-HgSdKJcfK&_nc_zt=23&_nc_ht=scontent.fktm8-1.fna&_nc_gid=tyixi5waOhgB8EE2jiIRYQ&oh=00_AfJo5QHrIIt2EtYizxjryrqviwOdfpQyBKWfAO4qTiorAA&oe=68412EBC"
-                    alt="Lorem ipsum dolor sit amet">
-                <figcaption>
-                    <h3>Farewell Student</h3>
-                    <p>It's been a pleasure teaching you. Best of luck in your next chapter!</p>
-                </figcaption>
-            </figure>
+<footer>
+  © 2025 Discovery Pathway Gallery. All Rights Reserved. <br>
+  Developed by <a href="https://rachitpokhrel.com.np" target="_blank">Rachit Pokhrel</a>
+</footer>
 
-            <figure>
-                <img src="https://scontent.fktm8-1.fna.fbcdn.net/v/t39.30808-6/495571731_667905199330672_6269842607099533639_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=110&ccb=1-7&_nc_sid=833d8c&_nc_ohc=LtLtgezit_AQ7kNvwHjBgdd&_nc_oc=AdlDaOEwqZ4FDbHKz6PIDlu0UaMdtMYbZ6iDKkHcFvX6wGERbLL5lFcpwZ2DIEj3HbRYwZ7DtvIvRuArUB_GU7FC&_nc_zt=23&_nc_ht=scontent.fktm8-1.fna&_nc_gid=2zg2ayX2GMZmaSs6Bf9M1g&oh=00_AfKATgb3HTYbQ5SeWxWCZh7EQAX-35h_RQ-npYYKS0csxQ&oe=684128BB"
-                    alt="Lorem ipsum dolor sit amet">
-                <figcaption>
-                    <h3>Professor Dr. Peter S.K.kim</h3>
-                    <p>Dean of international and external affairs of Far East University.</p>
-                </figcaption>
-            </figure>
+<script>
+  const gallery = document.getElementById('gallery');
+  const categories = ["events", "students", "office", "travel"];
+  let count = 1;
 
-            <figure>
-                <img src="https://scontent.fktm8-1.fna.fbcdn.net/v/t39.30808-6/496296982_667905192664006_461449778800950901_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=108&ccb=1-7&_nc_sid=833d8c&_nc_ohc=vE6TY3r7cpYQ7kNvwEQtOTa&_nc_oc=AdmAifO0Rp74Ugkug0H-QzfRgF-sAEWQt618UWM_HASSkEgLaBxEmG5nV9w2zcLE6YPTTYeYpWvDW4Epjt40buln&_nc_zt=23&_nc_ht=scontent.fktm8-1.fna&_nc_gid=QVo0nmkWN3otQCV0zavCNA&oh=00_AfKhcqyF0g7bQzvIhaeL4DO0wTs0RuesvKdXSFbJ3cGZHA&oe=684123CD"
-                    alt="Lorem ipsum dolor sit amet">
-                <figcaption>
-                    <h3>Riwaj Adhikari</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                </figcaption>
-            </figure>
+  categories.forEach(cat => {
+    for (let i = 0; i < 25; i++) {
+      const id = `img${count}`;
+      const thumb = `https://source.unsplash.com/400x600/?${cat}&sig=${count}`;
+      const full = `https://source.unsplash.com/1200x1600/?${cat}&sig=${count}`;
 
-            <figure>
-                <img src="https://scontent.fktm8-1.fna.fbcdn.net/v/t39.30808-6/490504012_645918704862655_6769841517453358129_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=833d8c&_nc_ohc=mh5JdYRhHGUQ7kNvwEjcbrG&_nc_oc=AdmbGd9Y9dAk6XUgcqArQNCdG1MJ06mhFzsByQRIOO72wlMnZ-QhdpM3-akn-ZIq9lXSQrXTuGN3j5iOyJyfYl8W&_nc_zt=23&_nc_ht=scontent.fktm8-1.fna&_nc_gid=DTDu_-16G0MU0jVvike3GQ&oh=00_AfKdgs3elcW6xZA-q5qP3xy00bU3GRHjBuon_scUmHr5QA&oe=68411819"
-                    alt="Lorem ipsum dolor sit amet">
-                <figcaption>
-                    <h3>Bicycle</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                </figcaption>
-            </figure>
+      const item = document.createElement('a');
+      item.href = `#${id}`;
+      item.className = `gallery-item ${cat}`;
+      item.innerHTML = `
+        <img src="${thumb}" alt="${cat} ${count}" loading="lazy">
+        <div class="overlay">${cat.charAt(0).toUpperCase() + cat.slice(1)} ${count}</div>
+      `;
+      gallery.appendChild(item);
 
-            <figure>
-                <img src="https://scontent.fktm8-1.fna.fbcdn.net/v/t39.30808-6/490552008_648277897960069_3504811998334779140_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=833d8c&_nc_ohc=4I_nFdPI-X8Q7kNvwGp9HPC&_nc_oc=AdlJF-SlKGlD_EJYweUO-arEE9TvV4oGSWEn8_xWvLZxW7kosss_kNiO9QYG6DvM0ElDyXmgAHUHWnl9KYqj8Wu4&_nc_zt=23&_nc_ht=scontent.fktm8-1.fna&_nc_gid=h1Qh0_8PeHvVObQ_JLllcQ&oh=00_AfInXq3Opk-Ys_8nKGlocXNrhAYC0PSViiHlH9h5Ale5zg&oe=684136CC"
-                    alt="Lorem ipsum dolor sit amet">
-                <figcaption>
-                    <h3>Korea Student</h3>
-                    <p>Have a great flight and great future ahead
-                        Congratulations 🎊🍾🎉🎈 everyone for getting student visa of South Korea 🇰🇷 and have a great
-                        life ahead for your further journey to South Korea.
-                        Thank you for trusting us.</p>
-                </figcaption>
-            </figure>
+      const lightbox = document.createElement('div');
+      lightbox.id = id;
+      lightbox.className = 'lightbox';
+      lightbox.innerHTML = `
+        <a href="#" class="close">&times;</a>
+        <img src="${full}" alt="${cat} ${count}">
+      `;
+      document.body.appendChild(lightbox);
 
-            <figure>
-                <img src="https://scontent.fktm8-1.fna.fbcdn.net/v/t39.30808-6/488413629_640028142118378_44371887084068951_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=833d8c&_nc_ohc=N7GgWiUzw1AQ7kNvwE8B4RE&_nc_oc=AdlxeHFR9ndgQsGd7XyTjrcOstAVE9MN2f-Vk2N5VHUwczt1zoCcCeeft9pf0vfNsWkvalnSDmtL8zCpaQUsehu_&_nc_zt=23&_nc_ht=scontent.fktm8-1.fna&_nc_gid=RRKfFNfHs96eFtxB4s4u9A&oh=00_AfJHRnZm4zQy-487OOKvuVVuofP1nA-n8br4Pn-htf0tTA&oe=68410EB8"
-                    alt="Lorem ipsum dolor sit amet">
-                <figcaption>
-                    <h3>Office</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                </figcaption>
-            </figure>
+      count++;
+    }
+  });
 
-            <figure>
-                <img src="https://scontent.fktm8-1.fna.fbcdn.net/v/t39.30808-6/487504579_640025818785277_8976748612624078393_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=833d8c&_nc_ohc=arcjspiwAp0Q7kNvwFSqMM8&_nc_oc=AdkGh2QVdwQzAVYjHvol7ZB3mvN4-Snopf4pSbgq0VNtCrNaUPIYx2XijC65Po9jV-qvB9JSSp4aOQuZc1ayqKPS&_nc_zt=23&_nc_ht=scontent.fktm8-1.fna&_nc_gid=9YndXvMTvc5V5HtYR6erpw&oh=00_AfJn5katyyLTjdtHJh2CsczBiP1NAIk9eFTroMQinadqog&oe=6841232B"
-                    alt="Lorem ipsum dolor sit amet">
-                <figcaption>
-                    <h3>Cityscape</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                </figcaption>
-            </figure>
-<!--
-            <figure>
-                <img src="https://images.unsplash.com/photo-1507097634215-e82e6b518529"
-                    alt="Lorem ipsum dolor sit amet">
-                <figcaption>
-                    <h3>Cityscape</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                </figcaption>
-            </figure>
+  // Filtering
+  const filterButtons = document.querySelectorAll(".filter-menu button");
+  filterButtons.forEach(button => {
+    button.addEventListener("click", () => {
+      filterButtons.forEach(btn => btn.classList.remove("active"));
+      button.classList.add("active");
 
-            <figure>
-                <img src="https://images.unsplash.com/photo-1458668383970-8ddd3927deed"
-                    alt="Lorem ipsum dolor sit amet">
-                <figcaption>
-                    <h3>Mountains</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                </figcaption>
-            </figure>
-
-            <figure>
-                <img src="https://images.unsplash.com/photo-1528988719300-046ff7faf8cb"
-                    alt="Lorem ipsum dolor sit amet">
-                <figcaption>
-                    <h3>Mountains</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                </figcaption>
-            </figure>
-
-            <figure>
-                <img src="https://images.unsplash.com/photo-1472396961693-142e6e269027"
-                    alt="Lorem ipsum dolor sit amet">
-                <figcaption>
-                    <h3>Mountains</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                </figcaption>
-            </figure>
-
-            <figure>
-                <img src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21"
-                    alt="Lorem ipsum dolor sit amet">
-                <figcaption>
-                    <h3>Mountains</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                </figcaption>
-            </figure>
-
-            <figure>
-                <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb"
-                    alt="Lorem ipsum dolor sit amet">
-                <figcaption>
-                    <h3>Mountains</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                </figcaption>
-            </figure>
-
-            <figure>
-                <img src="https://images.unsplash.com/photo-1487017159836-4e23ece2e4cf"
-                    alt="Lorem ipsum dolor sit amet">
-                <figcaption>
-                    <h3>Office</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                </figcaption>
-            </figure>
-
-            <figure>
-                <img src="https://images.unsplash.com/photo-1532103054090-3491f1a05d0d"
-                    alt="Lorem ipsum dolor sit amet">
-                <figcaption>
-                    <h3>Office</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                </figcaption>
-            </figure>
-
-            <figure>
-                <img src="https://images.unsplash.com/photo-1599033153041-e88627ca70bb"
-                    alt="Lorem ipsum dolor sit amet">
-                <figcaption>
-                    <h3>Cityscape</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                </figcaption>
-            </figure>
-
-            <figure>
-                <img src="https://images.unsplash.com/photo-1494475673543-6a6a27143fc8"
-                    alt="Lorem ipsum dolor sit amet">
-                <figcaption>
-                    <h3>Cityscape</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                </figcaption>
-            </figure>
-
-            <figure>
-                <img src="https://images.unsplash.com/photo-1528988719300-046ff7faf8cb"
-                    alt="Lorem ipsum dolor sit amet">
-                <figcaption>
-                    <h3>Mountains</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                </figcaption>
-            </figure>
-
-            <figure>
-                <img src="https://images.unsplash.com/photo-1466970601638-4e5fb6556584"
-                    alt="Lorem ipsum dolor sit amet">
-                <figcaption>
-                    <h3>Mountains</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                </figcaption>
-            </figure>
-        </div> -->
-    </main>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+      const filter = button.dataset.filter;
+      document.querySelectorAll(".gallery-item").forEach(item => {
+        if (filter === "all" || item.classList.contains(filter)) {
+          item.classList.remove("hide");
+        } else {
+          item.classList.add("hide");
         }
+      });
+    });
+  });
+</script>
 
-        img {
-            max-inline-size: 100%;
-        }
-
-        body {
-            font-family: system-ui, sans-serif;
-            font-size: 1rem;
-            line-height: 1.7;
-            color: #070707;
-            background: #fff;
-
-            /* Use whichever works best for you */
-            min-block-size: 100vh;
-            min-block-size: 100dvh;
-            min-block-size: 100svh;
-
-            display: grid;
-            grid-template-columns:
-                [sidebar-start] 5rem [sidebar-end main-start] 1fr [main-end];
-        }
-
-        h1 {
-            font-size: 1.75rem;
-            line-height: 1.5;
-            margin-block-end: 1rem;
-        }
-
-        .sidebar {
-            grid-column: sidebar;
-            color: #fff;
-            background-color: #1d1d29;
-        }
-
-        .logo {
-            display: flex;
-            justify-content: center;
-            font-size: 3rem;
-            line-height: 1.5;
-        }
-
-        .main {
-            grid-column: main;
-            padding: 1.25rem;
-        }
-
-        /* Photo Gallery */
-        .gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(12.5rem, 1fr));
-            grid-auto-rows: 12.5rem;
-            grid-auto-flow: dense;
-            gap: 0.75rem;
-        }
-
-        .gallery figure {
-            /* container-type: inline-size; */
-            container: figure / inline-size;
-            overflow: hidden;
-
-            display: grid;
-            /* grid-template-columns: 1fr; */
-            /* grid-template-rows: 1fr; */
-
-            /*
-    Because 1fr = minmax(auto, 1fr),
-    to prevent the grid blowout,
-    set the minimum to zero.
-  */
-            grid-template-columns: minmax(0, 1fr);
-            grid-template-rows: minmax(0, 1fr);
-        }
-
-        .gallery img {
-            inline-size: 100%;
-            block-size: 100%;
-            object-fit: cover;
-
-            /* grid-row: 1 / -1; */
-            /* grid-column: 1 / -1; */
-            grid-area: 1 / 1 / -1 / -1;
-
-            transition: scale 1s ease-in-out;
-        }
-
-        .gallery figure:hover img {
-            scale: 1.125;
-        }
-
-        .gallery figcaption {
-            grid-area: 1 / 1 / -1 / -1;
-            align-self: end;
-            z-index: 1;
-
-            padding: 3em 15% 1em 1em;
-            color: #fff;
-            font-size: 0.875rem;
-            line-height: 1.3;
-            background: linear-gradient(transparent 25%, rgb(0 0 0 / 0.75));
-            display: none;
-        }
-
-        @container figure (width > 20rem) {
-            .gallery figcaption {
-                display: block;
-            }
-        }
-
-        .gallery figcaption h3 {
-            font-size: 1.0625rem;
-        }
-
-        .gallery figcaption p {
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-        }
-
-        @media (width > 600px) {
-            .gallery figure:nth-child(1) {
-                grid-area: span 2 / span 2;
-            }
-
-            .gallery figure:nth-child(4n + 1) {
-                grid-row: span 2;
-            }
-
-            .gallery figure:nth-child(4n + 2) {
-                grid-column: span 2;
-            }
-        }
-    </style>
 </body>
-
 </html>
