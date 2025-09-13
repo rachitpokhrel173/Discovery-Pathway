@@ -20,6 +20,7 @@
 -->
 
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -53,56 +54,84 @@
           }
         }
       },
-      plugins: [ ],
+      plugins: [],
     }
   </script>
 
   <!-- Accessibility & baseline styles -->
   <style>
     /* small micro-interactions and utility adjustments */
-    :root { --radius: 12px; }
-    @media (max-width: 768px) {
-      :root { --radius: 10px; }
+    :root {
+      --radius: 12px;
     }
+
+    @media (max-width: 768px) {
+      :root {
+        --radius: 10px;
+      }
+    }
+
     /* Smooth focus outlines for accessibility */
     :focus {
-      outline: 3px solid rgba(15,98,254,0.15);
+      outline: 3px solid rgba(15, 98, 254, 0.15);
       outline-offset: 2px;
     }
+
     /* Draggable file drop hover */
-    .file-drop-hover { background: linear-gradient(90deg, rgba(6,182,212,0.04), rgba(15,98,254,0.02)); border-color: rgba(6,182,212,0.22); }
+    .file-drop-hover {
+      background: linear-gradient(90deg, rgba(6, 182, 212, 0.04), rgba(15, 98, 254, 0.02));
+      border-color: rgba(6, 182, 212, 0.22);
+    }
+
     /* Decorative separator */
-    .section-sep::after { content: ""; display:block; height:1px; background: linear-gradient(90deg, rgba(0,0,0,0.04), rgba(0,0,0,0.02)); margin-top: 1rem; border-radius: 999px; }
+    .section-sep::after {
+      content: "";
+      display: block;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(0, 0, 0, 0.04), rgba(0, 0, 0, 0.02));
+      margin-top: 1rem;
+      border-radius: 999px;
+    }
+
     /* Transition utilities for JS toggling */
-    .transition-fast { transition: all 220ms cubic-bezier(.4,.0,.2,1); }
-    .transition-smooth { transition: all 400ms cubic-bezier(.2,.1,.12,1); }
+    .transition-fast {
+      transition: all 220ms cubic-bezier(.4, .0, .2, 1);
+    }
+
+    .transition-smooth {
+      transition: all 400ms cubic-bezier(.2, .1, .12, 1);
+    }
+
     /* Sidebar collapsed state */
-.sidebar-collapsed {
-  width: 80px; /* only icons */
-  transition: width 0.3s ease;
-}
+    .sidebar-collapsed {
+      width: 80px;
+      /* only icons */
+      transition: width 0.3s ease;
+    }
 
-.sidebar-collapsed .menu-label {
-  display: none; /* hide text labels */
-}
+    .sidebar-collapsed .menu-label {
+      display: none;
+      /* hide text labels */
+    }
 
-.sidebar-expanded {
-  width: 250px; /* full sidebar */
-  transition: width 0.3s ease;
-}
+    .sidebar-expanded {
+      width: 250px;
+      /* full sidebar */
+      transition: width 0.3s ease;
+    }
 
-/* Content adjustment */
-.content {
-  margin-left: 250px;
-  transition: margin-left 0.3s ease;
-}
+    /* Content adjustment */
+    .content {
+      margin-left: 250px;
+      transition: margin-left 0.3s ease;
+    }
 
-.sidebar-collapsed ~ .content {
-  margin-left: 80px;
-}
-
+    .sidebar-collapsed~.content {
+      margin-left: 80px;
+    }
   </style>
 </head>
+
 <body class="antialiased text-slate-800 bg-gray-50 min-h-screen">
 
   <!-- Root App Container -->
@@ -110,17 +139,17 @@
 
     <!-- SIDEBAR -->
     <aside id="sidebar"
-           class="sidebar fixed left-0 top-0 bottom-0 w-72 sm:w-72 bg-white drop-shadow-md border-r border-transparent z-40 transform transition-fast"
-           role="navigation"
-           aria-label="Main sidebar">
+      class="sidebar fixed left-0 top-0 bottom-0 w-72 sm:w-72 bg-white drop-shadow-md border-r border-transparent z-40 transform transition-fast"
+      role="navigation" aria-label="Main sidebar">
       <!-- Sidebar Inner -->
       <div class="h-full flex flex-col">
         <!-- Header: Logo + Collapse Button -->
         <div class="flex items-center justify-between px-5 py-4 border-b">
           <div class="flex items-center space-x-3">
             <!-- Logo -->
-            <div class="flex items-center justify-center w-12 h-12 rounded-2xl bg-gradient-to-br from-primary to-accent text-white shadow">
-              <span class="font-extrabold tracking-tight"><img src="/Assets/Discovery_Logo-removebg-preview.png" alt="" srcset=""> </span>
+            <div class="flex items-center justify-center w-12 h-12 rounded-2xl ">
+              <span class="font-extrabold tracking-tight"><img src="/Assets/Discovery_Logo-removebg-preview.png" alt=""
+                  srcset=""> </span>
             </div>
             <div class="hidden md:block">
               <div class="text-lg font-semibold">Discovery Admin</div>
@@ -129,11 +158,8 @@
           </div>
           <!-- Collapse Button -->
           <button id="sidebarToggle" aria-expanded="true" aria-controls="sidebar"
-                  class="group p-2 rounded-md hover:bg-gray-100 transition-fast" title="Collapse sidebar">
+            class="group p-2 rounded-md hover:bg-gray-100 transition-fast" title="Collapse sidebar">
             <!-- Icon: chevron-left (rotate when collapsed) -->
-            <svg id="sidebarToggleIcon" class="w-5 h-5 text-muted transition-fast" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-            </svg>
           </button>
         </div>
 
@@ -143,37 +169,79 @@
             <!-- Menu item template: icon + label -->
             <!-- Active example -->
             <li>
-              <a href="#dashboard" class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-fast group" aria-current="page">
+              <a href="#dashboard" class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-fast group"
+                aria-current="page">
                 <!-- icon -->
-                <svg class="w-5 h-5 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12h18M3 6h18M3 18h18"/></svg>
+                <svg class="w-5 h-5 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12h18M3 6h18M3 18h18" />
+                </svg>
                 <span class="text-sm font-medium">Dashboard</span>
               </a>
             </li>
 
             <!-- Repeat items with icons -->
-            <li><a class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-fast" href="#"><svg class="w-5 h-5 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 6h16M4 12h8M4 18h16" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="text-sm">Applicants</span></a></li>
+            <li><a class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-fast" href="#"><svg
+                  class="w-5 h-5 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path d="M4 6h16M4 12h8M4 18h16" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                </svg><span class="text-sm">Applicants</span></a></li>
 
-            <li><a class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-fast" href="#"><svg class="w-5 h-5 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 12h6M9 16h6M9 8h6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="text-sm">Tasks</span></a></li>
+            <li><a class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-fast" href="#"><svg
+                  class="w-5 h-5 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path d="M9 12h6M9 16h6M9 8h6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                </svg><span class="text-sm">Tasks</span></a></li>
 
-            <li><a class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-fast" href="#"><svg class="w-5 h-5 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2l4 6H8l4-6zM6 20h12v-2H6v2z" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="text-sm">Appointments</span></a></li>
+            <li><a class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-fast" href="#"><svg
+                  class="w-5 h-5 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path d="M12 2l4 6H8l4-6zM6 20h12v-2H6v2z" stroke-width="1.4" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg><span class="text-sm">Appointments</span></a></li>
 
-            <li><a class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-fast" href="#"><svg class="w-5 h-5 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 7h18M3 12h12M3 17h18" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="text-sm">Abroad Section</span></a></li>
+            <li><a class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-fast" href="#"><svg
+                  class="w-5 h-5 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path d="M3 7h18M3 12h12M3 17h18" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                </svg><span class="text-sm">Abroad Section</span></a></li>
 
-            <li><a class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-fast" href="#"><svg class="w-5 h-5 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2l2 7h7l-5.5 4 2 7L12 16l-7.5 4 2-7L1 9h7l2-7z" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="text-sm">Services</span></a></li>
+            <li><a class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-fast" href="#"><svg
+                  class="w-5 h-5 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path d="M12 2l2 7h7l-5.5 4 2 7L12 16l-7.5 4 2-7L1 9h7l2-7z" stroke-width="1.2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg><span class="text-sm">Services</span></a></li>
 
-            <li><a class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-fast" href="#"><svg class="w-5 h-5 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M8 7h8M8 12h8M8 17h8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="text-sm">Classes</span></a></li>
+            <li><a class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-fast" href="#"><svg
+                  class="w-5 h-5 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path d="M8 7h8M8 12h8M8 17h8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                </svg><span class="text-sm">Classes</span></a></li>
 
-            <li><a class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-fast" href="#"><svg class="w-5 h-5 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2v20M2 12h20" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="text-sm">Payments</span></a></li>
+            <li><a class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-fast" href="#"><svg
+                  class="w-5 h-5 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path d="M12 2v20M2 12h20" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                </svg><span class="text-sm">Payments</span></a></li>
 
-            <li><a class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-fast" href="#"><svg class="w-5 h-5 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 3h18v18H3V3z" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="text-sm">Workflow</span></a></li>
+            <li><a class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-fast" href="#"><svg
+                  class="w-5 h-5 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path d="M3 3h18v18H3V3z" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg><span class="text-sm">Workflow</span></a></li>
 
-            <li><a class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-fast" href="#"><svg class="w-5 h-5 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 12a5 5 0 100-10 5 5 0 000 10zM6 18c1.333-2 3-3 6-3s4.667 1 6 3" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="text-sm">Contacts</span></a></li>
+            <li><a class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-fast" href="#"><svg
+                  class="w-5 h-5 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path d="M12 12a5 5 0 100-10 5 5 0 000 10zM6 18c1.333-2 3-3 6-3s4.667 1 6 3" stroke-width="1.2"
+                    stroke-linecap="round" stroke-linejoin="round" />
+                </svg><span class="text-sm">Contacts</span></a></li>
 
-            <li><a class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-fast" href="#"><svg class="w-5 h-5 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 7h18M3 12h18M3 17h18" stroke-width="1.0" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="text-sm">Applicant App</span></a></li>
+            <li><a class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-fast" href="#"><svg
+                  class="w-5 h-5 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path d="M3 7h18M3 12h18M3 17h18" stroke-width="1.0" stroke-linecap="round" stroke-linejoin="round" />
+                </svg><span class="text-sm">Applicant App</span></a></li>
 
-            <li><a class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-fast" href="#"><svg class="w-5 h-5 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 7h16M4 12h16M4 17h10" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="text-sm">Other Services</span></a></li>
+            <li><a class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-fast" href="#"><svg
+                  class="w-5 h-5 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path d="M4 7h16M4 12h16M4 17h10" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg><span class="text-sm">Other Services</span></a></li>
 
-            <li><a class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-fast" href="#"><svg class="w-5 h-5 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 6h16M4 12h8m-8 6h16" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="text-sm">Settings</span></a></li>
+            <li><a class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-fast" href="#"><svg
+                  class="w-5 h-5 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path d="M4 6h16M4 12h8m-8 6h16" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
+                </svg><span class="text-sm">Settings</span></a></li>
           </ul>
         </nav>
 
@@ -181,7 +249,8 @@
         <div class="px-5 py-4 border-t text-xs text-muted">
           <div class="flex items-center justify-between">
             <span>Need help?</span>
-            <a href="mailto:rachitpokhrel123@gmail.com" class="text-primary text-sm font-medium hover:underline">Contact</a>
+            <a href="mailto:rachitpokhrel123@gmail.com"
+              class="text-primary text-sm font-medium hover:underline">Contact</a>
           </div>
         </div>
 
@@ -197,36 +266,65 @@
           <div class="flex items-center justify-between h-16">
             <!-- Left -->
             <div class="flex items-center gap-6">
-              <button id="mobileSidebarOpen" class="md:hidden p-2 rounded-md hover:bg-gray-100 transition-fast" aria-label="Open sidebar">
-                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 6h16M4 12h16M4 18h16" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <button id="mobileSidebarOpen" class="md:hidden p-2 rounded-md hover:bg-gray-100 transition-fast"
+                aria-label="Open sidebar">
+                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path d="M4 6h16M4 12h16M4 18h16" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
               </button>
               <div>
-                <div class="text-sm text-muted">Welcome back,</div>
+                <div class="text-sm text-muted">Welcome back, </div>
                 <div class="font-semibold">Discovery Pathway</div>
               </div>
             </div>
 
             <!-- Right controls -->
             <div class="flex items-center gap-4">
-              
+
 
               <!-- Notifications -->
               <div class="relative">
-                <button id="notifToggle" class="p-2 rounded-full hover:bg-gray-100 transition-fast" aria-haspopup="true" aria-expanded="false" aria-controls="notifMenu" title="Notifications">
+                <button id="notifToggle" class="p-2 rounded-full hover:bg-gray-100 transition-fast" aria-haspopup="true"
+                  aria-expanded="false" aria-controls="notifMenu" title="Notifications">
                   <span class="sr-only">Notifications</span>
-                  <svg class="w-6 h-6 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17h5l-1.405-1.405A2.034 2.034 0 0118 14.158V11a6 6 0 10-12 0v3.159c0 .538-.214 1.055-.595 1.436L4 17h11zM13.73 21a2 2 0 01-3.46 0" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  <span class="absolute -top-1 -right-1 inline-flex items-center justify-center px-1.5 py-0.5 text-xs rounded-full bg-red-500 text-white">3</span>
+                  <svg class="w-6 h-6 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path
+                      d="M15 17h5l-1.405-1.405A2.034 2.034 0 0118 14.158V11a6 6 0 10-12 0v3.159c0 .538-.214 1.055-.595 1.436L4 17h11zM13.73 21a2 2 0 01-3.46 0"
+                      stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+             <!--     <span
+                    class="absolute -top-1 -right-1 inline-flex items-center justify-center px-1.5 py-0.5 text-xs rounded-full bg-red-500 text-white">3</span> -->
                 </button>
                 <!-- Notification dropdown -->
-                <div id="notifMenu" class="notif-menu hidden origin-top-right absolute right-0 mt-2 w-80 rounded-2xl bg-white shadow-soft-md ring-1 ring-black ring-opacity-5 p-3 transition-smooth" role="menu" aria-label="Notifications">
+
+                <div id="notifMenu"
+                  class="notif-menu hidden origin-top-right absolute right-0 mt-2 w-80 rounded-2xl bg-white shadow-soft-md ring-1 ring-black ring-opacity-5 p-3 transition-smooth"
+                  role="menu" aria-label="Notifications">
                   <div class="flex items-center justify-between mb-2">
                     <span class="font-medium">Notifications</span>
                     <a href="#" class="text-sm text-primary hover:underline">Mark all read</a>
                   </div>
+
+                  <div class="p-6 text-center text-muted">
+                    <div class="flex flex-col items-center">
+                      <!-- Icon -->
+                      <svg class="w-12 h-12 text-gray-300 mb-3" fill="none" stroke="currentColor" stroke-width="1.5"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M9.75 17L9 21h6l-.75-4M4 21h16M12 3v10m0 0l3.5-3.5M12 13l-3.5-3.5" />
+                      </svg>
+                      <!-- Message -->
+                      <p class="text-sm font-medium text-gray-600">Email notifications</p>
+                      <p class="text-xs text-gray-400">This section is under construction</p>
+                    </div>
+                  </div>
+<!--
                   <ul class="space-y-2 max-h-64 overflow-auto pr-2">
                     <li class="p-2 rounded-lg hover:bg-gray-50 transition-fast">
                       <div class="flex items-start gap-3">
-                        <div class="flex-shrink-0 w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">A</div>
+                        <div
+                          class="flex-shrink-0 w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                          A</div>
                         <div class="flex-1">
                           <div class="text-sm font-semibold">Application Approved</div>
                           <div class="text-xs text-muted">Your student's application to University X is approved.</div>
@@ -236,7 +334,9 @@
                     </li>
                     <li class="p-2 rounded-lg hover:bg-gray-50 transition-fast">
                       <div class="flex items-start gap-3">
-                        <div class="flex-shrink-0 w-10 h-10 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-600">!</div>
+                        <div
+                          class="flex-shrink-0 w-10 h-10 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-600">
+                          !</div>
                         <div class="flex-1">
                           <div class="text-sm font-semibold">Payment Pending</div>
                           <div class="text-xs text-muted">Invoice #412 is due in 3 days.</div>
@@ -246,7 +346,9 @@
                     </li>
                     <li class="p-2 rounded-lg hover:bg-gray-50 transition-fast">
                       <div class="flex items-start gap-3">
-                        <div class="flex-shrink-0 w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600">✓</div>
+                        <div
+                          class="flex-shrink-0 w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600">
+                          ✓</div>
                         <div class="flex-1">
                           <div class="text-sm font-semibold">New Lead</div>
                           <div class="text-xs text-muted">A lead from Facebook Ads has been added.</div>
@@ -254,21 +356,27 @@
                         </div>
                       </div>
                     </li>
-                  </ul>
+                  </ul>-->
                 </div>
               </div>
 
               <!-- Profile menu -->
               <div class="relative">
-                <button id="profileToggle" class="flex items-center gap-2 p-1 rounded-full hover:bg-gray-100 transition-fast" aria-haspopup="true" aria-expanded="false" aria-controls="profileMenu" title="Open profile">
-                  <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40'><rect rx='10' width='100%' height='100%' fill='%230f62fe'/><text x='50%' y='55%' font-size='18' fill='white' text-anchor='middle' font-family='Arial'>R</text></svg>" alt="Profile avatar" class="w-8 h-8 rounded-full ring-1 ring-white" />
+                <button id="profileToggle"
+                  class="flex items-center gap-2 p-1 rounded-full hover:bg-gray-100 transition-fast"
+                  aria-haspopup="true" aria-expanded="false" aria-controls="profileMenu" title="Open profile">
+                  <img
+                    src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40'><rect rx='10' width='100%' height='100%' fill='%230f62fe'/><text x='50%' y='55%' font-size='18' fill='white' text-anchor='middle' font-family='Arial'>R</text></svg>"
+                    alt="Profile avatar" class="w-8 h-8 rounded-full ring-1 ring-white" />
                   <span class="hidden sm:block text-left">
                     <div class="text-sm font-medium">Rachit Pokhrel</div>
                     <div class="text-xs text-muted">Admin</div>
                   </span>
                 </button>
 
-                <div id="profileMenu" class="hidden origin-top-right absolute right-0 mt-2 w-48 rounded-2xl bg-white shadow-soft-md ring-1 ring-black ring-opacity-5 p-2 transition-smooth" role="menu" aria-label="Profile menu">
+                <div id="profileMenu"
+                  class="hidden origin-top-right absolute right-0 mt-2 w-48 rounded-2xl bg-white shadow-soft-md ring-1 ring-black ring-opacity-5 p-2 transition-smooth"
+                  role="menu" aria-label="Profile menu">
                   <a href="#" class="block px-3 py-2 rounded-lg hover:bg-gray-50">Profile</a>
                   <a href="#" class="block px-3 py-2 rounded-lg hover:bg-gray-50">Settings</a>
                   <div class="border-t my-1"></div>
@@ -284,26 +392,40 @@
       <main class="p-6 max-w-8xl mx-auto">
 
         <!-- Action Buttons Row -->
-        <section aria-label="Primary actions" class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+        <section aria-label="Primary actions"
+          class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
           <div class="flex items-center gap-4">
             <h1 class="text-2xl font-semibold">Dashboard</h1>
             <p class="text-sm text-muted">Overview of applicants, visitors, tasks, and appointments.</p>
           </div>
 
           <div class="flex items-center gap-3">
-            <button id="addApplicantBtn" class="inline-flex items-center gap-2 bg-white border border-gray-200 px-4 py-2 rounded-lg shadow-sm hover:shadow-md transition-fast" aria-haspopup="dialog">
-              <svg class="w-5 h-5 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 4v16M4 12h16" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <button id="addApplicantBtn"
+              class="inline-flex items-center gap-2 bg-white border border-gray-200 px-4 py-2 rounded-lg shadow-sm hover:shadow-md transition-fast"
+              aria-haspopup="dialog">
+              <svg class="w-5 h-5 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M12 4v16M4 12h16" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
               <span class="text-sm font-medium">Add Applicant</span>
             </button>
 
-            <button id="addVisitorBtn" class="inline-flex items-center gap-2 bg-white border border-gray-200 px-4 py-2 rounded-lg shadow-sm hover:shadow-md transition-fast" aria-haspopup="dialog">
-              <svg class="w-5 h-5 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2a2 2 0 012 2v1h-4V4a2 2 0 012-2zM6 8v10a2 2 0 002 2h8a2 2 0 002-2V8" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <button id="addVisitorBtn"
+              class="inline-flex items-center gap-2 bg-white border border-gray-200 px-4 py-2 rounded-lg shadow-sm hover:shadow-md transition-fast"
+              aria-haspopup="dialog">
+              <svg class="w-5 h-5 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M12 2a2 2 0 012 2v1h-4V4a2 2 0 012-2zM6 8v10a2 2 0 002 2h8a2 2 0 002-2V8" stroke-width="1.4"
+                  stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
               <span class="text-sm font-medium">Add Visitor</span>
             </button>
 
             <!-- Debug toggle -->
-            <button id="debugToggle" class="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-gray-50 border text-sm hover:bg-gray-100 transition-fast" title="Open debug panel">
-              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 8v8M8 12h8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <button id="debugToggle"
+              class="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-gray-50 border text-sm hover:bg-gray-100 transition-fast"
+              title="Open debug panel">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M12 8v8M8 12h8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
               Debug
             </button>
           </div>
@@ -312,14 +434,18 @@
         <!-- Dashboard Cards Grid -->
         <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6" aria-label="Key metrics">
           <!-- Card 1: Visitors -->
-          <article class="card rounded-2xl bg-white p-5 shadow-soft-md border border-transparent transition-smooth" role="region" aria-labelledby="visitorsTitle">
+          <article class="card rounded-2xl bg-white p-5 shadow-soft-md border border-transparent transition-smooth"
+            role="region" aria-labelledby="visitorsTitle">
             <div class="flex items-start justify-between">
               <div>
                 <h3 id="visitorsTitle" class="text-sm font-semibold">Visitors</h3>
                 <p class="text-xs text-muted mt-1">People who visited office</p>
               </div>
               <div class="rounded-lg bg-primary/10 p-2 inline-flex items-center justify-center">
-                <svg class="w-6 h-6 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 12a5 5 0 100-10 5 5 0 000 10zM6 20c1.333-2 3-3 6-3s4.667 1 6 3" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <svg class="w-6 h-6 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path d="M12 12a5 5 0 100-10 5 5 0 000 10zM6 20c1.333-2 3-3 6-3s4.667 1 6 3" stroke-width="1.2"
+                    stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
               </div>
             </div>
             <div class="mt-6">
@@ -329,53 +455,64 @@
           </article>
 
           <!-- Card 2: Leads -->
-          <article class="rounded-2xl bg-white p-5 shadow-soft-md border border-transparent transition-smooth" role="region" aria-labelledby="leadsTitle">
+          <article class="rounded-2xl bg-white p-5 shadow-soft-md border border-transparent transition-smooth"
+            role="region" aria-labelledby="leadsTitle">
             <div class="flex items-start justify-between">
               <div>
-                <h3 id="leadsTitle" class="text-sm font-semibold">Leads</h3>
-                <p class="text-xs text-muted mt-1">New marketing leads</p>
+                <h3 id="leadsTitle" class="text-sm font-semibold">IELTS</h3>
+                <p class="text-xs text-muted mt-1">New IELTS Students</p>
               </div>
               <div class="rounded-lg bg-amber-100 p-2 inline-flex items-center justify-center">
-                <svg class="w-6 h-6 text-amber-600" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2l2 7h7l-5.5 4 2 7L12 16l-7.5 4 2-7L1 9h7l2-7z" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <svg class="w-6 h-6 text-amber-600" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path d="M12 2l2 7h7l-5.5 4 2 7L12 16l-7.5 4 2-7L1 9h7l2-7z" stroke-width="1.2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg>
               </div>
             </div>
             <div class="mt-6">
               <div class="text-3xl font-bold" data-counter data-target="478" id="counter-leads">0</div>
-              <div class="mt-2 text-xs text-muted">Tracked from campaigns</div>
+              <div class="mt-2 text-xs text-muted"></div>
             </div>
           </article>
 
           <!-- Card 3: Inquiries -->
-          <article class="rounded-2xl bg-white p-5 shadow-soft-md border border-transparent transition-smooth" role="region" aria-labelledby="inquiriesTitle">
+          <article class="rounded-2xl bg-white p-5 shadow-soft-md border border-transparent transition-smooth"
+            role="region" aria-labelledby="inquiriesTitle">
             <div class="flex items-start justify-between">
               <div>
                 <h3 id="inquiriesTitle" class="text-sm font-semibold">Inquiries</h3>
                 <p class="text-xs text-muted mt-1">Contact form inquiries</p>
               </div>
               <div class="rounded-lg bg-green-100 p-2 inline-flex items-center justify-center">
-                <svg class="w-6 h-6 text-green-600" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M7 8h10M7 12h6M7 16h10" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <svg class="w-6 h-6 text-green-600" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path d="M7 8h10M7 12h6M7 16h10" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
               </div>
             </div>
             <div class="mt-6">
               <div class="text-3xl font-bold" data-counter data-target="312" id="counter-inquiries">0</div>
-              <div class="mt-2 text-xs text-muted">Support & general questions</div>
+              <div class="mt-2 text-xs text-muted"></div>
             </div>
           </article>
 
           <!-- Card 4: Class Enrollments -->
-          <article class="rounded-2xl bg-white p-5 shadow-soft-md border border-transparent transition-smooth" role="region" aria-labelledby="enrollTitle">
+          <article class="rounded-2xl bg-white p-5 shadow-soft-md border border-transparent transition-smooth"
+            role="region" aria-labelledby="enrollTitle">
             <div class="flex items-start justify-between">
               <div>
                 <h3 id="enrollTitle" class="text-sm font-semibold">Class Enrollments</h3>
                 <p class="text-xs text-muted mt-1">Signups for classes</p>
               </div>
               <div class="rounded-lg bg-indigo-100 p-2 inline-flex items-center justify-center">
-                <svg class="w-6 h-6 text-indigo-600" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2l4 6H8l4-6zM6 20h12v-2H6v2z" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <svg class="w-6 h-6 text-indigo-600" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path d="M12 2l4 6H8l4-6zM6 20h12v-2H6v2z" stroke-width="1.2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg>
               </div>
             </div>
             <div class="mt-6">
               <div class="text-3xl font-bold" data-counter data-target="89" id="counter-enroll">0</div>
-              <div class="mt-2 text-xs text-muted">Active this semester</div>
+              <div class="mt-2 text-xs text-muted">Active this intake</div>
             </div>
           </article>
         </section>
@@ -384,8 +521,14 @@
         <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6" aria-label="Secondary metrics">
           <article class="rounded-2xl bg-white p-5 shadow-soft-md transition-smooth">
             <div class="flex items-start justify-between">
-              <div><h3 class="font-semibold">Assigned Applicants</h3><div class="text-xs text-muted mt-1">Per counselor</div></div>
-              <div class="p-2 rounded-lg bg-pink-50 inline-flex items-center justify-center"><svg class="w-5 h-5 text-pink-500" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2v20M5 12h14" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              <div>
+                <h3 class="font-semibold">Assigned Applicants</h3>
+                <div class="text-xs text-muted mt-1">Per counselor</div>
+              </div>
+              <div class="p-2 rounded-lg bg-pink-50 inline-flex items-center justify-center"><svg
+                  class="w-5 h-5 text-pink-500" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path d="M12 2v20M5 12h14" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
+                </svg></div>
             </div>
             <div class="mt-6">
               <div class="text-2xl font-bold" data-counter data-target="243" id="counter-assigned">0</div>
@@ -395,8 +538,14 @@
 
           <article class="rounded-2xl bg-white p-5 shadow-soft-md transition-smooth">
             <div class="flex items-start justify-between">
-              <div><h3 class="font-semibold">Appointment / Follow-Up</h3><div class="text-xs text-muted mt-1">Scheduled & pending</div></div>
-              <div class="p-2 rounded-lg bg-sky-50 inline-flex items-center justify-center"><svg class="w-5 h-5 text-sky-600" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M8 7h8M8 12h8M8 17h8" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              <div>
+                <h3 class="font-semibold">Appointment / Follow-Up</h3>
+                <div class="text-xs text-muted mt-1">Scheduled & pending</div>
+              </div>
+              <div class="p-2 rounded-lg bg-sky-50 inline-flex items-center justify-center"><svg
+                  class="w-5 h-5 text-sky-600" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path d="M8 7h8M8 12h8M8 17h8" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
+                </svg></div>
             </div>
             <div class="mt-6">
               <div class="text-2xl font-bold" data-counter data-target="56" id="counter-appointments">0</div>
@@ -406,8 +555,14 @@
 
           <article class="rounded-2xl bg-white p-5 shadow-soft-md transition-smooth">
             <div class="flex items-start justify-between">
-              <div><h3 class="font-semibold">Courses</h3><div class="text-xs text-muted mt-1">Active & upcoming</div></div>
-              <div class="p-2 rounded-lg bg-emerald-50 inline-flex items-center justify-center"><svg class="w-5 h-5 text-emerald-600" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 6h16M4 12h16M4 18h16" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              <div>
+                <h3 class="font-semibold">Courses</h3>
+                <div class="text-xs text-muted mt-1">Active & upcoming</div>
+              </div>
+              <div class="p-2 rounded-lg bg-emerald-50 inline-flex items-center justify-center"><svg
+                  class="w-5 h-5 text-emerald-600" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path d="M4 6h16M4 12h16M4 18h16" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg></div>
             </div>
             <div class="mt-6">
               <div class="text-2xl font-bold" data-counter data-target="34" id="counter-courses">0</div>
@@ -417,8 +572,15 @@
 
           <article class="rounded-2xl bg-white p-5 shadow-soft-md transition-smooth">
             <div class="flex items-start justify-between">
-              <div><h3 class="font-semibold">Decision</h3><div class="text-xs text-muted mt-1">Offers & rejections</div></div>
-              <div class="p-2 rounded-lg bg-violet-50 inline-flex items-center justify-center"><svg class="w-5 h-5 text-violet-600" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2l2 7h7l-5.5 4 2 7L12 16l-7.5 4 2-7L1 9h7l2-7z" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              <div>
+                <h3 class="font-semibold">Decision</h3>
+                <div class="text-xs text-muted mt-1">Offers & rejections</div>
+              </div>
+              <div class="p-2 rounded-lg bg-violet-50 inline-flex items-center justify-center"><svg
+                  class="w-5 h-5 text-violet-600" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path d="M12 2l2 7h7l-5.5 4 2 7L12 16l-7.5 4 2-7L1 9h7l2-7z" stroke-width="1.1" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg></div>
             </div>
             <div class="mt-6">
               <div class="text-2xl font-bold" data-counter data-target="154" id="counter-decision">0</div>
@@ -427,7 +589,7 @@
           </article>
         </section>
 
-        <!-- Row 3: Incoming & Outgoing -->
+        <!-- Row 3: Incoming & Outgoing 
         <section class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6" aria-label="Traffic">
           <article class="rounded-2xl bg-white p-5 shadow-soft-md transition-smooth">
             <div class="flex items-start justify-between">
@@ -456,12 +618,13 @@
               <div class="mt-2 text-xs text-muted">Sent communications</div>
             </div>
           </article>
-        </section>
+        </section> -->
 
         <!-- Bottom Panels Row -->
         <section class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-16">
           <!-- Appointments / Follow-Up -->
-          <section class="rounded-2xl bg-white p-5 shadow-soft-md transition-smooth" aria-labelledby="appointmentsTitle" role="region">
+          <section class="rounded-2xl bg-white p-5 shadow-soft-md transition-smooth" aria-labelledby="appointmentsTitle"
+            role="region">
             <div class="flex items-center justify-between">
               <div>
                 <h3 id="appointmentsTitle" class="text-lg font-semibold">Appointment / Follow-Up</h3>
@@ -470,11 +633,15 @@
 
               <div class="flex items-center gap-2">
                 <div class="hidden sm:flex items-center bg-gray-100 rounded-lg p-1 text-sm">
-                  <button class="tabBtn px-3 py-1 rounded-md text-sm font-medium active" data-tab-target="all-appointments">All</button>
-                  <button class="tabBtn px-3 py-1 rounded-md text-sm font-medium" data-tab-target="appointment">Appointment</button>
-                  <button class="tabBtn px-3 py-1 rounded-md text-sm font-medium" data-tab-target="followup">FollowUp</button>
+                  <button class="tabBtn px-3 py-1 rounded-md text-sm font-medium active"
+                    data-tab-target="all-appointments">All</button>
+                  <button class="tabBtn px-3 py-1 rounded-md text-sm font-medium"
+                    data-tab-target="appointment">Appointment</button>
+                  <button class="tabBtn px-3 py-1 rounded-md text-sm font-medium"
+                    data-tab-target="followup">FollowUp</button>
                 </div>
-                <button class="px-3 py-2 rounded-lg bg-primary text-white text-sm hover:brightness-95 transition-fast" id="viewAllAppointments">View All</button>
+                <button class="px-3 py-2 rounded-lg bg-primary text-white text-sm hover:brightness-95 transition-fast"
+                  id="viewAllAppointments">View All</button>
               </div>
             </div>
 
@@ -489,7 +656,7 @@
                       <div class="flex items-start gap-3">
                         <div class="w-3/4">
                           <div class="flex items-center gap-2">
-                            <div class="font-semibold">Call: John Doe</div>
+                            <div class="font-semibold">Call: Rachit</div>
                             <div class="text-xs text-muted">— Follow up</div>
                           </div>
                           <div class="text-xs text-muted mt-1">Scheduled: Sep 12, 2025 • 10:00 AM</div>
@@ -527,7 +694,8 @@
           </section>
 
           <!-- Tasks Panel -->
-          <section class="rounded-2xl bg-white p-5 shadow-soft-md transition-smooth" aria-labelledby="tasksTitle" role="region">
+          <section class="rounded-2xl bg-white p-5 shadow-soft-md transition-smooth" aria-labelledby="tasksTitle"
+            role="region">
             <div class="flex items-center justify-between">
               <div>
                 <h3 id="tasksTitle" class="text-lg font-semibold">Tasks</h3>
@@ -536,12 +704,18 @@
 
               <div class="flex items-center gap-2">
                 <div class="hidden sm:flex items-center bg-gray-100 rounded-lg p-1 text-sm">
-                  <button class="taskTabBtn px-3 py-1 rounded-md text-sm font-medium active" data-task-target="all-tasks">All Task</button>
-                  <button class="taskTabBtn px-3 py-1 rounded-md text-sm font-medium" data-task-target="pending">Pending</button>
-                  <button class="taskTabBtn px-3 py-1 rounded-md text-sm font-medium" data-task-target="inprogress">In Progress</button>
-                  <button class="taskTabBtn px-3 py-1 rounded-md text-sm font-medium" data-task-target="completed">Completed</button>
+                  <button class="taskTabBtn px-3 py-1 rounded-md text-sm font-medium active"
+                    data-task-target="all-tasks">All Task</button>
+                  <button class="taskTabBtn px-3 py-1 rounded-md text-sm font-medium"
+                    data-task-target="pending">Pending</button>
+                  <button class="taskTabBtn px-3 py-1 rounded-md text-sm font-medium" data-task-target="inprogress">In
+                    Progress</button>
+                  <button class="taskTabBtn px-3 py-1 rounded-md text-sm font-medium"
+                    data-task-target="completed">Completed</button>
                 </div>
-                <button id="viewAllTasks" class="px-3 py-2 rounded-lg bg-primary text-white text-sm hover:brightness-95 transition-fast">View All</button>
+                <button id="viewAllTasks"
+                  class="px-3 py-2 rounded-lg bg-primary text-white text-sm hover:brightness-95 transition-fast">View
+                  All</button>
               </div>
             </div>
 
@@ -555,7 +729,7 @@
                       <div class="flex items-start gap-3">
                         <input type="checkbox" class="mt-1" aria-label="Mark task done">
                         <div>
-                          <div class="font-medium">Prepare application package for Sarah</div>
+                          <div class="font-medium">Prepare application package for Rachit</div>
                           <div class="text-xs text-muted">Due: Sep 14, 2025</div>
                         </div>
                       </div>
@@ -594,7 +768,12 @@
 
         <!-- Footer / small copyright -->
         <footer class="text-center text-xs text-muted mb-6">
-          © <span id="currentYear"></span> CMST — Crafted with care & attention to detail.
+          <div class="max-w-7xl mx-auto mt-10 border-t border-white/10 pt-6 text-center text-xs text-black-200">
+            <p> © <span id="currentYear"></span> Discovery Pathway. All Rights Reserved. <br>Developed By
+              <a href="https://www.rachitpokhrel.com.np/"
+                class="hover:text-black hover:font-bold transition-all duration-200">Rachit Pokhrel.</a>
+            </p>
+          </div>
         </footer>
 
       </main>
@@ -627,10 +806,12 @@
     </div>
 
     <!-- ADD APPLICANT MODAL -->
-    <div id="applicantModal" class="fixed inset-0 z-60 hidden" role="dialog" aria-modal="true" aria-labelledby="applicantModalTitle">
+    <div id="applicantModal" class="fixed inset-0 z-60 hidden" role="dialog" aria-modal="true"
+      aria-labelledby="applicantModalTitle">
       <div class="absolute inset-0 bg-black/40 transition-opacity" data-modal-backdrop></div>
       <div class="fixed inset-0 flex items-start sm:items-center justify-center p-4 sm:p-6 overflow-auto">
-        <div class="bg-white rounded-2xl w-full max-w-6xl shadow-soft-lg transform transition-smooth scale-95 opacity-0" role="document" id="applicantModalCard" style="max-height: 90vh; overflow:auto;">
+        <div class="bg-white rounded-2xl w-full max-w-6xl shadow-soft-lg transform transition-smooth scale-95 opacity-0"
+          role="document" id="applicantModalCard" style="max-height: 90vh; overflow:auto;">
           <!-- Modal header (sticky) -->
           <div class="sticky top-0 bg-white border-b px-6 py-4 rounded-t-2xl z-10 flex items-center justify-between">
             <div class="flex items-center gap-3">
@@ -649,7 +830,8 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
                 <label class="text-xs font-semibold text-muted">Lead Stage</label>
-                <select name="leadStage" class="mt-1 block w-full rounded-lg border-gray-200 p-3 transition-fast" aria-label="Lead stage">
+                <select name="leadStage" class="mt-1 block w-full rounded-lg border-gray-200 p-3 transition-fast"
+                  aria-label="Lead stage">
                   <option>Leads</option>
                   <option>Enquiring</option>
                   <option>Enrolled</option>
@@ -658,7 +840,8 @@
               </div>
               <div>
                 <label class="text-xs font-semibold text-muted">Counselor</label>
-                <select name="counselor" class="mt-1 block w-full rounded-lg border-gray-200 p-3 transition-fast" aria-label="Counselor">
+                <select name="counselor" class="mt-1 block w-full rounded-lg border-gray-200 p-3 transition-fast"
+                  aria-label="Counselor">
                   <option>Not assigned</option>
                   <option>Rachit</option>
                   <option>Aisha</option>
@@ -666,7 +849,8 @@
               </div>
               <div>
                 <label class="text-xs font-semibold text-muted">Tags</label>
-                <input name="tags" class="mt-1 block w-full rounded-lg border-gray-200 p-3" placeholder="e.g. priority, scholarship" aria-label="Tags" />
+                <input name="tags" class="mt-1 block w-full rounded-lg border-gray-200 p-3"
+                  placeholder="e.g. priority, scholarship" aria-label="Tags" />
               </div>
             </div>
 
@@ -680,29 +864,34 @@
               <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
                 <div>
                   <label class="text-xs font-medium">Full Name <span class="text-red-500">*</span></label>
-                  <input name="fullName" required class="mt-1 block w-full rounded-lg border-gray-200 p-3" placeholder="First Last" aria-required="true" />
+                  <input name="fullName" required class="mt-1 block w-full rounded-lg border-gray-200 p-3"
+                    placeholder="First Last" aria-required="true" />
                   <p class="mt-1 text-xs text-red-600 hidden" data-error-for="fullName">Name is required</p>
                 </div>
 
                 <div>
                   <label class="text-xs font-medium">Email</label>
-                  <input name="email" type="email" class="mt-1 block w-full rounded-lg border-gray-200 p-3" placeholder="name@example.com" />
+                  <input name="email" type="email" class="mt-1 block w-full rounded-lg border-gray-200 p-3"
+                    placeholder="name@example.com" />
                 </div>
 
                 <div>
                   <label class="text-xs font-medium">Secondary Email</label>
-                  <input name="secondaryEmail" type="email" class="mt-1 block w-full rounded-lg border-gray-200 p-3" placeholder="secondary@example.com" />
+                  <input name="secondaryEmail" type="email" class="mt-1 block w-full rounded-lg border-gray-200 p-3"
+                    placeholder="secondary@example.com" />
                 </div>
 
                 <div>
                   <label class="text-xs font-medium">Phone Number <span class="text-red-500">*</span></label>
-                  <input name="phone" required class="mt-1 block w-full rounded-lg border-gray-200 p-3" placeholder="+977-98xxxxxxxx" aria-required="true" />
+                  <input name="phone" required class="mt-1 block w-full rounded-lg border-gray-200 p-3"
+                    placeholder="+977-98xxxxxxxx" aria-required="true" />
                   <p class="mt-1 text-xs text-red-600 hidden" data-error-for="phone">Phone is required</p>
                 </div>
 
                 <div>
                   <label class="text-xs font-medium">Secondary Phone</label>
-                  <input name="secondaryPhone" class="mt-1 block w-full rounded-lg border-gray-200 p-3" placeholder="+977-98xxxxxxxx" />
+                  <input name="secondaryPhone" class="mt-1 block w-full rounded-lg border-gray-200 p-3"
+                    placeholder="+977-98xxxxxxxx" />
                 </div>
 
                 <div>
@@ -722,17 +911,20 @@
 
                 <div>
                   <label class="text-xs font-medium">Reference</label>
-                  <input name="reference" class="mt-1 block w-full rounded-lg border-gray-200 p-3" placeholder="How did they hear about us?" />
+                  <input name="reference" class="mt-1 block w-full rounded-lg border-gray-200 p-3"
+                    placeholder="How did they hear about us?" />
                 </div>
 
                 <div>
                   <label class="text-xs font-medium">Interested Countries</label>
-                  <input name="countries" class="mt-1 block w-full rounded-lg border-gray-200 p-3" placeholder="e.g. UK, Canada" />
+                  <input name="countries" class="mt-1 block w-full rounded-lg border-gray-200 p-3"
+                    placeholder="e.g. UK, Canada" />
                 </div>
 
                 <div>
                   <label class="text-xs font-medium">Interested Course</label>
-                  <input name="interestedCourse" class="mt-1 block w-full rounded-lg border-gray-200 p-3" placeholder="e.g. MBA, MS Computer Science" />
+                  <input name="interestedCourse" class="mt-1 block w-full rounded-lg border-gray-200 p-3"
+                    placeholder="e.g. MBA, MS Computer Science" />
                 </div>
 
               </div>
@@ -790,7 +982,8 @@
 
                 <div>
                   <label class="text-xs font-medium">Passed Year</label>
-                  <input name="passedYear" type="number" min="1900" max="2099" step="1" class="mt-1 block w-full rounded-lg border-gray-200 p-3" />
+                  <input name="passedYear" type="number" min="1900" max="2099" step="1"
+                    class="mt-1 block w-full rounded-lg border-gray-200 p-3" />
                 </div>
 
                 <div>
@@ -810,7 +1003,8 @@
 
                 <div>
                   <label class="text-xs font-medium">Percentage</label>
-                  <input name="percentage" type="number" min="0" max="100" step="0.01" class="mt-1 block w-full rounded-lg border-gray-200 p-3" />
+                  <input name="percentage" type="number" min="0" max="100" step="0.01"
+                    class="mt-1 block w-full rounded-lg border-gray-200 p-3" />
                 </div>
               </div>
             </section>
@@ -860,8 +1054,11 @@
               <h3 id="docsTitle" class="text-sm font-semibold">Documents</h3>
               <div class="mt-4">
                 <label class="block text-xs font-medium mb-2">Upload Documents</label>
-                <div id="dropArea" class="border-2 border-dashed rounded-lg p-6 text-center file-drop-hover transition-smooth" aria-label="File upload area" tabindex="0">
-                  <p class="text-sm text-muted">Drag & drop files here or <button id="fileBrowseBtn" type="button" class="text-primary underline">browse</button></p>
+                <div id="dropArea"
+                  class="border-2 border-dashed rounded-lg p-6 text-center file-drop-hover transition-smooth"
+                  aria-label="File upload area" tabindex="0">
+                  <p class="text-sm text-muted">Drag & drop files here or <button id="fileBrowseBtn" type="button"
+                      class="text-primary underline">browse</button></p>
                   <input id="fileInput" name="documents" type="file" multiple class="hidden" />
                   <div id="fileList" class="mt-3 text-sm text-muted"></div>
                 </div>
@@ -871,15 +1068,19 @@
             <!-- Summary -->
             <section class="rounded-lg border border-gray-100 p-4 section-sep" aria-labelledby="summaryTitle">
               <h3 id="summaryTitle" class="text-sm font-semibold">Summary</h3>
-              <textarea name="summary" rows="4" class="mt-2 block w-full rounded-lg border-gray-200 p-3" placeholder="Notes about the applicant, interview notes, special conditions"></textarea>
+              <textarea name="summary" rows="4" class="mt-2 block w-full rounded-lg border-gray-200 p-3"
+                placeholder="Notes about the applicant, interview notes, special conditions"></textarea>
             </section>
 
             <!-- Modal footer (sticky) -->
-            <div class="sticky bottom-0 bg-white border-t px-6 py-4 rounded-b-2xl flex items-center justify-between gap-4 z-10">
+            <div
+              class="sticky bottom-0 bg-white border-t px-6 py-4 rounded-b-2xl flex items-center justify-between gap-4 z-10">
               <div class="text-xs text-muted">Fields saved locally until you hit Save</div>
               <div class="flex items-center gap-2">
-                <button type="button" id="applicantCancel" class="px-4 py-2 rounded-lg hover:bg-gray-100">Cancel</button>
-                <button type="submit" id="applicantSubmit" class="px-4 py-2 rounded-lg bg-primary text-white">Save Applicant</button>
+                <button type="button" id="applicantCancel"
+                  class="px-4 py-2 rounded-lg hover:bg-gray-100">Cancel</button>
+                <button type="submit" id="applicantSubmit" class="px-4 py-2 rounded-lg bg-primary text-white">Save
+                  Applicant</button>
               </div>
             </div>
           </form>
@@ -888,11 +1089,12 @@
     </div>
 
     <!-- ADD VISITOR MODAL -->
-    <div id="visitorModal" class="fixed inset-0 z-60 hidden" role="dialog" aria-modal="true" aria-labelledby="visitorModalTitle">
+    <div id="visitorModal" class="fixed inset-0 z-60 hidden" role="dialog" aria-modal="true"
+      aria-labelledby="visitorModalTitle">
       <div class="absolute inset-0 bg-black/40 transition-opacity" data-modal-backdrop></div>
       <div class="fixed inset-0 flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl w-full max-w-2xl shadow-soft-lg transform transition-smooth scale-95 opacity-0"
-     role="document">
+          role="document">
 
           <div class="sticky top-0 bg-white border-b px-6 py-4 rounded-t-2xl z-10 flex items-center justify-between">
             <h2 id="visitorModalTitle" class="text-lg font-semibold">Add Visitor</h2>
@@ -906,40 +1108,48 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label class="text-xs font-medium">Name <span class="text-red-500">*</span></label>
-                <input name="visitorName" required class="mt-1 block w-full rounded-lg border-gray-200 p-3" placeholder="Name"/>
+                <input name="visitorName" required class="mt-1 block w-full rounded-lg border-gray-200 p-3"
+                  placeholder="Name" />
                 <p class="mt-1 text-xs text-red-600 hidden" data-error-for="visitorName">Name is required</p>
               </div>
               <div>
                 <label class="text-xs font-medium">Email</label>
-                <input name="visitorEmail" type="email" class="mt-1 block w-full rounded-lg border-gray-200 p-3" placeholder="Email"/>
+                <input name="visitorEmail" type="email" class="mt-1 block w-full rounded-lg border-gray-200 p-3"
+                  placeholder="Email" />
               </div>
               <div>
                 <label class="text-xs font-medium">Personal Phone <span class="text-red-500">*</span></label>
-                <input name="visitorPhone" required class="mt-1 block w-full rounded-lg border-gray-200 p-3" placeholder="Personal Number"/>
+                <input name="visitorPhone" required class="mt-1 block w-full rounded-lg border-gray-200 p-3"
+                  placeholder="Personal Number" />
                 <p class="mt-1 text-xs text-red-600 hidden" data-error-for="visitorPhone">Phone is required</p>
               </div>
               <div>
                 <label class="text-xs font-medium">Parent's Phone </label>
-                <input name="visitorPhone" required class="mt-1 block w-full rounded-lg border-gray-200 p-3" placeholder="Parents Number"/>
-                
+                <input name="visitorPhone" required class="mt-1 block w-full rounded-lg border-gray-200 p-3"
+                  placeholder="Parents Number" />
+
               </div>
               <div>
                 <label class="text-xs font-medium">Interested Course</label>
-                <input name="visitorCourse" class="mt-1 block w-full rounded-lg border-gray-200 p-3" placeholder="Course"/>
+                <input name="visitorCourse" class="mt-1 block w-full rounded-lg border-gray-200 p-3"
+                  placeholder="Course" />
               </div>
               <div>
                 <label class="text-xs font-medium">Interested Country</label>
-                <input name="visitorCourse" class="mt-1 block w-full rounded-lg border-gray-200 p-3" placeholder="Country"/>
+                <input name="visitorCourse" class="mt-1 block w-full rounded-lg border-gray-200 p-3"
+                  placeholder="Country" />
               </div>
               <div class="md:col-span-2">
                 <label class="text-xs font-medium">Notes</label>
-                <textarea name="visitorNotes" rows="3" class="mt-1 block w-full rounded-lg border-gray-200 p-3" placeholder="Name"></textarea>
+                <textarea name="visitorNotes" rows="3" class="mt-1 block w-full rounded-lg border-gray-200 p-3"
+                  placeholder="Name"></textarea>
               </div>
             </div>
 
             <div class="flex items-center justify-end gap-2">
               <button type="button" id="visitorCancel" class="px-4 py-2 rounded-lg hover:bg-gray-100">Cancel</button>
-              <button type="submit" id="visitorSubmit" class="px-4 py-2 rounded-lg bg-primary text-white">Save Visitor</button>
+              <button type="submit" id="visitorSubmit" class="px-4 py-2 rounded-lg bg-primary text-white">Save
+                Visitor</button>
             </div>
           </form>
 
@@ -948,10 +1158,12 @@
     </div>
 
     <!-- VIEW ALL MODALS (Appointments / Tasks) -->
-    <div id="viewAllModal" class="fixed inset-0 z-60 hidden" role="dialog" aria-modal="true" aria-labelledby="viewAllTitle">
+    <div id="viewAllModal" class="fixed inset-0 z-60 hidden" role="dialog" aria-modal="true"
+      aria-labelledby="viewAllTitle">
       <div class="absolute inset-0 bg-black/40 transition-opacity" data-modal-backdrop></div>
       <div class="fixed inset-0 flex items-start sm:items-center justify-center p-4 sm:p-6 overflow-auto">
-        <div class="bg-white rounded-2xl w-full max-w-4xl shadow-soft-lg transform transition-smooth scale-95 opacity-0" role="document">
+        <div class="bg-white rounded-2xl w-full max-w-4xl shadow-soft-lg transform transition-smooth scale-95 opacity-0"
+          role="document">
           <div class="sticky top-0 bg-white border-b px-6 py-4 rounded-t-2xl z-10 flex items-center justify-between">
             <h2 id="viewAllTitle" class="text-lg font-semibold">View All</h2>
             <button id="viewAllCloseTop" class="px-3 py-2 rounded-lg hover:bg-gray-100">Close</button>
@@ -963,7 +1175,8 @@
             </div>
           </div>
 
-          <div class="sticky bottom-0 bg-white border-t px-6 py-4 rounded-b-2xl flex items-center justify-between gap-4 z-10">
+          <div
+            class="sticky bottom-0 bg-white border-t px-6 py-4 rounded-b-2xl flex items-center justify-between gap-4 z-10">
             <div class="text-xs text-muted">Showing mock data for demonstration.</div>
             <button id="viewAllClose" class="px-4 py-2 rounded-lg bg-primary text-white">Close</button>
           </div>
@@ -1029,14 +1242,14 @@
      * - Handles sidebar toggling, dropdowns, modals, counters, tabs, file upload, debug panel.
      * - Written with accessibility & progressive enhancement in mind.
      */
-const toggleBtn = document.getElementById("sidebarToggle");
-const sidebar = document.getElementById("sidebar");
-const content = document.getElementById("content");
+    const toggleBtn = document.getElementById("sidebarToggle");
+    const sidebar = document.getElementById("sidebar");
+    const content = document.getElementById("content");
 
-toggleBtn.addEventListener("click", () => {
-  sidebar.classList.toggle("sidebar-collapsed");
-  sidebar.classList.toggle("sidebar-expanded");
-});
+    toggleBtn.addEventListener("click", () => {
+      sidebar.classList.toggle("sidebar-collapsed");
+      sidebar.classList.toggle("sidebar-expanded");
+    });
 
     (function () {
       'use strict';
@@ -1242,7 +1455,7 @@ toggleBtn.addEventListener("click", () => {
           notifMenu.classList.remove('hidden');
           notifToggle.setAttribute('aria-expanded', 'true');
           // close profile if open
-          if (profileOpen) { profileOpen = false; profileMenu.classList.add('hidden'); profileToggle.setAttribute('aria-expanded','false'); }
+          if (profileOpen) { profileOpen = false; profileMenu.classList.add('hidden'); profileToggle.setAttribute('aria-expanded', 'false'); }
         } else {
           notifMenu.classList.add('hidden');
           notifToggle.setAttribute('aria-expanded', 'false');
@@ -1255,7 +1468,7 @@ toggleBtn.addEventListener("click", () => {
         if (profileOpen) {
           profileMenu.classList.remove('hidden');
           profileToggle.setAttribute('aria-expanded', 'true');
-          if (notifOpen) { notifOpen = false; notifMenu.classList.add('hidden'); notifToggle.setAttribute('aria-expanded','false'); }
+          if (notifOpen) { notifOpen = false; notifMenu.classList.add('hidden'); notifToggle.setAttribute('aria-expanded', 'false'); }
         } else {
           profileMenu.classList.add('hidden');
           profileToggle.setAttribute('aria-expanded', 'false');
@@ -1425,9 +1638,9 @@ toggleBtn.addEventListener("click", () => {
       function buildAppointmentsTable() {
         // mock rows
         const rows = [
-          { name: 'John Doe', type: 'FollowUp', when: '2025-09-12 10:00', counselor: 'Rachit' },
-          { name: 'Sarah Lee', type: 'Appointment', when: '2025-09-13 14:30', counselor: 'Aisha' },
-          { name: 'Mark T', type: 'Appointment', when: '2025-09-14 09:00', counselor: 'Rachit' }
+          { name: 'Rachit', type: 'FollowUp', when: '2025-09-12 10:00', counselor: 'Rachit' },
+          { name: 'Arpan', type: 'Appointment', when: '2025-09-13 14:30', counselor: 'Rachit' },
+          { name: 'Nirmal', type: 'Appointment', when: '2025-09-14 09:00', counselor: 'Rachit' }
         ];
         let html = '<table class="w-full text-sm"><thead><tr class="text-left text-xs text-muted"><th>Name</th><th>Type</th><th>When</th><th>Counselor</th></tr></thead><tbody>';
         rows.forEach(r => html += `<tr class="border-t"><td class="py-2">${r.name}</td><td class="py-2">${r.type}</td><td class="py-2">${r.when}</td><td class="py-2">${r.counselor}</td></tr>`);
@@ -1437,8 +1650,8 @@ toggleBtn.addEventListener("click", () => {
 
       function buildTasksTable() {
         const rows = [
-          { task: 'Prepare application for Sarah', due: '2025-09-14', priority: 'High' },
-          { task: 'Check documents - Mark', due: '2025-09-16', priority: 'Medium' },
+          { task: 'Prepare application for Rachit', due: '2025-09-14', priority: 'High' },
+          { task: 'Check documents - Rachit', due: '2025-09-16', priority: 'Medium' },
         ];
         let html = '<table class="w-full text-sm"><thead><tr class="text-left text-xs text-muted"><th>Task</th><th>Due</th><th>Priority</th></tr></thead><tbody>';
         rows.forEach(r => html += `<tr class="border-t"><td class="py-2">${r.task}</td><td class="py-2">${r.due}</td><td class="py-2">${r.priority}</td></tr>`);
@@ -1458,11 +1671,11 @@ toggleBtn.addEventListener("click", () => {
 
       // drag & drop events
       if (dropArea) {
-        ['dragenter','dragover'].forEach(evt => dropArea.addEventListener(evt, (e) => {
+        ['dragenter', 'dragover'].forEach(evt => dropArea.addEventListener(evt, (e) => {
           e.preventDefault(); e.stopPropagation();
           dropArea.classList.add('file-drop-hover');
         }));
-        ['dragleave','drop'].forEach(evt => dropArea.addEventListener(evt, (e) => {
+        ['dragleave', 'drop'].forEach(evt => dropArea.addEventListener(evt, (e) => {
           e.preventDefault(); e.stopPropagation();
           dropArea.classList.remove('file-drop-hover');
         }));
@@ -1479,7 +1692,7 @@ toggleBtn.addEventListener("click", () => {
           fileList.textContent = 'No files chosen';
           return;
         }
-        const items = files.map(f => `<div class="flex items-center justify-between py-1"><div class="truncate">${f.name}</div><div class="text-xs text-muted">${Math.round(f.size/1024)} KB</div></div>`).join('');
+        const items = files.map(f => `<div class="flex items-center justify-between py-1"><div class="truncate">${f.name}</div><div class="text-xs text-muted">${Math.round(f.size / 1024)} KB</div></div>`).join('');
         fileList.innerHTML = `<div class="text-sm">${items}</div>`;
       }
 
@@ -1529,7 +1742,7 @@ toggleBtn.addEventListener("click", () => {
       });
       debugReset && debugReset.addEventListener('click', () => {
         // reset to defaults
-        const defaults = { dbgVisitors:1245, dbgLeads:478, dbgInquiries:312, dbgEnroll:89, dbgIncoming:1024, dbgOutgoing:824 };
+        const defaults = { dbgVisitors: 1245, dbgLeads: 478, dbgInquiries: 312, dbgEnroll: 89, dbgIncoming: 1024, dbgOutgoing: 824 };
         Object.keys(defaults).forEach(k => { const el = document.getElementById(k); if (el) el.value = defaults[k]; });
         debugApply.click();
       });
@@ -1620,4 +1833,5 @@ toggleBtn.addEventListener("click", () => {
   -->
 
 </body>
+
 </html>
