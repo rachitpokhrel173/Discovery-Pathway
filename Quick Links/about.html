@@ -98,148 +98,138 @@
 
 <body class="bg-gray-100 font-sans">
   <!-- HEADER -->
-  <!-- Header -->
-  <!-- Header -->
-  <header id="mainHeader" class="bg-white shadow-md fixed w-full z-50 transition-transform duration-300">
-    <div class="max-w-7xl mx-auto px-4 flex justify-between items-center py-2 md:py-3">
-      <!-- Logo -->
-      <div class="flex items-center">
-        <a href="https://discoverypathway.edu.np/"><img src="/Assets/Discovery_Logo_TP.jpg" alt="Logo"
-            class="h-10 md:h-12"></a>
-      </div>
-
-      <!-- Hamburger (Mobile) -->
-      <div class="md:hidden">
-        <button id="hamburgerBtn" class="text-3xl focus:outline-none">&#9776;</button>
-      </div>
-
-      <!-- Contact Info (Desktop) -->
-      <div class="hidden md:flex flex-col text-xs text-right text-gray-700 font-semibold">
-        <span><i class="fas fa-map-marker-alt text-cyan-600 mr-1"></i> Banepa, Nepal</span>
-        <span><i class="fas fa-phone-alt text-cyan-600 mr-1"></i> +977 011 665659</span>
-      </div>
-
-      <!-- Social Icons (Desktop) -->
-      <div class="hidden md:flex space-x-2">
-        <a href="https://www.facebook.com/discoveryconsultancybanepa" target="_blank"
-          class="w-8 h-8 bg-[#3b5998] text-white flex items-center justify-center rounded">
-          <i class="fab fa-facebook-f"></i>
-        </a>
-        <a href="https://www.tiktok.com/@discoverybanepa" target="_blank"
-          class="w-8 h-8 bg-[#00acee] text-white flex items-center justify-center rounded">
-          <i class="fab fa-tiktok"></i>
-        </a>
-        <a href="https://www.instagram.com/discovery.pathway/" target="_blank"
-          class="w-8 h-8 bg-[#E1306C] text-white flex items-center justify-center rounded">
-          <i class="fab fa-instagram"></i>
-        </a>
+  <!-- 🔹 Top Bar -->
+  <div class="bg-[#26539E] text-white text-sm">
+    <div class="max-w-7xl mx-auto flex justify-between items-center px-4 py-2">
+      <!-- Address -->
+      <p class="flex items-center gap-2">
+        <i class="fas fa-map-marker-alt"></i> Discovery Pathway, Chandeshwori Margh, Banepa, Kavrepalanchok
+      </p>
+      <!-- Social -->
+      <div class="flex space-x-4 text-lg">
+        <a href="https://www.facebook.com/discoveryconsultancybanepa" target="_blank" class="hover:text-[#44C4DF]"><i
+            class="fab fa-facebook-f"></i></a>
+        <a href="https://www.tiktok.com/@discoverybanepa" target="_blank" class="hover:text-[#44C4DF]"><i
+            class="fab fa-tiktok"></i></a>
+        <a href="https://www.instagram.com/discovery.pathway/" target="_blank" class="hover:text-[#44C4DF]"><i
+            class="fab fa-linkedin-in"></i></a>
       </div>
     </div>
+  </div>
 
-    <!-- Desktop Navigation -->
-    <nav class="bg-[#0066b3] hidden md:block">
-      <ul class="flex flex-wrap justify-center space-x-6 text-white text-sm font-semibold uppercase py-2">
-        <li><a href="/Quick Links/about.html" class="hover:text-[#46C3E0]">ABOUT US</a></li>
+  <!-- 🔹 Middle Section -->
+  <div class="bg-white border-b border-gray-200">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between px-1 py-1">
+
+      <!-- Logo -->
+      <div class="flex items-center">
+        <a href="https://discoverypathway.edu.np/index.html"><img src="/Assets/Discovery_Logo_TP.jpg"
+            alt="Best Consultancy in Banepa" class="h-10 md:h-12"></a>
+      </div>
+
+      <!-- Contact Info -->
+      <div class="hidden md:flex items-center space-x-8">
+        <div class="flex items-center space-x-2">
+          <i class="fas fa-envelope text-[#26539E]"></i>
+          <div>
+            <p class="text-sm font-semibold">Email Us</p>
+            <p class="text-gray-600 text-sm">banepa@discoveryedu.com.np</p>
+          </div>
+        </div>
+        <div class="flex items-center space-x-2">
+          <i class="fas fa-phone-alt text-[#26539E]"></i>
+          <div>
+            <p class="text-sm font-semibold">Call Us</p>
+            <p class="text-gray-600 text-sm">011 665659</p>
+          </div>
+        </div>
+        <button
+          class="border border-[#44C4DF] text-[#26539E] px-4 py-2 rounded font-semibold hover:bg-[#44C4DF] hover:text-white transition">
+          Free Consulting
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 🔹 Navigation Bar -->
+  <nav class="bg-[#26539E] sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto flex items-center justify-between px-2 py-2">
 
 
-        <li><a href="/Quick Links/interview.html" class="hover:text-[#46C3E0]">INTERVIEWS</a></li>
-        <li><a href="Mantainance.html" class="hover:text-[#46C3E0]">SCHOLARSHIP</a></li>
+
+      <!-- Desktop Menu (Centered) -->
+      <ul class="hidden md:flex flex-1 justify-center space-x-6 text-white font-medium">
+        <li><a href="/Quick Links/about.html" class="hover:text-[#44C4DF]">ABOUT US</a></li>
+        <li><a href="/Quick Links/interview.html" class="hover:text-[#44C4DF]">INTERVIEWS</a></li>
         <li class="relative dropdown">
-          <button id="studyAbroadToggle" class="hover:text-[#46C3E0] focus:outline-none">STUDY ABROAD</button>
+          <button id="classesToggle" class="hover:text-[#46C3E0] focus:outline-none">CLASSES</button>
 
-          <div class="absolute left-1/2 transform -translate-x-1/2 mt-2 w-[90vw] md:w-[700px] p-4 rounded-lg shadow-lg 
-              bg-white/50 backdrop-blur-md border border-gray-200 z-50 dropdown-menu" id="studyAbroadMenu">
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              <a href="Mantainance.html"
-                class="flex items-center justify-start space-x-3 hover:bg-blue-50 p-2 rounded-md transition">
-                <img src="https://upload.wikimedia.org/wikipedia/en/b/b9/Flag_of_Australia.svg" class="w-8 h-auto"
-                  alt="Australia">
-                <span class="text-gray-800 font-semibold">Australia</span>
+          <div class="absolute left-1/2 transform -translate-x-1/2 mt-2 w-64 p-4 rounded-lg shadow-lg 
+              bg-white/50 backdrop-blur-md border border-gray-200 z-50 dropdown-menu hidden" id="classesMenu">
+            <div class="grid grid-cols-1 gap-3">
+              <a href="/Quick Links/IELTS.html"
+                class="flex items-center hover:bg-blue-100/40 p-2 rounded-md transition">
+                <span class="text-gray-800 font-semibold">IELTS</span>
               </a>
-              <a href="Mantainance.html" class="flex items-center space-x-3 hover:bg-blue-50 p-2 rounded-md transition">
-                <img src="https://upload.wikimedia.org/wikipedia/en/a/a4/Flag_of_the_United_States.svg"
-                  class="w-8 h-auto" alt="USA">
-                <span class="text-gray-800 font-semibold">USA</span>
+              <a href="/Quick Links/PTE.html" class="flex items-center hover:bg-blue-100/40 p-2 rounded-md transition">
+                <span class="text-gray-800 font-semibold">PTE</span>
               </a>
-              <a href="Mantainance.html" class="flex items-center space-x-3 hover:bg-blue-50 p-2 rounded-md transition">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Flag_of_New_Zealand.svg"
-                  class="w-8 h-auto" alt="New Zealand">
-                <span class="text-gray-800 font-semibold">New Zealand</span>
+              <a href="/Quick Links/Japanese.html"
+                class="flex items-center hover:bg-blue-100/40 p-2 rounded-md transition">
+                <span class="text-gray-800 font-semibold">Japanese</span>
               </a>
-              <a href="Mantainance.html" class="flex items-center space-x-3 hover:bg-blue-50 p-2 rounded-md transition">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/c/cf/Flag_of_Canada.svg" class="w-8 h-auto"
-                  alt="Canada">
-                <span class="text-gray-800 font-semibold">Canada</span>
-              </a>
-              <a href="Mantainance.html" class="flex items-center space-x-3 hover:bg-blue-50 p-2 rounded-md transition">
-                <img src="https://upload.wikimedia.org/wikipedia/en/a/ae/Flag_of_the_United_Kingdom.svg"
-                  class="w-8 h-auto" alt="UK">
-                <span class="text-gray-800 font-semibold">UK</span>
-              </a>
-              <a href="Mantainance.html" class="flex items-center space-x-3 hover:bg-blue-50 p-2 rounded-md transition">
-                <img
-                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBeaSZSwax2XvXTLQ5hlnz3oF6SMpRiTb_hu_WAaa6oCXnEHWihMmU3ww1DDwt&s=10"
-                  class="w-8 h-auto" alt="Denmark">
-                <span class="text-gray-800 font-semibold">Denmark</span>
-              </a>
-              <a href="Mantainance.html" class="flex items-center space-x-3 hover:bg-blue-50 p-2 rounded-md transition">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/4/45/Flag_of_Ireland.svg" class="w-8 h-auto"
-                  alt="Ireland">
-                <span class="text-gray-800 font-semibold">Ireland</span>
-              </a>
-              <a href="Mantainance.html" class="flex items-center space-x-3 hover:bg-blue-50 p-2 rounded-md transition">
-                <img src="https://upload.wikimedia.org/wikipedia/en/9/9e/Flag_of_Japan.svg" class="w-8 h-auto"
-                  alt="Japan">
-                <span class="text-gray-800 font-semibold">Japan</span>
-              </a>
-              <a href="Mantainance.html" class="flex items-center space-x-3 hover:bg-blue-50 p-2 rounded-md transition">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg"
-                  class="w-8 h-auto" alt="South Korea">
-                <span class="text-gray-800 font-semibold">South Korea</span>
-              </a>
-              <a href="Mantainance.html" class="flex items-center space-x-3 hover:bg-blue-50 p-2 rounded-md transition">
-                <img src="https://upload.wikimedia.org/wikipedia/en/b/ba/Flag_of_Germany.svg" class="w-8 h-auto"
-                  alt="Germany">
-                <span class="text-gray-800 font-semibold">Germany</span>
-              </a>
-              <a href="Mantainance.html" class="flex items-center space-x-3 hover:bg-blue-50 p-2 rounded-md transition">
-                <img src="https://upload.wikimedia.org/wikipedia/en/c/c3/Flag_of_France.svg" class="w-8 h-auto"
-                  alt="France">
-                <span class="text-gray-800 font-semibold">France</span>
-              </a>
-              <a href="Mantainance.html" class="flex items-center space-x-3 hover:bg-blue-50 p-2 rounded-md transition">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/f/f3/Flag_of_Switzerland.svg"
-                  class="w-8 h-auto" alt="Switzerland">
-                <span class="text-gray-800 font-semibold">Switzerland</span>
-              </a>
-              <!-- Other countries same as before -->
             </div>
           </div>
         </li>
-        <li><a href="Gallery.html" class="hover:text-[#46C3E0]">GALLERY</a></li>
-        <li><a href="#services" class="hover:text-[#46C3E0]">SERVICES</a></li>
-        <li><a href="#feedbacks" class="hover:text-[#46C3E0]">FEEDBACKS</a></li>
-        <li><a href="#contact" class="hover:text-[#46C3E0]">CONTACT</a></li>
+        <li><a href="#" class="hover:text-[#44C4DF]">STUDY ABROAD</a></li>
+        <li><a href="#" class="hover:text-[#44C4DF]">GALLERY</a></li>
+        <li><a href="/Quick Links/university.html" class="hover:text-[#44C4DF]">UNIVERSITIES</a></li>
+        <li><a href="#" class="hover:text-[#44C4DF]">FEEDBACKS</a></li>
+        <li><a href="#" class="hover:text-[#44C4DF]">CONTACT</a></li>
       </ul>
-    </nav>
+
+      <!-- Icons (Right Side) -->
+      <div class="flex space-x-4 text-white text-xl">
+        <!-- ✅ Login Icon -->
+        <a href="/Admin_Portal/admin-login.html"><button class="hover:text-[#44C4DF]"><i
+              class="fa-solid fa-user-secret"></i></button></a>
+        <!-- Mobile Menu Button -->
+        <button class="md:hidden hover:text-[#44C4DF]" onclick="toggleMenu()">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
 
     <!-- Mobile Menu -->
-    <div id="mobileMenu" class="md:hidden hidden bg-[#0066b3] text-white text-sm font-semibold uppercase px-4 pb-4">
-      <ul class="space-y-2 pt-2">
-        <li><a href="#" class="block py-1 border-b border-white">Home</a></li>
-        <li><a href="#" class="block py-1 border-b border-white">Discover Us</a></li>
-        <li><a href="#" class="block py-1 border-b border-white">Our Pride</a></li>
-        <li><a href="#" class="block py-1 border-b border-white">Scholarships</a></li>
-        <li><a href="#" class="block py-1 border-b border-white">Study Destination</a></li>
-        <li><a href="#" class="block py-1 border-b border-white">Test Prep</a></li>
-        <li><a href="#" class="block py-1 border-b border-white">Services</a></li>
-        <li><a href="#" class="block py-1 border-b border-white">Blog</a></li>
-        <li><a href="#contact" class="block py-1 border-b border-white">Contact</a></li>
-      </ul>
+    <div id="mobileMenu" class="hidden md:hidden bg-[#26539E] px-4 py-3 space-y-2">
+      <a href="/Coun" class="hover:text-[#44C4DF]">ABOUT US</a>
+      <a href="#" class="hover:text-[#44C4DF]">INTERVIEWS</a>
+      <a href="#" class="hover:text-[#44C4DF]">CLASSES</a></li>
+      <a href="#" class="hover:text-[#44C4DF]">STUDY ABROAD</a></li>
+      <a href="#" class="hover:text-[#44C4DF]">GALLERY</a></li>
+      <a href="#" class="hover:text-[#44C4DF]">UNIVERSITIES</a>
+      <a href="#" class="hover:text-[#44C4DF]">FEEDBACKS</a>
+      <a href="#" class="hover:text-[#44C4DF]">CONTACT</a>
+      <button
+        class="w-full mt-2 bg-[#44C4DF] text-[#26539E] px-4 py-2 rounded font-semibold hover:bg-white hover:text-[#26539E] transition">
+        Free Consulting
+      </button>
     </div>
-  </header>
+  </nav>
+  <script>
+    function toggleMenu() {
+      document.getElementById("mobileMenu").classList.toggle("hidden");
+    }
+  </script>
 
   <!-- JavaScript for Header -->
+  <script>
+    document.getElementById('classesToggle').addEventListener('click', () => {
+      const menu = document.getElementById('classesMenu');
+      menu.classList.toggle('hidden');
+    });
+  </script>
+
   <script>
     // Mobile hamburger toggle
     const hamburgerBtn = document.getElementById("hamburgerBtn");
@@ -459,104 +449,299 @@
   </head>
 
   <body>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>  
-    <section>
-      <h2>About Us</h2>
-      <p><strong>Welcome to Discovery Pathway Pvt. Ltd</strong></p>
-      <p>Discovery Pathway Pvt. Ltd is a leading education consultancy, headquartered in Banepa, Nepal, which was
-        established in 2023 and is registered under the Ministry of Education, Science & Technology. We fulfill all
-        technical and certification requirements. Our motive is to provide top-quality, reliable services to aspiring
-        students for higher studies worldwide. We have successfully unleashed thousands of dreams for people who wish to
-        study abroad.</p>
-      <p>Our highly skilled and experienced team provides detailed counseling to prospective students to secure
-        admission at various universities and colleges in Europe, Australia, Japan, South Korea, UK, Canada, USA, and
-        more. We also prepare students for IELTS and PTE exams with expert coaching by our highly trained teachers in
-        modern high-tech classrooms.</p>
-      <p>We have strong relationships with Institutes and Universities worldwide. Our team of learned expert counselors
-        holds not only ample experience but has also visited the respective nations' universities and acquired in-depth
-        knowledge and training. We hold a very high admission and student visa success ratio. Trust is what we have
-        established through people’s faith and excellent service. With our incredible success rate, Discovery Pathway is
-        becoming one of the most renowned international education consultants in Nepal.</p>
+
+    <!-- HERO -->
+    <section class="hero">
+      <h1>Discovery Pathway</h1>
+      <p>Your Gateway to International Education</p>
     </section>
 
-    <section>
-      <h2>Message from CEO</h2>
-      <div class="profile-container">
-        <div class="text-content">
-          <p>Dear Students and Parents,</p>
-          <p>Empowering the students with quality education in a wider horizon is the mission we embrace at Global. As
-            the Managing Director of Discovery Pathway Pvt. Ltd, I am privileged to be a part of the education scenario
-            today. Understanding the competitive environment, we strive to facilitate excellent educational options for
-            the personal growth and career fulfillment of students aspiring to study abroad.</p>
-          <p>In the emerging context of the global economy and community, having a globally accepted degree from abroad
-            secures a bright future ensuring an ever-advancing career profile. We provide vital services to obtain
-            admission to popular courses in premium institutions abroad. Our adaptable service package ensures complete
-            support and guidance from pre-application to final admission.</p>
-          <p>Our highly dedicated and committed team strives to achieve excellence in overseas educational consultancy,
-            and I am honored to be the leader of this team. With a keen focus on quality education, we are steadfast in
-            our path, assisting students in attaining meritorious heights. We work closely to serve students in
-            fulfilling their academic dreams through a cost-effective package and professional guidance. We look forward
-            to answering your queries and ensuring effective assistance for education overseas.</p>
-          <p><strong>Thanks,<br> Amit Neupane</strong></p>
+    <section class="py-16 bg-gray-50">
+      <div class="max-w-7xl mx-auto px-6">
+        <!-- About Us -->
+        <div class="mb-16 text-center">
+          <h2 class="text-4xl font-extrabold text-blue-900 mb-4">About Us</h2>
+          <p class="text-gray-700 max-w-3xl mx-auto text-lg leading-relaxed">
+            Discovery Pathway Pvt. Ltd is a leading education consultancy headquartered in Banepa, Nepal. Established in
+            2023, we provide top-quality guidance for students aspiring to study abroad. Our highly skilled team ensures
+            success in admissions, visas, and test preparations.
+          </p>
         </div>
-        <img src="/Assets/Amit_NeupaneICEO.jpg" alt="Amit Neupane - CEO" class="ceo">
+
+        <!-- CEO Section -->
+        <div
+          class="bg-white rounded-2xl shadow-lg overflow-hidden mb-16 flex flex-col md:flex-row items-center md:items-start md:gap-10 p-8 transition hover:shadow-2xl">
+          <img src="/Assets/Amit_NeupaneICEO.jpg" alt="Amit Neupane - CEO"
+            class="w-64 rounded-xl shadow-md mb-6 md:mb-0 md:flex-shrink-0 hover:scale-105 transform transition duration-300">
+          <div class="flex-1 text-center md:text-left">
+            <h3 class="text-2xl font-bold text-blue-800 mb-2">Amit Neupane</h3>
+            <h4 class="text-lg font-semibold text-blue-600 mb-4">Chief Executive Officer</h4>
+            <p class="text-gray-700 mb-3">
+              Dear Students and Parents, empowering students with quality education in a wider horizon is our mission at
+              Discovery Pathway. We provide complete support from pre-application to final admission, ensuring a smooth
+              journey abroad.
+            </p>
+            <p class="text-gray-700 mb-3">
+              Our dedicated team is committed to excellence and personalized guidance for every student, turning dreams
+              into reality with integrity and transparency.
+            </p>
+            <p class="text-gray-900 font-semibold mt-4">Thanks,<br>Amit Neupane</p>
+          </div>
+        </div>
+
+        <!-- MD Section -->
+        <div
+          class="bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col md:flex-row-reverse items-center md:items-start md:gap-10 p-8 transition hover:shadow-2xl">
+          <img src="/Assets/Suman Kumar Gautammd.jpg" alt="Suman Kumar Gautam - MD"
+            class="w-64 rounded-xl shadow-md mb-6 md:mb-0 md:flex-shrink-0 hover:scale-105 transform transition duration-300">
+          <div class="flex-1 text-center md:text-left">
+            <h3 class="text-2xl font-bold text-blue-800 mb-2">Suman Kumar Gautam</h3>
+            <h4 class="text-lg font-semibold text-blue-600 mb-4">Managing Director</h4>
+            <p class="text-gray-700 mb-3">
+              Dear Students and Parents, welcome to Discovery Pathway! Each student has unique dreams and goals. We
+              provide personalized guidance from choosing universities to interview and visa preparation.
+            </p>
+            <p class="text-gray-700 mb-3">
+              With a dedicated team, global partnerships, and up-to-date insights, we create a safe and informed
+              environment to help students succeed academically and personally.
+            </p>
+            <p class="text-gray-900 font-semibold mt-4">Thanks,<br>Suman Kumar Gautam</p>
+          </div>
+        </div>
+        <br>
+
+        <!-- MD Section -->
+        <div
+          class="bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col md:flex-row-reverse items-center md:items-start md:gap-10 p-8 transition hover:shadow-2xl">
+          <img src="/Assets/Nirmal.jpg" alt="Nirmal Chaulagain"
+            class="w-64 rounded-xl shadow-md mb-6 md:mb-0 md:flex-shrink-0 hover:scale-105 transform transition duration-300">
+          <div class="flex-1 text-center md:text-left">
+            <h3 class="text-2xl font-bold text-blue-800 mb-2">Nirmal Chaulagain</h3>
+            <h4 class="text-lg font-semibold text-blue-600 mb-4">Manager</h4>
+            <p class="text-gray-700 mb-3">
+              Welcome to Discovery Pathway! Every student has unique dreams and ambitions. At Discovery Pathway, we
+              provide personalized guidance to help you navigate the entire process, from selecting the right
+              universities to preparing for documentation and visa applications.
+            </p>
+            <p class="text-gray-700 mb-3">
+              With our dedicated team, strong global partnerships, and up-to-date knowledge, we ensure a supportive and
+              informed environment, empowering students to achieve both academic excellence and personal growth.
+            </p>
+
+            <p class="text-gray-900 font-semibold mt-4">Thanks,<br>Nirmal Chaulagain</p>
+          </div>
+        </div>
+        <br>
+
       </div>
     </section>
 
-    <section>
-      <h2>Message from Managing Director</h2>
-      <div class="profile-container">
-        <img src="/Assets/Suman Kumar Gautammd.jpg" alt="Suman Kumar Gautam - Managing Director" class="md">
-        <div class="text-content">
-          <p>Dear Students and Parents,</p>
-          <p>It gives me great pleasure to welcome you to Discovery Pathway, a place where ambition meets opportunity.
-            As the Managing Director, my priority is to uphold the values of integrity, transparency, and student-first
-            service that define our organization.</p>
-          <p>We recognize that no two students are the same. Each individual has a unique dream, a personal story, and
-            specific goals. Our job is to listen closely, guide carefully, and support consistently. From choosing the
-            right country and university to preparing for interviews and visas, we walk with you through every step of
-            your academic adventure abroad.</p>
-          <p>At Discovery Pathway, we strive to create a safe, supportive, and informed space for every learner. With an
-            expert team, strong global partnerships, and up-to-date insights into international education systems, we
-            offer a service you can trust.</p>
-          <p>Let Discovery Pathway be your compass. We are here to inspire, to guide, and to celebrate your success. The
-            future is bright—and it's yours to claim.</p>
-          <strong>Thanks,<br> Suman Kumar Gautam</strong></p>
+
+
+    <style>
+      :root {
+        --primary: #2252a6;
+        --accent: #82d6e7;
+        --light-bg: #f4f8fb;
+        --text-color: #333;
+      }
+
+      body {
+        font-family: 'Segoe UI', sans-serif;
+        background-color: var(--light-bg);
+        color: var(--text-color);
+        margin: 0;
+      }
+
+      header {
+        background-color: #fff;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        z-index: 50;
+      }
+
+      header nav a:hover {
+        color: var(--accent);
+      }
+
+      .hero {
+        background: linear-gradient(135deg, var(--primary), var(--accent));
+        color: #fff;
+        text-align: center;
+        padding: 100px 20px;
+      }
+
+      .hero h1 {
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+      }
+
+      .hero p {
+        font-size: 1.2rem;
+        opacity: 0.9;
+      }
+
+      section {
+        padding: 60px 20px;
+      }
+
+      h2 {
+        color: var(--primary);
+        font-weight: 700;
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+
+      .profile-card {
+        background-color: #fff;
+        border-radius: 1rem;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.07);
+        padding: 40px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .profile-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+      }
+
+      .profile-card img {
+        border-radius: 1rem;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        width: 250px;
+        transition: transform 0.3s ease;
+      }
+
+      .profile-card img:hover {
+        transform: scale(1.05);
+      }
+
+      .why-us-card {
+        background-color: #fff;
+        border-radius: 1rem;
+        padding: 30px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.07);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .why-us-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      footer {
+        background-color: var(--primary);
+        color: #fff;
+      }
+
+      footer a:hover {
+        color: var(--accent);
+      }
+    </style>
+
+
+
+
+
+    <!-- WHY US -->
+    <section id="why-us" class="bg-light-bg py-20">
+      <h2>Why Choose Discovery Pathway?</h2>
+      <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-8 mt-10">
+        <div class="why-us-card text-center p-6">
+          <i class="fas fa-user-graduate text-4xl text-primary mb-4"></i>
+          <h4 class="font-bold text-primary mb-2">Trusted Guidance</h4>
+          <p class="text-gray-700">Pioneers in overseas education with a global academic network.</p>
+        </div>
+        <div class="why-us-card text-center p-6">
+          <i class="fas fa-chart-line text-4xl text-primary mb-4"></i>
+          <h4 class="font-bold text-primary mb-2">High Success Rate</h4>
+          <p class="text-gray-700">Thousands of students placed successfully in top universities worldwide.</p>
+        </div>
+        <div class="why-us-card text-center p-6">
+          <i class="fas fa-hand-holding-heart text-4xl text-primary mb-4"></i>
+          <h4 class="font-bold text-primary mb-2">Personalized Support</h4>
+          <p class="text-gray-700">Tailored guidance based on academic, financial, and personal goals.</p>
         </div>
       </div>
     </section>
 
-    <section>
-  <h2>Why Discovery Pathway?</h2>
-  <ul>
-    <li>Trusted pioneers in overseas education counseling with global academic network.</li>
-    <li>Thousands of students placed successfully in top universities worldwide.</li>
-    <li>Focused exclusively on English-speaking countries to eliminate language barriers.</li>
-    <li>Customized guidance based on academic, financial, and personal goals.</li>
-    <li>Personalized, student-first approach over a one-size-fits-all system.</li>
-    <li>Expert counselors committed to turning your dreams into reality.</li>
-    <li>Among Nepal’s highest student visa success rates.</li>
-  </ul>
-</section>
 
-    <section>
-      <h2>What We Do</h2>
-      <ul>
-        <li><strong>University & Course Selection:</strong> Tailored guidance to find the perfect academic match.</li>
-        <li><strong>Test Preparation:</strong> Coaching for IELTS, Japanese Language, PTE, and SAT.</li>
-        <li><strong>Application Assistance:</strong> Expert help with SOPs, transcripts, and documentation.</li>
-        <li><strong>Admission Follow-up:</strong> Fast and effective application tracking and support.</li>
-        <li><strong>Visa Counseling:</strong> Guidance for successful visa applications and documentation.</li>
-        <li><strong>Financial & Travel Planning:</strong> Advice on loans, foreign exchange, and logistics.</li>
-        <li><strong>Pre-Departure Orientation:</strong> Cultural and academic readiness sessions.</li>
-        <li><strong>Career Skills:</strong> Resume writing and interview training for part-time or full-time jobs.</li>
-      </ul>
+
+    <!-- Mobile Toggle Script -->
+
+
+
+    <section class="py-20 bg-light-bg">
+      <div class="max-w-6xl mx-auto px-6 text-center">
+        <h2 class="text-4xl font-bold text-blue-900 mb-12">What We Do</h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+
+          <!-- Card 1 -->
+          <div class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transition duration-300">
+            <i class="fas fa-university text-4xl text-blue-600 mb-4"></i>
+            <h3 class="text-xl font-semibold mb-2">University & Course Selection</h3>
+            <p class="text-gray-700 text-sm">Tailored guidance to find the perfect academic match for every student.</p>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transition duration-300">
+            <i class="fas fa-pencil-alt text-4xl text-blue-600 mb-4"></i>
+            <h3 class="text-xl font-semibold mb-2">Test Preparation</h3>
+            <p class="text-gray-700 text-sm">Coaching for IELTS, Japanese Language, PTE, and SAT to achieve top scores.
+            </p>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transition duration-300">
+            <i class="fas fa-file-alt text-4xl text-blue-600 mb-4"></i>
+            <h3 class="text-xl font-semibold mb-2">Application Assistance</h3>
+            <p class="text-gray-700 text-sm">Expert help with SOPs, transcripts, and all necessary documentation.</p>
+          </div>
+
+          <!-- Card 4 -->
+          <div class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transition duration-300">
+            <i class="fas fa-check-circle text-4xl text-blue-600 mb-4"></i>
+            <h3 class="text-xl font-semibold mb-2">Admission Follow-up</h3>
+            <p class="text-gray-700 text-sm">Fast and effective application tracking and support for every student.</p>
+          </div>
+
+          <!-- Card 5 -->
+          <div class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transition duration-300">
+            <i class="fas fa-passport text-4xl text-blue-600 mb-4"></i>
+            <h3 class="text-xl font-semibold mb-2">Visa Counseling</h3>
+            <p class="text-gray-700 text-sm">Guidance for successful visa applications and documentation.</p>
+          </div>
+
+          <!-- Card 6 -->
+          <div class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transition duration-300">
+            <i class="fas fa-plane-departure text-4xl text-blue-600 mb-4"></i>
+            <h3 class="text-xl font-semibold mb-2">Financial & Travel Planning</h3>
+            <p class="text-gray-700 text-sm">Advice on loans, foreign exchange, and smooth travel logistics.</p>
+          </div>
+
+          <!-- Card 7 -->
+          <div class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transition duration-300">
+            <i class="fas fa-globe text-4xl text-blue-600 mb-4"></i>
+            <h3 class="text-xl font-semibold mb-2">Pre-Departure Orientation</h3>
+            <p class="text-gray-700 text-sm">Cultural and academic readiness sessions for a smooth transition abroad.
+            </p>
+          </div>
+
+          <!-- Card 8 -->
+          <div class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transition duration-300">
+            <i class="fas fa-briefcase text-4xl text-blue-600 mb-4"></i>
+            <h3 class="text-xl font-semibold mb-2">Career Skills</h3>
+            <p class="text-gray-700 text-sm">Resume writing, interview training, and career guidance for students.</p>
+          </div>
+
+        </div>
+      </div>
     </section>
+
+
+
+
 
 
 
@@ -595,12 +780,12 @@
         <div>
           <h2 class="text-lg font-semibold mb-4">Quick Links</h2>
           <ul class="space-y-2 text-sm">
-            <li><a href="#">About Discovery</a></li>
+            <li><a href="/Quick Links/about.html">About Discovery</a></li>
             <li><a href="#">Services</a></li>
-            <li><a href="#">Universities</a></li>
+            <li><a href="/Quick Links/university.html">Universities</a></li>
             <li><a href="#">Resources</a></li>
             <li><a href="#">Events</a></li>
-            <li><a href="#">Contact Us</a></li>
+            <li><a href="mailto:banepa@discoveryedu.com.np">Contact Us</a></li>
           </ul>
         </div>
 
@@ -608,12 +793,13 @@
         <div>
           <h2 class="text-lg font-semibold mb-4">&nbsp;</h2>
           <ul class="space-y-2 text-sm">
-            <li><a href="#">Gallery</a></li>
+            <li><a href="Gallery.html">Gallery</a></li>
             <li><a href="#">Testimonials & Reviews</a></li>
             <li><a href="#">Success Stories</a></li>
-            <li><a href="#">Interviews</a></li>
-            <li><a href="#">OHSC</a></li>
+            <li><a href="/Quick Links/interview.html">Interviews</a></li>
+            <li><a href="https://oshcaustralia.com.au/en">OHSC</a></li>
             <li><a href="/Quick Links/faqs.html">FAQs</a></li>
+            <li><a href="/Quick Links/linktree.html">Linktree</a></li>
           </ul>
         </div>
 
@@ -621,10 +807,11 @@
         <div>
           <h2 class="text-lg font-semibold mb-4">Need for Students</h2>
           <ul class="space-y-2 text-sm">
-            <li><a href="#">Career Counseling</a></li>
-            <li><a href="#">Online Application</a></li>
-            <li><a href="#">How to Obtain Visa</a></li>
-            <li><a href="#">Student Accommodation</a></li>
+            <li><a href="/Quick Links/Counseling.html">Career Counseling</a></li>
+            <li><a href="/Quick Links/onlappli.html">Online Application</a></li>
+            <li><a href="/Quick Links/hottovisa.html">How to Obtain Visa</a></li>
+            <li><a href="https://flatmates.com.au/">Student Accommodation</a></li>
+            <li><a href="Quick Links/index.html">Student Admission</a></li>
           </ul>
         </div>
 
@@ -647,6 +834,10 @@
         </p>
       </div>
     </footer>
+    <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <script src="script.js"></script>
   </body>
 
 </html>
