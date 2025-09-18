@@ -1,172 +1,147 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Discovery Pathway</title>
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="style copy.css">
-  <link rel="stylesheet" href="animation.css">
-  <link rel="shortcut icon" href="/Assets/Discovery_Logo-removebg-preview.png" type="image/x-icon">
-  <!-- Bootstrap Icons -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" />
-  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.11/typed.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Interview Preparation — Discovery Pathway</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
-  <link rel="stylesheet" href="mobileview.css">
- 
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
   <style>
-    .fade-slide {
-      transition: opacity 1s ease-in-out;
-    }
-     .dropdown-menu {
-      display: none;
-    }
-
-    .dropdown:hover .dropdown-menu {
-      display: block;
-    }
-
-    .dropdown-menu.show {
-      display: block;
-    }
+    /* Small UI niceties */
+    .chip { transition: transform .15s, box-shadow .15s; }
+    .chip:hover { transform: translateY(-3px); }
+    .accordion-btn[aria-expanded="true"] { color: #1e3a8a; }
+    .card-shadow { box-shadow: 0 8px 24px rgba(12, 18, 33, 0.06); }
+    /* make longer answers easier to read */
+    .answer p { margin-bottom: 0.6rem; }
   </style>
-  
 </head>
-<body class="bg-gray-100 font-sans">
+<body class="bg-gray-50 text-gray-800 antialiased">
 <!-- HEADER -->
-<!-- Header -->
-<!-- Header -->
-<header id="mainHeader" class="bg-white shadow-md fixed w-full z-50 transition-transform duration-300">
-  <div class="max-w-7xl mx-auto px-4 flex justify-between items-center py-2 md:py-3">
-    <!-- Logo -->
-    <div class="flex items-center">
-      <a href="https://discoverypathway.edu.np/"><img src="/Assets/Discovery_Logo_TP.jpg" alt="Logo" class="h-10 md:h-12"></a>
-    </div>
-
-    <!-- Hamburger (Mobile) -->
-    <div class="md:hidden">
-      <button id="hamburgerBtn" class="text-3xl focus:outline-none">&#9776;</button>
-    </div>
-
-    <!-- Contact Info (Desktop) -->
-    <div class="hidden md:flex flex-col text-xs text-right text-gray-700 font-semibold">
-      <span><i class="fas fa-map-marker-alt text-cyan-600 mr-1"></i> Banepa, Nepal</span>
-      <span><i class="fas fa-phone-alt text-cyan-600 mr-1"></i> +977 011 665659</span>
-    </div>
-
-    <!-- Social Icons (Desktop) -->
-    <div class="hidden md:flex space-x-2">
-      <a href="https://www.facebook.com/discoveryconsultancybanepa" target="_blank" class="w-8 h-8 bg-[#3b5998] text-white flex items-center justify-center rounded">
-        <i class="fab fa-facebook-f"></i>
-      </a>
-      <a href="https://www.tiktok.com/@discoverybanepa" target="_blank" class="w-8 h-8 bg-[#00acee] text-white flex items-center justify-center rounded">
-        <i class="fab fa-tiktok"></i>
-      </a>
-      <a href="https://www.instagram.com/discovery.pathway/" target="_blank" class="w-8 h-8 bg-[#E1306C] text-white flex items-center justify-center rounded">
-        <i class="fab fa-instagram"></i>
-      </a>
-    </div>
-  </div>
-
-  <!-- Desktop Navigation -->
-  <nav class="bg-[#0066b3] hidden md:block">
-    <ul class="flex flex-wrap justify-center space-x-6 text-white text-sm font-semibold uppercase py-2">
-
-      <li><a href="#About" class="hover:text-[#46C3E0]">ABOUT US</a></li>
-      <li><a href="Mantainance.html" class="hover:text-[#46C3E0]">INTERVIEWS</a></li>
-      <li><a href="Mantainance.html" class="hover:text-[#46C3E0]">SCHOLARSHIP</a></li>
-      <li class="relative dropdown">
-          <button id="studyAbroadToggle" class="hover:text-[#46C3E0] focus:outline-none">STUDY ABROAD</button>
-          <div class="absolute left-1/2 transform -translate-x-1/2 mt-2 w-[90vw] md:w-[700px] p-4 rounded-lg shadow-lg bg-white border border-gray-200 z-50 dropdown-menu" id="studyAbroadMenu">
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              <a href="Mantainance.html" class="flex items-center justify-start space-x-3 hover:bg-blue-50 p-2 rounded-md transition">
-                <img src="https://upload.wikimedia.org/wikipedia/en/b/b9/Flag_of_Australia.svg" class="w-8 h-auto" alt="Australia">
-                <span class="text-gray-800 font-semibold">Australia</span>
-              </a>
-              <a href="Mantainance.html" class="flex items-center space-x-3 hover:bg-blue-50 p-2 rounded-md transition">
-                <img src="https://upload.wikimedia.org/wikipedia/en/a/a4/Flag_of_the_United_States.svg" class="w-8 h-auto" alt="USA">
-                <span class="text-gray-800 font-semibold">USA</span>
-              </a>
-              <a href="Mantainance.html" class="flex items-center space-x-3 hover:bg-blue-50 p-2 rounded-md transition">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Flag_of_New_Zealand.svg" class="w-8 h-auto" alt="New Zealand">
-                <span class="text-gray-800 font-semibold">New Zealand</span>
-              </a>
-              <a href="Mantainance.html" class="flex items-center space-x-3 hover:bg-blue-50 p-2 rounded-md transition">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/c/cf/Flag_of_Canada.svg" class="w-8 h-auto" alt="Canada">
-                <span class="text-gray-800 font-semibold">Canada</span>
-              </a>
-              <a href="Mantainance.html" class="flex items-center space-x-3 hover:bg-blue-50 p-2 rounded-md transition">
-                <img src="https://upload.wikimedia.org/wikipedia/en/a/ae/Flag_of_the_United_Kingdom.svg" class="w-8 h-auto" alt="UK">
-                <span class="text-gray-800 font-semibold">UK</span>
-              </a>
-              <a href="Mantainance.html" class="flex items-center space-x-3 hover:bg-blue-50 p-2 rounded-md transition">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBeaSZSwax2XvXTLQ5hlnz3oF6SMpRiTb_hu_WAaa6oCXnEHWihMmU3ww1DDwt&s=10" class="w-8 h-auto" alt="Denmark">
-                <span class="text-gray-800 font-semibold">Denmark</span>
-              </a>
-              <a href="Mantainance.html" class="flex items-center space-x-3 hover:bg-blue-50 p-2 rounded-md transition">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/4/45/Flag_of_Ireland.svg" class="w-8 h-auto" alt="Ireland">
-                <span class="text-gray-800 font-semibold">Ireland</span>
-              </a>
-              <a href="Mantainance.html" class="flex items-center space-x-3 hover:bg-blue-50 p-2 rounded-md transition">
-                <img src="https://upload.wikimedia.org/wikipedia/en/9/9e/Flag_of_Japan.svg" class="w-8 h-auto" alt="Japan">
-                <span class="text-gray-800 font-semibold">Japan</span>
-              </a>
-              <a href="Mantainance.html" class="flex items-center space-x-3 hover:bg-blue-50 p-2 rounded-md transition">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" class="w-8 h-auto" alt="South Korea">
-                <span class="text-gray-800 font-semibold">South Korea</span>
-              </a>
-              <a href="Mantainance.html" class="flex items-center space-x-3 hover:bg-blue-50 p-2 rounded-md transition">
-                <img src="https://upload.wikimedia.org/wikipedia/en/b/ba/Flag_of_Germany.svg" class="w-8 h-auto" alt="Germany">
-                <span class="text-gray-800 font-semibold">Germany</span>
-              </a>
-              <a href="Mantainance.html" class="flex items-center space-x-3 hover:bg-blue-50 p-2 rounded-md transition">
-                <img src="https://upload.wikimedia.org/wikipedia/en/c/c3/Flag_of_France.svg" class="w-8 h-auto" alt="France">
-                <span class="text-gray-800 font-semibold">France</span>
-              </a>
-              <a href="Mantainance.html" class="flex items-center space-x-3 hover:bg-blue-50 p-2 rounded-md transition">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/f/f3/Flag_of_Switzerland.svg" class="w-8 h-auto" alt="Switzerland">
-                <span class="text-gray-800 font-semibold">Switzerland</span>
-              </a>
-              <!-- Other countries same as before -->
+ <!-- 🔹 Top Bar -->
+    <div class="bg-[#26539E] text-white text-sm">
+        <div class="max-w-7xl mx-auto flex justify-between items-center px-4 py-2">
+            <!-- Address -->
+            <p class="flex items-center gap-2">
+                <i class="fas fa-map-marker-alt"></i> Discovery Pathway, Chandeshwori Margh, Banepa, Kavrepalanchok
+            </p>
+            <!-- Social -->
+            <div class="flex space-x-4 text-lg">
+                <a href="https://www.facebook.com/discoveryconsultancybanepa" target="_blank" class="hover:text-[#44C4DF]"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://www.tiktok.com/@discoverybanepa" target="_blank" class="hover:text-[#44C4DF]"><i class="fab fa-tiktok"></i></a>
+                <a href="https://www.instagram.com/discovery.pathway/" target="_blank" class="hover:text-[#44C4DF]"><i class="fab fa-linkedin-in"></i></a>
             </div>
-          </div>
-        </li>
-      <li><a href="Gallery.html" class="hover:text-[#46C3E0]">GALLERY</a></li>
-      <li><a href="#services" class="hover:text-[#46C3E0]">Services</a></li>
-      <li><a href="#feedbacks" class="hover:text-[#46C3E0]">FEEDBACKS</a></li>
-      <li><a href="#contact" class="hover:text-[#46C3E0]">Contact</a></li>
-    </ul>
-  </nav>
+        </div>
+    </div>
 
-  <!-- Mobile Menu -->
-  <div id="mobileMenu" class="md:hidden hidden bg-[#0066b3] text-white text-sm font-semibold uppercase px-4 pb-4">
-    <ul class="space-y-2 pt-2">
-      <li><a href="#" class="block py-1 border-b border-white">Home</a></li>
-      <li><a href="#" class="block py-1 border-b border-white">Discover Us</a></li>
-      <li><a href="#" class="block py-1 border-b border-white">Our Pride</a></li>
-      <li><a href="#" class="block py-1 border-b border-white">Scholarships</a></li>
-      <li><a href="#" class="block py-1 border-b border-white">Study Destination</a></li>
-      <li><a href="#" class="block py-1 border-b border-white">Test Prep</a></li>
-      <li><a href="#" class="block py-1 border-b border-white">Services</a></li>
-      <li><a href="#" class="block py-1 border-b border-white">Blog</a></li>
-      <li><a href="#contact" class="block py-1 border-b border-white">Contact</a></li>
-    </ul>
-  </div>
-</header>
+    <!-- 🔹 Middle Section -->
+    <div class="bg-white border-b border-gray-200">
+        <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between px-1 py-1">
+
+            <!-- Logo -->
+            <div class="flex items-center">
+      <a href="https://discoverypathway.edu.np/index.html"><img src="/Assets/Discovery_Logo_TP.jpg" alt="Best Consultancy in Banepa" class="h-10 md:h-12"></a>
+    </div>
+
+            <!-- Contact Info -->
+            <div class="hidden md:flex items-center space-x-8">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-envelope text-[#26539E]"></i>
+                    <div>
+                        <p class="text-sm font-semibold">Email Us</p>
+                        <p class="text-gray-600 text-sm">banepa@discoveryedu.com.np</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-phone-alt text-[#26539E]"></i>
+                    <div>
+                        <p class="text-sm font-semibold">Call Us</p>
+                        <p class="text-gray-600 text-sm">011 665659</p>
+                    </div>
+                </div>
+                <button
+                    class="border border-[#44C4DF] text-[#26539E] px-4 py-2 rounded font-semibold hover:bg-[#44C4DF] hover:text-white transition">
+                    Free Consulting
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🔹 Navigation Bar -->
+    <nav class="bg-[#26539E] sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto flex items-center justify-between px-2 py-2">
+
+
+
+            <!-- Desktop Menu (Centered) -->
+            <ul class="hidden md:flex flex-1 justify-center space-x-6 text-white font-medium">
+                <li><a href="/Quick Links/about.html" class="hover:text-[#44C4DF]">ABOUT US</a></li>
+                <li><a href="/Quick Links/interview.html" class="hover:text-[#44C4DF]">INTERVIEWS</a></li>
+                <li class="relative dropdown">
+        <button id="classesToggle" class="hover:text-[#46C3E0] focus:outline-none">CLASSES</button>
+
+        <div class="absolute left-1/2 transform -translate-x-1/2 mt-2 w-64 p-4 rounded-lg shadow-lg 
+              bg-white/50 backdrop-blur-md border border-gray-200 z-50 dropdown-menu hidden" id="classesMenu">
+          <div class="grid grid-cols-1 gap-3">
+            <a href="/Quick Links/IELTS.html" class="flex items-center hover:bg-blue-100/40 p-2 rounded-md transition">
+              <span class="text-gray-800 font-semibold">IELTS</span>
+            </a>
+            <a href="/Quick Links/PTE.html" class="flex items-center hover:bg-blue-100/40 p-2 rounded-md transition">
+              <span class="text-gray-800 font-semibold">PTE</span>
+            </a>
+            <a href="/Quick Links/Japanese.html" class="flex items-center hover:bg-blue-100/40 p-2 rounded-md transition">
+              <span class="text-gray-800 font-semibold">Japanese</span>
+            </a>
+          </div>
+        </div>
+      </li>
+                <li><a href="#" class="hover:text-[#44C4DF]">STUDY ABROAD</a></li>
+                <li><a href="#" class="hover:text-[#44C4DF]">GALLERY</a></li>
+                <li><a href="/Quick Links/university.html" class="hover:text-[#44C4DF]">UNIVERSITIES</a></li>
+                <li><a href="#" class="hover:text-[#44C4DF]">FEEDBACKS</a></li>
+                <li><a href="#" class="hover:text-[#44C4DF]">CONTACT</a></li>
+            </ul>
+
+            <!-- Icons (Right Side) -->
+            <div class="flex space-x-4 text-white text-xl">
+                <!-- ✅ Login Icon -->
+                <a href="/Admin_Portal/admin-login.html"><button class="hover:text-[#44C4DF]"><i class="fa-solid fa-user-secret"></i></button></a>
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden hover:text-[#44C4DF]" onclick="toggleMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-[#26539E] px-4 py-3 space-y-2">
+            <a href="/Coun" class="hover:text-[#44C4DF]">ABOUT US</a>
+            <a href="#" class="hover:text-[#44C4DF]">INTERVIEWS</a>
+            <a href="#" class="hover:text-[#44C4DF]">CLASSES</a></li>
+            <a href="#" class="hover:text-[#44C4DF]">STUDY ABROAD</a></li>
+            <a href="#" class="hover:text-[#44C4DF]">GALLERY</a></li>
+            <a href="#" class="hover:text-[#44C4DF]">UNIVERSITIES</a>
+            <a href="#" class="hover:text-[#44C4DF]">FEEDBACKS</a>
+            <a href="#" class="hover:text-[#44C4DF]">CONTACT</a>
+            <button
+                class="w-full mt-2 bg-[#44C4DF] text-[#26539E] px-4 py-2 rounded font-semibold hover:bg-white hover:text-[#26539E] transition">
+                Free Consulting
+            </button>
+        </div>
+    </nav>
+ <script>
+        function toggleMenu() {
+            document.getElementById("mobileMenu").classList.toggle("hidden");
+        }
+    </script>
 
 <!-- JavaScript for Header -->
+ <script>
+  document.getElementById('classesToggle').addEventListener('click', () => {
+    const menu = document.getElementById('classesMenu');
+    menu.classList.toggle('hidden');
+  });
+</script>
+
  <script>
   // Mobile hamburger toggle
 const hamburgerBtn = document.getElementById("hamburgerBtn");
@@ -241,122 +216,71 @@ hamburgerBtn.addEventListener("click", () => {
     lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
   }, false);
 </script>
-<body class="bg-gray-50 text-gray-800">
-<br>
-<br>
-<br>
-<br>
-  <section class="bg-blue-50 py-10 text-center">
-    <h1 class="text-4xl font-bold text-blue-700">Interview <span class="text-red-600">Preparation</span></h1>
-    <p class="mt-2 text-lg">Visa Interview Checklist</p>
-    <p class="mt-1 text-sm max-w-2xl mx-auto">Visa interview is an important step prior to the final confirmation of student visa approval for most countries including Australia, Canada, Germany, New Zealand, UK and USA. Your interview could fasten or delay your visa processing.</p>
-  </section>
 
-  <!-- Checklist Image -->
-  <section class="flex justify-center my-10">
-    <img src="https://scontent.fktm8-1.fna.fbcdn.net/v/t39.30808-6/488650649_641752348612624_6327923415399936879_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeHuqLSnokjMBS3ZqeAq5smSJcY8n_lJSfAlxjyf-UlJ8H1z0laSDVl_hvaCrnhriJ482SOrhuOosYyC8A61vqxA&_nc_ohc=fI4qTqUhavAQ7kNvwGDCMWV&_nc_oc=AdkzyKUDPJ3nGAXHk8B71fvMlTpWVBuheFBHtHi4igmofLRbAJRIi4XUN0TlNK6nviouVZWUIBbunmHu0o4jHaiU&_nc_zt=23&_nc_ht=scontent.fktm8-1.fna&_nc_gid=pzK_-KlVbCVe6kYA18kGeg&oh=00_AfOmeKntdZu0R4fe402YsVoTS7Cv2Jo-JfTZc5qwQ_mR-Q&oe=684BB156" alt="Checklist Interview" class="rounded-lg shadow-lg w-full max-w-2xl">
-  </section>
 
-  <!-- Interview Questions -->
-  <section class="px-6 lg:px-32 py-10 bg-white">
-    <h2 class="text-3xl font-bold mb-6 text-center">Preparatory interview questions for the Student Visa Interview:</h2>
-    <div class="space-y-10">
-      <div>
-        <h3 class="text-2xl font-semibold text-blue-700">1. Introductory Questions</h3>
-        <ul class="list-disc list-inside mt-2 text-gray-700">
-          <li>How are you doing?</li>
-          <li>Have you ever been to the respective country before?</li>
-        </ul>
+  <main class="pt-0">
+
+    <!-- Hero -->
+    <section class="bg-gradient-to-r from-sky-700 to-indigo-600 text-white py-16">
+      <div class="max-w-5xl mx-auto px-4 text-center">
+        <h1 class="text-3xl sm:text-4xl font-extrabold">Visa Interview Preparation</h1>
+        <p class="mt-3 text-lg opacity-90 max-w-2xl mx-auto">
+          Practice country-specific interview questions & model answers. Select a destination below to view tailored Q&A and tips.
+        </p>
+      </div>
+    </section>
+
+    <!-- Controls: country chips + select -->
+    <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-10">
+      <div class="flex flex-col lg:flex-row gap-6 items-start lg:items-center justify-between">
+        <div class="flex flex-wrap gap-3">
+          <!-- clickable chips (keeps UI fast & obvious) -->
+          <button class="chip px-4 py-2 rounded-full bg-white border text-sm font-medium card-shadow" data-country="">All</button>
+          <button class="chip px-4 py-2 rounded-full bg-white border text-sm font-medium card-shadow" data-country="korea">South Korea</button>
+          <button class="chip px-4 py-2 rounded-full bg-white border text-sm font-medium card-shadow" data-country="australia">Australia</button>
+          <button class="chip px-4 py-2 rounded-full bg-white border text-sm font-medium card-shadow" data-country="uk">United Kingdom</button>
+          <button class="chip px-4 py-2 rounded-full bg-white border text-sm font-medium card-shadow" data-country="usa">USA</button>
+          <button class="chip px-4 py-2 rounded-full bg-white border text-sm font-medium card-shadow" data-country="japan">Japan</button>
+        </div>
+
+        <div class="flex gap-3 items-center w-full lg:w-auto">
+          <label for="countrySelect" class="sr-only">Choose country</label>
+          <select id="countrySelect" class="rounded-lg border-gray-200 shadow-sm py-2 px-3 bg-white text-sm">
+            <option value="">-- Choose destination --</option>
+            <option value="korea">South Korea</option>
+            <option value="australia">Australia</option>
+            <option value="uk">United Kingdom</option>
+            <option value="usa">USA</option>
+            <option value="japan">Japan</option>
+          </select>
+
+          <button id="expandAll" class="bg-sky-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-sky-700">Expand all</button>
+          <button id="collapseAll" class="bg-white border px-4 py-2 rounded-lg text-sm hover:bg-gray-50">Collapse</button>
+        </div>
       </div>
 
-      <div>
-        <h3 class="text-2xl font-semibold text-blue-700">2. Questions on Intention and Motivation of Study</h3>
-        <ul class="list-disc list-inside mt-2 text-gray-700">
-          <li>Why do you want to study in the respective country?</li>
-          <li>Why did you select this particular institution?</li>
-          <li>Why not study this course in Nepal?</li>
-        </ul>
-      </div>
+      <p id="activeInfo" class="mt-4 text-sm text-slate-600">
+        Tip: pick a destination to view tailored interview questions and suggested answers.
+      </p>
+    </section>
 
-      <div>
-        <h3 class="text-2xl font-semibold text-blue-700">3. Questions on Your Subject and Course</h3>
-        <ul class="list-disc list-inside mt-2 text-gray-700">
-          <li>For which course are you going?</li>
-          <li>Why did you choose this course?</li>
-        </ul>
+    <!-- Q&A area -->
+    <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 mb-16">
+      <div id="qaContainer" class="space-y-4">
+        <!-- Rendered by JavaScript -->
       </div>
+    </section>
 
-      <div>
-        <h3 class="text-2xl font-semibold text-blue-700">4. Questions on Funding</h3>
-        <ul class="list-disc list-inside mt-2 text-gray-700">
-          <li>How are you going to fund your education?</li>
-          <li>Who is sponsoring your education?</li>
-          <li>Do you have enough funds?</li>
-        </ul>
+    <!-- Optional general FAQ/notes card -->
+    <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-20">
+      <div class="bg-white rounded-lg p-6 border border-gray-100 card-shadow">
+        <h3 class="text-lg font-semibold text-slate-700 mb-2">General guidance</h3>
+        <p class="text-sm text-slate-600">Always carry supporting documents, be honest, be concise, and show clear intent. Research your chosen university & course thoroughly and know basic facts (dates, fees, scholarship details, sponsor info).</p>
       </div>
+    </section>
+  </main>
 
-      <div>
-        <h3 class="text-2xl font-semibold text-blue-700">5. Questions on Academic Qualifications</h3>
-        <ul class="list-disc list-inside mt-2 text-gray-700">
-          <li>What is your undergraduate CGPA?</li>
-          <li>Can you show me your degree?</li>
-        </ul>
-      </div>
-
-      <div>
-        <h3 class="text-2xl font-semibold text-blue-700">6. Questions on Achievements</h3>
-        <ul class="list-disc list-inside mt-2 text-gray-700">
-          <li>Tell me something about your past achievements.</li>
-          <li>Show me any awards or certificates you have earned.</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- Destination Cards -->
-  <section class="px-6 lg:px-32 py-10 bg-gray-100">
-    <h2 class="text-3xl font-bold text-center text-blue-700 mb-8">Interview Preparation <span class="text-red-600">Destination</span></h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-      <div class="bg-white shadow-lg rounded-lg overflow-hidden">
-        <img src="https://upload.wikimedia.org/wikipedia/en/b/b9/Flag_of_Australia.svg" alt="Australia" class="w-full h-40 object-cover">
-        <div class="p-4 text-center font-semibold">Australia</div>
-      </div>
-      <div class="bg-white shadow-lg rounded-lg overflow-hidden">
-        <img src="https://upload.wikimedia.org/wikipedia/en/a/a4/Flag_of_the_United_States.svg" alt="USA" class="w-full h-40 object-cover">
-        <div class="p-4 text-center font-semibold">United States</div>
-      </div>
-      <div class="bg-white shadow-lg rounded-lg overflow-hidden">
-        <img src="https://upload.wikimedia.org/wikipedia/en/a/ae/Flag_of_the_United_Kingdom.svg" alt="UK" class="w-full h-40 object-cover">
-        <div class="p-4 text-center font-semibold">United Kingdom</div>
-      </div>
-      <div class="bg-white shadow-lg rounded-lg overflow-hidden">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Flag_of_New_Zealand.svg" alt="New Zealand" class="w-full h-40 object-cover">
-        <div class="p-4 text-center font-semibold">New Zealand</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Visa Tips -->
-  <section class="px-6 lg:px-32 py-10 bg-white">
-    <h2 class="text-3xl font-bold text-blue-700 mb-6 text-center">Visa Interview Tips</h2>
-    <ul class="list-disc list-inside space-y-2 text-gray-700 max-w-3xl mx-auto">
-      <li>Prepare for the interview questions in advance.</li>
-      <li>Get a copy of all your documents with you for the interview.</li>
-      <li>Dress appropriately (formally).</li>
-      <li>Be on time for the interview.</li>
-      <li>Be courteous, friendly, and polite throughout the interview.</li>
-      <li>Be confident in your speech and answers.</li>
-      <li>Be brief and clear in your answers.</li>
-      <li>Know about your course content thoroughly.</li>
-      <li>Be ready for any strange questions and don’t get nervous when they’re asked.</li>
-      <li>Interview may take 30-40 minutes or more, so be comfortable with it.</li>
-    </ul>
-  </section>
-
- 
-
-
-  <!-- Footer -->
+    <!-- Footer -->
 <footer class="px-6 py-10 md:px-20 text-white" style="background-color: #003f84;">
   <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-10">
     <!-- Logo and Contact Info -->
@@ -390,12 +314,12 @@ hamburgerBtn.addEventListener("click", () => {
     <div>
       <h2 class="text-lg font-semibold mb-4">Quick Links</h2>
       <ul class="space-y-2 text-sm">
-        <li><a href="#">About Discovery</a></li>
+        <li><a href="/Quick Links/about.html">About Discovery</a></li>
         <li><a href="#">Services</a></li>
-        <li><a href="#">Universities</a></li>
+        <li><a href="/Quick Links/university.html">Universities</a></li>
         <li><a href="#">Resources</a></li>
         <li><a href="#">Events</a></li>
-        <li><a href="#">Contact Us</a></li>
+        <li><a href="mailto:banepa@discoveryedu.com.np">Contact Us</a></li>
       </ul>
     </div>
 
@@ -403,12 +327,13 @@ hamburgerBtn.addEventListener("click", () => {
     <div>
       <h2 class="text-lg font-semibold mb-4">&nbsp;</h2>
       <ul class="space-y-2 text-sm">
-        <li><a href="#">Gallery</a></li>
+        <li><a href="Gallery.html">Gallery</a></li>
         <li><a href="#">Testimonials & Reviews</a></li>
         <li><a href="#">Success Stories</a></li>
-        <li><a href="#">Interviews</a></li>
-        <li><a href="#">OHSC</a></li>
+        <li><a href="/Quick Links/interview.html">Interviews</a></li>
+        <li><a href="https://oshcaustralia.com.au/en">OHSC</a></li>
         <li><a href="/Quick Links/faqs.html">FAQs</a></li>
+        <li><a href="/Quick Links/linktree.html">Linktree</a></li>
       </ul>
     </div>
 
@@ -416,10 +341,11 @@ hamburgerBtn.addEventListener("click", () => {
     <div>
       <h2 class="text-lg font-semibold mb-4">Need for Students</h2>
       <ul class="space-y-2 text-sm">
-        <li><a href="#">Career Counseling</a></li>
-        <li><a href="#">Online Application</a></li>
-        <li><a href="#">How to Obtain Visa</a></li>
-        <li><a href="#">Student Accommodation</a></li>
+        <li><a href="/Quick Links/Counseling.html">Career Counseling</a></li>
+        <li><a href="/Quick Links/onlappli.html">Online Application</a></li>
+        <li><a href="/Quick Links/hottovisa.html">How to Obtain Visa</a></li>
+        <li><a href="https://flatmates.com.au/">Student Accommodation</a></li>
+        <li><a href="Quick Links/index.html">Student Admission</a></li>
       </ul>
     </div>
 
@@ -443,5 +369,292 @@ hamburgerBtn.addEventListener("click", () => {
 </footer>
 
 
+
+  <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+  <script src="script.js"></script>
+
+  <!-- Font Awesome icons (for header small icons if needed) -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+  <!-- Data + Rendering + Interactions -->
+  <script>
+    // Full Q&A content (Korea, Australia, UK & sample USA)
+    // Each item: { q: "Question", a: "<p>Tip: ...</p><ul>...</ul>" }
+    const QADATA = {
+      korea: [
+        {
+          q: "1. What is your name and address?",
+          a: `<p><strong>Tip:</strong> Provide your full name as per official documents and clearly state your complete address. Be confident and calm when answering.</p>
+              <p><strong>Example:</strong> "My name is John Doe and my address is 123 New Road, Kathmandu, Nepal."</p>`
+        },
+        {
+          q: "2. What is your last academic degree and when did you complete it?",
+          a: `<p><strong>Tip:</strong> Mention your most recent qualification, the year you passed, and the institution. Keep it concise and truthful.</p>
+              <p><strong>Example:</strong> "I completed my Bachelor's degree in Computer Science from Tribhuvan University in 2023."</p>`
+        },
+        {
+          q: "3. Why do you want to go to South Korea?",
+          a: `<p><strong>Tip:</strong> Highlight S.Korea's reputation for high-quality education, innovation and technological advancement. Tie the reason to your career goals and the university/course you've chosen.</p>`
+        },
+        {
+          q: "4. Which course do you want to study in South Korea?",
+          a: `<p><strong>Tip:</strong> State the exact course name and explain how it fits into your career plan. Show genuine interest.</p>`
+        },
+        {
+          q: "5. What is the purpose of your study in South Korea?",
+          a: `<p><strong>Tip:</strong> Emphasize learning objectives, skills you'll gain, and how this will help your career back home or internationally.</p>`
+        },
+        {
+          q: "6. What is your age?",
+          a: `<p><strong>Tip:</strong> State your age clearly as on your passport; no further detail required.</p>`
+        },
+        {
+          q: "7. What is your marital status?",
+          a: `<p><strong>Tip:</strong> Answer directly (single/married). Provide spouse info only if relevant.</p>`
+        },
+        {
+          q: "8. How many members are there in your family?",
+          a: `<p><strong>Tip:</strong> Give the total number and be prepared to briefly elaborate on family structure if asked.</p>`
+        },
+        {
+          q: "9. What is your annual income source?",
+          a: `<p><strong>Tip:</strong> State primary family income sources—salary, business, investments—and how they will support your studies. Mention scholarships or personal savings if applicable.</p>`
+        },
+        {
+          q: "10. What is your annual income?",
+          a: `<p><strong>Tip:</strong> Give an exact figure if known and be ready to show bank documents or tax papers.</p>`
+        },
+        {
+          q: "11. Can you speak Korean?",
+          a: `<p><strong>Tip:</strong> If you know Korean, state your proficiency. If not, show willingness and any plan to learn (TOPIK/ language classes).</p>`
+        },
+        {
+          q: "12. How much family property do you have in total?",
+          a: `<p><strong>Tip:</strong> Provide an approximate value of land, real estate, or other assets. Be honest and have supporting documents if requested.</p>`
+        },
+        {
+          q: "13. Do you have any account and bank balance in 'A' Level Bank of Nepal?",
+          a: `<p><strong>Tip:</strong> If yes, state account details and balances. Have recent bank statements ready.</p>`
+        },
+        {
+          q: "14. What is your plan after course completion?",
+          a: `<p><strong>Tip:</strong> Describe career plans and how the degree will help. Emphasize intent to use the qualification in your home country or internationally; avoid implying permanent settlement unless that's the case.</p>`
+        },
+        {
+          q: "15. Do you hope to be selected for a study visa? If not, why?",
+          a: `<p><strong>Tip:</strong> Be confident and positive. Explain you have required documents, clear academic plan and financial backing.</p>`
+        },
+        {
+          q: "16. Are there any relatives in South Korea?",
+          a: `<p><strong>Tip:</strong> Answer truthfully; explain relationship if relatives exist.</p>`
+        },
+        {
+          q: "17. What do you know about South Korea?",
+          a: `<p><strong>Tip:</strong> Mention its economic strength, technology, culture, education quality, and the particular strengths of your chosen university.</p>`
+        },
+        {
+          q: "18. Are you preparing any exams (IELTS/TOPIK/TOEFL) for study in South Korea?",
+          a: `<p><strong>Tip:</strong> Mention test names, scores you have, or your preparation plans. If you have results, be ready to show them.</p>`
+        },
+        {
+          q: "19. Do you have extra courses/work experience to maintain academic gaps?",
+          a: `<p><strong>Tip:</strong> Mention internships, short courses or relevant work you've done during gaps, to demonstrate continued learning.</p>`
+        },
+        {
+          q: "20. Which city/college/university do you want to go/join?",
+          a: `<p><strong>Tip:</strong> State the university and city clearly, and why you chose them (program strength, faculty, research, campus facilities).</p>`
+        },
+
+        // Additional sample template answers from Response 2 (examples & phrasing)
+        {
+          q: "Example phrasing: How to answer name & address?",
+          a: `<p><strong>Tip:</strong> Keep it precise and match passport details.</p><p><strong>Example:</strong> "My name is [Your Name], and my address is [Full Address]."</p>`
+        },
+        {
+          q: "Example phrasing: Last academic qualification & year",
+          a: `<p><strong>Tip:</strong> State degree, institution and year.</p><p><strong>Example:</strong> "I completed my Bachelor's in [Major] from [University Name] in [Year]."</p>`
+        }
+      ],
+
+      australia: [
+        // Based on your long Australia section: grouped questions with tips
+        { q: "Why study in Australia?", a: `<p><strong>Tip:</strong> Talk about world-class universities, industry links, practical learning and post-study work opportunities. Explain why Australia suits your course & career plan.</p>` },
+        { q: "Why did you choose this university/college (e.g., CQU)?", a: `<p><strong>Tip:</strong> Name the university, specific program strengths, campus location and any industry tie-ups or facilities that match your goals.</p>` },
+        { q: "Why not study in Nepal or other countries?", a: `<p><strong>Tip:</strong> Explain gaps in local offerings and how Australia's program provides specific training or accreditation you need for your career.</p>` },
+        { q: "How many universities did you research and what are they?", a: `<p><strong>Tip:</strong> Mention 2-4 comparable universities you looked at and why you selected your preferred option.</p>` },
+        { q: "Tuition fees of similar programs in Australia?", a: `<p><strong>Tip:</strong> Know approximate tuition ranges and be ready to compare similar programs—this shows research and seriousness.</p>` },
+        { q: "What are your yearly living expenses?", a: `<p><strong>Tip:</strong> Be aware of estimated living cost (example: AU$29,710/year) and explain budgeting plans.</p>` },
+        { q: "What does OSHC mean?", a: `<p><strong>Tip:</strong> OSHC = Overseas Student Health Cover. Know approximate costs per year and that it's mandatory for student visa holders.</p>` },
+        { q: "How do you finance your studies in Australia?", a: `<p><strong>Tip:</strong> State sponsors (parents/relatives), loans, scholarships and show supporting documents like bank statements and tax returns.</p>` },
+        { q: "Who are your sponsors and what is their annual income?", a: `<p><strong>Tip:</strong> Provide sponsor names, occupations and annual incomes; have proof (bank statements, tax docs).</p>` },
+        { q: "Employment questions (if employed): company, role, salary, start date", a: `<p><strong>Tip:</strong> Be prepared to explain your job role, responsibilities, salary, work tenure and how further study relates to your job/career path.</p>` },
+        { q: "Accommodation & local life in your preferred city", a: `<p><strong>Tip:</strong> Show you've researched housing options and approximate costs in your chosen city (e.g., Sydney). Mention transport & living arrangements briefly.</p>` },
+        { q: "Why will you return after study?", a: `<p><strong>Tip:</strong> Explain clear post-study plans: jobs, family ties, property or business back home—anything that shows intent to return.</p>` },
+        { q: "Research & immigration resources to prepare (sites)", a: `<ul><li>University/college website (your chosen institution)</li><li>www.homeaffairs.gov.au</li><li>www.studyinaustralia.gov.au</li><li>www.cricos.education.gov.au</li><li>www.internationaleducation.gov.au</li></ul>` },
+        { q: "Important general note for Australia interviews", a: `<p><strong>Tip:</strong> Be truthful, know your passport & DOB, course dates, fees, sponsors and financial proof. Remain calm — interviews vary by profile, so prepare thoroughly.</p>` }
+      ],
+
+      uk: [
+        // UK sample questions (converted to Q&A with tips)
+        { q: "What is your passport number?", a: `<p><strong>Tip:</strong> Have your passport open and answer exactly as written. The officer may verify details.</p>` },
+        { q: "What is your date of birth?", a: `<p><strong>Tip:</strong> Answer accurately and match your passport.</p>` },
+        { q: "When did you complete your SLC/SEE/10+2/Bachelor's/Master's?", a: `<p><strong>Tip:</strong> Provide the year and institution; be honest about gaps.</p>` },
+        { q: "What did you study in SLC/10+2/University?", a: `<p><strong>Tip:</strong> Mention major subjects and any highlights or awards.</p>` },
+        { q: "Why do you want to study abroad?", a: `<p><strong>Tip:</strong> Explain how overseas education gives you skills not available locally and aligns with your career goals.</p>` },
+        { q: "Which university/college are you applying to and why?", a: `<p><strong>Tip:</strong> Name the institution, program and one/two reasons why it fits your goals.</p>` },
+        { q: "What will you learn and what is the course outcome?", a: `<p><strong>Tip:</strong> Describe main learning outcomes and potential job roles after graduation.</p>` },
+        { q: "How can you justify the investment in overseas education?", a: `<p><strong>Tip:</strong> Explain ROI: career progression, better earnings, transferable skills and industry opportunities.</p>` },
+        { q: "Who is sponsoring you and how will they pay?", a: `<p><strong>Tip:</strong> Provide sponsor details and how educational loan or savings will be repaid if used.</p>` },
+        { q: "What will you do after returning to your country?", a: `<p><strong>Tip:</strong> Mention target employers or sectors and how you will apply your new skills locally.</p>` }
+      ],
+
+      usa: [
+        { q: "Why do you want to study in the USA?", a: `<p><strong>Tip:</strong> Mention diversity of programs, research opportunities and how the chosen university supports your goals.</p>` },
+        { q: "How will you fund your studies in the USA?", a: `<p><strong>Tip:</strong> State sponsors, scholarships or savings and be ready to provide bank statements and sponsorship letters.</p>` },
+        { q: "Do you plan to work while studying?", a: `<p><strong>Tip:</strong> If yes, state on-campus or permitted work and that you will follow visa regulations (F-1 OPT rules etc.).</p>` },
+        { q: "Why that particular university?", a: `<p><strong>Tip:</strong> Mention research groups, faculty, labs, or course modules relevant to your goals.</p>` },
+        { q: "What are your post-graduation plans?", a: `<p><strong>Tip:</strong> State whether you aim to return home, pursue OPT, or continue academically — and your rationale.</p>` }
+      ],
+      japan: [
+        { q: "Please introduce yourself in Japanese.", a: "Keep it short and polite. Example: 'Hajimemashite, watashi wa [Name] desu'." },
+        { q: "Why do you want to study in Japan?", a: "Mention Japan’s technology, innovation, research, and cultural uniqueness." },
+        { q: "Do you know Japanese language?", a: "Be honest. If not fluent, mention efforts to learn (JLPT, language courses)." },
+        { q: "Which university and course have you applied to?", a: "State exact name of university & program, and why you chose it." },
+        { q: "How will you finance your studies?", a: "Explain sponsor income, scholarships, or personal savings clearly." },
+        { q: "What are your plans after graduation?", a: "Mention contributing back to Nepal or working in international companies. Avoid only saying 'stay in Japan'." },
+        { q: "What do you know about Japan?", a: "Talk about safety, technology, education quality, and culture (e.g., discipline, innovation)." },
+        // ... (more from your Japan PDF)
+      ]
+    };
+
+    // Helper: render QA list for a country (or all)
+    const qaContainer = document.getElementById('qaContainer');
+    const countrySelect = document.getElementById('countrySelect');
+    const chipButtons = document.querySelectorAll('.chip');
+    const activeInfo = document.getElementById('activeInfo');
+    const expandAllBtn = document.getElementById('expandAll');
+    const collapseAllBtn = document.getElementById('collapseAll');
+
+    function formatCountryLabel(countryKey) {
+      if (!countryKey) return 'All countries';
+      if (countryKey === 'korea') return 'South Korea';
+      if (countryKey === 'australia') return 'Australia';
+      if (countryKey === 'uk') return 'United Kingdom';
+      if (countryKey === 'usa') return 'USA';
+      return countryKey;
+    }
+
+    function renderQA(filterCountry) {
+      qaContainer.innerHTML = '';
+      let items = [];
+
+      if (!filterCountry) {
+        // show all by flattening keys in preferred order
+        const preferred = ['korea','australia','uk','usa'];
+        preferred.forEach(k => {
+          if (QADATA[k]) {
+            items.push({ header: formatCountryLabel(k), isHeader: true });
+            QADATA[k].forEach(q => items.push({ ...q, country: k }));
+          }
+        });
+      } else {
+        const key = filterCountry;
+        if (!QADATA[key]) {
+          qaContainer.innerHTML = `<div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded"><p class="text-sm">No Q&A available for ${formatCountryLabel(key)} yet.</p></div>`;
+          return;
+        }
+        items = QADATA[key].map(q => ({ ...q, country: key }));
+      }
+
+      // Create nodes
+      items.forEach((item, idx) => {
+        if (item.isHeader) {
+          const h = document.createElement('div');
+          h.className = "mt-6 mb-2 text-sm font-semibold text-slate-700";
+          h.textContent = item.header;
+          qaContainer.appendChild(h);
+          return;
+        }
+
+        const card = document.createElement('div');
+        card.className = "bg-white rounded-lg p-4 border border-gray-100 card-shadow";
+        card.innerHTML = `
+          <button class="w-full text-left accordion-btn flex items-start gap-3" aria-expanded="false" aria-controls="a${idx}">
+            <div class="flex-1">
+              <div class="text-sm font-semibold text-slate-900">${item.q}</div>
+            </div>
+            <div class="text-slate-400 text-xs">Show</div>
+          </button>
+          <div id="a${idx}" class="answer mt-3 hidden text-sm text-slate-700">${item.a}</div>
+        `;
+        // Toggle behavior
+        const btn = card.querySelector('.accordion-btn');
+        const panel = card.querySelector('.answer');
+        const showLabel = card.querySelector('div.text-slate-400');
+
+        btn.addEventListener('click', () => {
+          const expanded = btn.getAttribute('aria-expanded') === 'true';
+          btn.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+          if (expanded) {
+            panel.classList.add('hidden');
+            showLabel.textContent = 'Show';
+          } else {
+            panel.classList.remove('hidden');
+            showLabel.textContent = 'Hide';
+            panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          }
+        });
+
+        qaContainer.appendChild(card);
+      });
+
+      // Update active info text
+      activeInfo.textContent = filterCountry ? `Showing questions for: ${formatCountryLabel(filterCountry)}.` : 'Showing all country questions.';
+    }
+
+    // Wire UI interactions: chips and select
+    chipButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const c = btn.dataset.country;
+        countrySelect.value = c;
+        renderQA(c);
+      });
+    });
+
+    countrySelect.addEventListener('change', (e) => {
+      const val = e.target.value;
+      renderQA(val);
+    });
+
+    expandAllBtn.addEventListener('click', () => {
+      document.querySelectorAll('.accordion-btn').forEach(b => {
+        const panel = b.closest('.card-shadow, .bg-white')?.querySelector('.answer') || b.parentElement.querySelector('.answer');
+        if (panel) {
+          panel.classList.remove('hidden');
+          b.setAttribute('aria-expanded', 'true');
+          const label = b.querySelector('div.text-slate-400');
+          if (label) label.textContent = 'Hide';
+        }
+      });
+    });
+
+    collapseAllBtn.addEventListener('click', () => {
+      document.querySelectorAll('.accordion-btn').forEach(b => {
+        const panel = b.closest('.card-shadow, .bg-white')?.querySelector('.answer') || b.parentElement.querySelector('.answer');
+        if (panel) {
+          panel.classList.add('hidden');
+          b.setAttribute('aria-expanded', 'false');
+          const label = b.querySelector('div.text-slate-400');
+          if (label) label.textContent = 'Show';
+        }
+      });
+    });
+
+    // Initial render: show nothing or All depending on desired default
+    // We'll show nothing until user chooses — but you requested country-specific -> default to all so user can see everything.
+    renderQA(''); // pass '' to show all grouped by region
+  </script>
 </body>
 </html>
