@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Analytics Dashboard — Clean</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    :root{--radius:12px}
+    .sidebar-collapsed{width:72px}
+    .sidebar-expanded{width:260px}
+    .transition-fast{transition:all .2s cubic-bezier(.4,0,.2,1)}
+    :focus{outline:3px solid rgba(15,98,254,.12);outline-offset:2px}
+  </style>
+</head>
+<body class="min-h-screen bg-gray-50 text-slate-800 antialiased">
+  <div id="app" class="flex">
+
+    <!-- SIDEBAR -->
+    <aside id="sidebar" class="sidebar-expanded fixed left-0 top-0 bottom-0 bg-white border-r shadow-sm transition-fast z-40">
+      <div class="h-full flex flex-col">
+        <div class="px-4 py-4 flex items-center justify-between border-b">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-lg bg-primary-600 text-white flex items-center justify-center font-bold">DP</div>
+            <div class="hidden md:block">
+              <div class="font-semibold">Discovery</div>
+              <div class="text-xs text-muted">Admin</div>
+            </div>
+          </div>
+          <button id="collapseBtn" class="p-2 rounded-md hover:bg-gray-100 transition-fast" aria-label="Toggle sidebar">▸</button>
+        </div>
+
+        <nav class="p-3 flex-1 overflow-auto">
+          <ul class="space-y-1">
+            <li>
+              <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-50" href="#">
+                <svg class="w-5 h-5 text-primary-600" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 12h18M3 6h18M3 18h18" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span class="menu-label">Dashboard</span>
+              </a>
+            </li>
+            <li>
+              <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-50" href="#">
+                <svg class="w-5 h-5 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 6h16M4 12h8M4 18h16" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span class="menu-label">Applicants</span>
+              </a>
+            </li>
+            <li>
+              <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-50" href="#">
+                <svg class="w-5 h-5 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M8 7h8M8 12h8M8 17h8" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span class="menu-label">Tasks</span>
+              </a>
+            </li>
+            <li>
+              <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-50" href="#">
+                <svg class="w-5 h-5 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2l4 6H8l4-6zM6 20h12v-2H6v2z" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span class="menu-label">Appointments</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+
+        <div class="p-4 border-t text-xs text-muted hidden md:block">© <span id="year"></span> Discovery</div>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <div id="main" class="flex-1 ml-[260px] transition-fast">
+
+      <!-- TOPBAR -->
+      <header class="sticky top-0 z-20 bg-white/60 backdrop-blur-md border-b">
+        <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex items-center justify-between h-16">
+            <div class="flex items-center gap-6">
+              <button id="mobileOpen" class="md:hidden p-2 rounded-md hover:bg-gray-100">☰</button>
+              <div>
+                <div class="text-xs text-muted">Welcome back</div>
+                <div class="font-semibold">Analytics Dashboard</div>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3">
+              <div class="relative">
+                <input id="search" type="search" placeholder="Search applicants, tasks..." class="hidden sm:block border rounded-lg px-3 py-2 w-64" />
+              </div>
+              <button class="px-3 py-2 rounded-lg bg-primary-600 text-white">New Applicant</button>
+              <div class="rounded-full overflow-hidden w-9 h-9 bg-gray-200"></div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main class="p-6 max-w-full">
+        <div class="max-w-7xl mx-auto">
+          <!-- KPI Cards -->
+          <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+            <div class="bg-white rounded-2xl p-5 shadow-sm border">
+              <div class="flex items-start justify-between">
+                <div>
+                  <h3 class="text-sm font-semibold">Visitors</h3>
+                  <p class="text-xs text-muted mt-1">People visited this month</p>
+                </div>
+                <div class="p-2 rounded-lg bg-blue-50 inline-flex items-center justify-center">
+                  <!-- icon -->
+                  <svg class="w-6 h-6 text-blue-600" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 12a5 5 0 100-10 5 5 0 000 10zM6 20c1.333-2 3-3 6-3s4.667 1 6 3" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+              </div>
+              <div class="mt-6">
+                <div class="text-3xl font-bold" data-counter id="visitors">0</div>
+                <div class="text-xs text-muted mt-2">+12% since last month</div>
+              </div>
+            </div>
+
+            <div class="bg-white rounded-2xl p-5 shadow-sm border">
+              <div class="flex items-start justify-between">
+                <div>
+                  <h3 class="text-sm font-semibold">Leads</h3>
+                  <p class="text-xs text-muted mt-1">New leads this month</p>
+                </div>
+                <div class="p-2 rounded-lg bg-amber-50 inline-flex items-center justify-center">
+                  <svg class="w-6 h-6 text-amber-600" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2l2 7h7l-5.5 4 2 7L12 16l-7.5 4 2-7L1 9h7l2-7z" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+              </div>
+              <div class="mt-6">
+                <div class="text-3xl font-bold" data-counter id="leads">0</div>
+                <div class="text-xs text-muted mt-2">Source: Organic, Ads</div>
+              </div>
+            </div>
+
+            <div class="bg-white rounded-2xl p-5 shadow-sm border">
+              <div class="flex items-start justify-between">
+                <div>
+                  <h3 class="text-sm font-semibold">Inquiries</h3>
+                  <p class="text-xs text-muted mt-1">Contact form inquiries</p>
+                </div>
+                <div class="p-2 rounded-lg bg-green-50 inline-flex items-center justify-center">
+                  <svg class="w-6 h-6 text-green-600" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M7 8h10M7 12h6M7 16h10" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+              </div>
+              <div class="mt-6">
+                <div class="text-3xl font-bold" data-counter id="inquiries">0</div>
+                <div class="text-xs text-muted mt-2">All channels</div>
+              </div>
+            </div>
+
+            <div class="bg-white rounded-2xl p-5 shadow-sm border">
+              <div class="flex items-start justify-between">
+                <div>
+                  <h3 class="text-sm font-semibold">Enrollments</h3>
+                  <p class="text-xs text-muted mt-1">This intake</p>
+                </div>
+                <div class="p-2 rounded-lg bg-indigo-50 inline-flex items-center justify-center">
+                  <svg class="w-6 h-6 text-indigo-600" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2l4 6H8l4-6zM6 20h12v-2H6v2z" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+              </div>
+              <div class="mt-6">
+                <div class="text-3xl font-bold" data-counter id="enroll">0</div>
+                <div class="text-xs text-muted mt-2">Active students</div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Charts -->
+          <section class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+            <div class="lg:col-span-2 bg-white rounded-2xl p-5 shadow-sm border">
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="font-semibold">Visitors Trend</h3>
+                <div class="text-xs text-muted">Last 12 months</div>
+              </div>
+              <canvas id="lineChart" height="180"></canvas>
+            </div>
+
+            <div class="bg-white rounded-2xl p-5 shadow-sm border">
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="font-semibold">Lead Sources</h3>
+                <div class="text-xs text-muted">Current month</div>
+              </div>
+              <canvas id="barChart" height="180"></canvas>
+            </div>
+          </section>
+
+          <!-- Recent Activity Table -->
+          <section class="bg-white rounded-2xl p-5 shadow-sm border">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="font-semibold">Recent Activity</h3>
+              <button id="viewAll" class="text-sm text-primary-600">View all</button>
+            </div>
+
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm">
+                <thead class="text-xs text-muted text-left">
+                  <tr>
+                    <th class="py-2">Applicant</th>
+                    <th class="py-2">Stage</th>
+                    <th class="py-2">Counselor</th>
+                    <th class="py-2">Date</th>
+                    <th class="py-2">Action</th>
+                  </tr>
+                </thead>
+                <tbody id="activityBody" class="divide-y">
+                  <!-- injected by JS -->
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+        </div>
+      </main>
+    </div>
+
+    <!-- Mobile overlay sidebar -->
+    <div id="mobileSidebar" class="fixed inset-0 z-50 hidden">
+      <div id="mobileBackdrop" class="absolute inset-0 bg-black/30"></div>
+      <div class="absolute left-0 top-0 bottom-0 w-72 bg-white shadow p-4 overflow-auto">
+        <div class="flex items-center justify-between">
+          <div class="font-semibold">Discovery</div>
+          <button id="mobileClose">✕</button>
+        </div>
+        <nav class="mt-4">
+          <ul class="space-y-2">
+            <li><a class="block p-2 rounded hover:bg-gray-50">Dashboard</a></li>
+            <li><a class="block p-2 rounded hover:bg-gray-50">Applicants</a></li>
+            <li><a class="block p-2 rounded hover:bg-gray-50">Tasks</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Script: functionality -->
+  <script>
+    // Simple data (mock). When ready, replace with API fetches.
+    const DATA = {
+      visitors: 1245,
+      leads: 478,
+      inquiries: 312,
+      enroll: 89,
+      monthly: [78, 95, 120, 150, 160, 190, 210, 230, 245, 300, 360, 420],
+      sources: {Organic: 180, Ads: 210, Referral: 60, "Walk-in": 28},
+      recent: [
+        {name: 'Ramesh Thapa', stage: 'Enquiring', counselor: 'Rachit', date: '2025-09-08'},
+        {name: 'Sita Rai', stage: 'Leads', counselor: 'Aisha', date: '2025-09-07'},
+        {name: 'Amit K.C.', stage: 'Enrolled', counselor: 'Rachit', date: '2025-09-05'},
+      ]
+    };
+
+    // Counters
+    function easeOutCubic(t){return 1-Math.pow(1-t,3)}
+    function animateCounter(el, end, duration=900){
+      const start = 0; const range = end - start; const startTime = performance.now();
+      function tick(now){
+        const elapsed = Math.min(now - startTime, duration);
+        const prog = elapsed/duration; const val = Math.round(start + range * easeOutCubic(prog));
+        el.textContent = val.toLocaleString();
+        if(elapsed < duration) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
+
+    document.addEventListener('DOMContentLoaded', ()=>{
+      // set year
+      document.getElementById('year').textContent = new Date().getFullYear();
+
+      // counters
+      animateCounter(document.getElementById('visitors'), DATA.visitors);
+      animateCounter(document.getElementById('leads'), DATA.leads);
+      animateCounter(document.getElementById('inquiries'), DATA.inquiries);
+      animateCounter(document.getElementById('enroll'), DATA.enroll);
+
+      // Recent activity
+      const tbody = document.getElementById('activityBody');
+      DATA.recent.forEach(r=>{
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td class="py-3"> <div class=\"font-medium\">${r.name}</div><div class=\"text-xs text-muted\">${r.name.toLowerCase().replace(/\s+/g,'.')}@example.com</div></td>
+          <td class="py-3">${r.stage}</td>
+          <td class="py-3">${r.counselor}</td>
+          <td class="py-3">${r.date}</td>
+          <td class="py-3"><button class=\"px-3 py-1 text-xs rounded bg-gray-50 hover:bg-gray-100\">Open</button></td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      // Charts
+      const lineCtx = document.getElementById('lineChart').getContext('2d');
+      const lineChart = new Chart(lineCtx, {
+        type: 'line',
+        data: {
+          labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+          datasets:[{label:'Visitors',data:DATA.monthly,fill:true,tension:0.3,pointRadius:3}]
+        },
+        options:{plugins:{legend:{display:false}},scales:{y:{beginAtZero:true}}}
+      });
+
+      const barCtx = document.getElementById('barChart').getContext('2d');
+      const barChart = new Chart(barCtx,{type:'bar',data:{labels:Object.keys(DATA.sources),datasets:[{label:'Leads',data:Object.values(DATA.sources),barPercentage:0.7}]},options:{plugins:{legend:{display:false}},scales:{y:{beginAtZero:true}}}});
+
+      // Sidebar collapse
+      const sidebar = document.getElementById('sidebar');
+      const collapseBtn = document.getElementById('collapseBtn');
+      const main = document.getElementById('main');
+      collapseBtn.addEventListener('click', ()=>{
+        if(sidebar.classList.contains('sidebar-expanded')){
+          sidebar.classList.remove('sidebar-expanded');
+          sidebar.classList.add('sidebar-collapsed');
+          main.style.marginLeft = '72px';
+          collapseBtn.textContent = '◂';
+          document.querySelectorAll('.menu-label').forEach(el=>el.style.display='none');
+        } else {
+          sidebar.classList.remove('sidebar-collapsed');
+          sidebar.classList.add('sidebar-expanded');
+          main.style.marginLeft = '260px';
+          collapseBtn.textContent = '▸';
+          document.querySelectorAll('.menu-label').forEach(el=>el.style.display='');
+        }
+      });
+
+      // Mobile sidebar
+      const mobileOpen = document.getElementById('mobileOpen');
+      const mobileSidebar = document.getElementById('mobileSidebar');
+      const mobileClose = document.getElementById('mobileClose');
+      mobileOpen && mobileOpen.addEventListener('click', ()=> mobileSidebar.classList.remove('hidden'));
+      mobileClose && mobileClose.addEventListener('click', ()=> mobileSidebar.classList.add('hidden'));
+
+      // Search (simple filter of recent list)
+      const search = document.getElementById('search');
+      if(search){
+        search.addEventListener('input', (e)=>{
+          const q = e.target.value.toLowerCase();
+          const trs = tbody.querySelectorAll('tr');
+          trs.forEach(tr=>{
+            tr.style.display = tr.textContent.toLowerCase().includes(q)? 'table-row' : 'none';
+          });
+        });
+      }
+
+    });
+  </script>
+</body>
+</html>

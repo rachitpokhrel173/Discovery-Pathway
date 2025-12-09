@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <!-- APPLICANT SECTION -->
+<div id="applicantSection" class="p-6 bg-white rounded-2xl shadow-soft-lg space-y-4">
+
+  <!-- Section Header -->
+  <div class="flex items-center justify-between">
+    <h2 class="text-xl font-semibold">Applicants</h2>
+    <button id="addApplicantBtn" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+      + Add Applicant
+    </button>
+  </div>
+
+  <!-- Search / Filter -->
+  <div class="flex items-center gap-3 mt-3">
+    <input 
+      type="text" 
+      id="searchApplicant" 
+      placeholder="Search by Name, Email, Phone..." 
+      class="flex-1 rounded-lg border-gray-300 p-3 focus:ring focus:ring-blue-200 focus:border-blue-500 transition"
+    />
+    
+    <select id="filterTestType" class="rounded-lg border-gray-300 p-3">
+      <option value="">All Tests</option>
+      <option value="IELTS">IELTS</option>
+      <option value="TOEFL">TOEFL</option>
+      <option value="PTE">PTE</option>
+    </select>
+  </div>
+
+  <!-- Applicants Table -->
+  <div class="overflow-x-auto mt-4">
+    <table class="min-w-full divide-y divide-gray-200 text-sm">
+      <thead class="bg-gray-50">
+        <tr>
+          <th class="px-4 py-2 text-left font-medium text-gray-700">Name</th>
+          <th class="px-4 py-2 text-left font-medium text-gray-700">Email</th>
+          <th class="px-4 py-2 text-left font-medium text-gray-700">Phone</th>
+          <th class="px-4 py-2 text-left font-medium text-gray-700">Test</th>
+          <th class="px-4 py-2 text-left font-medium text-gray-700">Score</th>
+          <th class="px-4 py-2 text-center font-medium text-gray-700">Actions</th>
+        </tr>
+      </thead>
+
+      <tbody id="applicantTableBody" class="bg-white divide-y divide-gray-200">
+        <!-- Dynamic rows -->
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<!-- Script -->
+<script>
+const SHEET_ENDPOINT =
+  "https://script.google.com/macros/s/AKfycby1nzEyhMUjRhS4DDLvvduHIqbyBAP1a_JccV10xpCFSVc8XDvAXL3TxGW7XJrzR-YS/exec";
+
+/* ------------------------------
+   LOAD APPLICANTS
+------------------------------ */
+async function loadApplicants() {
+  const tableBody = document.getElementById("applicantTableBody");
+
+  tableBody.innerHTML =
+    "<tr><td colspan='6' class='text-center p-4 text-gray-500'>Loading...</td></tr>";
+
+  try {
+    const res = await fetch(`${SHEET_ENDPOINT}?action=getApplicants`);
+    const result = await res.json();
+
+    if (!result || !Array.isArray(result.data)) {
+      throw new Error("Invalid API response");
+    }
+
+    const applicants = result.data;
+    tableBody.innerHTML = "";
+
+    applicants.forEach((app) => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td class="px-4 py-2">${app.fullName || "-"}</td>
+        <td class="px-4 py-2">${app.email || "-"}</td>
+        <td class="px-4 py-2">${app.phone || "-"}</td>
+        <td class="px-4 py-2">${app.testType || "-"}</td>
+        <td class="px-4 py-2">${app.score || "-"}</td>
+
+        <td class="px-4 py-2 flex justify-center gap-2">
+          <button 
+            class="px-2 py-1 text-sm bg-yellow-100 text-yellow-800 rounded edit-btn"
+            data-id="${app.sn}"
+          >
+            Edit
+          </button>
+
+          <button 
+            class="px-2 py-1 text-sm bg-red-100 text-red-800 rounded delete-btn"
+            data-id="${app.sn}"
+          >
+            Delete
+          </button>
+        </td>
+      `;
+
+      tableBody.appendChild(tr);
+    });
+    
+  } catch (error) {
+    console.error(error);
+    tableBody.innerHTML =
+      "<tr><td colspan='6' class='text-center p-4 text-red-500'>Failed to load applicants</td></tr>";
+  }
+}
+
+loadApplicants();
+
+/* ------------------------------
+   SEARCH
+------------------------------ */
+document.getElementById("searchApplicant").addEventListener("input", (e) => {
+  filterApplicants();
+});
+
+/* ------------------------------
+   FILTER TEST TYPE
+------------------------------ */
+document.getElementById("filterTestType").addEventListener("change", () => {
+  filterApplicants();
+});
+
+/* ------------------------------
+   MASTER FILTER FUNCTION
+------------------------------ */
+function filterApplicants() {
+  const search = document.getElementById("searchApplicant").value.toLowerCase();
+  const testFilter = document.getElementById("filterTestType").value.toLowerCase();
+
+  document.querySelectorAll("#applicantTableBody tr").forEach((tr) => {
+    const text = tr.textContent.toLowerCase();
+    const test = tr.children[3].textContent.toLowerCase();
+
+    const matchSearch = text.includes(search);
+    const matchTest = !testFilter || test === testFilter;
+
+    tr.style.display = matchSearch && matchTest ? "" : "none";
+  });
+}
+</script>
+
+</body>
+</html>

@@ -180,7 +180,7 @@
             </li>
 
             <!-- Repeat items with icons -->
-            <li><a class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-fast" href="#"><svg
+            <li><a class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-fast" href="/Admin_Portal/applicant_Admin.html"><svg
                   class="w-5 h-5 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                   <path d="M4 6h16M4 12h8M4 18h16" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                 </svg><span class="text-sm">Applicants</span></a></li>
@@ -806,14 +806,14 @@
     </div>
 
     <!-- ADD APPLICANT MODAL -->
-    <div id="applicantModal" class="fixed inset-0 z-60 hidden" role="dialog" aria-modal="true"
+    <div id="applicantModal" class="fixed inset-0 z-600 hidden" role="dialog" aria-modal="true"
       aria-labelledby="applicantModalTitle">
       <div class="absolute inset-0 bg-black/40 transition-opacity" data-modal-backdrop></div>
       <div class="fixed inset-0 flex items-start sm:items-center justify-center p-4 sm:p-6 overflow-auto">
         <div class="bg-white rounded-2xl w-full max-w-6xl shadow-soft-lg transform transition-smooth scale-95 opacity-0"
           role="document" id="applicantModalCard" style="max-height: 90vh; overflow:auto;">
           <!-- Modal header (sticky) -->
-          <div class="sticky top-0 bg-white border-b px-6 py-4 rounded-t-2xl z-10 flex items-center justify-between">
+          <div class="sticky top-0 bg-white border-b px-6 py-4 rounded-t-2xl z-100 flex items-center justify-between">
             <div class="flex items-center gap-3">
               <h2 id="applicantModalTitle" class="text-lg font-semibold">Add Applicant</h2>
               <div class="text-xs text-muted">Multi-section applicant form</div>
@@ -843,8 +843,12 @@
                 <select name="counselor" class="mt-1 block w-full rounded-lg border-gray-200 p-3 transition-fast"
                   aria-label="Counselor">
                   <option>Not assigned</option>
-                  <option>Rachit</option>
-                  <option>Aisha</option>
+                  <option>Amit Neupane</option>
+                  <option>Suman Gautam</option>
+                  <option>Nirmal Chaulagain</option>
+                  <option>Rachit Pokhrel</option>
+                  <option>Arpan Poudel</option>
+                  <option>Sadhana Baniya</option>
                 </select>
               </div>
               <div>
@@ -876,22 +880,10 @@
                 </div>
 
                 <div>
-                  <label class="text-xs font-medium">Secondary Email</label>
-                  <input name="secondaryEmail" type="email" class="mt-1 block w-full rounded-lg border-gray-200 p-3"
-                    placeholder="secondary@example.com" />
-                </div>
-
-                <div>
                   <label class="text-xs font-medium">Phone Number <span class="text-red-500">*</span></label>
                   <input name="phone" required class="mt-1 block w-full rounded-lg border-gray-200 p-3"
                     placeholder="+977-98xxxxxxxx" aria-required="true" />
                   <p class="mt-1 text-xs text-red-600 hidden" data-error-for="phone">Phone is required</p>
-                </div>
-
-                <div>
-                  <label class="text-xs font-medium">Secondary Phone</label>
-                  <input name="secondaryPhone" class="mt-1 block w-full rounded-lg border-gray-200 p-3"
-                    placeholder="+977-98xxxxxxxx" />
                 </div>
 
                 <div>
@@ -942,18 +934,6 @@
                   <label class="text-xs font-medium">City</label>
                   <input name="city" class="mt-1 block w-full rounded-lg border-gray-200 p-3" />
                 </div>
-                <div>
-                  <label class="text-xs font-medium">State</label>
-                  <input name="state" class="mt-1 block w-full rounded-lg border-gray-200 p-3" />
-                </div>
-                <div>
-                  <label class="text-xs font-medium">Zip / Postal Code</label>
-                  <input name="zip" class="mt-1 block w-full rounded-lg border-gray-200 p-3" />
-                </div>
-                <div class="md:col-span-2">
-                  <label class="text-xs font-medium">Street</label>
-                  <input name="street" class="mt-1 block w-full rounded-lg border-gray-200 p-3" />
-                </div>
               </div>
             </section>
 
@@ -973,6 +953,7 @@
                 <div>
                   <label class="text-xs font-medium">Degree Level</label>
                   <select name="degreeLevel" class="mt-1 block w-full rounded-lg border-gray-200 p-3">
+                    <option>High School</option>
                     <option>Bachelor</option>
                     <option>Master</option>
                     <option>Diploma</option>
@@ -984,21 +965,6 @@
                   <label class="text-xs font-medium">Passed Year</label>
                   <input name="passedYear" type="number" min="1900" max="2099" step="1"
                     class="mt-1 block w-full rounded-lg border-gray-200 p-3" />
-                </div>
-
-                <div>
-                  <label class="text-xs font-medium">Course Start</label>
-                  <input name="courseStart" type="date" class="mt-1 block w-full rounded-lg border-gray-200 p-3" />
-                </div>
-
-                <div>
-                  <label class="text-xs font-medium">Course End</label>
-                  <input name="courseEnd" type="date" class="mt-1 block w-full rounded-lg border-gray-200 p-3" />
-                </div>
-
-                <div>
-                  <label class="text-xs font-medium">Subject</label>
-                  <input name="subject" class="mt-1 block w-full rounded-lg border-gray-200 p-3" />
                 </div>
 
                 <div>
@@ -1020,32 +986,15 @@
                     <option>IELTS</option>
                     <option>TOEFL</option>
                     <option>PTE</option>
+                    <option>JLCT</option>
+                    <option>JLPT</option>
                   </select>
                 </div>
                 <div>
                   <label class="text-xs font-medium">Overall</label>
                   <input name="overall" class="mt-1 block w-full rounded-lg border-gray-200 p-3" />
                 </div>
-                <div>
-                  <label class="text-xs font-medium">Listening (L)</label>
-                  <input name="listening" class="mt-1 block w-full rounded-lg border-gray-200 p-3" />
-                </div>
-                <div>
-                  <label class="text-xs font-medium">Reading (R)</label>
-                  <input name="reading" class="mt-1 block w-full rounded-lg border-gray-200 p-3" />
-                </div>
-                <div>
-                  <label class="text-xs font-medium">Writing (W)</label>
-                  <input name="writing" class="mt-1 block w-full rounded-lg border-gray-200 p-3" />
-                </div>
-                <div>
-                  <label class="text-xs font-medium">Speaking (S)</label>
-                  <input name="speaking" class="mt-1 block w-full rounded-lg border-gray-200 p-3" />
-                </div>
-                <div>
-                  <label class="text-xs font-medium">Attended Date</label>
-                  <input name="attendedDate" type="date" class="mt-1 block w-full rounded-lg border-gray-200 p-3" />
-                </div>
+                
               </div>
             </section>
 
@@ -1074,7 +1023,7 @@
 
             <!-- Modal footer (sticky) -->
             <div
-              class="sticky bottom-0 bg-white border-t px-6 py-4 rounded-b-2xl flex items-center justify-between gap-4 z-10">
+              class="sticky bottom-0 bg-white border-t px-6 py-4 rounded-b-2xl flex items-center justify-between gap-4 z-1000">
               <div class="text-xs text-muted">Fields saved locally until you hit Save</div>
               <div class="flex items-center gap-2">
                 <button type="button" id="applicantCancel"
@@ -1089,14 +1038,14 @@
     </div>
 
     <!-- ADD VISITOR MODAL -->
-    <div id="visitorModal" class="fixed inset-0 z-60 hidden" role="dialog" aria-modal="true"
+    <div id="visitorModal" class="fixed inset-0 z-600 hidden" role="dialog" aria-modal="true"
       aria-labelledby="visitorModalTitle">
       <div class="absolute inset-0 bg-black/40 transition-opacity" data-modal-backdrop></div>
       <div class="fixed inset-0 flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl w-full max-w-2xl shadow-soft-lg transform transition-smooth scale-95 opacity-0"
           role="document">
 
-          <div class="sticky top-0 bg-white border-b px-6 py-4 rounded-t-2xl z-10 flex items-center justify-between">
+          <div class="sticky top-0 bg-white border-b px-6 py-4 rounded-t-2xl z-100 flex items-center justify-between">
             <h2 id="visitorModalTitle" class="text-lg font-semibold">Add Visitor</h2>
             <div class="flex items-center gap-2">
               <button id="visitorCancelTop" class="px-3 py-2 rounded-lg hover:bg-gray-100">Cancel</button>
@@ -1233,7 +1182,220 @@
       </div>
     </div>
 
-  </div> <!-- end app -->
+  </div> 
+
+
+
+  <script>
+// ---------------------------------------------
+// GOOGLE SHEET API ENDPOINT
+// ---------------------------------------------
+const SHEET_ENDPOINT = "https://script.google.com/macros/s/AKfycby1nzEyhMUjRhS4DDLvvduHIqbyBAP1a_JccV10xpCFSVc8XDvAXL3TxGW7XJrzR-YS/exec";
+
+// ---------------------------------------------
+// APPLICANT FORM HANDLER
+// ---------------------------------------------
+document.addEventListener("DOMContentLoaded", () => {
+  
+  const applicantForm = document.getElementById("applicantForm");
+  const applicantModal = document.getElementById("applicantModal");
+  const applicantModalCard = document.getElementById("applicantModalCard");
+
+  // Buttons
+  const openBtn = document.getElementById("addApplicantBtn");
+  const cancelTop = document.getElementById("applicantCancelTop");
+  const cancelBottom = document.getElementById("applicantCancel");
+  const submitBtn = document.getElementById("applicantSubmit");
+
+  // ----------------------------
+  // OPEN MODAL
+  // ----------------------------
+  if (openBtn) {
+    openBtn.addEventListener("click", () => {
+      applicantModal.classList.remove("hidden");
+      setTimeout(() => {
+        applicantModalCard.classList.remove("opacity-0", "scale-95");
+      }, 50);
+    });
+  }
+
+  // ----------------------------
+  // CLOSE MODAL
+  // ----------------------------
+  function closeApplicantModal() {
+    applicantModalCard.classList.add("opacity-0", "scale-95");
+    setTimeout(() => {
+      applicantModal.classList.add("hidden");
+    }, 200);
+  }
+
+  cancelTop?.addEventListener("click", closeApplicantModal);
+  cancelBottom?.addEventListener("click", closeApplicantModal);
+
+  // ----------------------------
+  // SUBMIT FORM → GOOGLE SHEETS
+  // ----------------------------
+  if (applicantForm) {
+    applicantForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      // Required Fields
+      const fullName = applicantForm.fullName.value.trim();
+      const phone = applicantForm.phone.value.trim();
+
+      if (!fullName) {
+        alert("Full Name is required.");
+        return;
+      }
+      if (!phone) {
+        alert("Phone number is required.");
+        return;
+      }
+
+      // ----------------------------
+      // BUILD PAYLOAD
+      // ----------------------------
+      const data = {
+        leadStage: applicantForm.leadStage.value,
+        counselor: applicantForm.counselor.value,
+        tags: applicantForm.tags.value,
+        fullName: applicantForm.fullName.value,
+        email: applicantForm.email.value,
+        phone: applicantForm.phone.value,
+        dob: applicantForm.dob.value,
+        gender: applicantForm.gender.value,
+        reference: applicantForm.reference.value,
+        interestedCountries: applicantForm.countries.value,
+        interestedCourse: applicantForm.interestedCourse.value,
+        country: applicantForm.country.value,
+        city: applicantForm.city.value,
+        institution: applicantForm.institution.value,
+        degreeTitle: applicantForm.degreeTitle.value,
+        degreeLevel: applicantForm.degreeLevel.value,
+        passedYear: applicantForm.passedYear.value,
+        gpa: applicantForm.percentage.value,  // GPA stored from "percentage"
+        ielts: applicantForm.overall.value,   // IELTS from "overall"
+        summary: applicantForm.summary.value,
+      };
+
+      // ----------------------------
+      // SEND TO GOOGLE SHEETS
+      // ----------------------------
+      submitBtn.disabled = true;
+      submitBtn.innerText = "Saving...";
+
+      try {
+        const res = await fetch(SHEET_ENDPOINT, {
+          method: "POST",
+          mode: "no-cors", // IMPORTANT
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        });
+
+        // Because of no-cors, JS cannot read response, but request still succeeds.
+        alert("Applicant saved successfully!");
+        applicantForm.reset();
+        closeApplicantModal();
+
+      } catch (error) {
+        console.error("Save Error:", error);
+        alert("Error saving applicant. Check console.");
+      }
+
+      submitBtn.disabled = false;
+      submitBtn.innerText = "Save Applicant";
+    });
+  }
+
+});
+</script>
+
+
+
+<script>
+// ---------------------------------------------
+// VISITOR FORM HANDLER
+// ---------------------------------------------
+document.addEventListener("DOMContentLoaded", () => {
+  const visitorForm = document.getElementById("visitorForm");
+  const visitorModal = document.getElementById("visitorModal");
+  const visitorModalCard = visitorModal?.querySelector('div[role="document"]');
+
+  const openBtn = document.getElementById("addVisitorBtn");
+  const cancelTop = document.getElementById("visitorCancelTop");
+  const cancelBottom = document.getElementById("visitorCancel");
+  const submitBtn = document.getElementById("visitorSubmit");
+
+  // OPEN MODAL
+  openBtn?.addEventListener("click", () => {
+    visitorModal.classList.remove("hidden");
+    setTimeout(() => visitorModalCard?.classList.remove("opacity-0","scale-95"),50);
+  });
+
+  // CLOSE MODAL
+  function closeVisitorModal(){
+    visitorModalCard?.classList.add("opacity-0","scale-95");
+    setTimeout(() => visitorModal?.classList.add("hidden"),200);
+  }
+  cancelTop?.addEventListener("click", closeVisitorModal);
+  cancelBottom?.addEventListener("click", closeVisitorModal);
+
+  // SUBMIT FORM → GOOGLE SHEETS
+  visitorForm?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const name = visitorForm.visitorName.value.trim();
+    const personalPhone = visitorForm.visitorPhone.value.trim();
+
+    if(!name){ alert("Name is required"); return; }
+    if(!personalPhone){ alert("Personal Phone is required"); return; }
+
+    const data = {
+      name: visitorForm.visitorName.value,
+      email: visitorForm.visitorEmail.value,
+      personalPhone: visitorForm.visitorPhone.value,
+      parentPhone: visitorForm.parentPhone?.value || "",
+      course: visitorForm.visitorCourse?.value || "",
+      country: visitorForm.visitorCountry?.value || "",
+      notes: visitorForm.visitorNotes?.value || ""
+    };
+
+    submitBtn.disabled = true;
+    submitBtn.innerText = "Saving...";
+
+    try {
+      await fetch("https://script.google.com/macros/s/AKfycby1nzEyhMUjRhS4DDLvvduHIqbyBAP1a_JccV10xpCFSVc8XDvAXL3TxGW7XJrzR-YS/exec", {
+        method:"POST",
+        mode:"no-cors",
+        headers:{"Content-Type":"application/json"},
+        body: JSON.stringify(data)
+      });
+
+      alert("Visitor saved successfully!");
+      visitorForm.reset();
+      closeVisitorModal();
+
+    } catch(err){
+      console.error("Visitor Save Error:",err);
+      alert("Error saving visitor. Check console.");
+    }
+
+    submitBtn.disabled = false;
+    submitBtn.innerText = "Save Visitor";
+  });
+
+});
+</script>
+
+
+
+
+
+
+
+
+
+
 
   <!-- Inline JavaScript (well-commented & modular) -->
   <script>
