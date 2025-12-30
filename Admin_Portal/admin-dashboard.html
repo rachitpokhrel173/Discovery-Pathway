@@ -6,8 +6,8 @@
     <title>Discovery Pathway - Admin Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- EmailJS SDK -->
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
@@ -15,29 +15,12 @@
         ::-webkit-scrollbar-track { background: #f1f1f1; }
         ::-webkit-scrollbar-thumb { background: #888; border-radius: 4px; }
         .sidebar-mobile { transform: translateX(-100%); }
-        @media (min-width: 1024px) {
-            .sidebar-mobile { transform: translateX(0); }
-        }
-        .loading { 
-            border: 3px solid #f3f3f3; 
-            border-top: 3px solid #3498db; 
-            border-radius: 50%; 
-            width: 30px; 
-            height: 30px; 
-            animation: spin 1s linear infinite; 
-        }
-        @keyframes spin { 
-            0% { transform: rotate(0deg); } 
-            100% { transform: rotate(360deg); } 
-        }
+        @media (min-width: 1024px) { .sidebar-mobile { transform: translateX(0); } }
+        .loading { border: 3px solid #f3f3f3; border-top: 3px solid #3498db; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         .page-section { display: none; }
         .page-section.active { display: block; }
         .nav-item.active { background: #EFF6FF; color: #2563EB; }
-        .pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: .5; }
-        }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -62,22 +45,22 @@
         </div>
         
         <nav class="p-4">
-            <a href="#" onclick="showPage('dashboard')" class="nav-item flex items-center space-x-3 px-4 py-3 rounded-lg mb-2 active">
+            <a href="#" onclick="showPage(event, 'dashboard')" class="nav-item flex items-center space-x-3 px-4 py-3 rounded-lg mb-2 active">
                 <i class="fas fa-dashboard"></i><span>Dashboard</span>
             </a>
-            <a href="#" onclick="showPage('students')" class="nav-item flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-50 text-gray-700 mb-2">
+            <a href="#" onclick="showPage(event, 'students')" class="nav-item flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-50 text-gray-700 mb-2">
                 <i class="fas fa-users"></i><span>Students</span>
             </a>
-            <a href="#" onclick="showPage('tasks')" class="nav-item flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-50 text-gray-700 mb-2">
+            <a href="#" onclick="showPage(event, 'tasks')" class="nav-item flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-50 text-gray-700 mb-2">
                 <i class="fas fa-tasks"></i><span>Tasks</span>
             </a>
-            <a href="#" onclick="showPage('appointments')" class="nav-item flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-50 text-gray-700 mb-2">
+            <a href="#" onclick="showPage(event, 'appointments')" class="nav-item flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-50 text-gray-700 mb-2">
                 <i class="fas fa-calendar"></i><span>Appointments</span>
             </a>
-            <a href="#" onclick="showPage('classes')" class="nav-item flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-50 text-gray-700 mb-2">
+            <a href="#" onclick="showPage(event, 'classes')" class="nav-item flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-50 text-gray-700 mb-2">
                 <i class="fas fa-book"></i><span>Classes</span>
             </a>
-            <a href="#" onclick="showPage('settings')" class="nav-item flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-50 text-gray-700 mb-2">
+            <a href="#" onclick="showPage(event, 'settings')" class="nav-item flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-50 text-gray-700 mb-2">
                 <i class="fas fa-cog"></i><span>Settings</span>
             </a>
         </nav>
@@ -85,8 +68,6 @@
 
     <!-- Main Content -->
     <div class="lg:ml-64">
-        
-        <!-- Top Navbar -->
         <header class="bg-white shadow-sm sticky top-0 z-40">
             <div class="px-4 lg:px-6 py-4 flex items-center justify-between">
                 <div class="flex items-center space-x-4">
@@ -100,16 +81,13 @@
                 </div>
                 
                 <div class="flex items-center space-x-4">
-                    <button onclick="loadApplicantsFromSheet()" class="p-2 rounded-full hover:bg-gray-100" title="Refresh Data">
+                    <div id="dbStatusBadge" class="px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">
+                        <i class="fas fa-database mr-1"></i>Connected
+                    </div>
+                    <button onclick="refreshAllData()" class="p-2 rounded-full hover:bg-gray-100">
                         <i class="fas fa-sync text-gray-600"></i>
                     </button>
-                    <button class="relative p-2 rounded-full hover:bg-gray-100">
-                        <i class="fas fa-bell text-gray-600"></i>
-                        <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
-                    </button>
-                    <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white font-semibold">
-                        DP
-                    </div>
+                    <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white font-semibold">DP</div>
                 </div>
             </div>
         </header>
@@ -120,12 +98,11 @@
             <div id="dashboard-page" class="page-section active">
                 <div class="flex justify-between items-center mb-6">
                     <h1 class="text-2xl font-bold text-gray-800">Dashboard Overview</h1>
-                    <button onclick="loadApplicantsFromSheet()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
-                        <i class="fas fa-sync mr-2"></i>Refresh All Data
+                    <button onclick="refreshAllData()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                        <i class="fas fa-sync mr-2"></i>Refresh All
                     </button>
                 </div>
 
-                <!-- Stats Cards -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
                     <div class="bg-white p-6 rounded-xl shadow-sm">
                         <div class="flex justify-between items-start">
@@ -180,19 +157,18 @@
                     </div>
                 </div>
 
-                <!-- Recent Activity -->
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     <div class="bg-white rounded-xl shadow-sm p-6">
                         <h3 class="text-lg font-semibold mb-4">Recent Students</h3>
                         <div id="recentStudents" class="space-y-3">
-                            <p class="text-gray-500 text-center py-4">Loading...</p>
+                            <p class="text-gray-500 text-center py-4">No students loaded</p>
                         </div>
                     </div>
 
                     <div class="bg-white rounded-xl shadow-sm p-6">
                         <h3 class="text-lg font-semibold mb-4">Upcoming Appointments</h3>
                         <div id="upcomingAppointments" class="space-y-3">
-                            <p class="text-gray-500 text-center py-4">No upcoming appointments</p>
+                            <p class="text-gray-500 text-center py-4">No appointments</p>
                         </div>
                     </div>
                 </div>
@@ -204,7 +180,7 @@
                     <h1 class="text-2xl font-bold text-gray-800">Student Management</h1>
                     <div class="flex gap-3">
                         <button onclick="loadApplicantsFromSheet()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
-                            <i class="fas fa-sync mr-2"></i>Refresh
+                            <i class="fas fa-sync mr-2"></i>Load
                         </button>
                         <button onclick="exportToCSV()" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">
                             <i class="fas fa-download mr-2"></i>Export
@@ -215,7 +191,7 @@
                 <div class="bg-white rounded-xl shadow-sm p-6">
                     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-3">
                         <h3 class="text-lg font-semibold">All Students</h3>
-                        <input type="text" id="searchInput" placeholder="Search students..." class="px-4 py-2 border rounded-lg" onkeyup="searchApplicants()">
+                        <input type="text" id="searchInput" placeholder="Search..." class="px-4 py-2 border rounded-lg" onkeyup="searchApplicants()">
                     </div>
                     
                     <div id="loadingIndicator" class="hidden flex justify-center items-center py-8">
@@ -239,7 +215,7 @@
                                 <tr>
                                     <td colspan="6" class="px-4 py-8 text-center text-gray-500">
                                         <i class="fas fa-cloud-download-alt text-4xl mb-2 text-blue-500"></i>
-                                        <p class="font-semibold">Click Refresh to load students</p>
+                                        <p class="font-semibold">Click Load to fetch students</p>
                                     </td>
                                 </tr>
                             </tbody>
@@ -253,7 +229,7 @@
                 <div class="flex justify-between items-center mb-6">
                     <h1 class="text-2xl font-bold text-gray-800">Task Management</h1>
                     <button onclick="openTaskModal()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
-                        <i class="fas fa-plus mr-2"></i>Assign New Task
+                        <i class="fas fa-plus mr-2"></i>New Task
                     </button>
                 </div>
 
@@ -275,7 +251,7 @@
                 <div class="bg-white rounded-xl shadow-sm p-6">
                     <h3 class="text-lg font-semibold mb-4">All Tasks</h3>
                     <div id="tasksContainer" class="space-y-3">
-                        <p class="text-center text-gray-500 py-8">No tasks yet. Assign your first task!</p>
+                        <p class="text-center text-gray-500 py-8">No tasks yet</p>
                     </div>
                 </div>
             </div>
@@ -285,20 +261,20 @@
                 <div class="flex justify-between items-center mb-6">
                     <h1 class="text-2xl font-bold text-gray-800">Appointments</h1>
                     <button onclick="openAppointmentModal()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
-                        <i class="fas fa-plus mr-2"></i>New Appointment
+                        <i class="fas fa-plus mr-2"></i>New
                     </button>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     <div class="lg:col-span-2 bg-white rounded-xl shadow-sm p-6">
-                        <h3 class="text-lg font-semibold mb-4">Scheduled Appointments</h3>
+                        <h3 class="text-lg font-semibold mb-4">Scheduled</h3>
                         <div id="appointmentsContainer" class="space-y-3">
-                            <p class="text-center text-gray-500 py-8">No appointments scheduled</p>
+                            <p class="text-center text-gray-500 py-8">No appointments</p>
                         </div>
                     </div>
 
                     <div class="bg-white rounded-xl shadow-sm p-6">
-                        <h3 class="text-lg font-semibold mb-4">Quick Stats</h3>
+                        <h3 class="text-lg font-semibold mb-4">Stats</h3>
                         <div class="space-y-4">
                             <div class="p-4 bg-blue-50 rounded-lg">
                                 <p class="text-sm text-blue-600">Today</p>
@@ -320,14 +296,14 @@
             <!-- CLASSES PAGE -->
             <div id="classes-page" class="page-section">
                 <div class="flex justify-between items-center mb-6">
-                    <h1 class="text-2xl font-bold text-gray-800">Classes Management</h1>
+                    <h1 class="text-2xl font-bold text-gray-800">Classes</h1>
                     <button onclick="openClassModal()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
-                        <i class="fas fa-plus mr-2"></i>Add Class
+                        <i class="fas fa-plus mr-2"></i>Add
                     </button>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="classesContainer">
-                    <p class="text-center text-gray-500 py-8 col-span-full">No classes added yet</p>
+                    <p class="text-center text-gray-500 py-8 col-span-full">No classes yet</p>
                 </div>
             </div>
 
@@ -336,82 +312,68 @@
                 <h1 class="text-2xl font-bold text-gray-800 mb-6">Settings</h1>
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <!-- Email Configuration -->
                     <div class="bg-white rounded-xl shadow-sm p-6">
                         <h3 class="text-lg font-semibold mb-4">
-                            <i class="fas fa-envelope text-blue-600 mr-2"></i>Email Configuration
+                            <i class="fas fa-database text-blue-600 mr-2"></i>Database
                         </h3>
-                        <div class="space-y-4">
-                                                        <div>
-                                <label class="block text-sm font-medium mb-2">Service ID</label>
-                                <input type="text" id="emailServiceId" class="w-full px-4 py-2 border rounded-lg" placeholder="This is not accessible. Please contact the developer.">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium mb-2">Template ID</label>
-                                <input type="text" id="emailTemplateId" class="w-full px-4 py-2 border rounded-lg" placeholder="This is not accessible. Please contact the developer.">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium mb-2">Public Key</label>
-                                <input type="text" id="emailPublicKey" class="w-full px-4 py-2 border rounded-lg" placeholder="This is not accessible. Please contact the developer.">
-                            </div>
-                            
-                            <button onclick="saveEmailConfig()" class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
-                                <i class="fas fa-save mr-2"></i>Save Configuration
-                            </button>
-                            
-                            <div id="emailStatusIndicator" class="p-3 bg-gray-50 border rounded-lg text-center text-sm text-gray-600">
-                                <i class="fas fa-exclamation-triangle mr-2"></i>Email not configured
-                            </div>
+                        <div class="p-4 bg-green-50 border border-green-200 rounded-lg">
+                            <p class="text-sm text-green-700">
+                                <i class="fas fa-check-circle mr-2"></i>Connected
+                            </p>
+                            <p class="text-xs text-green-600 mt-1">Supabase</p>
                         </div>
                     </div>
 
                     <div class="bg-white rounded-xl shadow-sm p-6">
-                        <h3 class="text-lg font-semibold mb-4">Google Sheets Configuration</h3>
-                        <div class="space-y-4">
-                            <div>
-                                <label class="block text-sm font-medium mb-2">Sheet ID</label>
-                                <input type="text" id="settingsSheetId" class="w-full px-4 py-2 border rounded-lg" readonly value="This is not accessible. Please contact the developer.">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium mb-2">Sheet Name</label>
-                                <input type="text" id="settingsSheetName" class="w-full px-4 py-2 border rounded-lg" readonly value="This is not accessible. Please contact the developer.">
-                            </div>
-                            <div class="p-4 bg-green-50 border border-green-200 rounded-lg">
-                                <p class="text-sm text-green-700"><i class="fas fa-check-circle mr-2"></i>Connected to Google Sheets</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="bg-white rounded-xl shadow-sm p-6">
-                        <h3 class="text-lg font-semibold mb-4">System Information</h3>
+                        <h3 class="text-lg font-semibold mb-4">
+                            <i class="fas fa-envelope text-blue-600 mr-2"></i>Email
+                        </h3>
                         <div class="space-y-3">
-                            <div class="flex justify-between py-2 border-b">
-                                <span class="text-gray-600">Version</span>
-                                <span class="font-semibold">v1.1.0</span>
+                            <input type="text" id="emailServiceId" class="w-full px-4 py-2 border rounded-lg text-sm" placeholder="Service ID">
+                            <input type="text" id="emailTemplateId" class="w-full px-4 py-2 border rounded-lg text-sm" placeholder="Template ID">
+                            <input type="text" id="emailPublicKey" class="w-full px-4 py-2 border rounded-lg text-sm" placeholder="Public Key">
+                            <button onclick="saveEmailConfig()" class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 text-sm">
+                                <i class="fas fa-save mr-2"></i>Save
+                            </button>
+                            <div id="emailStatusIndicator" class="p-3 bg-gray-50 border rounded-lg text-center text-xs text-gray-600">
+                                <i class="fas fa-exclamation-triangle mr-1"></i>Not configured
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow-sm p-6">
+                        <h3 class="text-lg font-semibold mb-4">
+                            <i class="fas fa-info-circle text-blue-600 mr-2"></i>System
+                        </h3>
+                        <div class="space-y-2 text-sm">
                             <div class="flex justify-between py-2 border-b">
-                                <span class="text-gray-600">Students Loaded</span>
+                                <span class="text-gray-600">Students</span>
                                 <span class="font-semibold" id="settingsStudentCount">0</span>
                             </div>
                             <div class="flex justify-between py-2 border-b">
-                                <span class="text-gray-600">Tasks Created</span>
+                                <span class="text-gray-600">Tasks</span>
                                 <span class="font-semibold" id="settingsTaskCount">0</span>
                             </div>
                             <div class="flex justify-between py-2">
-                                <span class="text-gray-600">Last Updated</span>
-                                <span class="font-semibold" id="lastUpdated">Never</span>
+                                <span class="text-gray-600">Updated</span>
+                                <span class="font-semibold text-xs" id="lastUpdated">Now</span>
                             </div>
                         </div>
                     </div>
 
                     <div class="bg-white rounded-xl shadow-sm p-6">
-                        <h3 class="text-lg font-semibold mb-4">Data Management</h3>
-                        <div class="space-y-3">
-                            <button onclick="exportAllData()" class="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
-                                <i class="fas fa-download mr-2"></i>Export All Data
+                        <h3 class="text-lg font-semibold mb-4">
+                            <i class="fas fa-database text-purple-600 mr-2"></i>Data
+                        </h3>
+                        <div class="space-y-2">
+                            <button onclick="exportAllData()" class="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm">
+                                <i class="fas fa-download mr-2"></i>Export
                             </button>
-                            <button onclick="clearLocalData()" class="w-full px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
-                                <i class="fas fa-trash mr-2"></i>Clear Local Data
+                            <button onclick="syncWithSupabase()" class="w-full px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 text-sm">
+                                <i class="fas fa-sync mr-2"></i>Sync
+                            </button>
+                            <button onclick="clearAllData()" class="w-full px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 text-sm">
+                                <i class="fas fa-trash mr-2"></i>Clear
                             </button>
                         </div>
                     </div>
@@ -421,60 +383,57 @@
         </main>
     </div>
 
-    <!-- Task Modal (UPDATED WITH EMAIL FIELDS) -->
+    <!-- Task Modal -->
     <div id="taskModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
             <div class="border-b px-6 py-4 flex justify-between items-center sticky top-0 bg-white">
                 <h2 class="text-xl font-bold">
-                    <i class="fas fa-tasks text-blue-600 mr-2"></i>Assign New Task
+                    <i class="fas fa-tasks text-blue-600 mr-2"></i>Assign Task
                 </h2>
                 <button onclick="closeTaskModal()" class="text-gray-500 hover:text-gray-700">
                     <i class="fas fa-times text-xl"></i>
                 </button>
             </div>
             <form onsubmit="addTask(event)" class="p-6 space-y-4">
-                <!-- Assignee Information -->
                 <div class="bg-blue-50 p-4 rounded-lg border border-blue-200">
-                    <h3 class="font-semibold text-blue-800 mb-3">
-                        <i class="fas fa-user-tag mr-2"></i>Assignee Information
+                    <h3 class="font-semibold text-blue-800 mb-3 text-sm">
+                        <i class="fas fa-user-tag mr-2"></i>Assignee
                     </h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-sm font-medium mb-2">Assigned To (Name) *</label>
-                            <input type="text" id="taskAssigneeName" required class="w-full px-4 py-2 border rounded-lg" placeholder="e.g., Nirmal Chaulagain">
+                            <label class="block text-sm font-medium mb-2">Name *</label>
+                            <input type="text" id="taskAssigneeName" required class="w-full px-4 py-2 border rounded-lg text-sm" placeholder="Full name">
                         </div>
                         <div>
-                            <label class="block text-sm font-medium mb-2">Assignee Email *</label>
-                            <input type="email" id="taskAssigneeEmail" required class="w-full px-4 py-2 border rounded-lg" placeholder="nirmal@example.com">
+                            <label class="block text-sm font-medium mb-2">Email *</label>
+                            <input type="email" id="taskAssigneeEmail" required class="w-full px-4 py-2 border rounded-lg text-sm" placeholder="email@example.com">
                         </div>
                     </div>
                     <div class="mt-3">
-                        <label class="block text-sm font-medium mb-2">Assignee Position/Role</label>
-                        <input type="text" id="taskAssigneeRole" class="w-full px-4 py-2 border rounded-lg" placeholder="e.g., Manager, Counselor">
+                        <label class="block text-sm font-medium mb-2">Role</label>
+                        <input type="text" id="taskAssigneeRole" class="w-full px-4 py-2 border rounded-lg text-sm" placeholder="Position">
                     </div>
                 </div>
 
-                <!-- Task Details -->
                 <div>
                     <label class="block text-sm font-medium mb-2">Task Title *</label>
-                    <input type="text" id="taskTitle" required class="w-full px-4 py-2 border rounded-lg" placeholder="e.g., Collect payment from student">
+                    <input type="text" id="taskTitle" required class="w-full px-4 py-2 border rounded-lg text-sm" placeholder="Task title">
                 </div>
                 
                 <div>
-                    <label class="block text-sm font-medium mb-2">Task Description</label>
-                    <textarea id="taskDescription" rows="3" class="w-full px-4 py-2 border rounded-lg" placeholder="Provide detailed instructions for this task..."></textarea>
+                    <label class="block text-sm font-medium mb-2">Description</label>
+                    <textarea id="taskDescription" rows="3" class="w-full px-4 py-2 border rounded-lg text-sm" placeholder="Details..."></textarea>
                 </div>
 
-                <!-- Related Student (Optional) -->
                 <div>
-                    <label class="block text-sm font-medium mb-2">Related Student (Optional)</label>
-                    <input type="text" id="taskRelatedStudent" class="w-full px-4 py-2 border rounded-lg" placeholder="Student name if task is related to specific student">
+                    <label class="block text-sm font-medium mb-2">Related Student</label>
+                    <input type="text" id="taskRelatedStudent" class="w-full px-4 py-2 border rounded-lg text-sm" placeholder="Optional">
                 </div>
 
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <label class="block text-sm font-medium mb-2">Priority *</label>
-                        <select id="taskPriority" class="w-full px-4 py-2 border rounded-lg">
+                        <select id="taskPriority" class="w-full px-4 py-2 border rounded-lg text-sm">
                             <option value="low">🟢 Low</option>
                             <option value="medium" selected>🟡 Medium</option>
                             <option value="high">🔴 High</option>
@@ -482,23 +441,15 @@
                     </div>
                     <div>
                         <label class="block text-sm font-medium mb-2">Due Date *</label>
-                        <input type="date" id="taskDueDate" required class="w-full px-4 py-2 border rounded-lg">
+                        <input type="date" id="taskDueDate" required class="w-full px-4 py-2 border rounded-lg text-sm">
                     </div>
                 </div>
 
-                <div class="bg-green-50 p-4 rounded-lg border border-green-200">
-                    <label class="flex items-center space-x-2">
-                        <input type="checkbox" id="sendEmailNotification" checked class="w-4 h-4">
-                        <span class="text-sm font-medium text-green-800">
-                            <i class="fas fa-envelope mr-1"></i>Send email notification to assignee
-                        </span>
-                    </label>
-                </div>
-
+               
                 <div class="flex justify-end space-x-3 pt-4 border-t">
-                    <button type="button" onclick="closeTaskModal()" class="px-6 py-2 bg-gray-100 rounded-lg hover:bg-gray-200">Cancel</button>
-                    <button type="submit" id="submitTaskBtn" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
-                        <i class="fas fa-paper-plane mr-2"></i>Assign Task
+                    <button type="button" onclick="closeTaskModal()" class="px-6 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 text-sm">Cancel</button>
+                    <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm">
+                        <i class="fas fa-paper-plane mr-2"></i>Assign
                     </button>
                 </div>
             </form>
@@ -517,29 +468,29 @@
             <form onsubmit="addAppointment(event)" class="p-6 space-y-4">
                 <div>
                     <label class="block text-sm font-medium mb-2">Student Name *</label>
-                    <input type="text" id="appointmentStudent" required class="w-full px-4 py-2 border rounded-lg">
+                    <input type="text" id="appointmentStudent" required class="w-full px-4 py-2 border rounded-lg text-sm">
                 </div>
                 <div>
                     <label class="block text-sm font-medium mb-2">Purpose</label>
-                    <input type="text" id="appointmentPurpose" class="w-full px-4 py-2 border rounded-lg" placeholder="e.g., Consultation, Document Review">
+                    <input type="text" id="appointmentPurpose" class="w-full px-4 py-2 border rounded-lg text-sm" placeholder="Consultation">
                 </div>
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <label class="block text-sm font-medium mb-2">Date *</label>
-                        <input type="date" id="appointmentDate" required class="w-full px-4 py-2 border rounded-lg">
+                        <input type="date" id="appointmentDate" required class="w-full px-4 py-2 border rounded-lg text-sm">
                     </div>
                     <div>
                         <label class="block text-sm font-medium mb-2">Time *</label>
-                        <input type="time" id="appointmentTime" required class="w-full px-4 py-2 border rounded-lg">
+                        <input type="time" id="appointmentTime" required class="w-full px-4 py-2 border rounded-lg text-sm">
                     </div>
                 </div>
                 <div>
                     <label class="block text-sm font-medium mb-2">Notes</label>
-                    <textarea id="appointmentNotes" rows="2" class="w-full px-4 py-2 border rounded-lg"></textarea>
+                    <textarea id="appointmentNotes" rows="2" class="w-full px-4 py-2 border rounded-lg text-sm"></textarea>
                 </div>
                 <div class="flex justify-end space-x-3 pt-4 border-t">
-                    <button type="button" onclick="closeAppointmentModal()" class="px-6 py-2 bg-gray-100 rounded-lg hover:bg-gray-200">Cancel</button>
-                    <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Schedule</button>
+                    <button type="button" onclick="closeAppointmentModal()" class="px-6 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 text-sm">Cancel</button>
+                    <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm">Schedule</button>
                 </div>
             </form>
         </div>
@@ -549,7 +500,7 @@
     <div id="classModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl w-full max-w-md">
             <div class="border-b px-6 py-4 flex justify-between items-center">
-                <h2 class="text-xl font-bold">Add New Class</h2>
+                <h2 class="text-xl font-bold">Add Class</h2>
                 <button onclick="closeClassModal()" class="text-gray-500 hover:text-gray-700">
                     <i class="fas fa-times text-xl"></i>
                 </button>
@@ -557,741 +508,706 @@
             <form onsubmit="addClass(event)" class="p-6 space-y-4">
                 <div>
                     <label class="block text-sm font-medium mb-2">Class Name *</label>
-                    <input type="text" id="className" required class="w-full px-4 py-2 border rounded-lg" placeholder="e.g., IELTS Preparation">
+                    <input type="text" id="className" required class="w-full px-4 py-2 border rounded-lg text-sm" placeholder="IELTS Prep">
                 </div>
                 <div>
                     <label class="block text-sm font-medium mb-2">Instructor</label>
-                    <input type="text" id="classInstructor" class="w-full px-4 py-2 border rounded-lg">
+                    <input type="text" id="classInstructor" class="w-full px-4 py-2 border rounded-lg text-sm">
                 </div>
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <label class="block text-sm font-medium mb-2">Schedule</label>
-                        <input type="text" id="classSchedule" class="w-full px-4 py-2 border rounded-lg" placeholder="Mon, Wed, Fri">
+                        <input type="text" id="classSchedule" class="w-full px-4 py-2 border rounded-lg text-sm" placeholder="Mon, Wed">
                     </div>
                     <div>
                         <label class="block text-sm font-medium mb-2">Duration</label>
-                        <input type="text" id="classDuration" class="w-full px-4 py-2 border rounded-lg" placeholder="2 hours">
+                        <input type="text" id="classDuration" class="w-full px-4 py-2 border rounded-lg text-sm" placeholder="2 hours">
                     </div>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium mb-2">Students Enrolled</label>
-                    <input type="number" id="classEnrolled" class="w-full px-4 py-2 border rounded-lg" value="0">
+                    <label class="block text-sm font-medium mb-2">Enrolled</label>
+                    <input type="number" id="classEnrolled" class="w-full px-4 py-2 border rounded-lg text-sm" value="0">
                 </div>
                 <div class="flex justify-end space-x-3 pt-4 border-t">
-                    <button type="button" onclick="closeClassModal()" class="px-6 py-2 bg-gray-100 rounded-lg hover:bg-gray-200">Cancel</button>
-                    <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Add Class</button>
+                    <button type="button" onclick="closeClassModal()" class="px-6 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 text-sm">Cancel</button>
+                    <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm">Add</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <script>
+<script> 
 
-      function blurText() {
-    document.getElementById("API_KEY").classList.add("blurred");
+// Configuration
+const SHEET_ID = '1WGcsbCmocmwItPC0XdaLkfb9UoN-OVYgTu1m0HglLm0';
+const API_KEY = 'AIzaSyB7fuRTNZqyb6juWEJeIzfyCb2Zh8yO6s4';
+const SHEET_NAME = 'Admission';
+const SUPABASE_URL = 'https://rdzdermrmvbhfbynxqxy.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJkemRlcm1ybXZiaGZieW54cXh5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjcwNzEzOTgsImV4cCI6MjA4MjY0NzM5OH0.9MK2u6YUHmNGI85U_-suG_SogbRy9lLsqpB6SFdIrtA';
+// EmailJS Pre-Configuration - Add your credentials here
+const EMAILJS_SERVICE_ID = 'service_neeqisg';  // Replace with your actual Service ID
+const EMAILJS_TEMPLATE_ID = 'template_7ci3arc'; // Replace with your actual Template ID
+const EMAILJS_PUBLIC_KEY = 'xE-BfiszwSK3J4Xsb'; // Replace with your actual Public Key
+
+// Global Variables
+let supabaseClient;
+let applicantsData = [];
+let tasksData = [];
+let appointmentsData = [];
+let classesData = [];
+
+// ==================== INITIALIZATION ====================
+window.addEventListener('load', () => {
+    initSupabase(SUPABASE_URL, SUPABASE_KEY);
+    // Initialize EmailJS automatically
+    emailjs.init(EMAILJS_PUBLIC_KEY);
+    setTimeout(() => showNotification('✅ System Ready', 'success'), 1000);
+});
+
+function initSupabase(url, key) {
+    const { createClient } = supabase;
+    supabaseClient = createClient(url, key);
+    loadAllDataFromSupabase();
 }
 
-function unblurText() {
-    document.getElementById("API_KEY").classList.remove("blurred");
+async function loadAllDataFromSupabase() {
+    if (!supabaseClient) return;
+    await Promise.all([loadTasks(), loadAppointments(), loadClasses()]);
+    updateAllStats();
 }
-        const SHEET_ID = '1WGcsbCmocmwItPC0XdaLkfb9UoN-OVYgTu1m0HglLm0';
-        const API_KEY = 'AIzaSyB7fuRTNZqyb6juWEJeIzfyCb2Zh8yO6s4';
-        const SHEET_NAME = 'Admission';
+
+// ==================== TASK FUNCTIONS ====================
+async function loadTasks() {
+    if (!supabaseClient) return;
+    try {
+        const { data, error } = await supabaseClient.from('tasks').select('*').order('created_at', { ascending: false });
+        if (error) throw error;
+        tasksData = data || [];
+        displayTasks();
+    } catch (error) {
+        console.error('Error loading tasks:', error);
+    }
+}
+
+function displayTasks() {
+    const container = document.getElementById('tasksContainer');
+    if (!container) return;
+    
+    if (tasksData.length === 0) {
+        container.innerHTML = '<p class="text-center text-gray-500 py-8">No tasks yet</p>';
+        return;
+    }
+    
+    const priorityColors = { low: 'bg-green-100 text-green-800', medium: 'bg-yellow-100 text-yellow-800', high: 'bg-red-100 text-red-800' };
+    const statusColors = { todo: 'bg-gray-100 text-gray-800', inprogress: 'bg-blue-100 text-blue-800', done: 'bg-green-100 text-green-800' };
+    
+    container.innerHTML = tasksData.map(task => `
+        <div class="p-4 bg-gray-50 rounded-lg border">
+            <div class="flex justify-between items-start mb-2">
+                <div class="flex-1">
+                    <h4 class="font-semibold">${task.title}</h4>
+                    <p class="text-sm text-gray-600 mt-1">${task.description || 'No description'}</p>
+                </div>
+            </div>
+            
+            <div class="bg-white p-3 rounded border mb-2 text-sm">
+                <p><strong><i class="fas fa-user text-blue-600 mr-1"></i></strong> ${task.assignee_name}</p>
+                <p class="text-gray-600"><i class="fas fa-envelope text-gray-400 mr-1"></i>${task.assignee_email}</p>
+                ${task.assignee_role ? `<p class="text-gray-600"><i class="fas fa-briefcase text-gray-400 mr-1"></i>${task.assignee_role}</p>` : ''}
+                ${task.related_student ? `<p class="text-gray-600"><i class="fas fa-graduation-cap text-gray-400 mr-1"></i>${task.related_student}</p>` : ''}
+            </div>
+            
+            <div class="flex flex-wrap gap-2 mb-2">
+                <span class="px-2 py-1 rounded-full text-xs font-medium ${priorityColors[task.priority]}">${task.priority.toUpperCase()}</span>
+                <span class="px-2 py-1 rounded-full text-xs font-medium ${statusColors[task.status]}">${task.status.replace('inprogress', 'IN PROGRESS').toUpperCase()}</span>
+                ${task.due_date ? `<span class="px-2 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800"><i class="fas fa-calendar mr-1"></i>${task.due_date}</span>` : ''}
+            </div>
+            
+            <div class="flex gap-2 justify-end">
+                <select onchange="updateTaskStatus(${task.id}, this.value)" class="px-2 py-1 border rounded text-xs">
+                    <option value="todo" ${task.status === 'todo' ? 'selected' : ''}>To Do</option>
+                    <option value="inprogress" ${task.status === 'inprogress' ? 'selected' : ''}>In Progress</option>
+                    <option value="done" ${task.status === 'done' ? 'selected' : ''}>Done</option>
+                </select>
+                <button onclick="deleteTask(${task.id})" class="px-2 py-1 bg-red-100 text-red-600 rounded text-xs hover:bg-red-200">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </div>
+        </div>
+    `).join('');
+}
+
+async function addTask(event) {
+    event.preventDefault();
+    if (!supabaseClient) {
+        showNotification('⚠️ Database not connected', 'error');
+        return;
+    }
+    
+    const taskData = {
+        id: Date.now(),
+        assignee_name: document.getElementById('taskAssigneeName').value,
+        assignee_email: document.getElementById('taskAssigneeEmail').value,
+        assignee_role: document.getElementById('taskAssigneeRole').value,
+        title: document.getElementById('taskTitle').value,
+        description: document.getElementById('taskDescription').value,
+        related_student: document.getElementById('taskRelatedStudent').value,
+        priority: document.getElementById('taskPriority').value,
+        due_date: document.getElementById('taskDueDate').value,
+        status: 'todo',
+        created_at: new Date().toISOString()
+    };
+
+    try {
+        const { error } = await supabaseClient.from('tasks').insert([taskData]);
+        if (error) throw error;
         
-        let applicantsData = [];
-        let tasksData = [];
-        let appointmentsData = [];
-        let classesData = [];
-        let emailConfig = { serviceId: '', templateId: '', publicKey: '', configured: false };
+        await loadTasks();
+        updateAllStats();
+        closeTaskModal();
+        event.target.reset();
+        
+        try {
+    await sendTaskEmail(taskData);
+    showNotification('✅ Task assigned and email sent!', 'success');
+} catch (emailError) {
+    showNotification('✅ Task assigned (email failed)', 'warning');
+}
+    } catch (error) {
+        console.error('Error adding task:', error);
+        showNotification('❌ Error creating task', 'error');
+    }
+}
 
-       // Initialize EmailJS
-        function initEmailJS() {
-            if (emailConfig.configured && emailConfig.publicKey) {
-                try {
-                    emailjs.init(emailConfig.publicKey);
-                    console.log('✅ EmailJS initialized with key:', emailConfig.publicKey);
-                    updateEmailStatus(true);
-                } catch (error) {
-                    console.error('❌ EmailJS initialization failed:', error);
-                    updateEmailStatus(false);
-                }
-            } else {
-                console.warn('⚠️ EmailJS not configured');
-                updateEmailStatus(false);
-            }
-        }
+async function updateTaskStatus(taskId, newStatus) {
+    if (!supabaseClient) return;
+    try {
+        const { error } = await supabaseClient.from('tasks').update({ status: newStatus, updated_at: new Date().toISOString() }).eq('id', taskId);
+        if (error) throw error;
+        await loadTasks();
+        updateAllStats();
+        showNotification('✅ Task updated!', 'success');
+    } catch (error) {
+        console.error('Error updating task:', error);
+    }
+}
 
-        // Load data from storage
-        function loadFromStorage() {
-            tasksData = JSON.parse(localStorage.getItem('dpTasks') || '[]');
-            appointmentsData = JSON.parse(localStorage.getItem('dpAppointments') || '[]');
-            classesData = JSON.parse(localStorage.getItem('dpClasses') || '[]');
-            
-            // Load email config
-            const savedConfig = localStorage.getItem('dpEmailConfig');
-            if (savedConfig) {
-                emailConfig = JSON.parse(savedConfig);
-                if (emailConfig.configured) {
-                    // Pre-fill the settings form
-                    document.getElementById('emailServiceId').value = emailConfig.serviceId;
-                    document.getElementById('emailTemplateId').value = emailConfig.templateId;
-                    document.getElementById('emailPublicKey').value = emailConfig.publicKey;
-                    initEmailJS();
-                }
-            }
-        }
+async function deleteTask(taskId) {
+    if (!confirm('Delete this task?')) return;
+    if (!supabaseClient) return;
+    try {
+        const { error } = await supabaseClient.from('tasks').delete().eq('id', taskId);
+        if (error) throw error;
+        await loadTasks();
+        updateAllStats();
+        showNotification('✅ Task deleted!', 'success');
+    } catch (error) {
+        console.error('Error deleting task:', error);
+    }
+}
 
-        // Save email configuration
-        function saveEmailConfig() {
-            const serviceId = document.getElementById('emailServiceId').value.trim();
-            const templateId = document.getElementById('emailTemplateId').value.trim();
-            const publicKey = document.getElementById('emailPublicKey').value.trim();
-            
-            if (!serviceId || !templateId || !publicKey) {
-                showNotification('⚠️ Please fill all email configuration fields', 'error');
-                return;
-            }
-            
-            emailConfig = {
-                serviceId: serviceId,
-                templateId: templateId,
-                publicKey: publicKey,
-                configured: true
-            };
-            
-            localStorage.setItem('dpEmailConfig', JSON.stringify(emailConfig));
-            initEmailJS();
-            showNotification('✅ Email configuration saved successfully!', 'success');
-        }
+// ==================== APPOINTMENT FUNCTIONS ====================
+async function loadAppointments() {
+    if (!supabaseClient) return;
+    try {
+        const { data, error } = await supabaseClient.from('appointments').select('*').order('date', { ascending: true });
+        if (error) throw error;
+        appointmentsData = data || [];
+        displayAppointments();
+    } catch (error) {
+        console.error('Error loading appointments:', error);
+    }
+}
 
-        // Update email status indicator
-        function updateEmailStatus(isConfigured) {
-            const indicator = document.getElementById('emailStatusIndicator');
-            if (isConfigured) {
-                indicator.className = 'p-3 bg-green-50 border border-green-200 rounded-lg text-center text-sm text-green-700';
-                indicator.innerHTML = '<i class="fas fa-check-circle mr-2"></i>Email configured and ready';
-            } else {
-                indicator.className = 'p-3 bg-gray-50 border rounded-lg text-center text-sm text-gray-600';
-                indicator.innerHTML = '<i class="fas fa-exclamation-triangle mr-2"></i>Email not configured';
-            }
-        }
-
-        // Send email notification
-        async function sendTaskEmail(taskData) {
-            if (!emailConfig.configured) {
-                console.log('Email not configured, skipping notification');
-                return false;
-            }
-
-            const submitBtn = document.getElementById('submitTaskBtn');
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Sending Email...';
-
-            try {
-                const templateParams = {
-                    to_name: taskData.assigneeName,
-                    to_email: taskData.assigneeEmail,
-                    assignee_role: taskData.assigneeRole || 'Team Member',
-                    task_title: taskData.title,
-                    task_description: taskData.description || 'No description provided',
-                    task_priority: taskData.priority.toUpperCase(),
-                    task_due_date: taskData.dueDate,
-                    related_student: taskData.relatedStudent || 'N/A',
-                    assigned_by: 'Discovery Pathway Admin',
-                    assigned_date: new Date().toLocaleDateString(),
-                    company_name: 'Discovery Pathway'
-                };
-
-                await emailjs.send(
-                    emailConfig.serviceId,
-                    emailConfig.templateId,
-                    templateParams
-                );
-
-                submitBtn.innerHTML = '<i class="fas fa-check mr-2"></i>Task Assigned!';
-                return true;
-            } catch (error) {
-                console.error('Email send error:', error);
-                submitBtn.innerHTML = '<i class="fas fa-paper-plane mr-2"></i>Assign Task';
-                showNotification('⚠️ Task created but email failed to send', 'error');
-                return false;
-            } finally {
-                submitBtn.disabled = false;
-                setTimeout(() => {
-                    submitBtn.innerHTML = '<i class="fas fa-paper-plane mr-2"></i>Assign Task';
-                }, 2000);
-            }
-        }
-
-        // Save data to storage
-        function saveToStorage() {
-            localStorage.setItem('dpTasks', JSON.stringify(tasksData));
-            localStorage.setItem('dpAppointments', JSON.stringify(appointmentsData));
-            localStorage.setItem('dpClasses', JSON.stringify(classesData));
-        }
-
-        // Page Navigation
-        function showPage(pageName) {
-            document.querySelectorAll('.page-section').forEach(section => {
-                section.classList.remove('active');
-            });
-            document.querySelectorAll('.nav-item').forEach(item => {
-                item.classList.remove('active');
-            });
-            document.getElementById(pageName + '-page').classList.add('active');
-            event.target.closest('.nav-item').classList.add('active');
-            closeSidebar();
-        }
-
-        // Google Sheets Functions
-        async function loadApplicantsFromSheet() {
-            const loadingIndicator = document.getElementById('loadingIndicator');
-            const tableBody = document.getElementById('applicantsTableBody');
-            
-            if (loadingIndicator) loadingIndicator.classList.remove('hidden');
-            
-            try {
-                const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${SHEET_NAME}?key=${API_KEY}`;
-                const response = await fetch(url);
-                const data = await response.json();
-                
-                if (data.error) throw new Error(data.error.message);
-                
-                if (data.values && data.values.length > 1) {
-                    applicantsData = data.values.slice(1).map(row => ({
-                        timestamp: row[0] || '',
-                        name: row[1] || '',
-                        email: row[2] || '',
-                        dob: row[3] || '',
-                        gender: row[4] || '',
-                        address: row[5] || '',
-                        qualification: row[6] || '',
-                        gpa: row[7] || '',
-                        university: row[8] || '',
-                        phone: row[9] || '',
-                        parentPhone: row[10] || '',
-                        course: row[11] || '',
-                        country: row[12] || '',
-                        ielts: row[13] || '',
-                        pte: row[14] || '',
-                        japanTest: row[15] || '',
-                        paymentMethod: row[16] || '',
-                        paidTo: row[17] || '',
-                        qrReceipt: row[18] || ''
-                    }));
-                    
-                    displayApplicants(applicantsData);
-                    updateAllStats();
-                    updateRecentStudents();
-                    document.getElementById('lastUpdated').textContent = new Date().toLocaleString();
-                    showNotification(`✅ Loaded ${applicantsData.length} students!`, 'success');
-                } else {
-                    if (tableBody) tableBody.innerHTML = '<tr><td colspan="6" class="px-4 py-8 text-center text-gray-500">No data found</td></tr>';
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                if (tableBody) tableBody.innerHTML = `<tr><td colspan="6" class="px-4 py-8 text-center text-red-600">Error: ${error.message}</td></tr>`;
-                showNotification('❌ Error loading data', 'error');
-            } finally {
-                if (loadingIndicator) loadingIndicator.classList.add('hidden');
-            }
-        }
-
-        function displayApplicants(data) {
-            const tableBody = document.getElementById('applicantsTableBody');
-            if (!tableBody) return;
-            
-            if (data.length === 0) {
-                tableBody.innerHTML = '<tr><td colspan="6" class="px-4 py-8 text-center text-gray-500">No students found</td></tr>';
-                return;
-            }
-            
-            tableBody.innerHTML = data.map((a, i) => `
-                <tr class="hover:bg-gray-50">
-                    <td class="px-4 py-3 text-sm font-medium">${a.name}</td>
-                    <td class="px-4 py-3 text-sm">${a.email}</td>
-                    <td class="px-4 py-3 text-sm">${a.phone}</td>
-                    <td class="px-4 py-3 text-sm">${a.country}</td>
-                    <td class="px-4 py-3 text-sm">${a.course}</td>
-                    <td class="px-4 py-3 text-sm">
-                        <button onclick="viewApplicant(${i})" class="text-blue-600 hover:text-blue-800 mr-2">
-                            <i class="fas fa-eye"></i>
-                        </button>
-                    </td>
-                </tr>
-            `).join('');
-        }
-
-        function searchApplicants() {
-            const term = document.getElementById('searchInput').value.toLowerCase();
-            const filtered = applicantsData.filter(a => 
-                a.name.toLowerCase().includes(term) ||
-                a.email.toLowerCase().includes(term) ||
-                a.phone.includes(term) ||
-                a.country.toLowerCase().includes(term) ||
-                a.course.toLowerCase().includes(term)
-            );
-            displayApplicants(filtered);
-        }
-
-        function viewApplicant(index) {
-            const a = applicantsData[index];
-            alert(`👤 ${a.name}\n📧 ${a.email}\n📱 ${a.phone}\n🌍 ${a.country}\n📖 ${a.course}\n🎂 ${a.dob}\n⚧ ${a.gender}`);
-        }
-
-        function exportToCSV() {
-            if (applicantsData.length === 0) {
-                showNotification('No data to export', 'info');
-                return;
-            }
-            const csv = [
-                ['Timestamp', 'Name', 'Email', 'DOB', 'Gender', 'Phone', 'Country', 'Course'],
-                ...applicantsData.map(a => [a.timestamp, a.name, a.email, a.dob, a.gender, a.phone, a.country, a.course])
-            ].map(row => row.join(',')).join('\n');
-            
-            const blob = new Blob([csv], { type: 'text/csv' });
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `students-${new Date().toISOString().split('T')[0]}.csv`;
-            a.click();
-            showNotification('CSV exported!', 'success');
-        }
-
-        // Task Functions
-        async function addTask(event) {
-            event.preventDefault();
-            
-            const taskData = {
-                id: Date.now(),
-                assigneeName: document.getElementById('taskAssigneeName').value,
-                assigneeEmail: document.getElementById('taskAssigneeEmail').value,
-                assigneeRole: document.getElementById('taskAssigneeRole').value,
-                title: document.getElementById('taskTitle').value,
-                description: document.getElementById('taskDescription').value,
-                relatedStudent: document.getElementById('taskRelatedStudent').value,
-                priority: document.getElementById('taskPriority').value,
-                dueDate: document.getElementById('taskDueDate').value,
-                status: 'todo',
-                createdAt: new Date().toISOString()
-            };
-            
-            tasksData.push(taskData);
-            saveToStorage();
-            displayTasks();
-            updateAllStats();
-            
-            // Send email if checkbox is checked
-            const sendEmail = document.getElementById('sendEmailNotification').checked;
-            if (sendEmail && emailConfig.configured) {
-                const emailSent = await sendTaskEmail(taskData);
-                if (emailSent) {
-                    showNotification(`✅ Task assigned and email sent to ${taskData.assigneeName}!`, 'success');
-                }
-            } else if (sendEmail && !emailConfig.configured) {
-                showNotification('⚠️ Task created but email not configured', 'error');
-            } else {
-                showNotification('✅ Task assigned successfully!', 'success');
-            }
-            
-            closeTaskModal();
-            event.target.reset();
-        }
-
-        function displayTasks() {
-            const container = document.getElementById('tasksContainer');
-            if (!container) return;
-            
-            if (tasksData.length === 0) {
-                container.innerHTML = '<p class="text-center text-gray-500 py-8">No tasks yet. Assign your first task!</p>';
-                return;
-            }
-            
-            container.innerHTML = tasksData.map(task => {
-                const priorityColors = {
-                    low: 'bg-green-100 text-green-800',
-                    medium: 'bg-yellow-100 text-yellow-800',
-                    high: 'bg-red-100 text-red-800'
-                };
-                const statusColors = {
-                    todo: 'bg-gray-100 text-gray-800',
-                    inprogress: 'bg-blue-100 text-blue-800',
-                    done: 'bg-green-100 text-green-800'
-                };
-                
-                return `
-                    <div class="p-4 bg-gray-50 rounded-lg border hover:shadow-md transition-shadow">
-                        <div class="flex justify-between items-start mb-3">
-                            <div class="flex-1">
-                                <h4 class="font-semibold text-lg">${task.title}</h4>
-                                <p class="text-sm text-gray-600 mt-1">${task.description || 'No description'}</p>
-                            </div>
-                        </div>
-                        
-                        <div class="bg-white p-3 rounded border mb-3">
-                            <p class="text-sm"><strong><i class="fas fa-user text-blue-600 mr-1"></i>Assigned to:</strong> ${task.assigneeName}</p>
-                            <p class="text-sm text-gray-600"><i class="fas fa-envelope text-gray-400 mr-1"></i>${task.assigneeEmail}</p>
-                            ${task.assigneeRole ? `<p class="text-sm text-gray-600"><i class="fas fa-briefcase text-gray-400 mr-1"></i>${task.assigneeRole}</p>` : ''}
-                            ${task.relatedStudent ? `<p class="text-sm text-gray-600"><i class="fas fa-graduation-cap text-gray-400 mr-1"></i>Student: ${task.relatedStudent}</p>` : ''}
-                        </div>
-                        
-                        <div class="flex flex-wrap gap-2 mb-3">
-                            <span class="px-3 py-1 rounded-full text-xs font-medium ${priorityColors[task.priority]}">${task.priority.toUpperCase()}</span>
-                            <span class="px-3 py-1 rounded-full text-xs font-medium ${statusColors[task.status]}">${task.status.replace('inprogress', 'IN PROGRESS').toUpperCase()}</span>
-                            ${task.dueDate ? `<span class="px-3 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800"><i class="fas fa-calendar mr-1"></i>${task.dueDate}</span>` : ''}
-                        </div>
-                        
-                        <div class="flex gap-2 justify-end">
-                            <select onchange="updateTaskStatus(${task.id}, this.value)" class="px-3 py-1 border rounded text-sm">
-                                <option value="todo" ${task.status === 'todo' ? 'selected' : ''}>To Do</option>
-                                <option value="inprogress" ${task.status === 'inprogress' ? 'selected' : ''}>In Progress</option>
-                                <option value="done" ${task.status === 'done' ? 'selected' : ''}>Done</option>
-                            </select>
-                            <button onclick="deleteTask(${task.id})" class="px-3 py-1 bg-red-100 text-red-600 rounded text-sm hover:bg-red-200">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
+function displayAppointments() {
+    const container = document.getElementById('appointmentsContainer');
+    if (!container) return;
+    
+    if (appointmentsData.length === 0) {
+        container.innerHTML = '<p class="text-center text-gray-500 py-8">No appointments</p>';
+        return;
+    }
+    
+    container.innerHTML = appointmentsData.map(apt => `
+        <div class="p-4 bg-gray-50 rounded-lg border">
+            <div class="flex justify-between items-start">
+                <div class="flex-1">
+                    <h4 class="font-semibold">${apt.student}</h4>
+                    <p class="text-sm text-gray-600">${apt.purpose || 'Consultation'}</p>
+                    <div class="flex gap-3 mt-2 text-xs">
+                        <span><i class="fas fa-calendar text-blue-600 mr-1"></i>${apt.date}</span>
+                        <span><i class="fas fa-clock text-purple-600 mr-1"></i>${apt.time}</span>
                     </div>
-                `;
-            }).join('');
-        }
-
-        function updateTaskStatus(taskId, newStatus) {
-            const task = tasksData.find(t => t.id === taskId);
-            if (task) {
-                task.status = newStatus;
-                saveToStorage();
-                displayTasks();
-                updateAllStats();
-                showNotification('Task updated!', 'success');
-            }
-        }
-
-        function deleteTask(taskId) {
-            if (confirm('Delete this task?')) {
-                tasksData = tasksData.filter(t => t.id !== taskId);
-                saveToStorage();
-                displayTasks();
-                updateAllStats();
-                showNotification('Task deleted!', 'success');
-            }
-        }
-
-        // Appointment Functions
-        function addAppointment(event) {
-            event.preventDefault();
-            appointmentsData.push({
-                id: Date.now(),
-                student: document.getElementById('appointmentStudent').value,
-                purpose: document.getElementById('appointmentPurpose').value,
-                date: document.getElementById('appointmentDate').value,
-                time: document.getElementById('appointmentTime').value,
-                notes: document.getElementById('appointmentNotes').value,
-                createdAt: new Date().toISOString()
-            });
-            saveToStorage();
-            displayAppointments();
-            updateAllStats();
-            closeAppointmentModal();
-            event.target.reset();
-            showNotification('Appointment scheduled!', 'success');
-        }
-
-        function displayAppointments() {
-            const container = document.getElementById('appointmentsContainer');
-            if (!container) return;
-            
-            if (appointmentsData.length === 0) {
-                container.innerHTML = '<p class="text-center text-gray-500 py-8">No appointments scheduled</p>';
-                return;
-            }
-            
-            container.innerHTML = appointmentsData.map(apt => `
-                <div class="p-4 bg-gray-50 rounded-lg border">
-                    <div class="flex justify-between items-start">
-                        <div class="flex-1">
-                            <h4 class="font-semibold">${apt.student}</h4>
-                            <p class="text-sm text-gray-600">${apt.purpose || 'General consultation'}</p>
-                            <div class="flex gap-3 mt-2 text-sm">
-                                <span><i class="fas fa-calendar text-blue-600 mr-1"></i>${apt.date}</span>
-                                <span><i class="fas fa-clock text-purple-600 mr-1"></i>${apt.time}</span>
-                            </div>
-                        </div>
-                        <button onclick="deleteAppointment(${apt.id})" class="text-red-600 hover:text-red-800">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
+                    ${apt.notes ? `<p class="text-xs text-gray-500 mt-2">${apt.notes}</p>` : ''}
                 </div>
-            `).join('');
-            
-            updateUpcomingAppointments();
-        }
+                <button onclick="deleteAppointment(${apt.id})" class="text-red-600 hover:text-red-800 text-sm">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </div>
+        </div>
+    `).join('');
+    
+    updateAppointmentStats();
+}
 
-        function deleteAppointment(aptId) {
-            if (confirm('Delete this appointment?')) {
-                appointmentsData = appointmentsData.filter(a => a.id !== aptId);
-                saveToStorage();
-                displayAppointments();
-                updateAllStats();
-                showNotification('Appointment deleted!', 'success');
-            }
-        }
+async function addAppointment(event) {
+    event.preventDefault();
+    if (!supabaseClient) {
+        showNotification('⚠️ Database not connected', 'error');
+        return;
+    }
+    
+    const appointmentData = {
+        id: Date.now(),
+        student: document.getElementById('appointmentStudent').value,
+        purpose: document.getElementById('appointmentPurpose').value,
+        date: document.getElementById('appointmentDate').value,
+        time: document.getElementById('appointmentTime').value,
+        notes: document.getElementById('appointmentNotes').value,
+        created_at: new Date().toISOString()
+    };
 
-        // Class Functions
-        function addClass(event) {
-            event.preventDefault();
-            classesData.push({
-                id: Date.now(),
-                name: document.getElementById('className').value,
-                instructor: document.getElementById('classInstructor').value,
-                schedule: document.getElementById('classSchedule').value,
-                duration: document.getElementById('classDuration').value,
-                enrolled: parseInt(document.getElementById('classEnrolled').value) || 0
+    try {
+        const { error } = await supabaseClient.from('appointments').insert([appointmentData]);
+        if (error) throw error;
+        
+        await loadAppointments();
+        updateAllStats();
+        closeAppointmentModal();
+        event.target.reset();
+        showNotification('✅ Appointment scheduled!', 'success');
+    } catch (error) {
+        console.error('Error adding appointment:', error);
+        showNotification('❌ Error creating appointment', 'error');
+    }
+}
+
+async function deleteAppointment(aptId) {
+    if (!confirm('Delete this appointment?')) return;
+    if (!supabaseClient) return;
+    try {
+        const { error } = await supabaseClient.from('appointments').delete().eq('id', aptId);
+        if (error) throw error;
+        await loadAppointments();
+        updateAllStats();
+        showNotification('✅ Appointment deleted!', 'success');
+    } catch (error) {
+        console.error('Error deleting appointment:', error);
+    }
+}
+
+function updateAppointmentStats() {
+    const today = new Date().toISOString().split('T')[0];
+    const todayApts = appointmentsData.filter(a => a.date === today).length;
+    
+    const weekFromNow = new Date();
+    weekFromNow.setDate(weekFromNow.getDate() + 7);
+    const weekApts = appointmentsData.filter(a => new Date(a.date) <= weekFromNow).length;
+    
+    const monthFromNow = new Date();
+    monthFromNow.setMonth(monthFromNow.getMonth() + 1);
+    const monthApts = appointmentsData.filter(a => new Date(a.date) <= monthFromNow).length;
+    
+    const todayEl = document.getElementById('todayAppointments');
+    const weekEl = document.getElementById('weekAppointments');
+    const monthEl = document.getElementById('monthAppointments');
+    
+    if (todayEl) todayEl.textContent = todayApts;
+    if (weekEl) weekEl.textContent = weekApts;
+    if (monthEl) monthEl.textContent = monthApts;
+}
+
+// ==================== CLASS FUNCTIONS ====================
+async function loadClasses() {
+    if (!supabaseClient) return;
+    try {
+        const { data, error } = await supabaseClient.from('classes').select('*');
+        if (error) throw error;
+        classesData = data || [];
+        displayClasses();
+    } catch (error) {
+        console.error('Error loading classes:', error);
+    }
+}
+
+function displayClasses() {
+    const container = document.getElementById('classesContainer');
+    if (!container) return;
+    
+    if (classesData.length === 0) {
+        container.innerHTML = '<p class="text-center text-gray-500 py-8 col-span-full">No classes yet</p>';
+        return;
+    }
+    
+    container.innerHTML = classesData.map(cls => `
+        <div class="bg-white rounded-xl shadow-sm p-6">
+            <div class="flex justify-between items-start mb-4">
+                <h4 class="font-semibold text-lg">${cls.name}</h4>
+                <button onclick="deleteClass(${cls.id})" class="text-red-600 hover:text-red-800">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </div>
+            <div class="space-y-2 text-sm">
+                <p><i class="fas fa-user text-blue-600 mr-2"></i>${cls.instructor || 'TBA'}</p>
+                <p><i class="fas fa-calendar text-purple-600 mr-2"></i>${cls.schedule || 'Not set'}</p>
+                <p><i class="fas fa-clock text-green-600 mr-2"></i>${cls.duration || 'TBA'}</p>
+                <p><i class="fas fa-users text-amber-600 mr-2"></i>${cls.enrolled} students</p>
+            </div>
+        </div>
+    `).join('');
+}
+
+async function addClass(event) {
+    event.preventDefault();
+    if (!supabaseClient) {
+        showNotification('⚠️ Database not connected', 'error');
+        return;
+    }
+    
+    const classData = {
+        id: Date.now(),
+        name: document.getElementById('className').value,
+        instructor: document.getElementById('classInstructor').value,
+        schedule: document.getElementById('classSchedule').value,
+        duration: document.getElementById('classDuration').value,
+        enrolled: parseInt(document.getElementById('classEnrolled').value) || 0
+    };
+
+    try {
+        const { error } = await supabaseClient.from('classes').insert([classData]);
+        if (error) throw error;
+        
+        await loadClasses();
+        updateAllStats();
+        closeClassModal();
+        event.target.reset();
+        showNotification('✅ Class added!', 'success');
+    } catch (error) {
+        console.error('Error adding class:', error);
+        showNotification('❌ Error creating class', 'error');
+    }
+}
+
+async function deleteClass(classId) {
+    if (!confirm('Delete this class?')) return;
+    if (!supabaseClient) return;
+    try {
+        const { error } = await supabaseClient.from('classes').delete().eq('id', classId);
+        if (error) throw error;
+        await loadClasses();
+        updateAllStats();
+        showNotification('✅ Class deleted!', 'success');
+    } catch (error) {
+        console.error('Error deleting class:', error);
+    }
+}
+
+// ==================== STUDENT/GOOGLE SHEETS FUNCTIONS ====================
+async function loadApplicantsFromSheet() {
+    const indicator = document.getElementById('loadingIndicator');
+    indicator.classList.remove('hidden');
+    
+    try {
+        const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${SHEET_NAME}?key=${API_KEY}`;
+        const response = await fetch(url);
+        const data = await response.json();
+        
+        if (data.values && data.values.length > 0) {
+            const headers = data.values[0];
+            applicantsData = data.values.slice(1).map(row => {
+                let obj = {};
+                headers.forEach((header, index) => {
+                    obj[header] = row[index] || '';
+                });
+                return obj;
             });
-            saveToStorage();
-            displayClasses();
+            displayApplicants();
             updateAllStats();
-            closeClassModal();
-            event.target.reset();
-            showNotification('Class added!', 'success');
+            showNotification('✅ Students loaded!', 'success');
         }
+    } catch (error) {
+        console.error('Error loading students:', error);
+        showNotification('❌ Error loading students', 'error');
+    } finally {
+        indicator.classList.add('hidden');
+    }
+}
 
-        function displayClasses() {
-            const container = document.getElementById('classesContainer');
-            if (!container) return;
-            
-            if (classesData.length === 0) {
-                container.innerHTML = '<p class="text-center text-gray-500 py-8 col-span-full">No classes added yet</p>';
-                return;
+function displayApplicants() {
+    const tbody = document.getElementById('applicantsTableBody');
+    if (!tbody) return;
+    
+    if (applicantsData.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" class="px-4 py-8 text-center text-gray-500">No students loaded</td></tr>';
+        return;
+    }
+    
+    tbody.innerHTML = applicantsData.map((applicant, index) => `
+        <tr class="hover:bg-gray-50">
+            <td class="px-4 py-3 text-sm">${applicant.Name || applicant.name || 'N/A'}</td>
+            <td class="px-4 py-3 text-sm">${applicant.Email || applicant.email || 'N/A'}</td>
+            <td class="px-4 py-3 text-sm">${applicant.Phone || applicant.phone || 'N/A'}</td>
+            <td class="px-4 py-3 text-sm">${applicant.Country || applicant.country || 'N/A'}</td>
+            <td class="px-4 py-3 text-sm">${applicant.Course || applicant.course || 'N/A'}</td>
+            <td class="px-4 py-3 text-sm">
+                <button onclick="viewApplicant(${index})" class="text-blue-600 hover:text-blue-800 text-xs">
+                    <i class="fas fa-eye"></i> View
+                </button>
+            </td>
+        </tr>
+    `).join('');
+    
+    displayRecentStudents();
+}
+
+function searchApplicants() {
+    const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+    const tbody = document.getElementById('applicantsTableBody');
+    
+    if (!searchTerm) {
+        displayApplicants();
+        return;
+    }
+    
+    const filtered = applicantsData.filter(applicant => {
+        return Object.values(applicant).some(value => 
+            String(value).toLowerCase().includes(searchTerm)
+        );
+    });
+    
+    tbody.innerHTML = filtered.map((applicant, index) => `
+        <tr class="hover:bg-gray-50">
+            <td class="px-4 py-3 text-sm">${applicant.Name || applicant.name || 'N/A'}</td>
+            <td class="px-4 py-3 text-sm">${applicant.Email || applicant.email || 'N/A'}</td>
+            <td class="px-4 py-3 text-sm">${applicant.Phone || applicant.phone || 'N/A'}</td>
+            <td class="px-4 py-3 text-sm">${applicant.Country || applicant.country || 'N/A'}</td>
+            <td class="px-4 py-3 text-sm">${applicant.Course || applicant.course || 'N/A'}</td>
+            <td class="px-4 py-3 text-sm">
+                <button onclick="viewApplicant(${index})" class="text-blue-600 hover:text-blue-800 text-xs">
+                    <i class="fas fa-eye"></i> View
+                </button>
+            </td>
+        </tr>
+    `).join('');
+}
+
+function viewApplicant(index) {
+    const applicant = applicantsData[index];
+    alert(JSON.stringify(applicant, null, 2));
+}
+
+function displayRecentStudents() {
+    const container = document.getElementById('recentStudents');
+    if (!container) return;
+    
+    const recent = applicantsData.slice(0, 5);
+    
+    if (recent.length === 0) {
+        container.innerHTML = '<p class="text-gray-500 text-center py-4 text-sm">No students</p>';
+        return;
+    }
+    
+    container.innerHTML = recent.map(student => `
+        <div class="flex items-center space-x-3 p-2 hover:bg-gray-50 rounded">
+            <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                <i class="fas fa-user text-blue-600"></i>
+            </div>
+            <div class="flex-1">
+                <p class="text-sm font-semibold">${student.Name || student.name || 'N/A'}</p>
+                <p class="text-xs text-gray-500">${student.Email || student.email || 'N/A'}</p>
+            </div>
+        </div>
+    `).join('');
+}
+
+function exportToCSV() {
+    if (applicantsData.length === 0) {
+        showNotification('⚠️ No data to export', 'error');
+        return;
+    }
+    
+    const headers = Object.keys(applicantsData[0]);
+    const csvContent = [
+        headers.join(','),
+        ...applicantsData.map(row => headers.map(header => `"${row[header] || ''}"`).join(','))
+    ].join('\n');
+    
+    const blob = new Blob([csvContent], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `students-${Date.now()}.csv`;
+    link.click();
+    URL.revokeObjectURL(url);
+    
+    showNotification('✅ Exported!', 'success');
+}
+
+// ==================== EMAIL FUNCTIONS ====================
+async function sendTaskEmail(task) {
+    try {
+        const result = await emailjs.send(
+            EMAILJS_SERVICE_ID,
+            EMAILJS_TEMPLATE_ID,
+            {
+                to_name: task.assignee_name,
+                to_email: task.assignee_email,
+                task_title: task.title,
+                task_description: task.description || 'No description',
+                task_priority: task.priority.toUpperCase(),
+                task_due_date: task.due_date,
+                assignee_role: task.assignee_role || '',
+                related_student: task.related_student || ''
             }
-            
-            container.innerHTML = classesData.map(cls => `
-                <div class="bg-white rounded-xl shadow-sm p-6">
-                    <div class="flex justify-between items-start mb-4">
-                        <h4 class="font-semibold text-lg">${cls.name}</h4>
-                        <button onclick="deleteClass(${cls.id})" class="text-red-600 hover:text-red-800">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                    <div class="space-y-2 text-sm">
-                        <p><i class="fas fa-user text-blue-600 mr-2"></i>${cls.instructor || 'TBA'}</p>
-                        <p><i class="fas fa-calendar text-purple-600 mr-2"></i>${cls.schedule || 'Not set'}</p>
-                        <p><i class="fas fa-clock text-green-600 mr-2"></i>${cls.duration || 'TBA'}</p>
-                        <p><i class="fas fa-users text-amber-600 mr-2"></i>${cls.enrolled} students</p>
-                    </div>
-                </div>
-            `).join('');
-        }
+        );
+        console.log('✅ Email sent successfully:', result);
+        return result;
+    } catch (error) {
+        console.error('❌ Email error:', error);
+        throw error;
+    }
+}
 
-        function deleteClass(classId) {
-            if (confirm('Delete this class?')) {
-                classesData = classesData.filter(c => c.id !== classId);
-                saveToStorage();
-                displayClasses();
-                updateAllStats();
-                showNotification('Class deleted!', 'success');
-            }
-        }
+// ==================== UI HELPER FUNCTIONS ====================
+function showPage(event, pageName) {
+    event.preventDefault();
+    document.querySelectorAll('.page-section').forEach(section => section.classList.remove('active'));
+    document.getElementById(pageName + '-page').classList.add('active');
+    
+    document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+    event.target.closest('.nav-item').classList.add('active');
+}
 
-        // Update All Stats
-        function updateAllStats() {
-            document.getElementById('totalApplicants').textContent = applicantsData.length;
-            document.getElementById('settingsStudentCount').textContent = applicantsData.length;
-            document.getElementById('settingsTaskCount').textContent = tasksData.length;
-            
-            const todo = tasksData.filter(t => t.status === 'todo').length;
-            const inprogress = tasksData.filter(t => t.status === 'inprogress').length;
-            const done = tasksData.filter(t => t.status === 'done').length;
-            
-            document.getElementById('todoCount').textContent = todo;
-            document.getElementById('inProgressCount').textContent = inprogress;
-            document.getElementById('doneCount').textContent = done;
-            document.getElementById('pendingTasks').textContent = todo + inprogress;
-            
-            document.getElementById('totalAppointments').textContent = appointmentsData.length;
-            document.getElementById('totalClasses').textContent = classesData.length;
-            
-            updateAppointmentStats();
-        }
+function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('sidebar-mobile');
+}
 
-        function updateAppointmentStats() {
-            const today = new Date().toISOString().split('T')[0];
-            const todayApts = appointmentsData.filter(a => a.date === today).length;
-            document.getElementById('todayAppointments').textContent = todayApts;
-            
-            const weekFromNow = new Date();
-            weekFromNow.setDate(weekFromNow.getDate() + 7);
-            const weekApts = appointmentsData.filter(a => {
-                const aptDate = new Date(a.date);
-                return aptDate >= new Date() && aptDate <= weekFromNow;
-            }).length;
-            document.getElementById('weekAppointments').textContent = weekApts;
-            
-            const monthApts = appointmentsData.filter(a => {
-                const aptDate = new Date(a.date);
-                return aptDate.getMonth() === new Date().getMonth();
-            }).length;
-            document.getElementById('monthAppointments').textContent = monthApts;
-        }
+function closeSidebar() {
+    document.getElementById('sidebar').classList.add('sidebar-mobile');
+}
 
-        function updateRecentStudents() {
-            const container = document.getElementById('recentStudents');
-            if (!container) return;
-            
-            const recent = applicantsData.slice(0, 5);
-            if (recent.length === 0) {
-                container.innerHTML = '<p class="text-gray-500 text-center py-4">No students yet</p>';
-                return;
-            }
-            
-            container.innerHTML = recent.map(s => `
-                <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-                    <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-                        <i class="fas fa-user text-blue-600"></i>
-                    </div>
-                    <div class="flex-1">
-                        <p class="font-semibold text-sm">${s.name}</p>
-                        <p class="text-xs text-gray-600">${s.course}</p>
-                    </div>
-                </div>
-            `).join('');
-        }
+function openTaskModal() {
+    document.getElementById('taskModal').classList.remove('hidden');
+}
 
-        function updateUpcomingAppointments() {
-            const container = document.getElementById('upcomingAppointments');
-            if (!container) return;
-            
-            const upcoming = appointmentsData.filter(a => new Date(a.date) >= new Date()).slice(0, 5);
-            if (upcoming.length === 0) {
-                container.innerHTML = '<p class="text-gray-500 text-center py-4">No upcoming appointments</p>';
-                return;
-            }
-            
-            container.innerHTML = upcoming.map(apt => `
-                <div class="p-3 bg-gray-50 rounded-lg">
-                    <p class="font-semibold text-sm">${apt.student}</p>
-                    <p class="text-xs text-gray-600 mt-1">${apt.date} at ${apt.time}</p>
-                </div>
-            `).join('');
-        }
+function closeTaskModal() {
+    document.getElementById('taskModal').classList.add('hidden');
+}
 
-        // Settings Functions
-        function exportAllData() {
-            const data = {
-                students: applicantsData,
-                tasks: tasksData,
-                appointments: appointmentsData,
-                classes: classesData,
-                exportDate: new Date().toISOString()
-            };
-            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `discovery-pathway-backup-${new Date().toISOString().split('T')[0]}.json`;
-            a.click();
-            showNotification('All data exported!', 'success');
-        }
+function openAppointmentModal() {
+    document.getElementById('appointmentModal').classList.remove('hidden');
+}
 
-        function clearLocalData() {
-            if (confirm('This will clear all tasks, appointments, and classes. Students data from Google Sheets will not be affected. Continue?')) {
-                localStorage.removeItem('dpTasks');
-                localStorage.removeItem('dpAppointments');
-                localStorage.removeItem('dpClasses');
-                tasksData = [];
-                appointmentsData = [];
-                classesData = [];
-                displayTasks();
-                displayAppointments();
-                displayClasses();
-                updateAllStats();
-                showNotification('Local data cleared!', 'info');
-            }
-        }
+function closeAppointmentModal() {
+    document.getElementById('appointmentModal').classList.add('hidden');
+}
 
-        // Modal Functions
-        function toggleSidebar() {
-            document.getElementById('sidebar').classList.toggle('sidebar-mobile');
-        }
+function openClassModal() {
+    document.getElementById('classModal').classList.remove('hidden');
+}
 
-        function closeSidebar() {
-            if (window.innerWidth < 1024) {
-                document.getElementById('sidebar').classList.add('sidebar-mobile');
-            }
-        }
+function closeClassModal() {
+    document.getElementById('classModal').classList.add('hidden');
+}
 
-        function openTaskModal() {
-            document.getElementById('taskModal').classList.remove('hidden');
-            // Set minimum date to today
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById('taskDueDate').setAttribute('min', today);
-        }
+function showNotification(message, type = 'info') {
+    const colors = {
+        success: 'bg-green-500',
+        error: 'bg-red-500',
+        info: 'bg-blue-500',
+        warning: 'bg-amber-500'
+    };
+    
+    const notification = document.createElement('div');
+    notification.className = `fixed top-4 right-4 ${colors[type]} text-white px-6 py-3 rounded-lg shadow-lg z-[100] text-sm`;
+    notification.textContent = message;
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.style.opacity = '0';
+        notification.style.transition = 'opacity 300ms';
+        setTimeout(() => notification.remove(), 300);
+    }, 3000);
+}
 
-        function closeTaskModal() {
-            document.getElementById('taskModal').classList.add('hidden');
-        }
+function updateAllStats() {
+    document.getElementById('totalApplicants').textContent = applicantsData.length;
+    document.getElementById('totalAppointments').textContent = appointmentsData.length;
+    document.getElementById('totalClasses').textContent = classesData.length;
+    
+    const todoCount = tasksData.filter(t => t.status === 'todo').length;
+    const inProgressCount = tasksData.filter(t => t.status === 'inprogress').length;
+    const doneCount = tasksData.filter(t => t.status === 'done').length;
+    
+    document.getElementById('pendingTasks').textContent = todoCount + inProgressCount;
+    document.getElementById('todoCount').textContent = todoCount;
+    document.getElementById('inProgressCount').textContent = inProgressCount;
+    document.getElementById('doneCount').textContent = doneCount;
+    
+    document.getElementById('settingsStudentCount').textContent = applicantsData.length;
+    document.getElementById('settingsTaskCount').textContent = tasksData.length;
+    
+    const now = new Date();
+    document.getElementById('lastUpdated').textContent = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+}
 
-        function openAppointmentModal() {
-            document.getElementById('appointmentModal').classList.remove('hidden');
-            // Set minimum date to today
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById('appointmentDate').setAttribute('min', today);
-        }
+async function refreshAllData() {
+    showNotification('🔄 Refreshing...', 'info');
+    await loadAllDataFromSupabase();
+    await loadApplicantsFromSheet();
+    showNotification('✅ Refreshed!', 'success');
+}
 
-        function closeAppointmentModal() {
-            document.getElementById('appointmentModal').classList.add('hidden');
-        }
+async function syncWithSupabase() {
+    showNotification('🔄 Syncing...', 'info');
+    await loadAllDataFromSupabase();
+    showNotification('✅ Synced!', 'success');
+}
 
-        function openClassModal() {
-            document.getElementById('classModal').classList.remove('hidden');
-        }
+function exportAllData() {
+    const allData = {
+        tasks: tasksData,
+        appointments: appointmentsData,
+        classes: classesData,
+        students: applicantsData,
+        exportDate: new Date().toISOString()
+    };
+    
+    const dataStr = JSON.stringify(allData, null, 2);
+    const blob = new Blob([dataStr], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `discovery-backup-${Date.now()}.json`;
+    link.click();
+    URL.revokeObjectURL(url);
+    
+    showNotification('✅ Exported!', 'success');
+}
 
-        function closeClassModal() {
-            document.getElementById('classModal').classList.add('hidden');
-        }
-
-        function showNotification(message, type) {
-            const colors = {
-                success: 'bg-green-500',
-                error: 'bg-red-500',
-                info: 'bg-blue-500'
-            };
-            const notif = document.createElement('div');
-            notif.className = `fixed top-4 right-4 ${colors[type]} text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-slide-in`;
-            notif.innerHTML = `<i class="fas fa-${type === 'success' ? 'check' : 'info'}-circle mr-2"></i>${message}`;
-            document.body.appendChild(notif);
-            setTimeout(() => {
-                notif.style.opacity = '0';
-                notif.style.transition = 'opacity 0.3s';
-                setTimeout(() => notif.remove(), 300);
-            }, 3000);
-        }
-
-        // Initialize
-        window.addEventListener('load', () => {
-            loadFromStorage();
-            displayTasks();
-            displayAppointments();
-            displayClasses();
-            updateAllStats();
-            loadApplicantsFromSheet();
-        });
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                closeTaskModal();
-                closeAppointmentModal();
-                closeClassModal();
-            }
-        });
-
-        // Handle window resize for sidebar
-        window.addEventListener('resize', () => {
-            if (window.innerWidth >= 1024) {
-                document.getElementById('sidebar').classList.remove('sidebar-mobile');
-            }
-        });
-    </script>
-
+async function clearAllData() {
+    if (!confirm('⚠️ Delete ALL data? This cannot be undone!')) return;
+    if (!confirm('Type YES in next dialog to confirm')) return;
+    
+    const confirmation = prompt('Type "DELETE ALL":');
+    if (confirmation !== 'DELETE ALL') {
+        showNotification('❌ Cancelled', 'info');
+        return;
+    } 
+    try {
+        const {error:te}=await db.from('tasks').delete().neq('id',0);
+        const {error:ae}=await db.from('appointments').delete().neq('id',0);
+        const {error:ce}=await db.from('classes').delete().neq('id',0);
+        if(te||ae||ce)throw new Error('Delete failed');
+        tasks=[];appts=[];classes=[];applicants=[];
+        await loadAll();
+        showNotification('✅ All data cleared!','success');
+    }
+    catch(e){
+        console.error('Clear error:',e);
+        showNotification('❌ Error clearing data','error');
+    }
+}
+</script>
 </body>
 </html>
