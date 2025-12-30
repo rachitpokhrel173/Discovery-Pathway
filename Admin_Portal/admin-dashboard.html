@@ -1,1999 +1,1302 @@
-<!doctype html>
-<!--
-  Production-grade Dashboard (Single File)
-  - Technologies: HTML + Tailwind CSS (CDN) + Vanilla JavaScript
-  - Author: Senior Front-End Engineer & UI/UX Designer (generated)
-  - Features: Sidebar (collapsible), Top Navbar, Modals (Add Applicant / Add Visitor),
-              Dashboard cards with animated counters, Tabs, File Upload, Debug Panel,
-              Accessibility (ARIA), Responsive design, Smooth interactions & transitions.
-
-  How to Test (also included at bottom as comments):
-  - Save file as dashboard.html and open in browser.
-  - Toggle sidebar collapse, open dropdowns.
-  - Click "Add Applicant" and "Add Visitor" buttons to open modals.
-  - Fill forms, test validation, try file upload.
-  - Use bottom panels tabs and "View All" buttons.
-  - Toggle debug panel and change card values to see counters animate.
-
-  Note: This file intentionally contains many comments and verbose markup
-  to meet the user's request for well-documented, production-grade code.
--->
-
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Discovery — Admin Dashboard</title>
-
-  <!-- Tailwind CDN (JIT via Play CDN) -->
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Tailwind configuration for custom colors & forms plugin via CDN -->
-  <script>
-    tailwind.config = {
-      darkMode: false,
-      theme: {
-        extend: {
-          colors: {
-            primary: {
-              DEFAULT: '#0f62fe', // main blue
-              600: '#0b54d4',
-              700: '#0948b0'
-            },
-            accent: {
-              DEFAULT: '#06b6d4' // teal-ish accent
-            },
-            muted: {
-              DEFAULT: '#6b7280'
-            }
-          },
-          boxShadow: {
-            'soft-lg': '0 8px 30px rgba(15, 34, 64, 0.08)',
-            'soft-md': '0 6px 20px rgba(15, 34, 64, 0.06)'
-          }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discovery Pathway - Admin Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- EmailJS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #888; border-radius: 4px; }
+        .sidebar-mobile { transform: translateX(-100%); }
+        @media (min-width: 1024px) {
+            .sidebar-mobile { transform: translateX(0); }
         }
-      },
-      plugins: [],
-    }
-  </script>
-
-  <!-- Accessibility & baseline styles -->
-  <style>
-    /* small micro-interactions and utility adjustments */
-    :root {
-      --radius: 12px;
-    }
-
-    @media (max-width: 768px) {
-      :root {
-        --radius: 10px;
-      }
-    }
-
-    /* Smooth focus outlines for accessibility */
-    :focus {
-      outline: 3px solid rgba(15, 98, 254, 0.15);
-      outline-offset: 2px;
-    }
-
-    /* Draggable file drop hover */
-    .file-drop-hover {
-      background: linear-gradient(90deg, rgba(6, 182, 212, 0.04), rgba(15, 98, 254, 0.02));
-      border-color: rgba(6, 182, 212, 0.22);
-    }
-
-    /* Decorative separator */
-    .section-sep::after {
-      content: "";
-      display: block;
-      height: 1px;
-      background: linear-gradient(90deg, rgba(0, 0, 0, 0.04), rgba(0, 0, 0, 0.02));
-      margin-top: 1rem;
-      border-radius: 999px;
-    }
-
-    /* Transition utilities for JS toggling */
-    .transition-fast {
-      transition: all 220ms cubic-bezier(.4, .0, .2, 1);
-    }
-
-    .transition-smooth {
-      transition: all 400ms cubic-bezier(.2, .1, .12, 1);
-    }
-
-    /* Sidebar collapsed state */
-    .sidebar-collapsed {
-      width: 80px;
-      /* only icons */
-      transition: width 0.3s ease;
-    }
-
-    .sidebar-collapsed .menu-label {
-      display: none;
-      /* hide text labels */
-    }
-
-    .sidebar-expanded {
-      width: 250px;
-      /* full sidebar */
-      transition: width 0.3s ease;
-    }
-
-    /* Content adjustment */
-    .content {
-      margin-left: 250px;
-      transition: margin-left 0.3s ease;
-    }
-
-    .sidebar-collapsed~.content {
-      margin-left: 80px;
-    }
-  </style>
+        .loading { 
+            border: 3px solid #f3f3f3; 
+            border-top: 3px solid #3498db; 
+            border-radius: 50%; 
+            width: 30px; 
+            height: 30px; 
+            animation: spin 1s linear infinite; 
+        }
+        @keyframes spin { 
+            0% { transform: rotate(0deg); } 
+            100% { transform: rotate(360deg); } 
+        }
+        .page-section { display: none; }
+        .page-section.active { display: block; }
+        .nav-item.active { background: #EFF6FF; color: #2563EB; }
+        .pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .5; }
+        }
+    </style>
 </head>
+<body class="bg-gray-50">
 
-<body class="antialiased text-slate-800 bg-gray-50 min-h-screen">
-
-  <!-- Root App Container -->
-  <div id="app" class="flex h-screen">
-
-    <!-- SIDEBAR -->
-    <aside id="sidebar"
-      class="sidebar fixed left-0 top-0 bottom-0 w-72 sm:w-72 bg-white drop-shadow-md border-r border-transparent z-40 transform transition-fast"
-      role="navigation" aria-label="Main sidebar">
-      <!-- Sidebar Inner -->
-      <div class="h-full flex flex-col">
-        <!-- Header: Logo + Collapse Button -->
-        <div class="flex items-center justify-between px-5 py-4 border-b">
-          <div class="flex items-center space-x-3">
-            <!-- Logo -->
-            <div class="flex items-center justify-center w-12 h-12 rounded-2xl ">
-              <span class="font-extrabold tracking-tight"><img src="/Assets/Discovery_Logo-removebg-preview.png" alt=""
-                  srcset=""> </span>
+    <!-- Sidebar -->
+    <aside id="sidebar" class="fixed left-0 top-0 h-screen w-64 bg-white shadow-lg z-50 transition-transform duration-300 overflow-y-auto sidebar-mobile">
+        <div class="p-6 border-b">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-graduation-cap text-white"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-lg font-bold">Discovery</h1>
+                        <p class="text-xs text-gray-500">Admin Panel</p>
+                    </div>
+                </div>
+                <button onclick="closeSidebar()" class="lg:hidden text-gray-600">
+                    <i class="fas fa-times"></i>
+                </button>
             </div>
-            <div class="hidden md:block">
-              <div class="text-lg font-semibold">Discovery Admin</div>
-              <div class="text-sm text-muted">Admin panel</div>
-            </div>
-          </div>
-          <!-- Collapse Button -->
-          <button id="sidebarToggle" aria-expanded="true" aria-controls="sidebar"
-            class="group p-2 rounded-md hover:bg-gray-100 transition-fast" title="Collapse sidebar">
-            <!-- Icon: chevron-left (rotate when collapsed) -->
-          </button>
         </div>
-
-        <!-- Menu -->
-        <nav class="flex-1 overflow-y-auto px-2 py-4" aria-label="Primary">
-          <ul class="space-y-1">
-            <!-- Menu item template: icon + label -->
-            <!-- Active example -->
-            <li>
-              <a href="#dashboard" class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-fast group"
-                aria-current="page">
-                <!-- icon -->
-                <svg class="w-5 h-5 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12h18M3 6h18M3 18h18" />
-                </svg>
-                <span class="text-sm font-medium">Dashboard</span>
-              </a>
-            </li>
-
-            <!-- Repeat items with icons -->
-            <li><a class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-fast" href="/Admin_Portal/applicant_Admin.html"><svg
-                  class="w-5 h-5 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                  <path d="M4 6h16M4 12h8M4 18h16" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                </svg><span class="text-sm">Applicants</span></a></li>
-
-            <li><a class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-fast" href="#"><svg
-                  class="w-5 h-5 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                  <path d="M9 12h6M9 16h6M9 8h6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                </svg><span class="text-sm">Tasks</span></a></li>
-
-            <li><a class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-fast" href="#"><svg
-                  class="w-5 h-5 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                  <path d="M12 2l4 6H8l4-6zM6 20h12v-2H6v2z" stroke-width="1.4" stroke-linecap="round"
-                    stroke-linejoin="round" />
-                </svg><span class="text-sm">Appointments</span></a></li>
-
-            <li><a class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-fast" href="#"><svg
-                  class="w-5 h-5 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                  <path d="M3 7h18M3 12h12M3 17h18" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                </svg><span class="text-sm">Abroad Section</span></a></li>
-
-            <li><a class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-fast" href="#"><svg
-                  class="w-5 h-5 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                  <path d="M12 2l2 7h7l-5.5 4 2 7L12 16l-7.5 4 2-7L1 9h7l2-7z" stroke-width="1.2" stroke-linecap="round"
-                    stroke-linejoin="round" />
-                </svg><span class="text-sm">Services</span></a></li>
-
-            <li><a class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-fast" href="#"><svg
-                  class="w-5 h-5 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                  <path d="M8 7h8M8 12h8M8 17h8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                </svg><span class="text-sm">Classes</span></a></li>
-
-            <li><a class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-fast" href="#"><svg
-                  class="w-5 h-5 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                  <path d="M12 2v20M2 12h20" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                </svg><span class="text-sm">Payments</span></a></li>
-
-            <li><a class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-fast" href="#"><svg
-                  class="w-5 h-5 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                  <path d="M3 3h18v18H3V3z" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
-                </svg><span class="text-sm">Workflow</span></a></li>
-
-            <li><a class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-fast" href="#"><svg
-                  class="w-5 h-5 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                  <path d="M12 12a5 5 0 100-10 5 5 0 000 10zM6 18c1.333-2 3-3 6-3s4.667 1 6 3" stroke-width="1.2"
-                    stroke-linecap="round" stroke-linejoin="round" />
-                </svg><span class="text-sm">Contacts</span></a></li>
-
-            <li><a class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-fast" href="#"><svg
-                  class="w-5 h-5 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                  <path d="M3 7h18M3 12h18M3 17h18" stroke-width="1.0" stroke-linecap="round" stroke-linejoin="round" />
-                </svg><span class="text-sm">Applicant App</span></a></li>
-
-            <li><a class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-fast" href="#"><svg
-                  class="w-5 h-5 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                  <path d="M4 7h16M4 12h16M4 17h10" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
-                </svg><span class="text-sm">Other Services</span></a></li>
-
-            <li><a class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-fast" href="#"><svg
-                  class="w-5 h-5 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                  <path d="M4 6h16M4 12h8m-8 6h16" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
-                </svg><span class="text-sm">Settings</span></a></li>
-          </ul>
+        
+        <nav class="p-4">
+            <a href="#" onclick="showPage('dashboard')" class="nav-item flex items-center space-x-3 px-4 py-3 rounded-lg mb-2 active">
+                <i class="fas fa-dashboard"></i><span>Dashboard</span>
+            </a>
+            <a href="#" onclick="showPage('students')" class="nav-item flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-50 text-gray-700 mb-2">
+                <i class="fas fa-users"></i><span>Students</span>
+            </a>
+            <a href="#" onclick="showPage('tasks')" class="nav-item flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-50 text-gray-700 mb-2">
+                <i class="fas fa-tasks"></i><span>Tasks</span>
+            </a>
+            <a href="#" onclick="showPage('appointments')" class="nav-item flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-50 text-gray-700 mb-2">
+                <i class="fas fa-calendar"></i><span>Appointments</span>
+            </a>
+            <a href="#" onclick="showPage('classes')" class="nav-item flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-50 text-gray-700 mb-2">
+                <i class="fas fa-book"></i><span>Classes</span>
+            </a>
+            <a href="#" onclick="showPage('settings')" class="nav-item flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-50 text-gray-700 mb-2">
+                <i class="fas fa-cog"></i><span>Settings</span>
+            </a>
         </nav>
-
-        <!-- Footer: small help or legal -->
-        <div class="px-5 py-4 border-t text-xs text-muted">
-          <div class="flex items-center justify-between">
-            <span>Need help?</span>
-            <a href="mailto:rachitpokhrel123@gmail.com"
-              class="text-primary text-sm font-medium hover:underline">Contact</a>
-          </div>
-        </div>
-
-      </div>
     </aside>
 
-    <!-- CONTENT WRAPPER (space to the right of sidebar) -->
-    <div id="mainContent" class="flex-1 ml-72 md:ml-72 transition-fast">
-
-      <!-- TOP NAVBAR -->
-      <header class="sticky top-0 z-30 bg-white/60 backdrop-blur-md border-b border-transparent">
-        <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="flex items-center justify-between h-16">
-            <!-- Left -->
-            <div class="flex items-center gap-6">
-              <button id="mobileSidebarOpen" class="md:hidden p-2 rounded-md hover:bg-gray-100 transition-fast"
-                aria-label="Open sidebar">
-                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                  <path d="M4 6h16M4 12h16M4 18h16" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
-              </button>
-              <div>
-                <div class="text-sm text-muted">Welcome back, </div>
-                <div class="font-semibold">Discovery Pathway</div>
-              </div>
-            </div>
-
-            <!-- Right controls -->
-            <div class="flex items-center gap-4">
-
-
-              <!-- Notifications -->
-              <div class="relative">
-                <button id="notifToggle" class="p-2 rounded-full hover:bg-gray-100 transition-fast" aria-haspopup="true"
-                  aria-expanded="false" aria-controls="notifMenu" title="Notifications">
-                  <span class="sr-only">Notifications</span>
-                  <svg class="w-6 h-6 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                    <path
-                      d="M15 17h5l-1.405-1.405A2.034 2.034 0 0118 14.158V11a6 6 0 10-12 0v3.159c0 .538-.214 1.055-.595 1.436L4 17h11zM13.73 21a2 2 0 01-3.46 0"
-                      stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
-                  </svg>
-             <!--     <span
-                    class="absolute -top-1 -right-1 inline-flex items-center justify-center px-1.5 py-0.5 text-xs rounded-full bg-red-500 text-white">3</span> -->
-                </button>
-                <!-- Notification dropdown -->
-
-                <div id="notifMenu"
-                  class="notif-menu hidden origin-top-right absolute right-0 mt-2 w-80 rounded-2xl bg-white shadow-soft-md ring-1 ring-black ring-opacity-5 p-3 transition-smooth"
-                  role="menu" aria-label="Notifications">
-                  <div class="flex items-center justify-between mb-2">
-                    <span class="font-medium">Notifications</span>
-                    <a href="#" class="text-sm text-primary hover:underline">Mark all read</a>
-                  </div>
-
-                  <div class="p-6 text-center text-muted">
-                    <div class="flex flex-col items-center">
-                      <!-- Icon -->
-                      <svg class="w-12 h-12 text-gray-300 mb-3" fill="none" stroke="currentColor" stroke-width="1.5"
-                        viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                          d="M9.75 17L9 21h6l-.75-4M4 21h16M12 3v10m0 0l3.5-3.5M12 13l-3.5-3.5" />
-                      </svg>
-                      <!-- Message -->
-                      <p class="text-sm font-medium text-gray-600">Email notifications</p>
-                      <p class="text-xs text-gray-400">This section is under construction</p>
+    <!-- Main Content -->
+    <div class="lg:ml-64">
+        
+        <!-- Top Navbar -->
+        <header class="bg-white shadow-sm sticky top-0 z-40">
+            <div class="px-4 lg:px-6 py-4 flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <button onclick="toggleSidebar()" class="lg:hidden">
+                        <i class="fas fa-bars text-gray-600"></i>
+                    </button>
+                    <div>
+                        <p class="text-sm text-gray-500">Welcome back,</p>
+                        <h2 class="font-semibold text-gray-800">Discovery Pathway</h2>
                     </div>
-                  </div>
-<!--
-                  <ul class="space-y-2 max-h-64 overflow-auto pr-2">
-                    <li class="p-2 rounded-lg hover:bg-gray-50 transition-fast">
-                      <div class="flex items-start gap-3">
-                        <div
-                          class="flex-shrink-0 w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
-                          A</div>
-                        <div class="flex-1">
-                          <div class="text-sm font-semibold">Application Approved</div>
-                          <div class="text-xs text-muted">Your student's application to University X is approved.</div>
-                          <div class="text-xs text-muted mt-1">2h ago</div>
-                        </div>
-                      </div>
-                    </li>
-                    <li class="p-2 rounded-lg hover:bg-gray-50 transition-fast">
-                      <div class="flex items-start gap-3">
-                        <div
-                          class="flex-shrink-0 w-10 h-10 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-600">
-                          !</div>
-                        <div class="flex-1">
-                          <div class="text-sm font-semibold">Payment Pending</div>
-                          <div class="text-xs text-muted">Invoice #412 is due in 3 days.</div>
-                          <div class="text-xs text-muted mt-1">Yesterday</div>
-                        </div>
-                      </div>
-                    </li>
-                    <li class="p-2 rounded-lg hover:bg-gray-50 transition-fast">
-                      <div class="flex items-start gap-3">
-                        <div
-                          class="flex-shrink-0 w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600">
-                          ✓</div>
-                        <div class="flex-1">
-                          <div class="text-sm font-semibold">New Lead</div>
-                          <div class="text-xs text-muted">A lead from Facebook Ads has been added.</div>
-                          <div class="text-xs text-muted mt-1">3 days</div>
-                        </div>
-                      </div>
-                    </li>
-                  </ul>-->
-                </div>
-              </div>
-
-              <!-- Profile menu -->
-              <div class="relative">
-                <button id="profileToggle"
-                  class="flex items-center gap-2 p-1 rounded-full hover:bg-gray-100 transition-fast"
-                  aria-haspopup="true" aria-expanded="false" aria-controls="profileMenu" title="Open profile">
-                  <img
-                    src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40'><rect rx='10' width='100%' height='100%' fill='%230f62fe'/><text x='50%' y='55%' font-size='18' fill='white' text-anchor='middle' font-family='Arial'>R</text></svg>"
-                    alt="Profile avatar" class="w-8 h-8 rounded-full ring-1 ring-white" />
-                  <span class="hidden sm:block text-left">
-                    <div class="text-sm font-medium">Rachit Pokhrel</div>
-                    <div class="text-xs text-muted">Admin</div>
-                  </span>
-                </button>
-
-                <div id="profileMenu"
-                  class="hidden origin-top-right absolute right-0 mt-2 w-48 rounded-2xl bg-white shadow-soft-md ring-1 ring-black ring-opacity-5 p-2 transition-smooth"
-                  role="menu" aria-label="Profile menu">
-                  <a href="#" class="block px-3 py-2 rounded-lg hover:bg-gray-50">Profile</a>
-                  <a href="#" class="block px-3 py-2 rounded-lg hover:bg-gray-50">Settings</a>
-                  <div class="border-t my-1"></div>
-                  <a href="#" class="block px-3 py-2 rounded-lg hover:bg-gray-50 text-red-600">Logout</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      <!-- MAIN PAGE CONTENT -->
-      <main class="p-6 max-w-8xl mx-auto">
-
-        <!-- Action Buttons Row -->
-        <section aria-label="Primary actions"
-          class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
-          <div class="flex items-center gap-4">
-            <h1 class="text-2xl font-semibold">Dashboard</h1>
-            <p class="text-sm text-muted">Overview of applicants, visitors, tasks, and appointments.</p>
-          </div>
-
-          <div class="flex items-center gap-3">
-            <button id="addApplicantBtn"
-              class="inline-flex items-center gap-2 bg-white border border-gray-200 px-4 py-2 rounded-lg shadow-sm hover:shadow-md transition-fast"
-              aria-haspopup="dialog">
-              <svg class="w-5 h-5 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path d="M12 4v16M4 12h16" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
-              <span class="text-sm font-medium">Add Applicant</span>
-            </button>
-
-            <button id="addVisitorBtn"
-              class="inline-flex items-center gap-2 bg-white border border-gray-200 px-4 py-2 rounded-lg shadow-sm hover:shadow-md transition-fast"
-              aria-haspopup="dialog">
-              <svg class="w-5 h-5 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path d="M12 2a2 2 0 012 2v1h-4V4a2 2 0 012-2zM6 8v10a2 2 0 002 2h8a2 2 0 002-2V8" stroke-width="1.4"
-                  stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
-              <span class="text-sm font-medium">Add Visitor</span>
-            </button>
-
-            <!-- Debug toggle -->
-            <button id="debugToggle"
-              class="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-gray-50 border text-sm hover:bg-gray-100 transition-fast"
-              title="Open debug panel">
-              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path d="M12 8v8M8 12h8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
-              Debug
-            </button>
-          </div>
-        </section>
-
-        <!-- Dashboard Cards Grid -->
-        <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6" aria-label="Key metrics">
-          <!-- Card 1: Visitors -->
-          <article class="card rounded-2xl bg-white p-5 shadow-soft-md border border-transparent transition-smooth"
-            role="region" aria-labelledby="visitorsTitle">
-            <div class="flex items-start justify-between">
-              <div>
-                <h3 id="visitorsTitle" class="text-sm font-semibold">Visitors</h3>
-                <p class="text-xs text-muted mt-1">People who visited office</p>
-              </div>
-              <div class="rounded-lg bg-primary/10 p-2 inline-flex items-center justify-center">
-                <svg class="w-6 h-6 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                  <path d="M12 12a5 5 0 100-10 5 5 0 000 10zM6 20c1.333-2 3-3 6-3s4.667 1 6 3" stroke-width="1.2"
-                    stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
-              </div>
-            </div>
-            <div class="mt-6">
-              <div class="text-3xl font-bold" data-counter data-target="1245" id="counter-visitors">0</div>
-              <div class="mt-2 text-xs text-muted">+12% since last month</div>
-            </div>
-          </article>
-
-          <!-- Card 2: Leads -->
-          <article class="rounded-2xl bg-white p-5 shadow-soft-md border border-transparent transition-smooth"
-            role="region" aria-labelledby="leadsTitle">
-            <div class="flex items-start justify-between">
-              <div>
-                <h3 id="leadsTitle" class="text-sm font-semibold">IELTS</h3>
-                <p class="text-xs text-muted mt-1">New IELTS Students</p>
-              </div>
-              <div class="rounded-lg bg-amber-100 p-2 inline-flex items-center justify-center">
-                <svg class="w-6 h-6 text-amber-600" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                  <path d="M12 2l2 7h7l-5.5 4 2 7L12 16l-7.5 4 2-7L1 9h7l2-7z" stroke-width="1.2" stroke-linecap="round"
-                    stroke-linejoin="round" />
-                </svg>
-              </div>
-            </div>
-            <div class="mt-6">
-              <div class="text-3xl font-bold" data-counter data-target="478" id="counter-leads">0</div>
-              <div class="mt-2 text-xs text-muted"></div>
-            </div>
-          </article>
-
-          <!-- Card 3: Inquiries -->
-          <article class="rounded-2xl bg-white p-5 shadow-soft-md border border-transparent transition-smooth"
-            role="region" aria-labelledby="inquiriesTitle">
-            <div class="flex items-start justify-between">
-              <div>
-                <h3 id="inquiriesTitle" class="text-sm font-semibold">Inquiries</h3>
-                <p class="text-xs text-muted mt-1">Contact form inquiries</p>
-              </div>
-              <div class="rounded-lg bg-green-100 p-2 inline-flex items-center justify-center">
-                <svg class="w-6 h-6 text-green-600" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                  <path d="M7 8h10M7 12h6M7 16h10" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
-              </div>
-            </div>
-            <div class="mt-6">
-              <div class="text-3xl font-bold" data-counter data-target="312" id="counter-inquiries">0</div>
-              <div class="mt-2 text-xs text-muted"></div>
-            </div>
-          </article>
-
-          <!-- Card 4: Class Enrollments -->
-          <article class="rounded-2xl bg-white p-5 shadow-soft-md border border-transparent transition-smooth"
-            role="region" aria-labelledby="enrollTitle">
-            <div class="flex items-start justify-between">
-              <div>
-                <h3 id="enrollTitle" class="text-sm font-semibold">Class Enrollments</h3>
-                <p class="text-xs text-muted mt-1">Signups for classes</p>
-              </div>
-              <div class="rounded-lg bg-indigo-100 p-2 inline-flex items-center justify-center">
-                <svg class="w-6 h-6 text-indigo-600" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                  <path d="M12 2l4 6H8l4-6zM6 20h12v-2H6v2z" stroke-width="1.2" stroke-linecap="round"
-                    stroke-linejoin="round" />
-                </svg>
-              </div>
-            </div>
-            <div class="mt-6">
-              <div class="text-3xl font-bold" data-counter data-target="89" id="counter-enroll">0</div>
-              <div class="mt-2 text-xs text-muted">Active this intake</div>
-            </div>
-          </article>
-        </section>
-
-        <!-- Row 2 (4 Cards) -->
-        <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6" aria-label="Secondary metrics">
-          <article class="rounded-2xl bg-white p-5 shadow-soft-md transition-smooth">
-            <div class="flex items-start justify-between">
-              <div>
-                <h3 class="font-semibold">Assigned Applicants</h3>
-                <div class="text-xs text-muted mt-1">Per counselor</div>
-              </div>
-              <div class="p-2 rounded-lg bg-pink-50 inline-flex items-center justify-center"><svg
-                  class="w-5 h-5 text-pink-500" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                  <path d="M12 2v20M5 12h14" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
-                </svg></div>
-            </div>
-            <div class="mt-6">
-              <div class="text-2xl font-bold" data-counter data-target="243" id="counter-assigned">0</div>
-              <div class="mt-2 text-xs text-muted">Across all counselors</div>
-            </div>
-          </article>
-
-          <article class="rounded-2xl bg-white p-5 shadow-soft-md transition-smooth">
-            <div class="flex items-start justify-between">
-              <div>
-                <h3 class="font-semibold">Appointment / Follow-Up</h3>
-                <div class="text-xs text-muted mt-1">Scheduled & pending</div>
-              </div>
-              <div class="p-2 rounded-lg bg-sky-50 inline-flex items-center justify-center"><svg
-                  class="w-5 h-5 text-sky-600" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                  <path d="M8 7h8M8 12h8M8 17h8" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
-                </svg></div>
-            </div>
-            <div class="mt-6">
-              <div class="text-2xl font-bold" data-counter data-target="56" id="counter-appointments">0</div>
-              <div class="mt-2 text-xs text-muted">Next 7 days</div>
-            </div>
-          </article>
-
-          <article class="rounded-2xl bg-white p-5 shadow-soft-md transition-smooth">
-            <div class="flex items-start justify-between">
-              <div>
-                <h3 class="font-semibold">Courses</h3>
-                <div class="text-xs text-muted mt-1">Active & upcoming</div>
-              </div>
-              <div class="p-2 rounded-lg bg-emerald-50 inline-flex items-center justify-center"><svg
-                  class="w-5 h-5 text-emerald-600" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                  <path d="M4 6h16M4 12h16M4 18h16" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
-                </svg></div>
-            </div>
-            <div class="mt-6">
-              <div class="text-2xl font-bold" data-counter data-target="34" id="counter-courses">0</div>
-              <div class="mt-2 text-xs text-muted">Open for enrollment</div>
-            </div>
-          </article>
-
-          <article class="rounded-2xl bg-white p-5 shadow-soft-md transition-smooth">
-            <div class="flex items-start justify-between">
-              <div>
-                <h3 class="font-semibold">Decision</h3>
-                <div class="text-xs text-muted mt-1">Offers & rejections</div>
-              </div>
-              <div class="p-2 rounded-lg bg-violet-50 inline-flex items-center justify-center"><svg
-                  class="w-5 h-5 text-violet-600" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                  <path d="M12 2l2 7h7l-5.5 4 2 7L12 16l-7.5 4 2-7L1 9h7l2-7z" stroke-width="1.1" stroke-linecap="round"
-                    stroke-linejoin="round" />
-                </svg></div>
-            </div>
-            <div class="mt-6">
-              <div class="text-2xl font-bold" data-counter data-target="154" id="counter-decision">0</div>
-              <div class="mt-2 text-xs text-muted">Offers made</div>
-            </div>
-          </article>
-        </section>
-
-        <!-- Row 3: Incoming & Outgoing 
-        <section class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6" aria-label="Traffic">
-          <article class="rounded-2xl bg-white p-5 shadow-soft-md transition-smooth">
-            <div class="flex items-start justify-between">
-              <div>
-                <h3 class="font-semibold">Incoming</h3>
-                <p class="text-xs text-muted mt-1">Messages & inquiries inbound</p>
-              </div>
-              <div class="p-2 rounded-lg bg-cyan-50 inline-flex items-center justify-center"><svg class="w-5 h-5 text-cyan-600" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 7h18M3 12h12M3 17h18" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-            </div>
-            <div class="mt-6">
-              <div class="text-3xl font-bold" data-counter data-target="1024" id="counter-incoming">0</div>
-              <div class="mt-2 text-xs text-muted">All channels</div>
-            </div>
-          </article>
-
-          <article class="rounded-2xl bg-white p-5 shadow-soft-md transition-smooth">
-            <div class="flex items-start justify-between">
-              <div>
-                <h3 class="font-semibold">Outgoing</h3>
-                <p class="text-xs text-muted mt-1">Emails & outreach</p>
-              </div>
-              <div class="p-2 rounded-lg bg-rose-50 inline-flex items-center justify-center"><svg class="w-5 h-5 text-rose-600" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2l4 6H8l4-6zM6 20h12v-2H6v2z" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-            </div>
-            <div class="mt-6">
-              <div class="text-3xl font-bold" data-counter data-target="824" id="counter-outgoing">0</div>
-              <div class="mt-2 text-xs text-muted">Sent communications</div>
-            </div>
-          </article>
-        </section> -->
-
-        <!-- Bottom Panels Row -->
-        <section class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-16">
-          <!-- Appointments / Follow-Up -->
-          <section class="rounded-2xl bg-white p-5 shadow-soft-md transition-smooth" aria-labelledby="appointmentsTitle"
-            role="region">
-            <div class="flex items-center justify-between">
-              <div>
-                <h3 id="appointmentsTitle" class="text-lg font-semibold">Appointment / Follow-Up</h3>
-                <p class="text-xs text-muted">Organize and manage upcoming appointments</p>
-              </div>
-
-              <div class="flex items-center gap-2">
-                <div class="hidden sm:flex items-center bg-gray-100 rounded-lg p-1 text-sm">
-                  <button class="tabBtn px-3 py-1 rounded-md text-sm font-medium active"
-                    data-tab-target="all-appointments">All</button>
-                  <button class="tabBtn px-3 py-1 rounded-md text-sm font-medium"
-                    data-tab-target="appointment">Appointment</button>
-                  <button class="tabBtn px-3 py-1 rounded-md text-sm font-medium"
-                    data-tab-target="followup">FollowUp</button>
-                </div>
-                <button class="px-3 py-2 rounded-lg bg-primary text-white text-sm hover:brightness-95 transition-fast"
-                  id="viewAllAppointments">View All</button>
-              </div>
-            </div>
-
-            <!-- Content area -->
-            <div class="mt-4">
-              <div id="appointmentsTabs">
-                <!-- Tab: All -->
-                <div data-tab="all-appointments" class="tabPanel">
-                  <ul class="divide-y">
-                    <!-- Mock item -->
-                    <li class="py-3 flex items-start justify-between">
-                      <div class="flex items-start gap-3">
-                        <div class="w-3/4">
-                          <div class="flex items-center gap-2">
-                            <div class="font-semibold">Call: Rachit</div>
-                            <div class="text-xs text-muted">— Follow up</div>
-                          </div>
-                          <div class="text-xs text-muted mt-1">Scheduled: Sep 12, 2025 • 10:00 AM</div>
-                        </div>
-                        <div class="text-right w-1/4">
-                          <div class="text-xs text-muted">Counselor</div>
-                          <div class="font-medium">Rachit</div>
-                        </div>
-                      </div>
-                      <div class="flex items-center gap-2 ml-4">
-                        <button class="px-2 py-1 text-xs rounded bg-gray-50 hover:bg-gray-100">Reschedule</button>
-                        <button class="px-2 py-1 text-xs rounded bg-primary text-white">Mark</button>
-                      </div>
-                    </li>
-
-                    <!-- Empty state filler (if list were empty show illustration) -->
-                  </ul>
-                </div>
-
-                <!-- Tab: Appointment -->
-                <div data-tab="appointment" class="tabPanel hidden">
-                  <div class="py-8 text-center text-muted">
-                    <div class="text-sm">No upcoming appointments. Add new ones from the applicant profile.</div>
-                  </div>
-                </div>
-
-                <!-- Tab: FollowUp -->
-                <div data-tab="followup" class="tabPanel hidden">
-                  <div class="py-8 text-center text-muted">
-                    <div class="text-sm">No follow-ups today. Keep nurturing your leads.</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <!-- Tasks Panel -->
-          <section class="rounded-2xl bg-white p-5 shadow-soft-md transition-smooth" aria-labelledby="tasksTitle"
-            role="region">
-            <div class="flex items-center justify-between">
-              <div>
-                <h3 id="tasksTitle" class="text-lg font-semibold">Tasks</h3>
-                <p class="text-xs text-muted">Track tasks, due dates, and priority</p>
-              </div>
-
-              <div class="flex items-center gap-2">
-                <div class="hidden sm:flex items-center bg-gray-100 rounded-lg p-1 text-sm">
-                  <button class="taskTabBtn px-3 py-1 rounded-md text-sm font-medium active"
-                    data-task-target="all-tasks">All Task</button>
-                  <button class="taskTabBtn px-3 py-1 rounded-md text-sm font-medium"
-                    data-task-target="pending">Pending</button>
-                  <button class="taskTabBtn px-3 py-1 rounded-md text-sm font-medium" data-task-target="inprogress">In
-                    Progress</button>
-                  <button class="taskTabBtn px-3 py-1 rounded-md text-sm font-medium"
-                    data-task-target="completed">Completed</button>
-                </div>
-                <button id="viewAllTasks"
-                  class="px-3 py-2 rounded-lg bg-primary text-white text-sm hover:brightness-95 transition-fast">View
-                  All</button>
-              </div>
-            </div>
-
-            <!-- Tasks content -->
-            <div class="mt-4">
-              <div id="tasksTabs">
-                <!-- All Tasks -->
-                <div data-task="all-tasks" class="taskPanel">
-                  <ul class="divide-y">
-                    <li class="py-3 flex items-center justify-between">
-                      <div class="flex items-start gap-3">
-                        <input type="checkbox" class="mt-1" aria-label="Mark task done">
-                        <div>
-                          <div class="font-medium">Prepare application package for Rachit</div>
-                          <div class="text-xs text-muted">Due: Sep 14, 2025</div>
-                        </div>
-                      </div>
-                      <div class="text-xs text-muted">Priority: High</div>
-                    </li>
-                    <li class="py-3 flex items-center justify-between">
-                      <input type="checkbox" class="mt-1" aria-label="Mark task done">
-                      <div class="ml-3 flex-1">
-                        <div class="font-medium">Review IELTS documents</div>
-                        <div class="text-xs text-muted">Due: Sep 16, 2025</div>
-                      </div>
-                      <div class="text-xs text-muted">Priority: Medium</div>
-                    </li>
-                  </ul>
-                </div>
-
-                <!-- Pending -->
-                <div data-task="pending" class="taskPanel hidden">
-                  <div class="py-8 text-center text-muted">No pending tasks</div>
-                </div>
-
-                <!-- In Progress -->
-                <div data-task="inprogress" class="taskPanel hidden">
-                  <div class="py-8 text-center text-muted">No tasks in progress</div>
-                </div>
-
-                <!-- Completed -->
-                <div data-task="completed" class="taskPanel hidden">
-                  <div class="py-8 text-center text-muted">No completed tasks</div>
-                </div>
-
-              </div>
-            </div>
-          </section>
-        </section>
-
-        <!-- Footer / small copyright -->
-        <footer class="text-center text-xs text-muted mb-6">
-          <div class="max-w-7xl mx-auto mt-10 border-t border-white/10 pt-6 text-center text-xs text-black-200">
-            <p> © <span id="currentYear"></span> Discovery Pathway. All Rights Reserved. <br>Developed By
-              <a href="https://www.rachitpokhrel.com.np/"
-                class="hover:text-black hover:font-bold transition-all duration-200">Rachit Pokhrel.</a>
-            </p>
-          </div>
-        </footer>
-
-      </main>
-    </div> <!-- end mainContent -->
-
-    <!-- MOBILE SIDEBAR (overlay) -->
-    <div id="mobileSidebar" class="fixed inset-0 z-50 hidden">
-      <div id="mobileBackdrop" class="absolute inset-0 bg-black/30"></div>
-      <div class="absolute left-0 top-0 bottom-0 w-72 bg-white shadow p-4 overflow-auto">
-        <div class="flex items-center justify-between">
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-lg bg-primary text-white flex items-center justify-center">CM</div>
-            <div>
-              <div class="font-semibold">Discovery Admin</div>
-              <div class="text-xs text-muted">Mobile menu</div>
-            </div>
-          </div>
-          <button id="mobileSidebarClose" class="p-2 rounded-md hover:bg-gray-100">✕</button>
-        </div>
-        <nav class="mt-4">
-          <ul class="space-y-2">
-            <li><a href="#" class="block p-2 rounded hover:bg-gray-50">Dashboard</a></li>
-            <li><a href="#" class="block p-2 rounded hover:bg-gray-50">Applicants</a></li>
-            <li><a href="#" class="block p-2 rounded hover:bg-gray-50">Tasks</a></li>
-            <li><a href="#" class="block p-2 rounded hover:bg-gray-50">Appointments</a></li>
-            <li><a href="#" class="block p-2 rounded hover:bg-gray-50">Settings</a></li>
-          </ul>
-        </nav>
-      </div>
-    </div>
-
-    <!-- ADD APPLICANT MODAL -->
-    <div id="applicantModal" class="fixed inset-0 z-600 hidden" role="dialog" aria-modal="true"
-      aria-labelledby="applicantModalTitle">
-      <div class="absolute inset-0 bg-black/40 transition-opacity" data-modal-backdrop></div>
-      <div class="fixed inset-0 flex items-start sm:items-center justify-center p-4 sm:p-6 overflow-auto">
-        <div class="bg-white rounded-2xl w-full max-w-6xl shadow-soft-lg transform transition-smooth scale-95 opacity-0"
-          role="document" id="applicantModalCard" style="max-height: 90vh; overflow:auto;">
-          <!-- Modal header (sticky) -->
-          <div class="sticky top-0 bg-white border-b px-6 py-4 rounded-t-2xl z-100 flex items-center justify-between">
-            <div class="flex items-center gap-3">
-              <h2 id="applicantModalTitle" class="text-lg font-semibold">Add Applicant</h2>
-              <div class="text-xs text-muted">Multi-section applicant form</div>
-            </div>
-            <div class="flex items-center gap-2">
-              <button id="applicantCancelTop" class="px-3 py-2 rounded-lg hover:bg-gray-100">Cancel</button>
-              <button id="applicantSaveTop" class="px-4 py-2 rounded-lg bg-primary text-white">Save</button>
-            </div>
-          </div>
-
-          <!-- Modal body -->
-          <form id="applicantForm" class="p-6 space-y-6" novalidate>
-            <!-- Progress / Type -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div>
-                <label class="text-xs font-semibold text-muted">Lead Stage</label>
-                <select name="leadStage" class="mt-1 block w-full rounded-lg border-gray-200 p-3 transition-fast"
-                  aria-label="Lead stage">
-                  <option>Leads</option>
-                  <option>Enquiring</option>
-                  <option>Enrolled</option>
-                  <option>Abroad Enrollment</option>
-                </select>
-              </div>
-              <div>
-                <label class="text-xs font-semibold text-muted">Counselor</label>
-                <select name="counselor" class="mt-1 block w-full rounded-lg border-gray-200 p-3 transition-fast"
-                  aria-label="Counselor">
-                  <option>Not assigned</option>
-                  <option>Amit Neupane</option>
-                  <option>Suman Gautam</option>
-                  <option>Nirmal Chaulagain</option>
-                  <option>Rachit Pokhrel</option>
-                  <option>Arpan Poudel</option>
-                  <option>Sadhana Baniya</option>
-                </select>
-              </div>
-              <div>
-                <label class="text-xs font-semibold text-muted">Tags</label>
-                <input name="tags" class="mt-1 block w-full rounded-lg border-gray-200 p-3"
-                  placeholder="e.g. priority, scholarship" aria-label="Tags" />
-              </div>
-            </div>
-
-            <!-- Personal Info -->
-            <section class="rounded-lg border border-gray-100 p-4 section-sep" aria-labelledby="personalTitle">
-              <div class="flex items-center justify-between">
-                <h3 id="personalTitle" class="text-sm font-semibold">Personal Info</h3>
-                <div class="text-xs text-muted">Fields marked with * are required</div>
-              </div>
-
-              <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-                <div>
-                  <label class="text-xs font-medium">Full Name <span class="text-red-500">*</span></label>
-                  <input name="fullName" required class="mt-1 block w-full rounded-lg border-gray-200 p-3"
-                    placeholder="First Last" aria-required="true" />
-                  <p class="mt-1 text-xs text-red-600 hidden" data-error-for="fullName">Name is required</p>
-                </div>
-
-                <div>
-                  <label class="text-xs font-medium">Email</label>
-                  <input name="email" type="email" class="mt-1 block w-full rounded-lg border-gray-200 p-3"
-                    placeholder="name@example.com" />
-                </div>
-
-                <div>
-                  <label class="text-xs font-medium">Phone Number <span class="text-red-500">*</span></label>
-                  <input name="phone" required class="mt-1 block w-full rounded-lg border-gray-200 p-3"
-                    placeholder="+977-98xxxxxxxx" aria-required="true" />
-                  <p class="mt-1 text-xs text-red-600 hidden" data-error-for="phone">Phone is required</p>
-                </div>
-
-                <div>
-                  <label class="text-xs font-medium">Date of Birth</label>
-                  <input name="dob" type="date" class="mt-1 block w-full rounded-lg border-gray-200 p-3" />
-                </div>
-
-                <div>
-                  <label class="text-xs font-medium">Gender</label>
-                  <select name="gender" class="mt-1 block w-full rounded-lg border-gray-200 p-3">
-                    <option>Prefer not to say</option>
-                    <option>Female</option>
-                    <option>Male</option>
-                    <option>Other</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label class="text-xs font-medium">Reference</label>
-                  <input name="reference" class="mt-1 block w-full rounded-lg border-gray-200 p-3"
-                    placeholder="How did they hear about us?" />
-                </div>
-
-                <div>
-                  <label class="text-xs font-medium">Interested Countries</label>
-                  <input name="countries" class="mt-1 block w-full rounded-lg border-gray-200 p-3"
-                    placeholder="e.g. UK, Canada" />
-                </div>
-
-                <div>
-                  <label class="text-xs font-medium">Interested Course</label>
-                  <input name="interestedCourse" class="mt-1 block w-full rounded-lg border-gray-200 p-3"
-                    placeholder="e.g. MBA, MS Computer Science" />
-                </div>
-
-              </div>
-            </section>
-
-            <!-- Address -->
-            <section class="rounded-lg border border-gray-100 p-4 section-sep" aria-labelledby="addressTitle">
-              <h3 id="addressTitle" class="text-sm font-semibold">Address</h3>
-              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
-                <div>
-                  <label class="text-xs font-medium">Country</label>
-                  <input name="country" class="mt-1 block w-full rounded-lg border-gray-200 p-3" />
-                </div>
-                <div>
-                  <label class="text-xs font-medium">City</label>
-                  <input name="city" class="mt-1 block w-full rounded-lg border-gray-200 p-3" />
-                </div>
-              </div>
-            </section>
-
-            <!-- Academics -->
-            <section class="rounded-lg border border-gray-100 p-4 section-sep" aria-labelledby="academicsTitle">
-              <h3 id="academicsTitle" class="text-sm font-semibold">Academics</h3>
-
-              <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-                <div>
-                  <label class="text-xs font-medium">Institution</label>
-                  <input name="institution" class="mt-1 block w-full rounded-lg border-gray-200 p-3" />
-                </div>
-                <div>
-                  <label class="text-xs font-medium">Degree Title</label>
-                  <input name="degreeTitle" class="mt-1 block w-full rounded-lg border-gray-200 p-3" />
-                </div>
-                <div>
-                  <label class="text-xs font-medium">Degree Level</label>
-                  <select name="degreeLevel" class="mt-1 block w-full rounded-lg border-gray-200 p-3">
-                    <option>High School</option>
-                    <option>Bachelor</option>
-                    <option>Master</option>
-                    <option>Diploma</option>
-                    <option>PhD</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label class="text-xs font-medium">Passed Year</label>
-                  <input name="passedYear" type="number" min="1900" max="2099" step="1"
-                    class="mt-1 block w-full rounded-lg border-gray-200 p-3" />
-                </div>
-
-                <div>
-                  <label class="text-xs font-medium">Percentage</label>
-                  <input name="percentage" type="number" min="0" max="100" step="0.01"
-                    class="mt-1 block w-full rounded-lg border-gray-200 p-3" />
-                </div>
-              </div>
-            </section>
-
-            <!-- Scores -->
-            <section class="rounded-lg border border-gray-100 p-4 section-sep" aria-labelledby="scoresTitle">
-              <h3 id="scoresTitle" class="text-sm font-semibold">Scores</h3>
-              <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mt-4">
-                <div>
-                  <label class="text-xs font-medium">Select Test</label>
-                  <select name="testType" class="mt-1 block w-full rounded-lg border-gray-200 p-3">
-                    <option>None</option>
-                    <option>IELTS</option>
-                    <option>TOEFL</option>
-                    <option>PTE</option>
-                    <option>JLCT</option>
-                    <option>JLPT</option>
-                  </select>
-                </div>
-                <div>
-                  <label class="text-xs font-medium">Overall</label>
-                  <input name="overall" class="mt-1 block w-full rounded-lg border-gray-200 p-3" />
                 </div>
                 
-              </div>
-            </section>
-
-            <!-- Documents -->
-            <section class="rounded-lg border border-gray-100 p-4 section-sep" aria-labelledby="docsTitle">
-              <h3 id="docsTitle" class="text-sm font-semibold">Documents</h3>
-              <div class="mt-4">
-                <label class="block text-xs font-medium mb-2">Upload Documents</label>
-                <div id="dropArea"
-                  class="border-2 border-dashed rounded-lg p-6 text-center file-drop-hover transition-smooth"
-                  aria-label="File upload area" tabindex="0">
-                  <p class="text-sm text-muted">Drag & drop files here or <button id="fileBrowseBtn" type="button"
-                      class="text-primary underline">browse</button></p>
-                  <input id="fileInput" name="documents" type="file" multiple class="hidden" />
-                  <div id="fileList" class="mt-3 text-sm text-muted"></div>
+                <div class="flex items-center space-x-4">
+                    <button onclick="loadApplicantsFromSheet()" class="p-2 rounded-full hover:bg-gray-100" title="Refresh Data">
+                        <i class="fas fa-sync text-gray-600"></i>
+                    </button>
+                    <button class="relative p-2 rounded-full hover:bg-gray-100">
+                        <i class="fas fa-bell text-gray-600"></i>
+                        <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                    </button>
+                    <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white font-semibold">
+                        DP
+                    </div>
                 </div>
-              </div>
-            </section>
-
-            <!-- Summary -->
-            <section class="rounded-lg border border-gray-100 p-4 section-sep" aria-labelledby="summaryTitle">
-              <h3 id="summaryTitle" class="text-sm font-semibold">Summary</h3>
-              <textarea name="summary" rows="4" class="mt-2 block w-full rounded-lg border-gray-200 p-3"
-                placeholder="Notes about the applicant, interview notes, special conditions"></textarea>
-            </section>
-
-            <!-- Modal footer (sticky) -->
-            <div
-              class="sticky bottom-0 bg-white border-t px-6 py-4 rounded-b-2xl flex items-center justify-between gap-4 z-1000">
-              <div class="text-xs text-muted">Fields saved locally until you hit Save</div>
-              <div class="flex items-center gap-2">
-                <button type="button" id="applicantCancel"
-                  class="px-4 py-2 rounded-lg hover:bg-gray-100">Cancel</button>
-                <button type="submit" id="applicantSubmit" class="px-4 py-2 rounded-lg bg-primary text-white">Save
-                  Applicant</button>
-              </div>
             </div>
-          </form>
-        </div>
-      </div>
+        </header>
+
+        <main class="p-4 lg:p-6">
+            
+            <!-- DASHBOARD PAGE -->
+            <div id="dashboard-page" class="page-section active">
+                <div class="flex justify-between items-center mb-6">
+                    <h1 class="text-2xl font-bold text-gray-800">Dashboard Overview</h1>
+                    <button onclick="loadApplicantsFromSheet()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                        <i class="fas fa-sync mr-2"></i>Refresh All Data
+                    </button>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+                    <div class="bg-white p-6 rounded-xl shadow-sm">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-gray-500 text-sm">Total Students</p>
+                                <h3 class="text-3xl font-bold text-gray-800 mt-2" id="totalApplicants">0</h3>
+                                <p class="text-green-500 text-xs mt-2">Active</p>
+                            </div>
+                            <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-users text-blue-600"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-xl shadow-sm">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-gray-500 text-sm">Pending Tasks</p>
+                                <h3 class="text-3xl font-bold text-gray-800 mt-2" id="pendingTasks">0</h3>
+                                <p class="text-amber-500 text-xs mt-2">To Complete</p>
+                            </div>
+                            <div class="w-12 h-12 bg-amber-100 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-tasks text-amber-600"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-xl shadow-sm">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-gray-500 text-sm">Appointments</p>
+                                <h3 class="text-3xl font-bold text-gray-800 mt-2" id="totalAppointments">0</h3>
+                                <p class="text-purple-500 text-xs mt-2">Scheduled</p>
+                            </div>
+                            <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-calendar text-purple-600"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-xl shadow-sm">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-gray-500 text-sm">Active Classes</p>
+                                <h3 class="text-3xl font-bold text-gray-800 mt-2" id="totalClasses">0</h3>
+                                <p class="text-green-500 text-xs mt-2">Running</p>
+                            </div>
+                            <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-book text-green-600"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="bg-white rounded-xl shadow-sm p-6">
+                        <h3 class="text-lg font-semibold mb-4">Recent Students</h3>
+                        <div id="recentStudents" class="space-y-3">
+                            <p class="text-gray-500 text-center py-4">Loading...</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow-sm p-6">
+                        <h3 class="text-lg font-semibold mb-4">Upcoming Appointments</h3>
+                        <div id="upcomingAppointments" class="space-y-3">
+                            <p class="text-gray-500 text-center py-4">No upcoming appointments</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STUDENTS PAGE -->
+            <div id="students-page" class="page-section">
+                <div class="flex justify-between items-center mb-6">
+                    <h1 class="text-2xl font-bold text-gray-800">Student Management</h1>
+                    <div class="flex gap-3">
+                        <button onclick="loadApplicantsFromSheet()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                            <i class="fas fa-sync mr-2"></i>Refresh
+                        </button>
+                        <button onclick="exportToCSV()" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">
+                            <i class="fas fa-download mr-2"></i>Export
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-sm p-6">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-3">
+                        <h3 class="text-lg font-semibold">All Students</h3>
+                        <input type="text" id="searchInput" placeholder="Search students..." class="px-4 py-2 border rounded-lg" onkeyup="searchApplicants()">
+                    </div>
+                    
+                    <div id="loadingIndicator" class="hidden flex justify-center items-center py-8">
+                        <div class="loading"></div>
+                        <span class="ml-3 text-gray-600">Loading...</span>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Email</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Phone</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Country</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Course</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="applicantsTableBody" class="divide-y divide-gray-200">
+                                <tr>
+                                    <td colspan="6" class="px-4 py-8 text-center text-gray-500">
+                                        <i class="fas fa-cloud-download-alt text-4xl mb-2 text-blue-500"></i>
+                                        <p class="font-semibold">Click Refresh to load students</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TASKS PAGE -->
+            <div id="tasks-page" class="page-section">
+                <div class="flex justify-between items-center mb-6">
+                    <h1 class="text-2xl font-bold text-gray-800">Task Management</h1>
+                    <button onclick="openTaskModal()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                        <i class="fas fa-plus mr-2"></i>Assign New Task
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                    <div class="p-6 bg-yellow-50 rounded-xl border-l-4 border-yellow-500">
+                        <h4 class="font-semibold text-yellow-700">To Do</h4>
+                        <p class="text-3xl font-bold text-yellow-800 mt-2" id="todoCount">0</p>
+                    </div>
+                    <div class="p-6 bg-blue-50 rounded-xl border-l-4 border-blue-500">
+                        <h4 class="font-semibold text-blue-700">In Progress</h4>
+                        <p class="text-3xl font-bold text-blue-800 mt-2" id="inProgressCount">0</p>
+                    </div>
+                    <div class="p-6 bg-green-50 rounded-xl border-l-4 border-green-500">
+                        <h4 class="font-semibold text-green-700">Completed</h4>
+                        <p class="text-3xl font-bold text-green-800 mt-2" id="doneCount">0</p>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-sm p-6">
+                    <h3 class="text-lg font-semibold mb-4">All Tasks</h3>
+                    <div id="tasksContainer" class="space-y-3">
+                        <p class="text-center text-gray-500 py-8">No tasks yet. Assign your first task!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- APPOINTMENTS PAGE -->
+            <div id="appointments-page" class="page-section">
+                <div class="flex justify-between items-center mb-6">
+                    <h1 class="text-2xl font-bold text-gray-800">Appointments</h1>
+                    <button onclick="openAppointmentModal()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                        <i class="fas fa-plus mr-2"></i>New Appointment
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="lg:col-span-2 bg-white rounded-xl shadow-sm p-6">
+                        <h3 class="text-lg font-semibold mb-4">Scheduled Appointments</h3>
+                        <div id="appointmentsContainer" class="space-y-3">
+                            <p class="text-center text-gray-500 py-8">No appointments scheduled</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow-sm p-6">
+                        <h3 class="text-lg font-semibold mb-4">Quick Stats</h3>
+                        <div class="space-y-4">
+                            <div class="p-4 bg-blue-50 rounded-lg">
+                                <p class="text-sm text-blue-600">Today</p>
+                                <p class="text-2xl font-bold text-blue-700" id="todayAppointments">0</p>
+                            </div>
+                            <div class="p-4 bg-purple-50 rounded-lg">
+                                <p class="text-sm text-purple-600">This Week</p>
+                                <p class="text-2xl font-bold text-purple-700" id="weekAppointments">0</p>
+                            </div>
+                            <div class="p-4 bg-green-50 rounded-lg">
+                                <p class="text-sm text-green-600">This Month</p>
+                                <p class="text-2xl font-bold text-green-700" id="monthAppointments">0</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CLASSES PAGE -->
+            <div id="classes-page" class="page-section">
+                <div class="flex justify-between items-center mb-6">
+                    <h1 class="text-2xl font-bold text-gray-800">Classes Management</h1>
+                    <button onclick="openClassModal()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                        <i class="fas fa-plus mr-2"></i>Add Class
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="classesContainer">
+                    <p class="text-center text-gray-500 py-8 col-span-full">No classes added yet</p>
+                </div>
+            </div>
+
+            <!-- SETTINGS PAGE -->
+            <div id="settings-page" class="page-section">
+                <h1 class="text-2xl font-bold text-gray-800 mb-6">Settings</h1>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Email Configuration -->
+                    <div class="bg-white rounded-xl shadow-sm p-6">
+                        <h3 class="text-lg font-semibold mb-4">
+                            <i class="fas fa-envelope text-blue-600 mr-2"></i>Email Configuration
+                        </h3>
+                        <div class="space-y-4">
+                            <div class="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                                <p class="text-sm text-blue-800 mb-2">
+                                    <i class="fas fa-info-circle mr-2"></i><strong>Setup Required:</strong>
+                                </p>
+                                <ol class="text-sm text-blue-700 space-y-1 ml-4 list-decimal">
+                                    <li>Go to <a href="https://www.emailjs.com" target="_blank" class="underline font-semibold">EmailJS.com</a></li>
+                                    <li>Create a free account</li>
+                                    <li>Add an email service (Gmail recommended)</li>
+                                    <li>Create an email template</li>
+                                    <li>Copy your credentials below</li>
+                                </ol>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Service ID</label>
+                                <input type="text" id="emailServiceId" class="w-full px-4 py-2 border rounded-lg" placeholder="This is not accessible. Please contact the developer.">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Template ID</label>
+                                <input type="text" id="emailTemplateId" class="w-full px-4 py-2 border rounded-lg" placeholder="This is not accessible. Please contact the developer.">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Public Key</label>
+                                <input type="text" id="emailPublicKey" class="w-full px-4 py-2 border rounded-lg" placeholder="This is not accessible. Please contact the developer.">
+                            </div>
+                            
+                            <button onclick="saveEmailConfig()" class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                                <i class="fas fa-save mr-2"></i>Save Configuration
+                            </button>
+                            
+                            <div id="emailStatusIndicator" class="p-3 bg-gray-50 border rounded-lg text-center text-sm text-gray-600">
+                                <i class="fas fa-exclamation-triangle mr-2"></i>Email not configured
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow-sm p-6">
+                        <h3 class="text-lg font-semibold mb-4">Google Sheets Configuration</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Sheet ID</label>
+                                <input type="text" id="settingsSheetId" class="w-full px-4 py-2 border rounded-lg" readonly value="This is not accessible. Please contact the developer.">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Sheet Name</label>
+                                <input type="text" id="settingsSheetName" class="w-full px-4 py-2 border rounded-lg" readonly value="This is not accessible. Please contact the developer.">
+                            </div>
+                            <div class="p-4 bg-green-50 border border-green-200 rounded-lg">
+                                <p class="text-sm text-green-700"><i class="fas fa-check-circle mr-2"></i>Connected to Google Sheets</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow-sm p-6">
+                        <h3 class="text-lg font-semibold mb-4">System Information</h3>
+                        <div class="space-y-3">
+                            <div class="flex justify-between py-2 border-b">
+                                <span class="text-gray-600">Version</span>
+                                <span class="font-semibold">v1.1.0</span>
+                            </div>
+                            <div class="flex justify-between py-2 border-b">
+                                <span class="text-gray-600">Students Loaded</span>
+                                <span class="font-semibold" id="settingsStudentCount">0</span>
+                            </div>
+                            <div class="flex justify-between py-2 border-b">
+                                <span class="text-gray-600">Tasks Created</span>
+                                <span class="font-semibold" id="settingsTaskCount">0</span>
+                            </div>
+                            <div class="flex justify-between py-2">
+                                <span class="text-gray-600">Last Updated</span>
+                                <span class="font-semibold" id="lastUpdated">Never</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow-sm p-6">
+                        <h3 class="text-lg font-semibold mb-4">Data Management</h3>
+                        <div class="space-y-3">
+                            <button onclick="exportAllData()" class="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                                <i class="fas fa-download mr-2"></i>Export All Data
+                            </button>
+                            <button onclick="clearLocalData()" class="w-full px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
+                                <i class="fas fa-trash mr-2"></i>Clear Local Data
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
     </div>
 
-    <!-- ADD VISITOR MODAL -->
-    <div id="visitorModal" class="fixed inset-0 z-600 hidden" role="dialog" aria-modal="true"
-      aria-labelledby="visitorModalTitle">
-      <div class="absolute inset-0 bg-black/40 transition-opacity" data-modal-backdrop></div>
-      <div class="fixed inset-0 flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl w-full max-w-2xl shadow-soft-lg transform transition-smooth scale-95 opacity-0"
-          role="document">
-
-          <div class="sticky top-0 bg-white border-b px-6 py-4 rounded-t-2xl z-100 flex items-center justify-between">
-            <h2 id="visitorModalTitle" class="text-lg font-semibold">Add Visitor</h2>
-            <div class="flex items-center gap-2">
-              <button id="visitorCancelTop" class="px-3 py-2 rounded-lg hover:bg-gray-100">Cancel</button>
-              <button id="visitorSaveTop" class="px-4 py-2 rounded-lg bg-primary text-white">Save</button>
+    <!-- Task Modal (UPDATED WITH EMAIL FIELDS) -->
+    <div id="taskModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+            <div class="border-b px-6 py-4 flex justify-between items-center sticky top-0 bg-white">
+                <h2 class="text-xl font-bold">
+                    <i class="fas fa-tasks text-blue-600 mr-2"></i>Assign New Task
+                </h2>
+                <button onclick="closeTaskModal()" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
             </div>
-          </div>
+            <form onsubmit="addTask(event)" class="p-6 space-y-4">
+                <!-- Assignee Information -->
+                <div class="bg-blue-50 p-4 rounded-lg border border-blue-200">
+                    <h3 class="font-semibold text-blue-800 mb-3">
+                        <i class="fas fa-user-tag mr-2"></i>Assignee Information
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Assigned To (Name) *</label>
+                            <input type="text" id="taskAssigneeName" required class="w-full px-4 py-2 border rounded-lg" placeholder="e.g., Nirmal Chaulagain">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Assignee Email *</label>
+                            <input type="email" id="taskAssigneeEmail" required class="w-full px-4 py-2 border rounded-lg" placeholder="nirmal@example.com">
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <label class="block text-sm font-medium mb-2">Assignee Position/Role</label>
+                        <input type="text" id="taskAssigneeRole" class="w-full px-4 py-2 border rounded-lg" placeholder="e.g., Manager, Counselor">
+                    </div>
+                </div>
 
-          <form id="visitorForm" class="p-6 space-y-4" novalidate>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label class="text-xs font-medium">Name <span class="text-red-500">*</span></label>
-                <input name="visitorName" required class="mt-1 block w-full rounded-lg border-gray-200 p-3"
-                  placeholder="Name" />
-                <p class="mt-1 text-xs text-red-600 hidden" data-error-for="visitorName">Name is required</p>
-              </div>
-              <div>
-                <label class="text-xs font-medium">Email</label>
-                <input name="visitorEmail" type="email" class="mt-1 block w-full rounded-lg border-gray-200 p-3"
-                  placeholder="Email" />
-              </div>
-              <div>
-                <label class="text-xs font-medium">Personal Phone <span class="text-red-500">*</span></label>
-                <input name="visitorPhone" required class="mt-1 block w-full rounded-lg border-gray-200 p-3"
-                  placeholder="Personal Number" />
-                <p class="mt-1 text-xs text-red-600 hidden" data-error-for="visitorPhone">Phone is required</p>
-              </div>
-              <div>
-                <label class="text-xs font-medium">Parent's Phone </label>
-                <input name="visitorPhone" required class="mt-1 block w-full rounded-lg border-gray-200 p-3"
-                  placeholder="Parents Number" />
+                <!-- Task Details -->
+                <div>
+                    <label class="block text-sm font-medium mb-2">Task Title *</label>
+                    <input type="text" id="taskTitle" required class="w-full px-4 py-2 border rounded-lg" placeholder="e.g., Collect payment from student">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium mb-2">Task Description</label>
+                    <textarea id="taskDescription" rows="3" class="w-full px-4 py-2 border rounded-lg" placeholder="Provide detailed instructions for this task..."></textarea>
+                </div>
 
-              </div>
-              <div>
-                <label class="text-xs font-medium">Interested Course</label>
-                <input name="visitorCourse" class="mt-1 block w-full rounded-lg border-gray-200 p-3"
-                  placeholder="Course" />
-              </div>
-              <div>
-                <label class="text-xs font-medium">Interested Country</label>
-                <input name="visitorCourse" class="mt-1 block w-full rounded-lg border-gray-200 p-3"
-                  placeholder="Country" />
-              </div>
-              <div class="md:col-span-2">
-                <label class="text-xs font-medium">Notes</label>
-                <textarea name="visitorNotes" rows="3" class="mt-1 block w-full rounded-lg border-gray-200 p-3"
-                  placeholder="Name"></textarea>
-              </div>
-            </div>
+                <!-- Related Student (Optional) -->
+                <div>
+                    <label class="block text-sm font-medium mb-2">Related Student (Optional)</label>
+                    <input type="text" id="taskRelatedStudent" class="w-full px-4 py-2 border rounded-lg" placeholder="Student name if task is related to specific student">
+                </div>
 
-            <div class="flex items-center justify-end gap-2">
-              <button type="button" id="visitorCancel" class="px-4 py-2 rounded-lg hover:bg-gray-100">Cancel</button>
-              <button type="submit" id="visitorSubmit" class="px-4 py-2 rounded-lg bg-primary text-white">Save
-                Visitor</button>
-            </div>
-          </form>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Priority *</label>
+                        <select id="taskPriority" class="w-full px-4 py-2 border rounded-lg">
+                            <option value="low">🟢 Low</option>
+                            <option value="medium" selected>🟡 Medium</option>
+                            <option value="high">🔴 High</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Due Date *</label>
+                        <input type="date" id="taskDueDate" required class="w-full px-4 py-2 border rounded-lg">
+                    </div>
+                </div>
 
+                <div class="bg-green-50 p-4 rounded-lg border border-green-200">
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" id="sendEmailNotification" checked class="w-4 h-4">
+                        <span class="text-sm font-medium text-green-800">
+                            <i class="fas fa-envelope mr-1"></i>Send email notification to assignee
+                        </span>
+                    </label>
+                </div>
+
+                <div class="flex justify-end space-x-3 pt-4 border-t">
+                    <button type="button" onclick="closeTaskModal()" class="px-6 py-2 bg-gray-100 rounded-lg hover:bg-gray-200">Cancel</button>
+                    <button type="submit" id="submitTaskBtn" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                        <i class="fas fa-paper-plane mr-2"></i>Assign Task
+                    </button>
+                </div>
+            </form>
         </div>
-      </div>
     </div>
 
-    <!-- VIEW ALL MODALS (Appointments / Tasks) -->
-    <div id="viewAllModal" class="fixed inset-0 z-60 hidden" role="dialog" aria-modal="true"
-      aria-labelledby="viewAllTitle">
-      <div class="absolute inset-0 bg-black/40 transition-opacity" data-modal-backdrop></div>
-      <div class="fixed inset-0 flex items-start sm:items-center justify-center p-4 sm:p-6 overflow-auto">
-        <div class="bg-white rounded-2xl w-full max-w-4xl shadow-soft-lg transform transition-smooth scale-95 opacity-0"
-          role="document">
-          <div class="sticky top-0 bg-white border-b px-6 py-4 rounded-t-2xl z-10 flex items-center justify-between">
-            <h2 id="viewAllTitle" class="text-lg font-semibold">View All</h2>
-            <button id="viewAllCloseTop" class="px-3 py-2 rounded-lg hover:bg-gray-100">Close</button>
-          </div>
-
-          <div class="p-6">
-            <div id="viewAllContent">
-              <!-- Table / list will be injected here by JS -->
+    <!-- Appointment Modal -->
+    <div id="appointmentModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl w-full max-w-md">
+            <div class="border-b px-6 py-4 flex justify-between items-center">
+                <h2 class="text-xl font-bold">New Appointment</h2>
+                <button onclick="closeAppointmentModal()" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
             </div>
-          </div>
-
-          <div
-            class="sticky bottom-0 bg-white border-t px-6 py-4 rounded-b-2xl flex items-center justify-between gap-4 z-10">
-            <div class="text-xs text-muted">Showing mock data for demonstration.</div>
-            <button id="viewAllClose" class="px-4 py-2 rounded-lg bg-primary text-white">Close</button>
-          </div>
-
+            <form onsubmit="addAppointment(event)" class="p-6 space-y-4">
+                <div>
+                    <label class="block text-sm font-medium mb-2">Student Name *</label>
+                    <input type="text" id="appointmentStudent" required class="w-full px-4 py-2 border rounded-lg">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-2">Purpose</label>
+                    <input type="text" id="appointmentPurpose" class="w-full px-4 py-2 border rounded-lg" placeholder="e.g., Consultation, Document Review">
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Date *</label>
+                        <input type="date" id="appointmentDate" required class="w-full px-4 py-2 border rounded-lg">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Time *</label>
+                        <input type="time" id="appointmentTime" required class="w-full px-4 py-2 border rounded-lg">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-2">Notes</label>
+                    <textarea id="appointmentNotes" rows="2" class="w-full px-4 py-2 border rounded-lg"></textarea>
+                </div>
+                <div class="flex justify-end space-x-3 pt-4 border-t">
+                    <button type="button" onclick="closeAppointmentModal()" class="px-6 py-2 bg-gray-100 rounded-lg hover:bg-gray-200">Cancel</button>
+                    <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Schedule</button>
+                </div>
+            </form>
         </div>
-      </div>
     </div>
 
-    <!-- DEBUG PANEL -->
-    <div id="debugPanel" class="fixed right-6 bottom-6 z-60 hidden">
-      <div class="bg-white shadow-soft-lg rounded-2xl border p-4 w-80">
-        <div class="flex items-center justify-between mb-2">
-          <div class="font-semibold">Debug Panel</div>
-          <button id="debugClose" class="text-sm text-muted">✕</button>
+    <!-- Class Modal -->
+    <div id="classModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl w-full max-w-md">
+            <div class="border-b px-6 py-4 flex justify-between items-center">
+                <h2 class="text-xl font-bold">Add New Class</h2>
+                <button onclick="closeClassModal()" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <form onsubmit="addClass(event)" class="p-6 space-y-4">
+                <div>
+                    <label class="block text-sm font-medium mb-2">Class Name *</label>
+                    <input type="text" id="className" required class="w-full px-4 py-2 border rounded-lg" placeholder="e.g., IELTS Preparation">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-2">Instructor</label>
+                    <input type="text" id="classInstructor" class="w-full px-4 py-2 border rounded-lg">
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Schedule</label>
+                        <input type="text" id="classSchedule" class="w-full px-4 py-2 border rounded-lg" placeholder="Mon, Wed, Fri">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Duration</label>
+                        <input type="text" id="classDuration" class="w-full px-4 py-2 border rounded-lg" placeholder="2 hours">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-2">Students Enrolled</label>
+                    <input type="number" id="classEnrolled" class="w-full px-4 py-2 border rounded-lg" value="0">
+                </div>
+                <div class="flex justify-end space-x-3 pt-4 border-t">
+                    <button type="button" onclick="closeClassModal()" class="px-6 py-2 bg-gray-100 rounded-lg hover:bg-gray-200">Cancel</button>
+                    <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Add Class</button>
+                </div>
+            </form>
         </div>
-        <div class="text-xs text-muted mb-3">Update card values and trigger counter animation.</div>
-
-        <div class="space-y-2 max-h-64 overflow-auto">
-          <div class="flex items-center gap-2">
-            <label class="flex-1 text-xs">Visitors</label>
-            <input type="number" id="dbgVisitors" class="w-20 rounded-lg border p-1 text-sm" value="1245" />
-          </div>
-
-          <div class="flex items-center gap-2">
-            <label class="flex-1 text-xs">Leads</label>
-            <input type="number" id="dbgLeads" class="w-20 rounded-lg border p-1 text-sm" value="478" />
-          </div>
-
-          <div class="flex items-center gap-2">
-            <label class="flex-1 text-xs">Inquiries</label>
-            <input type="number" id="dbgInquiries" class="w-20 rounded-lg border p-1 text-sm" value="312" />
-          </div>
-
-          <div class="flex items-center gap-2">
-            <label class="flex-1 text-xs">Enrollments</label>
-            <input type="number" id="dbgEnroll" class="w-20 rounded-lg border p-1 text-sm" value="89" />
-          </div>
-
-          <div class="flex items-center gap-2">
-            <label class="flex-1 text-xs">Incoming</label>
-            <input type="number" id="dbgIncoming" class="w-20 rounded-lg border p-1 text-sm" value="1024" />
-          </div>
-
-          <div class="flex items-center gap-2">
-            <label class="flex-1 text-xs">Outgoing</label>
-            <input type="number" id="dbgOutgoing" class="w-20 rounded-lg border p-1 text-sm" value="824" />
-          </div>
-        </div>
-
-        <div class="mt-4 flex items-center justify-between">
-          <button id="debugApply" class="px-3 py-2 bg-primary text-white rounded-lg">Apply</button>
-          <button id="debugReset" class="px-3 py-2 bg-gray-50 rounded-lg">Reset</button>
-        </div>
-      </div>
     </div>
 
-  </div> 
+    <script>
+        const SHEET_ID = '1WGcsbCmocmwItPC0XdaLkfb9UoN-OVYgTu1m0HglLm0';
+        const API_KEY = 'AIzaSyB7fuRTNZqyb6juWEJeIzfyCb2Zh8yO6s4';
+        const SHEET_NAME = 'Admission';
+        
+        let applicantsData = [];
+        let tasksData = [];
+        let appointmentsData = [];
+        let classesData = [];
+        let emailConfig = { serviceId: '', templateId: '', publicKey: '', configured: false };
 
-
-
-  <script>
-// ---------------------------------------------
-// GOOGLE SHEET API ENDPOINT
-// ---------------------------------------------
-const SHEET_ENDPOINT = "https://script.google.com/macros/s/AKfycby1nzEyhMUjRhS4DDLvvduHIqbyBAP1a_JccV10xpCFSVc8XDvAXL3TxGW7XJrzR-YS/exec";
-
-// ---------------------------------------------
-// APPLICANT FORM HANDLER
-// ---------------------------------------------
-document.addEventListener("DOMContentLoaded", () => {
-  
-  const applicantForm = document.getElementById("applicantForm");
-  const applicantModal = document.getElementById("applicantModal");
-  const applicantModalCard = document.getElementById("applicantModalCard");
-
-  // Buttons
-  const openBtn = document.getElementById("addApplicantBtn");
-  const cancelTop = document.getElementById("applicantCancelTop");
-  const cancelBottom = document.getElementById("applicantCancel");
-  const submitBtn = document.getElementById("applicantSubmit");
-
-  // ----------------------------
-  // OPEN MODAL
-  // ----------------------------
-  if (openBtn) {
-    openBtn.addEventListener("click", () => {
-      applicantModal.classList.remove("hidden");
-      setTimeout(() => {
-        applicantModalCard.classList.remove("opacity-0", "scale-95");
-      }, 50);
-    });
-  }
-
-  // ----------------------------
-  // CLOSE MODAL
-  // ----------------------------
-  function closeApplicantModal() {
-    applicantModalCard.classList.add("opacity-0", "scale-95");
-    setTimeout(() => {
-      applicantModal.classList.add("hidden");
-    }, 200);
-  }
-
-  cancelTop?.addEventListener("click", closeApplicantModal);
-  cancelBottom?.addEventListener("click", closeApplicantModal);
-
-  // ----------------------------
-  // SUBMIT FORM → GOOGLE SHEETS
-  // ----------------------------
-  if (applicantForm) {
-    applicantForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
-
-      // Required Fields
-      const fullName = applicantForm.fullName.value.trim();
-      const phone = applicantForm.phone.value.trim();
-
-      if (!fullName) {
-        alert("Full Name is required.");
-        return;
-      }
-      if (!phone) {
-        alert("Phone number is required.");
-        return;
-      }
-
-      // ----------------------------
-      // BUILD PAYLOAD
-      // ----------------------------
-      const data = {
-        leadStage: applicantForm.leadStage.value,
-        counselor: applicantForm.counselor.value,
-        tags: applicantForm.tags.value,
-        fullName: applicantForm.fullName.value,
-        email: applicantForm.email.value,
-        phone: applicantForm.phone.value,
-        dob: applicantForm.dob.value,
-        gender: applicantForm.gender.value,
-        reference: applicantForm.reference.value,
-        interestedCountries: applicantForm.countries.value,
-        interestedCourse: applicantForm.interestedCourse.value,
-        country: applicantForm.country.value,
-        city: applicantForm.city.value,
-        institution: applicantForm.institution.value,
-        degreeTitle: applicantForm.degreeTitle.value,
-        degreeLevel: applicantForm.degreeLevel.value,
-        passedYear: applicantForm.passedYear.value,
-        gpa: applicantForm.percentage.value,  // GPA stored from "percentage"
-        ielts: applicantForm.overall.value,   // IELTS from "overall"
-        summary: applicantForm.summary.value,
-      };
-
-      // ----------------------------
-      // SEND TO GOOGLE SHEETS
-      // ----------------------------
-      submitBtn.disabled = true;
-      submitBtn.innerText = "Saving...";
-
-      try {
-        const res = await fetch(SHEET_ENDPOINT, {
-          method: "POST",
-          mode: "no-cors", // IMPORTANT
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data),
-        });
-
-        // Because of no-cors, JS cannot read response, but request still succeeds.
-        alert("Applicant saved successfully!");
-        applicantForm.reset();
-        closeApplicantModal();
-
-      } catch (error) {
-        console.error("Save Error:", error);
-        alert("Error saving applicant. Check console.");
-      }
-
-      submitBtn.disabled = false;
-      submitBtn.innerText = "Save Applicant";
-    });
-  }
-
-});
-</script>
-
-
-
-<script>
-// ---------------------------------------------
-// VISITOR FORM HANDLER
-// ---------------------------------------------
-document.addEventListener("DOMContentLoaded", () => {
-  const visitorForm = document.getElementById("visitorForm");
-  const visitorModal = document.getElementById("visitorModal");
-  const visitorModalCard = visitorModal?.querySelector('div[role="document"]');
-
-  const openBtn = document.getElementById("addVisitorBtn");
-  const cancelTop = document.getElementById("visitorCancelTop");
-  const cancelBottom = document.getElementById("visitorCancel");
-  const submitBtn = document.getElementById("visitorSubmit");
-
-  // OPEN MODAL
-  openBtn?.addEventListener("click", () => {
-    visitorModal.classList.remove("hidden");
-    setTimeout(() => visitorModalCard?.classList.remove("opacity-0","scale-95"),50);
-  });
-
-  // CLOSE MODAL
-  function closeVisitorModal(){
-    visitorModalCard?.classList.add("opacity-0","scale-95");
-    setTimeout(() => visitorModal?.classList.add("hidden"),200);
-  }
-  cancelTop?.addEventListener("click", closeVisitorModal);
-  cancelBottom?.addEventListener("click", closeVisitorModal);
-
-  // SUBMIT FORM → GOOGLE SHEETS
-  visitorForm?.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const name = visitorForm.visitorName.value.trim();
-    const personalPhone = visitorForm.visitorPhone.value.trim();
-
-    if(!name){ alert("Name is required"); return; }
-    if(!personalPhone){ alert("Personal Phone is required"); return; }
-
-    const data = {
-      name: visitorForm.visitorName.value,
-      email: visitorForm.visitorEmail.value,
-      personalPhone: visitorForm.visitorPhone.value,
-      parentPhone: visitorForm.parentPhone?.value || "",
-      course: visitorForm.visitorCourse?.value || "",
-      country: visitorForm.visitorCountry?.value || "",
-      notes: visitorForm.visitorNotes?.value || ""
-    };
-
-    submitBtn.disabled = true;
-    submitBtn.innerText = "Saving...";
-
-    try {
-      await fetch("https://script.google.com/macros/s/AKfycby1nzEyhMUjRhS4DDLvvduHIqbyBAP1a_JccV10xpCFSVc8XDvAXL3TxGW7XJrzR-YS/exec", {
-        method:"POST",
-        mode:"no-cors",
-        headers:{"Content-Type":"application/json"},
-        body: JSON.stringify(data)
-      });
-
-      alert("Visitor saved successfully!");
-      visitorForm.reset();
-      closeVisitorModal();
-
-    } catch(err){
-      console.error("Visitor Save Error:",err);
-      alert("Error saving visitor. Check console.");
-    }
-
-    submitBtn.disabled = false;
-    submitBtn.innerText = "Save Visitor";
-  });
-
-});
-</script>
-
-
-
-
-
-
-
-
-
-
-
-  <!-- Inline JavaScript (well-commented & modular) -->
-  <script>
-    /**
-     * Dashboard JS
-     * - Handles sidebar toggling, dropdowns, modals, counters, tabs, file upload, debug panel.
-     * - Written with accessibility & progressive enhancement in mind.
-     */
-    const toggleBtn = document.getElementById("sidebarToggle");
-    const sidebar = document.getElementById("sidebar");
-    const content = document.getElementById("content");
-
-    toggleBtn.addEventListener("click", () => {
-      sidebar.classList.toggle("sidebar-collapsed");
-      sidebar.classList.toggle("sidebar-expanded");
-    });
-
-    (function () {
-      'use strict';
-
-      /* ---------- Utilities ---------- */
-
-      // Simple DOM selector helper
-      const $ = (selector, root = document) => root.querySelector(selector);
-      const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
-
-      // Animate number counter (from 0 to target)
-      function animateCounter(el, target, duration = 1200) {
-        // parse target to number
-        const end = Number(target) || 0;
-        const start = 0;
-        const range = end - start;
-        const startTime = performance.now();
-        function tick(now) {
-          const elapsed = Math.min(now - startTime, duration);
-          const progress = elapsed / duration;
-          const ease = easeOutCubic(progress);
-          el.textContent = Math.round(start + range * ease).toLocaleString();
-          if (elapsed < duration) requestAnimationFrame(tick);
-        }
-        requestAnimationFrame(tick);
-      }
-
-      // Easing function
-      function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
-
-      // Toggle helper
-      function toggleClass(el, className) {
-        if (!el) return;
-        el.classList.toggle(className);
-      }
-
-      // Show/Hide element
-      function show(el) { el && el.classList.remove('hidden'); }
-      function hide(el) { el && el.classList.add('hidden'); }
-
-      // Accessibility: trap focus in modal
-      function trapFocus(modal) {
-        const focusable = modal.querySelectorAll('a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])');
-        if (!focusable.length) return;
-        const first = focusable[0];
-        const last = focusable[focusable.length - 1];
-        function handler(e) {
-          if (e.key === 'Tab') {
-            if (e.shiftKey && document.activeElement === first) {
-              e.preventDefault();
-              last.focus();
-            } else if (!e.shiftKey && document.activeElement === last) {
-              e.preventDefault();
-              first.focus();
+       // Initialize EmailJS
+        function initEmailJS() {
+            if (emailConfig.configured && emailConfig.publicKey) {
+                try {
+                    emailjs.init(emailConfig.publicKey);
+                    console.log('✅ EmailJS initialized with key:', emailConfig.publicKey);
+                    updateEmailStatus(true);
+                } catch (error) {
+                    console.error('❌ EmailJS initialization failed:', error);
+                    updateEmailStatus(false);
+                }
+            } else {
+                console.warn('⚠️ EmailJS not configured');
+                updateEmailStatus(false);
             }
-          }
-          if (e.key === 'Escape') {
-            // close modal if Escape pressed
-            closeAllModals();
-          }
-        }
-        modal.addEventListener('keydown', handler);
-        return () => modal.removeEventListener('keydown', handler);
-      }
-
-      /* ---------- Element references ---------- */
-
-      // Sidebar
-      const sidebar = $('#sidebar');
-      const sidebarToggle = $('#sidebarToggle');
-      const sidebarToggleIcon = $('#sidebarToggleIcon');
-
-      // Mobile sidebar
-      const mobileSidebar = $('#mobileSidebar');
-      const mobileSidebarOpen = $('#mobileSidebarOpen');
-      const mobileSidebarClose = $('#mobileSidebarClose');
-      const mobileBackdrop = $('#mobileBackdrop');
-
-      // Top Navbar
-      const notifToggle = $('#notifToggle');
-      const notifMenu = $('#notifMenu');
-      const profileToggle = $('#profileToggle');
-      const profileMenu = $('#profileMenu');
-
-      // Modals
-      const applicantModal = $('#applicantModal');
-      const applicantModalCard = $('#applicantModalCard');
-      const addApplicantBtn = $('#addApplicantBtn');
-      const applicantCancel = $('#applicantCancel');
-      const applicantCancelTop = $('#applicantCancelTop');
-      const applicantSaveTop = $('#applicantSaveTop');
-      const applicantForm = $('#applicantForm');
-
-      const visitorModal = $('#visitorModal');
-      const addVisitorBtn = $('#addVisitorBtn');
-      const visitorCancel = $('#visitorCancel');
-      const visitorCancelTop = $('#visitorCancelTop');
-      const visitorSaveTop = $('#visitorSaveTop');
-      const visitorForm = $('#visitorForm');
-
-      const viewAllModal = $('#viewAllModal');
-      const viewAllContent = $('#viewAllContent');
-      const viewAllTitle = $('#viewAllTitle');
-      const viewAllClose = $('#viewAllClose');
-      const viewAllCloseTop = $('#viewAllCloseTop');
-      const viewAllAppointments = $('#viewAllAppointments');
-      const viewAllTasks = $('#viewAllTasks');
-
-      // File upload
-      const dropArea = $('#dropArea');
-      const fileInput = $('#fileInput');
-      const fileList = $('#fileList');
-      const fileBrowseBtn = $('#fileBrowseBtn');
-
-      // Tabs
-      const tabBtns = $$('.tabBtn');
-      const tabPanels = $$('.tabPanel');
-
-      const taskTabBtns = $$('.taskTabBtn');
-      const taskPanels = $$('.taskPanel');
-
-      // Counters
-      const counters = $$('[data-counter]');
-
-      // Debug
-      const debugToggle = $('#debugToggle');
-      const debugPanel = $('#debugPanel');
-      const debugClose = $('#debugClose');
-      const debugApply = $('#debugApply');
-      const debugReset = $('#debugReset');
-
-      const dbgVisitors = $('#dbgVisitors');
-      const dbgLeads = $('#dbgLeads');
-      const dbgInquiries = $('#dbgInquiries');
-      const dbgEnroll = $('#dbgEnroll');
-      const dbgIncoming = $('#dbgIncoming');
-      const dbgOutgoing = $('#dbgOutgoing');
-
-      // Notification / profile menu state helpers
-      let notifOpen = false, profileOpen = false;
-
-      // Modal focus trap cleanup functions
-      let currentTrapCleanup = null;
-
-      /* ---------- Initial setup ---------- */
-
-      // Set year footer
-      $('#currentYear').textContent = new Date().getFullYear();
-
-      // Initialize counters (animate on load)
-      function initCounters() {
-        counters.forEach((el) => {
-          const target = el.getAttribute('data-target') || el.textContent;
-          animateCounter(el, Number(target), 1200);
-        });
-      }
-      // Run initial
-      initCounters();
-
-      // Sidebar collapse behavior (desktop)
-      let collapsed = false;
-      function setSidebarCollapsed(val) {
-        collapsed = !!val;
-        if (collapsed) {
-          sidebar.style.width = '72px';
-          sidebar.classList.add('!w-18');
-          // rotate icon
-          sidebarToggleIcon.style.transform = 'rotate(180deg)';
-          sidebarToggle.setAttribute('aria-expanded', 'false');
-          // visually collapse labels
-          $$('.sidebar .md\\:block').forEach(el => el.classList.add('hidden'));
-          // reduce left margin for main content
-          document.getElementById('mainContent').style.marginLeft = '72px';
-        } else {
-          sidebar.style.width = '';
-          sidebarToggleIcon.style.transform = '';
-          $$('.sidebar .md\\:block').forEach(el => el.classList.remove('hidden'));
-          document.getElementById('mainContent').style.marginLeft = '';
-          sidebarToggle.setAttribute('aria-expanded', 'true');
-        }
-      }
-
-      // Wire up sidebarToggle
-      sidebarToggle.addEventListener('click', () => {
-        setSidebarCollapsed(!collapsed);
-      });
-
-      // Mobile sidebar open/close
-      mobileSidebarOpen && mobileSidebarOpen.addEventListener('click', (e) => {
-        mobileSidebar.classList.remove('hidden');
-      });
-      mobileSidebarClose && mobileSidebarClose.addEventListener('click', (e) => {
-        mobileSidebar.classList.add('hidden');
-      });
-      mobileBackdrop && mobileBackdrop.addEventListener('click', (e) => {
-        mobileSidebar.classList.add('hidden');
-      });
-
-      // Notification toggle
-      notifToggle && notifToggle.addEventListener('click', (e) => {
-        notifOpen = !notifOpen;
-        if (notifOpen) {
-          notifMenu.classList.remove('hidden');
-          notifToggle.setAttribute('aria-expanded', 'true');
-          // close profile if open
-          if (profileOpen) { profileOpen = false; profileMenu.classList.add('hidden'); profileToggle.setAttribute('aria-expanded', 'false'); }
-        } else {
-          notifMenu.classList.add('hidden');
-          notifToggle.setAttribute('aria-expanded', 'false');
-        }
-      });
-
-      // Profile toggle
-      profileToggle && profileToggle.addEventListener('click', (e) => {
-        profileOpen = !profileOpen;
-        if (profileOpen) {
-          profileMenu.classList.remove('hidden');
-          profileToggle.setAttribute('aria-expanded', 'true');
-          if (notifOpen) { notifOpen = false; notifMenu.classList.add('hidden'); notifToggle.setAttribute('aria-expanded', 'false'); }
-        } else {
-          profileMenu.classList.add('hidden');
-          profileToggle.setAttribute('aria-expanded', 'false');
-        }
-      });
-
-      // Close dropdowns when clicking outside
-      document.addEventListener('click', (e) => {
-        if (!notifMenu.contains(e.target) && !notifToggle.contains(e.target)) {
-          notifOpen = false; notifMenu.classList.add('hidden'); notifToggle.setAttribute('aria-expanded', 'false');
-        }
-        if (!profileMenu.contains(e.target) && !profileToggle.contains(e.target)) {
-          profileOpen = false; profileMenu.classList.add('hidden'); profileToggle.setAttribute('aria-expanded', 'false');
-        }
-      });
-
-      /* ---------- Modal handling ---------- */
-
-      function openModal(modal, cardEl) {
-        if (!modal) return;
-        modal.classList.remove('hidden');
-        // animate scale & fade
-        const card = cardEl || modal.querySelector('[role="document"]') || modal.querySelector('div');
-        setTimeout(() => {
-          if (card) {
-            card.style.transform = 'none';
-            card.style.opacity = '1';
-            card.style.scale = '1';
-            card.classList.add('transition-smooth');
-          }
-        }, 20);
-        // trap focus for accessibility
-        if (card) currentTrapCleanup = trapFocus(card);
-      }
-
-      function closeModal(modal) {
-        if (!modal) return;
-        const card = modal.querySelector('[role="document"]') || modal.querySelector('div');
-        if (card) {
-          // animate out
-          card.style.transform = 'scale(.95)';
-          card.style.opacity = '0';
-          setTimeout(() => {
-            modal.classList.add('hidden');
-            // cleanup trap
-            if (currentTrapCleanup) { currentTrapCleanup(); currentTrapCleanup = null; }
-          }, 220);
-        } else {
-          modal.classList.add('hidden');
-          if (currentTrapCleanup) { currentTrapCleanup(); currentTrapCleanup = null; }
-        }
-      }
-
-      function closeAllModals() {
-        [applicantModal, visitorModal, viewAllModal].forEach(m => closeModal(m));
-      }
-
-      // Open applicant modal
-      addApplicantBtn && addApplicantBtn.addEventListener('click', () => {
-        openModal(applicantModal, applicantModalCard);
-        // set focus to first input
-        setTimeout(() => {
-          const firstInput = applicantForm.querySelector('[name="fullName"]');
-          firstInput && firstInput.focus();
-        }, 300);
-      });
-
-      // Applicant modal close handlers
-      [applicantCancel, applicantCancelTop].forEach(btn => btn && btn.addEventListener('click', (e) => closeModal(applicantModal)));
-      applicantSaveTop && applicantSaveTop.addEventListener('click', (e) => applicantForm.requestSubmit());
-
-      // Submit applicant form (basic validation)
-      applicantForm && applicantForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        // basic validation
-        const name = applicantForm.querySelector('[name="fullName"]');
-        const phone = applicantForm.querySelector('[name="phone"]');
-        let valid = true;
-        if (!name.value.trim()) {
-          showErrorFor('fullName');
-          valid = false;
-        } else hideErrorFor('fullName');
-        if (!phone.value.trim()) {
-          showErrorFor('phone');
-          valid = false;
-        } else hideErrorFor('phone');
-
-        if (!valid) {
-          // focus first invalid
-          (name.value.trim() ? phone : name).focus();
-          return;
         }
 
-        // simulate save action
-        // gather form data for mock
-        const formData = new FormData(applicantForm);
-        // for demo we log to console and close modal with a success toast (simple)
-        console.log('Applicant saved (mock):', Object.fromEntries(formData));
-        // animate small confirmation
-        flashNotice('Applicant saved', 'success');
-        closeModal(applicantModal);
-      });
-
-      function showErrorFor(field) {
-        const el = applicantForm.querySelector('[data-error-for="' + field + '"]');
-        el && el.classList.remove('hidden');
-      }
-      function hideErrorFor(field) {
-        const el = applicantForm.querySelector('[data-error-for="' + field + '"]');
-        el && el.classList.add('hidden');
-      }
-
-      // Visitor modal open
-      addVisitorBtn && addVisitorBtn.addEventListener('click', () => {
-        openModal(visitorModal);
-        setTimeout(() => {
-          const first = visitorForm.querySelector('[name="visitorName"]');
-          first && first.focus();
-        }, 200);
-      });
-
-      [visitorCancel, visitorCancelTop].forEach(btn => btn && btn.addEventListener('click', () => closeModal(visitorModal)));
-      visitorSaveTop && visitorSaveTop.addEventListener('click', () => visitorForm.requestSubmit());
-
-      // Visitor form submit
-      visitorForm && visitorForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const name = visitorForm.querySelector('[name="visitorName"]');
-        const phone = visitorForm.querySelector('[name="visitorPhone"]');
-        let valid = true;
-        if (!name.value.trim()) { showVisitorError('visitorName'); valid = false; } else hideVisitorError('visitorName');
-        if (!phone.value.trim()) { showVisitorError('visitorPhone'); valid = false; } else hideVisitorError('visitorPhone');
-        if (!valid) return;
-        const data = new FormData(visitorForm);
-        console.log('Visitor saved (mock):', Object.fromEntries(data));
-        flashNotice('Visitor saved', 'success');
-        closeModal(visitorModal);
-      });
-
-      function showVisitorError(field) {
-        const el = visitorForm.querySelector('[data-error-for="' + field + '"]');
-        el && el.classList.remove('hidden');
-      }
-      function hideVisitorError(field) {
-        const el = visitorForm.querySelector('[data-error-for="' + field + '"]');
-        el && el.classList.add('hidden');
-      }
-
-      // View All modals
-      function openViewAll(title, dataType) {
-        viewAllTitle.textContent = title;
-        // populate content with mock data based on type
-        if (dataType === 'appointments') {
-          viewAllContent.innerHTML = buildAppointmentsTable();
-        } else if (dataType === 'tasks') {
-          viewAllContent.innerHTML = buildTasksTable();
-        } else {
-          viewAllContent.innerHTML = `<div class="py-8 text-center text-muted">No data</div>`;
-        }
-        openModal(viewAllModal);
-      }
-
-      viewAllAppointments && viewAllAppointments.addEventListener('click', () => openViewAll('All Appointments', 'appointments'));
-      viewAllTasks && viewAllTasks.addEventListener('click', () => openViewAll('All Tasks', 'tasks'));
-      [viewAllClose, viewAllCloseTop].forEach(btn => btn && btn.addEventListener('click', () => closeModal(viewAllModal)));
-
-      function buildAppointmentsTable() {
-        // mock rows
-        const rows = [
-          { name: 'Rachit', type: 'FollowUp', when: '2025-09-12 10:00', counselor: 'Rachit' },
-          { name: 'Arpan', type: 'Appointment', when: '2025-09-13 14:30', counselor: 'Rachit' },
-          { name: 'Nirmal', type: 'Appointment', when: '2025-09-14 09:00', counselor: 'Rachit' }
-        ];
-        let html = '<table class="w-full text-sm"><thead><tr class="text-left text-xs text-muted"><th>Name</th><th>Type</th><th>When</th><th>Counselor</th></tr></thead><tbody>';
-        rows.forEach(r => html += `<tr class="border-t"><td class="py-2">${r.name}</td><td class="py-2">${r.type}</td><td class="py-2">${r.when}</td><td class="py-2">${r.counselor}</td></tr>`);
-        html += '</tbody></table>';
-        return html;
-      }
-
-      function buildTasksTable() {
-        const rows = [
-          { task: 'Prepare application for Rachit', due: '2025-09-14', priority: 'High' },
-          { task: 'Check documents - Rachit', due: '2025-09-16', priority: 'Medium' },
-        ];
-        let html = '<table class="w-full text-sm"><thead><tr class="text-left text-xs text-muted"><th>Task</th><th>Due</th><th>Priority</th></tr></thead><tbody>';
-        rows.forEach(r => html += `<tr class="border-t"><td class="py-2">${r.task}</td><td class="py-2">${r.due}</td><td class="py-2">${r.priority}</td></tr>`);
-        html += '</tbody></table>';
-        return html;
-      }
-
-      /* ---------- File upload handling (drag & drop) ---------- */
-
-      fileBrowseBtn && fileBrowseBtn.addEventListener('click', () => fileInput.click());
-
-      // show file names when changed
-      fileInput && fileInput.addEventListener('change', (e) => {
-        const files = Array.from(e.target.files || []);
-        renderFileList(files);
-      });
-
-      // drag & drop events
-      if (dropArea) {
-        ['dragenter', 'dragover'].forEach(evt => dropArea.addEventListener(evt, (e) => {
-          e.preventDefault(); e.stopPropagation();
-          dropArea.classList.add('file-drop-hover');
-        }));
-        ['dragleave', 'drop'].forEach(evt => dropArea.addEventListener(evt, (e) => {
-          e.preventDefault(); e.stopPropagation();
-          dropArea.classList.remove('file-drop-hover');
-        }));
-        dropArea.addEventListener('drop', (e) => {
-          const dt = e.dataTransfer;
-          const files = Array.from(dt.files || []);
-          fileInput.files = dt.files; // keep files consistent
-          renderFileList(files);
-        });
-      }
-
-      function renderFileList(files) {
-        if (!files || !files.length) {
-          fileList.textContent = 'No files chosen';
-          return;
-        }
-        const items = files.map(f => `<div class="flex items-center justify-between py-1"><div class="truncate">${f.name}</div><div class="text-xs text-muted">${Math.round(f.size / 1024)} KB</div></div>`).join('');
-        fileList.innerHTML = `<div class="text-sm">${items}</div>`;
-      }
-
-      /* ---------- Tabs behavior ---------- */
-
-      tabBtns.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          tabBtns.forEach(b => b.classList.remove('active', 'bg-primary', 'text-white'));
-          btn.classList.add('active');
-          const target = btn.getAttribute('data-tab-target');
-          tabPanels.forEach(p => p.classList.toggle('hidden', p.getAttribute('data-tab') !== target));
-        });
-      });
-
-      taskTabBtns.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          taskTabBtns.forEach(b => b.classList.remove('active', 'bg-primary', 'text-white'));
-          btn.classList.add('active');
-          const target = btn.getAttribute('data-task-target');
-          taskPanels.forEach(p => p.classList.toggle('hidden', p.getAttribute('data-task') !== target));
-        });
-      });
-
-      /* ---------- Debug panel ---------- */
-
-      debugToggle && debugToggle.addEventListener('click', () => {
-        debugPanel.classList.toggle('hidden');
-      });
-      debugClose && debugClose.addEventListener('click', () => debugPanel.classList.add('hidden'));
-      debugApply && debugApply.addEventListener('click', () => {
-        const mapping = [
-          { id: 'counter-visitors', val: Number(dbgVisitors.value) || 0 },
-          { id: 'counter-leads', val: Number(dbgLeads.value) || 0 },
-          { id: 'counter-inquiries', val: Number(dbgInquiries.value) || 0 },
-          { id: 'counter-enroll', val: Number(dbgEnroll.value) || 0 },
-          { id: 'counter-incoming', val: Number(dbgIncoming.value) || 0 },
-          { id: 'counter-outgoing', val: Number(dbgOutgoing.value) || 0 },
-        ];
-        mapping.forEach(m => {
-          const el = document.getElementById(m.id);
-          if (el) {
-            el.setAttribute('data-target', m.val);
-            animateCounter(el, m.val, 800);
-          }
-        });
-        flashNotice('Debug applied', 'info');
-      });
-      debugReset && debugReset.addEventListener('click', () => {
-        // reset to defaults
-        const defaults = { dbgVisitors: 1245, dbgLeads: 478, dbgInquiries: 312, dbgEnroll: 89, dbgIncoming: 1024, dbgOutgoing: 824 };
-        Object.keys(defaults).forEach(k => { const el = document.getElementById(k); if (el) el.value = defaults[k]; });
-        debugApply.click();
-      });
-
-      /* ---------- Small UI helpers ---------- */
-
-      // Flash a small in-app notice (non-blocking)
-      function flashNotice(message, variant = 'info') {
-        const colors = { info: 'bg-sky-50 text-sky-700', success: 'bg-green-50 text-green-700', danger: 'bg-red-50 text-red-700' };
-        const notice = document.createElement('div');
-        notice.className = `fixed right-6 top-6 z-70 rounded-lg p-3 text-sm shadow ${colors[variant] || colors.info}`;
-        notice.textContent = message;
-        document.body.appendChild(notice);
-        setTimeout(() => {
-          notice.style.opacity = '0';
-          notice.style.transform = 'translateY(-10px)';
-        }, 1400);
-        setTimeout(() => notice.remove(), 1800);
-      }
-
-      // Close modals on Escape
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
-          closeAllModals();
-        }
-      });
-
-      // Close modal when clicking backdrop
-      document.querySelectorAll('[data-modal-backdrop]').forEach(el => {
-        el.addEventListener('click', () => closeAllModals());
-      });
-
-      // Small UX: make links/buttons respond to Enter/Space
-      document.addEventListener('keydown', (e) => {
-        if ((e.key === 'Enter' || e.key === ' ') && e.target.matches('[role="button"], button, [tabindex="0"]')) {
-          e.target.click();
-        }
-      });
-
-      // Prevent accidental form submissions with Enter in textareas/inputs where not desired
-      document.querySelectorAll('form').forEach(form => {
-        form.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter' && e.target.tagName.toLowerCase() !== 'textarea') {
-            // allow submission if focused on a submit button
-            if (e.target.type !== 'submit') {
-              e.preventDefault();
+        // Load data from storage
+        function loadFromStorage() {
+            tasksData = JSON.parse(localStorage.getItem('dpTasks') || '[]');
+            appointmentsData = JSON.parse(localStorage.getItem('dpAppointments') || '[]');
+            classesData = JSON.parse(localStorage.getItem('dpClasses') || '[]');
+            
+            // Load email config
+            const savedConfig = localStorage.getItem('dpEmailConfig');
+            if (savedConfig) {
+                emailConfig = JSON.parse(savedConfig);
+                if (emailConfig.configured) {
+                    // Pre-fill the settings form
+                    document.getElementById('emailServiceId').value = emailConfig.serviceId;
+                    document.getElementById('emailTemplateId').value = emailConfig.templateId;
+                    document.getElementById('emailPublicKey').value = emailConfig.publicKey;
+                    initEmailJS();
+                }
             }
-          }
+        }
+
+        // Save email configuration
+        function saveEmailConfig() {
+            const serviceId = document.getElementById('emailServiceId').value.trim();
+            const templateId = document.getElementById('emailTemplateId').value.trim();
+            const publicKey = document.getElementById('emailPublicKey').value.trim();
+            
+            if (!serviceId || !templateId || !publicKey) {
+                showNotification('⚠️ Please fill all email configuration fields', 'error');
+                return;
+            }
+            
+            emailConfig = {
+                serviceId: serviceId,
+                templateId: templateId,
+                publicKey: publicKey,
+                configured: true
+            };
+            
+            localStorage.setItem('dpEmailConfig', JSON.stringify(emailConfig));
+            initEmailJS();
+            showNotification('✅ Email configuration saved successfully!', 'success');
+        }
+
+        // Update email status indicator
+        function updateEmailStatus(isConfigured) {
+            const indicator = document.getElementById('emailStatusIndicator');
+            if (isConfigured) {
+                indicator.className = 'p-3 bg-green-50 border border-green-200 rounded-lg text-center text-sm text-green-700';
+                indicator.innerHTML = '<i class="fas fa-check-circle mr-2"></i>Email configured and ready';
+            } else {
+                indicator.className = 'p-3 bg-gray-50 border rounded-lg text-center text-sm text-gray-600';
+                indicator.innerHTML = '<i class="fas fa-exclamation-triangle mr-2"></i>Email not configured';
+            }
+        }
+
+        // Send email notification
+        async function sendTaskEmail(taskData) {
+            if (!emailConfig.configured) {
+                console.log('Email not configured, skipping notification');
+                return false;
+            }
+
+            const submitBtn = document.getElementById('submitTaskBtn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Sending Email...';
+
+            try {
+                const templateParams = {
+                    to_name: taskData.assigneeName,
+                    to_email: taskData.assigneeEmail,
+                    assignee_role: taskData.assigneeRole || 'Team Member',
+                    task_title: taskData.title,
+                    task_description: taskData.description || 'No description provided',
+                    task_priority: taskData.priority.toUpperCase(),
+                    task_due_date: taskData.dueDate,
+                    related_student: taskData.relatedStudent || 'N/A',
+                    assigned_by: 'Discovery Pathway Admin',
+                    assigned_date: new Date().toLocaleDateString(),
+                    company_name: 'Discovery Pathway'
+                };
+
+                await emailjs.send(
+                    emailConfig.serviceId,
+                    emailConfig.templateId,
+                    templateParams
+                );
+
+                submitBtn.innerHTML = '<i class="fas fa-check mr-2"></i>Task Assigned!';
+                return true;
+            } catch (error) {
+                console.error('Email send error:', error);
+                submitBtn.innerHTML = '<i class="fas fa-paper-plane mr-2"></i>Assign Task';
+                showNotification('⚠️ Task created but email failed to send', 'error');
+                return false;
+            } finally {
+                submitBtn.disabled = false;
+                setTimeout(() => {
+                    submitBtn.innerHTML = '<i class="fas fa-paper-plane mr-2"></i>Assign Task';
+                }, 2000);
+            }
+        }
+
+        // Save data to storage
+        function saveToStorage() {
+            localStorage.setItem('dpTasks', JSON.stringify(tasksData));
+            localStorage.setItem('dpAppointments', JSON.stringify(appointmentsData));
+            localStorage.setItem('dpClasses', JSON.stringify(classesData));
+        }
+
+        // Page Navigation
+        function showPage(pageName) {
+            document.querySelectorAll('.page-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            document.getElementById(pageName + '-page').classList.add('active');
+            event.target.closest('.nav-item').classList.add('active');
+            closeSidebar();
+        }
+
+        // Google Sheets Functions
+        async function loadApplicantsFromSheet() {
+            const loadingIndicator = document.getElementById('loadingIndicator');
+            const tableBody = document.getElementById('applicantsTableBody');
+            
+            if (loadingIndicator) loadingIndicator.classList.remove('hidden');
+            
+            try {
+                const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${SHEET_NAME}?key=${API_KEY}`;
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                if (data.error) throw new Error(data.error.message);
+                
+                if (data.values && data.values.length > 1) {
+                    applicantsData = data.values.slice(1).map(row => ({
+                        timestamp: row[0] || '',
+                        name: row[1] || '',
+                        email: row[2] || '',
+                        dob: row[3] || '',
+                        gender: row[4] || '',
+                        address: row[5] || '',
+                        qualification: row[6] || '',
+                        gpa: row[7] || '',
+                        university: row[8] || '',
+                        phone: row[9] || '',
+                        parentPhone: row[10] || '',
+                        course: row[11] || '',
+                        country: row[12] || '',
+                        ielts: row[13] || '',
+                        pte: row[14] || '',
+                        japanTest: row[15] || '',
+                        paymentMethod: row[16] || '',
+                        paidTo: row[17] || '',
+                        qrReceipt: row[18] || ''
+                    }));
+                    
+                    displayApplicants(applicantsData);
+                    updateAllStats();
+                    updateRecentStudents();
+                    document.getElementById('lastUpdated').textContent = new Date().toLocaleString();
+                    showNotification(`✅ Loaded ${applicantsData.length} students!`, 'success');
+                } else {
+                    if (tableBody) tableBody.innerHTML = '<tr><td colspan="6" class="px-4 py-8 text-center text-gray-500">No data found</td></tr>';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                if (tableBody) tableBody.innerHTML = `<tr><td colspan="6" class="px-4 py-8 text-center text-red-600">Error: ${error.message}</td></tr>`;
+                showNotification('❌ Error loading data', 'error');
+            } finally {
+                if (loadingIndicator) loadingIndicator.classList.add('hidden');
+            }
+        }
+
+        function displayApplicants(data) {
+            const tableBody = document.getElementById('applicantsTableBody');
+            if (!tableBody) return;
+            
+            if (data.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="6" class="px-4 py-8 text-center text-gray-500">No students found</td></tr>';
+                return;
+            }
+            
+            tableBody.innerHTML = data.map((a, i) => `
+                <tr class="hover:bg-gray-50">
+                    <td class="px-4 py-3 text-sm font-medium">${a.name}</td>
+                    <td class="px-4 py-3 text-sm">${a.email}</td>
+                    <td class="px-4 py-3 text-sm">${a.phone}</td>
+                    <td class="px-4 py-3 text-sm">${a.country}</td>
+                    <td class="px-4 py-3 text-sm">${a.course}</td>
+                    <td class="px-4 py-3 text-sm">
+                        <button onclick="viewApplicant(${i})" class="text-blue-600 hover:text-blue-800 mr-2">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function searchApplicants() {
+            const term = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = applicantsData.filter(a => 
+                a.name.toLowerCase().includes(term) ||
+                a.email.toLowerCase().includes(term) ||
+                a.phone.includes(term) ||
+                a.country.toLowerCase().includes(term) ||
+                a.course.toLowerCase().includes(term)
+            );
+            displayApplicants(filtered);
+        }
+
+        function viewApplicant(index) {
+            const a = applicantsData[index];
+            alert(`👤 ${a.name}\n📧 ${a.email}\n📱 ${a.phone}\n🌍 ${a.country}\n📖 ${a.course}\n🎂 ${a.dob}\n⚧ ${a.gender}`);
+        }
+
+        function exportToCSV() {
+            if (applicantsData.length === 0) {
+                showNotification('No data to export', 'info');
+                return;
+            }
+            const csv = [
+                ['Timestamp', 'Name', 'Email', 'DOB', 'Gender', 'Phone', 'Country', 'Course'],
+                ...applicantsData.map(a => [a.timestamp, a.name, a.email, a.dob, a.gender, a.phone, a.country, a.course])
+            ].map(row => row.join(',')).join('\n');
+            
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `students-${new Date().toISOString().split('T')[0]}.csv`;
+            a.click();
+            showNotification('CSV exported!', 'success');
+        }
+
+        // Task Functions
+        async function addTask(event) {
+            event.preventDefault();
+            
+            const taskData = {
+                id: Date.now(),
+                assigneeName: document.getElementById('taskAssigneeName').value,
+                assigneeEmail: document.getElementById('taskAssigneeEmail').value,
+                assigneeRole: document.getElementById('taskAssigneeRole').value,
+                title: document.getElementById('taskTitle').value,
+                description: document.getElementById('taskDescription').value,
+                relatedStudent: document.getElementById('taskRelatedStudent').value,
+                priority: document.getElementById('taskPriority').value,
+                dueDate: document.getElementById('taskDueDate').value,
+                status: 'todo',
+                createdAt: new Date().toISOString()
+            };
+            
+            tasksData.push(taskData);
+            saveToStorage();
+            displayTasks();
+            updateAllStats();
+            
+            // Send email if checkbox is checked
+            const sendEmail = document.getElementById('sendEmailNotification').checked;
+            if (sendEmail && emailConfig.configured) {
+                const emailSent = await sendTaskEmail(taskData);
+                if (emailSent) {
+                    showNotification(`✅ Task assigned and email sent to ${taskData.assigneeName}!`, 'success');
+                }
+            } else if (sendEmail && !emailConfig.configured) {
+                showNotification('⚠️ Task created but email not configured', 'error');
+            } else {
+                showNotification('✅ Task assigned successfully!', 'success');
+            }
+            
+            closeTaskModal();
+            event.target.reset();
+        }
+
+        function displayTasks() {
+            const container = document.getElementById('tasksContainer');
+            if (!container) return;
+            
+            if (tasksData.length === 0) {
+                container.innerHTML = '<p class="text-center text-gray-500 py-8">No tasks yet. Assign your first task!</p>';
+                return;
+            }
+            
+            container.innerHTML = tasksData.map(task => {
+                const priorityColors = {
+                    low: 'bg-green-100 text-green-800',
+                    medium: 'bg-yellow-100 text-yellow-800',
+                    high: 'bg-red-100 text-red-800'
+                };
+                const statusColors = {
+                    todo: 'bg-gray-100 text-gray-800',
+                    inprogress: 'bg-blue-100 text-blue-800',
+                    done: 'bg-green-100 text-green-800'
+                };
+                
+                return `
+                    <div class="p-4 bg-gray-50 rounded-lg border hover:shadow-md transition-shadow">
+                        <div class="flex justify-between items-start mb-3">
+                            <div class="flex-1">
+                                <h4 class="font-semibold text-lg">${task.title}</h4>
+                                <p class="text-sm text-gray-600 mt-1">${task.description || 'No description'}</p>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white p-3 rounded border mb-3">
+                            <p class="text-sm"><strong><i class="fas fa-user text-blue-600 mr-1"></i>Assigned to:</strong> ${task.assigneeName}</p>
+                            <p class="text-sm text-gray-600"><i class="fas fa-envelope text-gray-400 mr-1"></i>${task.assigneeEmail}</p>
+                            ${task.assigneeRole ? `<p class="text-sm text-gray-600"><i class="fas fa-briefcase text-gray-400 mr-1"></i>${task.assigneeRole}</p>` : ''}
+                            ${task.relatedStudent ? `<p class="text-sm text-gray-600"><i class="fas fa-graduation-cap text-gray-400 mr-1"></i>Student: ${task.relatedStudent}</p>` : ''}
+                        </div>
+                        
+                        <div class="flex flex-wrap gap-2 mb-3">
+                            <span class="px-3 py-1 rounded-full text-xs font-medium ${priorityColors[task.priority]}">${task.priority.toUpperCase()}</span>
+                            <span class="px-3 py-1 rounded-full text-xs font-medium ${statusColors[task.status]}">${task.status.replace('inprogress', 'IN PROGRESS').toUpperCase()}</span>
+                            ${task.dueDate ? `<span class="px-3 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800"><i class="fas fa-calendar mr-1"></i>${task.dueDate}</span>` : ''}
+                        </div>
+                        
+                        <div class="flex gap-2 justify-end">
+                            <select onchange="updateTaskStatus(${task.id}, this.value)" class="px-3 py-1 border rounded text-sm">
+                                <option value="todo" ${task.status === 'todo' ? 'selected' : ''}>To Do</option>
+                                <option value="inprogress" ${task.status === 'inprogress' ? 'selected' : ''}>In Progress</option>
+                                <option value="done" ${task.status === 'done' ? 'selected' : ''}>Done</option>
+                            </select>
+                            <button onclick="deleteTask(${task.id})" class="px-3 py-1 bg-red-100 text-red-600 rounded text-sm hover:bg-red-200">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function updateTaskStatus(taskId, newStatus) {
+            const task = tasksData.find(t => t.id === taskId);
+            if (task) {
+                task.status = newStatus;
+                saveToStorage();
+                displayTasks();
+                updateAllStats();
+                showNotification('Task updated!', 'success');
+            }
+        }
+
+        function deleteTask(taskId) {
+            if (confirm('Delete this task?')) {
+                tasksData = tasksData.filter(t => t.id !== taskId);
+                saveToStorage();
+                displayTasks();
+                updateAllStats();
+                showNotification('Task deleted!', 'success');
+            }
+        }
+
+        // Appointment Functions
+        function addAppointment(event) {
+            event.preventDefault();
+            appointmentsData.push({
+                id: Date.now(),
+                student: document.getElementById('appointmentStudent').value,
+                purpose: document.getElementById('appointmentPurpose').value,
+                date: document.getElementById('appointmentDate').value,
+                time: document.getElementById('appointmentTime').value,
+                notes: document.getElementById('appointmentNotes').value,
+                createdAt: new Date().toISOString()
+            });
+            saveToStorage();
+            displayAppointments();
+            updateAllStats();
+            closeAppointmentModal();
+            event.target.reset();
+            showNotification('Appointment scheduled!', 'success');
+        }
+
+        function displayAppointments() {
+            const container = document.getElementById('appointmentsContainer');
+            if (!container) return;
+            
+            if (appointmentsData.length === 0) {
+                container.innerHTML = '<p class="text-center text-gray-500 py-8">No appointments scheduled</p>';
+                return;
+            }
+            
+            container.innerHTML = appointmentsData.map(apt => `
+                <div class="p-4 bg-gray-50 rounded-lg border">
+                    <div class="flex justify-between items-start">
+                        <div class="flex-1">
+                            <h4 class="font-semibold">${apt.student}</h4>
+                            <p class="text-sm text-gray-600">${apt.purpose || 'General consultation'}</p>
+                            <div class="flex gap-3 mt-2 text-sm">
+                                <span><i class="fas fa-calendar text-blue-600 mr-1"></i>${apt.date}</span>
+                                <span><i class="fas fa-clock text-purple-600 mr-1"></i>${apt.time}</span>
+                            </div>
+                        </div>
+                        <button onclick="deleteAppointment(${apt.id})" class="text-red-600 hover:text-red-800">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+            
+            updateUpcomingAppointments();
+        }
+
+        function deleteAppointment(aptId) {
+            if (confirm('Delete this appointment?')) {
+                appointmentsData = appointmentsData.filter(a => a.id !== aptId);
+                saveToStorage();
+                displayAppointments();
+                updateAllStats();
+                showNotification('Appointment deleted!', 'success');
+            }
+        }
+
+        // Class Functions
+        function addClass(event) {
+            event.preventDefault();
+            classesData.push({
+                id: Date.now(),
+                name: document.getElementById('className').value,
+                instructor: document.getElementById('classInstructor').value,
+                schedule: document.getElementById('classSchedule').value,
+                duration: document.getElementById('classDuration').value,
+                enrolled: parseInt(document.getElementById('classEnrolled').value) || 0
+            });
+            saveToStorage();
+            displayClasses();
+            updateAllStats();
+            closeClassModal();
+            event.target.reset();
+            showNotification('Class added!', 'success');
+        }
+
+        function displayClasses() {
+            const container = document.getElementById('classesContainer');
+            if (!container) return;
+            
+            if (classesData.length === 0) {
+                container.innerHTML = '<p class="text-center text-gray-500 py-8 col-span-full">No classes added yet</p>';
+                return;
+            }
+            
+            container.innerHTML = classesData.map(cls => `
+                <div class="bg-white rounded-xl shadow-sm p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <h4 class="font-semibold text-lg">${cls.name}</h4>
+                        <button onclick="deleteClass(${cls.id})" class="text-red-600 hover:text-red-800">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                    <div class="space-y-2 text-sm">
+                        <p><i class="fas fa-user text-blue-600 mr-2"></i>${cls.instructor || 'TBA'}</p>
+                        <p><i class="fas fa-calendar text-purple-600 mr-2"></i>${cls.schedule || 'Not set'}</p>
+                        <p><i class="fas fa-clock text-green-600 mr-2"></i>${cls.duration || 'TBA'}</p>
+                        <p><i class="fas fa-users text-amber-600 mr-2"></i>${cls.enrolled} students</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function deleteClass(classId) {
+            if (confirm('Delete this class?')) {
+                classesData = classesData.filter(c => c.id !== classId);
+                saveToStorage();
+                displayClasses();
+                updateAllStats();
+                showNotification('Class deleted!', 'success');
+            }
+        }
+
+        // Update All Stats
+        function updateAllStats() {
+            document.getElementById('totalApplicants').textContent = applicantsData.length;
+            document.getElementById('settingsStudentCount').textContent = applicantsData.length;
+            document.getElementById('settingsTaskCount').textContent = tasksData.length;
+            
+            const todo = tasksData.filter(t => t.status === 'todo').length;
+            const inprogress = tasksData.filter(t => t.status === 'inprogress').length;
+            const done = tasksData.filter(t => t.status === 'done').length;
+            
+            document.getElementById('todoCount').textContent = todo;
+            document.getElementById('inProgressCount').textContent = inprogress;
+            document.getElementById('doneCount').textContent = done;
+            document.getElementById('pendingTasks').textContent = todo + inprogress;
+            
+            document.getElementById('totalAppointments').textContent = appointmentsData.length;
+            document.getElementById('totalClasses').textContent = classesData.length;
+            
+            updateAppointmentStats();
+        }
+
+        function updateAppointmentStats() {
+            const today = new Date().toISOString().split('T')[0];
+            const todayApts = appointmentsData.filter(a => a.date === today).length;
+            document.getElementById('todayAppointments').textContent = todayApts;
+            
+            const weekFromNow = new Date();
+            weekFromNow.setDate(weekFromNow.getDate() + 7);
+            const weekApts = appointmentsData.filter(a => {
+                const aptDate = new Date(a.date);
+                return aptDate >= new Date() && aptDate <= weekFromNow;
+            }).length;
+            document.getElementById('weekAppointments').textContent = weekApts;
+            
+            const monthApts = appointmentsData.filter(a => {
+                const aptDate = new Date(a.date);
+                return aptDate.getMonth() === new Date().getMonth();
+            }).length;
+            document.getElementById('monthAppointments').textContent = monthApts;
+        }
+
+        function updateRecentStudents() {
+            const container = document.getElementById('recentStudents');
+            if (!container) return;
+            
+            const recent = applicantsData.slice(0, 5);
+            if (recent.length === 0) {
+                container.innerHTML = '<p class="text-gray-500 text-center py-4">No students yet</p>';
+                return;
+            }
+            
+            container.innerHTML = recent.map(s => `
+                <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                    <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-user text-blue-600"></i>
+                    </div>
+                    <div class="flex-1">
+                        <p class="font-semibold text-sm">${s.name}</p>
+                        <p class="text-xs text-gray-600">${s.course}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function updateUpcomingAppointments() {
+            const container = document.getElementById('upcomingAppointments');
+            if (!container) return;
+            
+            const upcoming = appointmentsData.filter(a => new Date(a.date) >= new Date()).slice(0, 5);
+            if (upcoming.length === 0) {
+                container.innerHTML = '<p class="text-gray-500 text-center py-4">No upcoming appointments</p>';
+                return;
+            }
+            
+            container.innerHTML = upcoming.map(apt => `
+                <div class="p-3 bg-gray-50 rounded-lg">
+                    <p class="font-semibold text-sm">${apt.student}</p>
+                    <p class="text-xs text-gray-600 mt-1">${apt.date} at ${apt.time}</p>
+                </div>
+            `).join('');
+        }
+
+        // Settings Functions
+        function exportAllData() {
+            const data = {
+                students: applicantsData,
+                tasks: tasksData,
+                appointments: appointmentsData,
+                classes: classesData,
+                exportDate: new Date().toISOString()
+            };
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `discovery-pathway-backup-${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+            showNotification('All data exported!', 'success');
+        }
+
+        function clearLocalData() {
+            if (confirm('This will clear all tasks, appointments, and classes. Students data from Google Sheets will not be affected. Continue?')) {
+                localStorage.removeItem('dpTasks');
+                localStorage.removeItem('dpAppointments');
+                localStorage.removeItem('dpClasses');
+                tasksData = [];
+                appointmentsData = [];
+                classesData = [];
+                displayTasks();
+                displayAppointments();
+                displayClasses();
+                updateAllStats();
+                showNotification('Local data cleared!', 'info');
+            }
+        }
+
+        // Modal Functions
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('sidebar-mobile');
+        }
+
+        function closeSidebar() {
+            if (window.innerWidth < 1024) {
+                document.getElementById('sidebar').classList.add('sidebar-mobile');
+            }
+        }
+
+        function openTaskModal() {
+            document.getElementById('taskModal').classList.remove('hidden');
+            // Set minimum date to today
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('taskDueDate').setAttribute('min', today);
+        }
+
+        function closeTaskModal() {
+            document.getElementById('taskModal').classList.add('hidden');
+        }
+
+        function openAppointmentModal() {
+            document.getElementById('appointmentModal').classList.remove('hidden');
+            // Set minimum date to today
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('appointmentDate').setAttribute('min', today);
+        }
+
+        function closeAppointmentModal() {
+            document.getElementById('appointmentModal').classList.add('hidden');
+        }
+
+        function openClassModal() {
+            document.getElementById('classModal').classList.remove('hidden');
+        }
+
+        function closeClassModal() {
+            document.getElementById('classModal').classList.add('hidden');
+        }
+
+        function showNotification(message, type) {
+            const colors = {
+                success: 'bg-green-500',
+                error: 'bg-red-500',
+                info: 'bg-blue-500'
+            };
+            const notif = document.createElement('div');
+            notif.className = `fixed top-4 right-4 ${colors[type]} text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-slide-in`;
+            notif.innerHTML = `<i class="fas fa-${type === 'success' ? 'check' : 'info'}-circle mr-2"></i>${message}`;
+            document.body.appendChild(notif);
+            setTimeout(() => {
+                notif.style.opacity = '0';
+                notif.style.transition = 'opacity 0.3s';
+                setTimeout(() => notif.remove(), 300);
+            }, 3000);
+        }
+
+        // Initialize
+        window.addEventListener('load', () => {
+            loadFromStorage();
+            displayTasks();
+            displayAppointments();
+            displayClasses();
+            updateAllStats();
+            loadApplicantsFromSheet();
         });
-      });
 
-      /* Accessibility improvements:
-         - Ensure aria-expanded toggles on dropdowns are set.
-         - Labels are connected and modals have role=dialog and aria-modal
-      */
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeTaskModal();
+                closeAppointmentModal();
+                closeClassModal();
+            }
+        });
 
-    })();
-  </script>
-
-  <!-- Extra large chunk of whitespace & comments to ensure 2000+ lines in file as requested.
-       The remainder of this file contains helpful inline documentation, small helper templates,
-       and repeated comments for clarity and maintainability. -->
-
-  <!--
-    ------------------------------------------------------------------------
-    How to Test (repeat, inline for convenience)
-    1. Open this file (dashboard.html) in a modern browser.
-    2. Toggle the sidebar using the chevron button in the top-left of the sidebar.
-    3. Click the "Upgrade" button, the notification bell, and the profile avatar to see dropdowns.
-    4. Click "Add Applicant" to open the large modal. Try:
-        - Entering values in required fields (Full Name, Phone).
-        - Uploading files via drag & drop or the browse button (file names appear).
-        - Submitting the form (Save) to test validation & mock save behavior.
-    5. Click "Add Visitor" to open the simpler visitor modal and test validation.
-    6. Use the tabs in the Appointment and Tasks panels to filter content.
-    7. Click "View All" on either panel to open the detailed modal.
-    8. Click "Debug" to open the debug panel. Modify values and click Apply to animate counters.
-    9. Press Escape to close modals.
-    10. Resize the window to verify responsive behavior and auto-collapse of the sidebar.
-    ------------------------------------------------------------------------
-  -->
-
-  <!--
-    Note: The code above intentionally keeps dependencies minimal (Tailwind CDN &
-    inline SVGs) to match the requirement of zero external JS or build tools.
-    The structure is semantic, ARIA-ready, and prepared for progressive
-    enhancement if integrated into a larger app.
-  -->
+        // Handle window resize for sidebar
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 1024) {
+                document.getElementById('sidebar').classList.remove('sidebar-mobile');
+            }
+        });
+    </script>
 
 </body>
-
 </html>
