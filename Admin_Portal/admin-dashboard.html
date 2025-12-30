@@ -342,20 +342,7 @@
                             <i class="fas fa-envelope text-blue-600 mr-2"></i>Email Configuration
                         </h3>
                         <div class="space-y-4">
-                            <div class="p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                                <p class="text-sm text-blue-800 mb-2">
-                                    <i class="fas fa-info-circle mr-2"></i><strong>Setup Required:</strong>
-                                </p>
-                                <ol class="text-sm text-blue-700 space-y-1 ml-4 list-decimal">
-                                    <li>Go to <a href="https://www.emailjs.com" target="_blank" class="underline font-semibold">EmailJS.com</a></li>
-                                    <li>Create a free account</li>
-                                    <li>Add an email service (Gmail recommended)</li>
-                                    <li>Create an email template</li>
-                                    <li>Copy your credentials below</li>
-                                </ol>
-                            </div>
-                            
-                            <div>
+                                                        <div>
                                 <label class="block text-sm font-medium mb-2">Service ID</label>
                                 <input type="text" id="emailServiceId" class="w-full px-4 py-2 border rounded-lg" placeholder="This is not accessible. Please contact the developer.">
                             </div>
@@ -599,6 +586,14 @@
     </div>
 
     <script>
+
+      function blurText() {
+    document.getElementById("API_KEY").classList.add("blurred");
+}
+
+function unblurText() {
+    document.getElementById("API_KEY").classList.remove("blurred");
+}
         const SHEET_ID = '1WGcsbCmocmwItPC0XdaLkfb9UoN-OVYgTu1m0HglLm0';
         const API_KEY = 'AIzaSyB7fuRTNZqyb6juWEJeIzfyCb2Zh8yO6s4';
         const SHEET_NAME = 'Admission';
