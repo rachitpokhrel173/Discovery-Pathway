@@ -1,95 +1,300 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="utf-8" />
-  <title>Discovery Admin Login</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-  <!-- Clerk -->
-  <script async crossorigin="anonymous"
-    data-clerk-publishable-key="pk_test_bmV3LW1vbGx1c2stMTIuY2xlcmsuYWNjb3VudHMuZGV2JA"
-    src="https://new-mollusk-12.clerk.accounts.dev/npm/@clerk/clerk-js@latest/dist/clerk.browser.js">
-  </script>
-
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    body {
-      font-family: 'Inter', system-ui, sans-serif;
-    }
-
-    /* Hide Clerk badge */
-    .cl-internal-b3fm6y {
-      display: none !important;
-    }
-  </style>
-</head>
-
-<body class="min-h-screen flex items-center justify-center bg-[#1e1b29] p-4">
-
-  <!-- Container -->
-  <div class="w-full max-w-6xl h-auto md:h-[600px] flex flex-col md:flex-row bg-[#2a2738] rounded-2xl shadow-2xl overflow-hidden">
-
-    <!-- Left: Branding / Image -->
-    <div class="w-full md:w-3/5 h-48 md:h-auto bg-cover bg-center relative"
-      style="background-image: url('/Assets/1_Team_Discovery.jpeg');">
-      <div class="absolute inset-0 bg-black/50 flex flex-col justify-end p-6 md:p-8 text-white">
-        <img src="/Quick Links/LOGO.png" alt="Discovery Pathway" class="w-32 md:w-40 mb-4" />
-        <h2 class="text-lg md:text-2xl font-bold">Discovery Admin Portal</h2>
-        <p class="text-xs md:text-sm text-gray-300">Manage students, payments, and more — securely.</p>
-      </div>
-    </div>
-
-    <!-- Right: Login Box -->
-    <div class="w-full md:w-2/5 p-6 md:p-10 flex flex-col justify-center bg-[#1f1c2e] text-white">
-      <h1 class="text-2xl md:text-3xl font-bold mb-2">Sign in</h1>
-      <p class="text-gray-400 mb-8 text-sm md:text-base">Enter your credentials to access the admin dashboard.</p>
-
-      <!-- Clerk login will mount here -->
-      <div id="auth-root"></div>
-
-      <p class="mt-6 text-xs text-gray-500 text-center">
-        Trouble logging in? <a href="mailto:rachitpokhrel123@gmail.com" class="text-blue-400 hover:underline">Contact IT</a>
-      </p>
-    </div>
-  </div>
-
-  <!-- Clerk -->
- <script>
-  window.addEventListener('load', async () => {
-    await window.Clerk.load();
-
-    Clerk.mountSignIn(document.getElementById('auth-root'), {
-      routing: 'hash',
-      withSignUp: false, // disable sign-up for admin
-      redirectUrl: '/Admin_Portal/admin-dashboard.html',   // ✅ use this instead
-      afterSignInUrl: '/Admin_Portal/admin-dashboard.html', // ✅ ensure proper redirect
-      appearance: {
-        layout: { logoPlacement: "none" },
-        variables: {
-          colorPrimary: "#7c3aed",
-          borderRadius: "10px",
-          colorText: "white",
-          colorBackground: "#2a2738",
-          colorInputBackground: "#1e1b29",
-          colorInputText: "white",
-          colorInputBorder: "#444"
-        },
-        elements: {
-          card: "bg-transparent shadow-none",
-          headerTitle: "hidden",
-          headerSubtitle: "hidden",
-          formButtonPrimary:
-            "bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-semibold rounded-lg h-11 transition duration-200 w-full",
-          formFieldInput:
-            "bg-[#1e1b29] text-white border border-gray-600 rounded-lg px-3 py-2 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 outline-none",
-          footer: "hidden"
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discovery Admin Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
-      }
-    });
-  });
-</script>
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .input-focus:focus {
+            border-color: #7c3aed;
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center gradient-bg p-4">
 
+    <!-- Login Container -->
+    <div class="w-full max-w-6xl flex flex-col md:flex-row bg-white rounded-2xl shadow-2xl overflow-hidden">
+        
+        <!-- Left Side - Branding -->
+        <div class="w-full md:w-3/5 bg-gradient-to-br from-purple-600 to-indigo-700 p-8 md:p-12 flex flex-col justify-center text-white relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full -mr-32 -mt-32"></div>
+            <div class="absolute bottom-0 left-0 w-96 h-96 bg-white opacity-5 rounded-full -ml-48 -mb-48"></div>
+            
+            <div class="relative z-10">
+                <div class="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center mb-6 backdrop-blur-sm">
+                    <i class="fas fa-graduation-cap text-3xl"></i>
+                </div>
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">Discovery Pathway</h1>
+                <p class="text-lg md:text-xl text-purple-100 mb-8">Admin Portal</p>
+                <div class="space-y-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center backdrop-blur-sm">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <span>Manage Students & Applications</span>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center backdrop-blur-sm">
+                            <i class="fas fa-tasks"></i>
+                        </div>
+                        <span>Track Tasks & Assignments</span>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center backdrop-blur-sm">
+                            <i class="fas fa-calendar"></i>
+                        </div>
+                        <span>Schedule Appointments</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Side - Login Form -->
+        <div class="w-full md:w-2/5 p-8 md:p-12 flex flex-col justify-center bg-gray-50">
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-2">Welcome Back</h2>
+                <p class="text-gray-600">Sign in to access the admin dashboard</p>
+            </div>
+
+            <!-- Login Form -->
+            <form id="loginForm" class="space-y-5">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        <i class="fas fa-envelope text-purple-600 mr-2"></i>Email
+                    </label>
+                    <input 
+                        type="email" 
+                        id="emailInput" 
+                        required
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none input-focus transition"
+                        placeholder="admin@discovery.com"
+                    >
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        <i class="fas fa-lock text-purple-600 mr-2"></i>Password
+                    </label>
+                    <div class="relative">
+                        <input 
+                            type="password" 
+                            id="passwordInput" 
+                            required
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none input-focus transition pr-12"
+                            placeholder="••••••••"
+                        >
+                        <button 
+                            type="button"
+                            onclick="togglePassword()"
+                            class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                        >
+                            <i id="eyeIcon" class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between">
+                    <label class="flex items-center">
+                        <input type="checkbox" class="w-4 h-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500">
+                        <span class="ml-2 text-sm text-gray-600">Remember me</span>
+                    </label>
+                    <a href="#" onclick="forgotPassword()" class="text-sm text-purple-600 hover:text-purple-700 font-medium">
+                        Forgot password?
+                    </a>
+                </div>
+
+                <!-- Error Message -->
+                <div id="errorMessage" class="hidden bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
+                    <i class="fas fa-exclamation-circle mr-2"></i>
+                    <span id="errorText"></span>
+                </div>
+
+                <!-- Success Message -->
+                <div id="successMessage" class="hidden bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg text-sm">
+                    <i class="fas fa-check-circle mr-2"></i>
+                    <span id="successText"></span>
+                </div>
+
+                <button 
+                    type="submit"
+                    id="loginButton"
+                    class="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-semibold py-3 rounded-lg transition duration-200 flex items-center justify-center"
+                >
+                    <i class="fas fa-sign-in-alt mr-2"></i>
+                    <span id="buttonText">Sign In</span>
+                </button>
+            </form>
+
+            <div class="mt-6 text-center">
+                <p class="text-sm text-gray-600">
+                    Need help? <a href="mailto:rachitpokhrel123@gmail.com" class="text-purple-600 hover:text-purple-700 font-medium">Contact Support</a>
+                </p>
+            </div>
+
+            <!-- Database Status -->
+            <div class="mt-8 p-3 bg-white border border-gray-200 rounded-lg">
+                <div class="flex items-center justify-between text-xs">
+                    <span class="text-gray-600">Database Status:</span>
+                    <span id="dbStatus" class="text-green-600 font-medium">
+                        <i class="fas fa-circle text-xs mr-1"></i>Connected
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Supabase Configuration
+        const SUPABASE_URL = 'https://rdzdermrmvbhfbynxqxy.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJkemRlcm1ybXZiaGZieW54cXh5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjcwNzEzOTgsImV4cCI6MjA4MjY0NzM5OH0.9MK2u6YUHmNGI85U_-suG_SogbRy9lLsqpB6SFdIrtA';
+        
+        // Initialize Supabase
+        const { createClient } = supabase;
+        const supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        // Check if user is already logged in on page load
+        window.addEventListener('load', async () => {
+            const { data: { session } } = await supabaseClient.auth.getSession();
+            if (session) {
+                // User is already logged in, redirect to dashboard
+                showSuccess('Already logged in! Redirecting...');
+                setTimeout(() => {
+                    window.location.href = 'admin-dashboard.html';
+                }, 1000);
+            }
+        });
+
+        // Login Form Handler
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('emailInput').value.trim();
+            const password = document.getElementById('passwordInput').value;
+            
+            // Disable button and show loading
+            const button = document.getElementById('loginButton');
+            const buttonText = document.getElementById('buttonText');
+            button.disabled = true;
+            buttonText.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Signing in...';
+            
+            hideMessages();
+            
+            try {
+                // Sign in with Supabase
+                const { data, error } = await supabaseClient.auth.signInWithPassword({
+                    email: email,
+                    password: password
+                });
+                
+                if (error) throw error;
+                
+                // Success
+                showSuccess('Login successful! Redirecting...');
+                
+                // Store session info
+                if (data.session) {
+                    localStorage.setItem('sb_access_token', data.session.access_token);
+                    localStorage.setItem('sb_user_email', data.user.email);
+                }
+                
+                // Redirect to dashboard
+                setTimeout(() => {
+                    window.location.href = 'admin-dashboard.html';
+                }, 1500);
+                
+            } catch (error) {
+                console.error('Login error:', error);
+                showError(getErrorMessage(error.message));
+                
+                // Re-enable button
+                button.disabled = false;
+                buttonText.innerHTML = '<i class="fas fa-sign-in-alt mr-2"></i>Sign In';
+            }
+        });
+
+        // Toggle Password Visibility
+        function togglePassword() {
+            const passwordInput = document.getElementById('passwordInput');
+            const eyeIcon = document.getElementById('eyeIcon');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                eyeIcon.classList.remove('fa-eye');
+                eyeIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                eyeIcon.classList.remove('fa-eye-slash');
+                eyeIcon.classList.add('fa-eye');
+            }
+        }
+
+        // Forgot Password Handler
+        async function forgotPassword() {
+            const email = prompt('Enter your email address:');
+            if (!email) return;
+            
+            try {
+                const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
+                    redirectTo: window.location.origin + '/Admin_Portal/reset-password.html'
+                });
+                
+                if (error) throw error;
+                
+                showSuccess('Password reset email sent! Check your inbox.');
+            } catch (error) {
+                showError('Error sending reset email. Please try again.');
+            }
+        }
+
+        // Helper Functions
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            const errorText = document.getElementById('errorText');
+            errorText.textContent = message;
+            errorDiv.classList.remove('hidden');
+        }
+
+        function showSuccess(message) {
+            const successDiv = document.getElementById('successMessage');
+            const successText = document.getElementById('successText');
+            successText.textContent = message;
+            successDiv.classList.remove('hidden');
+        }
+
+        function hideMessages() {
+            document.getElementById('errorMessage').classList.add('hidden');
+            document.getElementById('successMessage').classList.add('hidden');
+        }
+
+        function getErrorMessage(error) {
+            if (error.includes('Invalid login credentials')) {
+                return 'Invalid email or password. Please try again.';
+            } else if (error.includes('Email not confirmed')) {
+                return 'Please verify your email before logging in.';
+            } else if (error.includes('Too many requests')) {
+                return 'Too many login attempts. Please try again later.';
+            }
+            return 'An error occurred. Please try again.';
+        }
+
+        // Check database connection on load
+        supabaseClient.auth.getSession().then(({ error }) => {
+            const statusEl = document.getElementById('dbStatus');
+            if (error) {
+                statusEl.innerHTML = '<i class="fas fa-circle text-xs mr-1"></i>Disconnected';
+                statusEl.className = 'text-red-600 font-medium';
+            }
+        });
+    </script>
 </body>
 </html>

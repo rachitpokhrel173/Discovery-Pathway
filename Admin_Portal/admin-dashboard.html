@@ -75,20 +75,43 @@
                         <i class="fas fa-bars text-gray-600"></i>
                     </button>
                     <div>
-                        <p class="text-sm text-gray-500">Welcome back,</p>
-                        <h2 class="font-semibold text-gray-800">Discovery Pathway</h2>
-                    </div>
+    <p class="text-sm text-gray-500" id="greetingText">Welcome back,</p>
+    <h2 class="font-semibold text-gray-800" id="welcomeMessage">Discovery Pathway</h2>
+</div>
                 </div>
                 
                 <div class="flex items-center space-x-4">
-                    <div id="dbStatusBadge" class="px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">
-                        <i class="fas fa-database mr-1"></i>Connected
-                    </div>
-                    <button onclick="refreshAllData()" class="p-2 rounded-full hover:bg-gray-100">
-                        <i class="fas fa-sync text-gray-600"></i>
-                    </button>
-                    <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white font-semibold">DP</div>
+    <div id="dbStatusBadge" class="px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">
+        <i class="fas fa-database mr-1"></i>Connected
+    </div>
+    <button onclick="refreshAllData()" class="p-2 rounded-full hover:bg-gray-100">
+        <i class="fas fa-sync text-gray-600"></i>
+    </button>
+    
+    <!-- User Info & Logout -->
+    <div class="flex items-center space-x-3">
+        <div class="hidden sm:block text-right">
+            <p class="text-xs text-gray-500">Logged in as</p>
+            <p id="userEmail" class="text-sm font-semibold text-gray-800">Loading...</p>
+        </div>
+        <div class="relative group">
+            <button class="w-10 h-10 bg-gradient-to-br from-purple-600 to-indigo-600 rounded-full flex items-center justify-center text-white font-semibold shadow-lg hover:shadow-xl transition">
+                <i class="fas fa-user"></i>
+            </button>
+            <!-- Dropdown -->
+            <div class="hidden group-hover:block absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl border py-2 z-50">
+                <div class="px-4 py-2 border-b">
+                    <p class="text-xs text-gray-500">Signed in as</p>
+                    <p id="userEmailDropdown" class="text-sm font-semibold text-gray-800 truncate"></p>
                 </div>
+                <button onclick="logout()" class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center">
+                    <i class="fas fa-sign-out-alt mr-2"></i>
+                    Logout
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
             </div>
         </header>
 
@@ -395,6 +418,7 @@
                 </button>
             </div>
             <form onsubmit="addTask(event)" class="p-6 space-y-4">
+                
                 <div class="bg-blue-50 p-4 rounded-lg border border-blue-200">
                     <h3 class="font-semibold text-blue-800 mb-3 text-sm">
                         <i class="fas fa-user-tag mr-2"></i>Assignee
@@ -538,6 +562,143 @@
 
 <script> 
 
+// ==================== CRITICAL: AUTHENTICATION PROTECTION ====================
+// THIS MUST BE AT THE TOP - DO NOT REMOVE OR MOVE
+
+const DASHBOARD_SUPABASE_URL = 'https://rdzdermrmvbhfbynxqxy.supabase.co';
+const DASHBOARD_SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJkemRlcm1ybXZiaGZieW54cXh5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjcwNzEzOTgsImV4cCI6MjA4MjY0NzM5OH0.9MK2u6YUHmNGI85U_-suG_SogbRy9lLsqpB6SFdIrtA';
+
+// Initialize Supabase for auth check IMMEDIATELY
+const { createClient: createAuthClient } = supabase;
+const authClient = createAuthClient(DASHBOARD_SUPABASE_URL, DASHBOARD_SUPABASE_KEY);
+
+// IMMEDIATE AUTH CHECK - Blocks unauthorized access
+// IMMEDIATE AUTH CHECK - Blocks unauthorized access
+(async function() {
+    try {
+        const { data: { session }, error } = await authClient.auth.getSession();
+        
+        if (error || !session) {
+            console.warn('⚠️ Unauthorized access attempt blocked');
+            window.location.replace('admin-login.html');
+            throw new Error('Authentication required');
+        }
+        
+        if (session && session.user) {
+            console.log('✅ Authenticated user:', session.user.email);
+            // Store user info globally
+            window.currentUser = session.user;
+            window.currentSession = session;
+            
+            // Display user info immediately after auth check
+            setTimeout(() => {
+                displayUserInfo();
+            }, 100);
+        }
+    } catch (error) {
+        console.error('Auth check error:', error);
+        window.location.replace('admin-login.html');
+    }
+})();
+
+// Monitor auth state changes (logout, token expiry)
+authClient.auth.onAuthStateChange((event, session) => {
+    if (event === 'SIGNED_OUT' || !session) {
+        console.warn('⚠️ Session expired or signed out');
+        window.location.replace('admin-login.html');
+    }
+});
+
+// Logout function
+async function logout() {
+    if (!confirm('Are you sure you want to logout?')) return;
+    
+    try {
+        const { error } = await authClient.auth.signOut();
+        if (error) throw error;
+        
+        // Clear all stored data
+        localStorage.clear();
+        sessionStorage.clear();
+        
+        // Redirect to login
+        window.location.replace('admin-login.html');
+    } catch (error) {
+        console.error('Logout error:', error);
+        alert('Error logging out. Redirecting anyway...');
+        window.location.replace('admin-login.html');
+    }
+}
+
+// Display logged-in user info
+// Display logged-in user info
+// Display logged-in user info
+// Display logged-in user info (COMPLETE VERSION)
+async function displayUserInfo() {
+    try {
+        const { data: { session } } = await authClient.auth.getSession();
+        
+        if (session && session.user) {
+            const userEmail = session.user.email;
+            const displayName = getDisplayName(userEmail);
+            const greeting = getTimeBasedGreeting();
+            
+            // Update main display name (top right)
+            const userEmailEl = document.getElementById('userEmail');
+            if (userEmailEl) {
+                userEmailEl.textContent = displayName;
+            }
+            
+            // Update dropdown email
+            const userEmailDropdown = document.getElementById('userEmailDropdown');
+            if (userEmailDropdown) {
+                userEmailDropdown.textContent = userEmail;
+            }
+            
+            // Update welcome message with time-based greeting
+            const welcomeMessage = document.getElementById('welcomeMessage');
+            if (welcomeMessage) {
+                welcomeMessage.textContent = `${greeting}, ${displayName}`;
+            }
+            
+            // Update greeting text
+            const greetingText = document.getElementById('greetingText');
+            if (greetingText) {
+                greetingText.textContent = 'Welcome back,';
+            }
+            
+            console.log(`✅ ${greeting}, ${displayName}!`);
+        } else {
+            window.location.replace('admin-login.html');
+        }
+    } catch (error) {
+        console.error('Error displaying user info:', error);
+        const userEmailEl = document.getElementById('userEmail');
+        if (userEmailEl) {
+            userEmailEl.textContent = 'Admin User';
+        }
+    }
+}
+// ==================== USER DISPLAY NAMES MAPPING ====================
+const USER_DISPLAY_NAMES = {
+    'rachitpokhrel123@gmail.com': 'Rachit Pokhrel',
+    'banepa@discoveryedu.com.np': 'Discovery Staff',
+    'amit@discoveryedu.com.np': 'Amit Neupane',
+    'suman@discoveryedu.com.np': 'Suman Gautam'
+};
+
+// Function to get display name from email
+function getDisplayName(email) {
+    return USER_DISPLAY_NAMES[email.toLowerCase()] || email.split('@')[0];
+}
+// ==================== END AUTHENTICATION PROTECTION ====================
+// Get greeting based on time of day
+function getTimeBasedGreeting() {
+    const hour = new Date().getHours();
+    if (hour < 12) return 'Good Morning';
+    if (hour < 17) return 'Good Afternoon';
+    return 'Good Evening';
+}
 // Configuration
 const SHEET_ID = '1WGcsbCmocmwItPC0XdaLkfb9UoN-OVYgTu1m0HglLm0';
 const API_KEY = 'AIzaSyB7fuRTNZqyb6juWEJeIzfyCb2Zh8yO6s4';
@@ -557,10 +718,13 @@ let appointmentsData = [];
 let classesData = [];
 
 // ==================== INITIALIZATION ====================
-window.addEventListener('load', () => {
+window.addEventListener('load', async () => {
     initSupabase(SUPABASE_URL, SUPABASE_KEY);
-    // Initialize EmailJS automatically
     emailjs.init(EMAILJS_PUBLIC_KEY);
+    
+    // Display user info with a slight delay to ensure DOM is ready
+    await displayUserInfo();
+    
     setTimeout(() => showNotification('✅ System Ready', 'success'), 1000);
 });
 
@@ -575,6 +739,27 @@ async function loadAllDataFromSupabase() {
     await Promise.all([loadTasks(), loadAppointments(), loadClasses()]);
     updateAllStats();
 }
+
+// ==================== AUTHENTICATION CHECK ====================
+async function checkAuth() {
+    const { data: { session } } = await supabaseClient.auth.getSession();
+    if (!session) {
+        // Not logged in, redirect to login
+        window.location.href = 'login.html';
+        return false;
+    }
+    
+    // Optional: Display logged-in user info
+    const userEmail = session.user.email;
+    console.log('Logged in as:', userEmail);
+    
+    return true;
+}
+
+// Check authentication immediately when page loads
+window.addEventListener('DOMContentLoaded', async () => {
+    await checkAuth();
+});
 
 // ==================== TASK FUNCTIONS ====================
 async function loadTasks() {
