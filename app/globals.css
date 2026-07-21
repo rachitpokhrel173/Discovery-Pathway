@@ -1,0 +1,102 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --header-height: 80px;
+}
+
+@layer base {
+  * {
+    @apply border-ink/10;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-paper text-ink font-body antialiased;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-display text-ink;
+  }
+
+  ::selection {
+    @apply bg-brass/30 text-ink;
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-brass ring-offset-2 ring-offset-paper;
+  }
+}
+
+@layer components {
+  /* Boarding-pass perforated divider — the site's signature motif */
+  .perforated {
+    position: relative;
+  }
+  .perforated::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 2px;
+    background-image: repeating-linear-gradient(
+      to bottom,
+      rgba(246, 244, 238, 0.9) 0,
+      rgba(246, 244, 238, 0.9) 8px,
+      transparent 8px,
+      transparent 16px
+    );
+  }
+
+  .mono-label {
+    @apply font-mono text-xs uppercase tracking-stamp;
+  }
+
+  .stamp-ring {
+    @apply relative inline-flex items-center justify-center rounded-full border-2 border-dashed;
+  }
+
+  .container-page {
+    @apply mx-auto max-w-8xl px-5 sm:px-8 lg:px-12;
+  }
+
+  .section-pad {
+    @apply py-16 sm:py-20 lg:py-24;
+  }
+
+  .btn-primary {
+    @apply inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full bg-brass px-6 py-3 font-body text-sm font-semibold text-paper transition-all duration-200 hover:bg-brass-dark hover:shadow-stamp active:scale-[0.98];
+  }
+
+  .btn-secondary {
+    @apply inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full border-2 border-ink/15 bg-transparent px-6 py-3 font-body text-sm font-semibold text-ink transition-all duration-200 hover:border-ink hover:bg-ink hover:text-paper active:scale-[0.98];
+  }
+
+  .btn-ghost-inverse {
+    @apply inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full border-2 border-paper/30 bg-transparent px-6 py-3 font-body text-sm font-semibold text-paper transition-all duration-200 hover:border-paper hover:bg-paper hover:text-ink active:scale-[0.98];
+  }
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
